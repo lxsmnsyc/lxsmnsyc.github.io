@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Page Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <style>
+            body{
+                width: 100%;
+                height: 100vh;
+                
+                position: absolute;
+                top: 0px;
+                left: 0px;
+
+                margin: 0px;
+
+                display: grid;
+                grid-template-rows: 1fr 4fr;
+                grid-template-columns: 1fr;
+
+                align-items: center;
+                justify-content: center;
+            }
+
+            nav, #all-data, .info, .vis{
+                display: inline-grid;
+                align-items: center;
+                justify-content: center;
+            }
+            nav{
+                grid-template-rows: 1fr 1fr;
+                grid-template-columns: 1fr 4fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr;
+            }
+
+            #all-data{
+                grid-template-rows: 1fr;
+                grid-template-columns: 3fr 1fr;
+
+                width: 100%;
+                height: 100%;
+            }
+
+            nav h6{
+                margin: auto;
+
+                text-align: center;
+            }
+
+            #all-data canvas{
+                background: #eceff1;
+                width: 80%;
+                height: 80%;
+                margin: auto;
+
+                border-radius: 1vmax;
+
+                box-shadow: 0px 1vmax 5vmax 0.5vmax #607d8b;
+            }
+
+            #all-data .info{
+                grid-template-rows: 1fr 1fr 1fr 1fr;
+                grid-template-columns: 1fr;
+
+                
+                width: 100%;
+                height: 100%;
+            }
+            #all-data h6{
+                text-align: center;
+            }
+
+            .vis{
+                grid-template-rows: 1fr 9fr;
+                grid-template-columns: 1fr;
+                
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <nav>
+            <h6>Algorithm</h6>
+            <select id="input-algo">
+                <option value="0">Recursive Lomuto QuickSort</option>
+                <option value="1">Non-Recursive Lomuto QuickSort</option>
+                <option value="2">Recursive Hoare QuickSort</option>
+                <option value="3">Non-Recursive Hoare QuickSort</option>
+                <option value="4">Recursive Top-Down MergeSort</option>
+                <option value="5">Bottom-Up MergeSort</option>
+                <option value="6">Sift-Down Binary Heap Sort</option>
+                <option value="7">Sift-Up Binary Heap Sort</option>
+                <option value="8">Basic Selection Sort</option>
+                <option value="9">Bingo Selection Sort</option>
+                <option value="10">Basic Bubble Sort</option>
+                <option value="11">Optimized Bubble Sort</option>
+                <option value="12">Cocktail Sort</option>
+                <option value="13">Serial Odd-Even Sort</option>
+                <option value="14">Parallel Odd-Even Sort</option>
+                <option value="15">Comb Sort</option>
+                <option value="16">Basic Insertion Sort</option>
+                <option value="17">Gnome Sort</option>
+                <option value="18">Shell Sort</option>
+                <option value="19">Insertion Sort with Recursive Binary Search</option>
+                <option value="20">Insertion Sort with Iterative Binary Search</option>
+                <option value="21">Counting Sort</option>
+                <option value="22">Cycle Sort</option>
+                <option value="23">Permutation Sort</option>
+                <option value="24">Recursive Stooge Sort</option>
+                <option value="25">Non-Recursive Stooge Sort</option>
+                <option value="26">Recursive Circle Sort</option>
+                <option value="27">Non-Recursive Circle Sort</option>
+                <option value="28">Recursive Lomuto Intro Sort</option>
+                <option value="29">Non-Recursive Lomuto Intro Sort</option>
+                <option value="30">Recursive Hoare Intro Sort</option>
+                <option value="31">Non-Recursive Hoare Intro Sort</option>
+                <option value="32">TimSort with Insertion Sort and Bottom-Up Merge</option>
+                <option value="32">TimSort with Recursive Binary Insertion Sort and Bottom-Up Merge</option>
+                <option value="33">TimSort with Non-Recursive Binary Insertion Sort and Bottom-Up Merge</option>
+            </select>
+            <h6>Data</h6>
+            <input id="input-len" type="text">
+            <h6>Modulus</h6>
+            <input id="input-mod"type="text">
+            <h6>Ascending?</h6>
+            <input id="input-asc"type="checkbox">
+            <button id="start">Start!</button>
+            <h6>Array Type</h6>
+            <select id="input-arr">
+                <option value="0">Array</option>
+                <option value="1">Int8Array</option>
+                <option value="2">Int16Array</option>
+                <option value="3">Int32Array</option>
+                <option value="4">Uint8Array</option>
+                <option value="5">Uint8ClampedArray</option>
+                <option value="6">Uint16Array</option>
+                <option value="7">Uint32Array</option>
+                <option value="8">Float32Array</option>
+                <option value="9">Float64Array</option>
+            </select>
+            <h6>Data Set</h6>
+            <select id="input-dataset">
+                <option value="unique">Unique</option>
+                <option value="semiunique">Semi-Unique</option>
+                <option value="almost">Almost Sorted</option>
+                <option value="reversed">Reversed</option>
+            </select>
+            <h6>Frames/Sec</h6>
+            <input id="input-fps" type="text">
+        </nav>
+        <div id="all-data">
+            <div class="vis">
+                <h6>Visualization</h6>
+                <canvas id="cv" width="1024" height="1024"></canvas>
+            </div>
+            <div class="info">
+                <h6 id="time">Time:</h6>
+                <h6 id="access">Access:</h6>
+                <h6 id="compare">Comparisons:</h6>
+                <h6 id="swap">Swaps:</h6>
+            </div>
+        </div>
+
+        
+        <script type="module" src="main.js"></script>
+    </body>
+</html>
