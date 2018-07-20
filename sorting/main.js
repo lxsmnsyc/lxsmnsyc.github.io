@@ -24,9 +24,84 @@ const DEFAULT_FPS = 1000/FRAME;
 const DEFAULT_LEN = 32;
 const DEFAULT_MODULUS = 4;
 
-const ACCESS_COLOR = "#0ff";
-const SWAP_COLOR = "#ff0";
-const NORMAL_COLOR = "#f0f";
+const COLORS = [
+    //041 Happy Acid
+    [
+        [72, 111],
+        [198, 134],
+        [239, 214]
+    ],
+    //039 Deep Blue
+    [
+        [106, 37],
+        [17, 117],
+        [203, 252]
+    ],
+    //035 Itmeo Branding
+    [
+        [42, 0],
+        [245, 158],
+        [152, 253]
+    ],
+    //034 Lemon Gate
+    [
+        [150, 249],
+        [251, 245],
+        [196, 134]
+    ],
+    //059 Teen Notebook
+    [
+        [151, 251],
+        [149, 200],
+        [240, 212]
+    ],
+    //064 Red Salvation
+    [
+        [244, 69],
+        [59, 58],
+        [71, 148]
+    ],
+    //066 Night Party
+    [
+        [2, 212],
+        [80, 63],
+        [197, 141]
+    ],
+    //069 Purple Division
+    [
+        [112, 229],
+        [40, 178],
+        [228, 202]
+    ],
+    //073 Love Kiss
+    [
+        [255, 255],
+        [8, 177],
+        [68, 153]
+    ],
+    //084 Phoenix Start
+    [
+        [248, 249],
+        [54, 212],
+        [0, 35]
+    ],
+    //084 Frozen Berry
+    [
+        [232, 199],
+        [25, 234],
+        [139, 253]
+    ],
+    //146 Juicy Cake
+    [
+        [225, 249],
+        [79, 212],
+        [173, 35]
+    ],
+];
+
+
+const ACCESS_COLOR = "#000";
+const SWAP_COLOR = "#888";
 
 const SORTS = [
     QuickSort.LomutoNRQS,
@@ -79,6 +154,8 @@ const ARRAY_TYPES = [
     Float64Array
 ];
 
+
+
 const ascending = (a, b) => a - b;
 const descending = (a, b) => b - a;
 
@@ -90,8 +167,20 @@ function getCanvasContext(cv){
     return cv.getContext("2d");
 }
 
+function lerp(a, b, t){
+    return a + (b - a)*t;
+}
 
-function DrawArrayToCanvas(cv, ctx, arr, len, s1, s2){
+function gradient(t, grad){
+    let r = Math.floor(lerp(COLORS[grad][0][0], COLORS[grad][0][1], t));
+    let g = Math.floor(lerp(COLORS[grad][1][0], COLORS[grad][1][1], t));
+    let b = Math.floor(lerp(COLORS[grad][2][0], COLORS[grad][2][1], t));
+
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+}
+
+
+function DrawArrayToCanvas(cv, ctx, arr, len, s1, s2, drawType, grad){
     let w = cv.width;
     let h = cv.height;
     //let normW = w/tw;
@@ -101,17 +190,30 @@ function DrawArrayToCanvas(cv, ctx, arr, len, s1, s2){
     let normX = w/len;
     let normY = h/len;
     for(let i = 0; i < len; i++){
+
+        let x = i*normX;
+        let y = arr[i]*normY;
+        let factor = y/h;
+        
         if(s1 == i){
             ctx.fillStyle = ACCESS_COLOR;
         } else if(s2 == i){
             ctx.fillStyle = SWAP_COLOR;
         } else{
-            ctx.fillStyle = NORMAL_COLOR;
+            ctx.fillStyle = gradient(factor, grad);
         }
 
-        let x = i*normX;
-        let y = arr[i]*normY;
-        ctx.fillRect(x, h - y, w/len, y);
+        switch(drawType){
+        case 1:
+            ctx.fillRect(x, h - y, normX, y);
+            break;
+        case 2:
+            ctx.fillRect(x, 0, normX, h);
+            break;
+        default:
+            ctx.fillRect(x, 0, normX, h);
+
+        }
     }
 }
 
@@ -171,14 +273,17 @@ async function startSort(type, sorter, len, modulus, arrayType, asc, task){
     let accessDisplay = document.getElementById("access");
     let swapDisplay = document.getElementById("swap");
 
+    let grad = Math.floor(Math.random()*COLORS.length);
+
     let drawData = (a, b, arr=data) => { 
-        DrawArrayToCanvas(cv, ctx, arr, len, a, b);
+        DrawArrayToCanvas(cv, ctx, arr, len, a, b, 1, grad);
 
         timeDisplay.innerHTML = "Time: " + ((performance.now() - timer.now)/1000) + " seconds";
         compDisplay.innerHTML = "Accesses: " + accesses.count;
         accessDisplay.innerHTML = "Comparisons: " + comparison.count;
         swapDisplay.innerHTML = "Swaps: " + swaps.count;
     };
+
         
     drawData();
     await SORTS[sorter](data, 0, len - 1, c, drawData, task, comparison, accesses, swaps);
@@ -243,47 +348,3 @@ document.getElementById("input-len").value = DEFAULT_LEN;
 document.getElementById("input-mod").value = DEFAULT_MODULUS;
 
 document.getElementById("input-fps").value = DEFAULT_FPS;
-
-{
-    function swap(a, i, j){
-        let tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
-    function siftup(a, start, end){
-        let child = end;
-        while(child > start){
-            let parent = (child - 1) >>> 1;
-            if(a[parent] < a[child]){
-                swap(a, parent, child);
-
-                child = parent;
-            }
-            else {return;}
-        }
-    }
-
-    function heapify(a){
-        let end = 1;
-        while(end < a.length){
-            siftup(a, 0, end++);
-            console.log("heapify: " + a);
-        }
-    }
-
-    function heapsort(a){
-        let count = a.length;
-        heapify(a);
-
-        let end = count - 1;
-        while(end > 0){
-            swap(a, 0, end--);
-            siftup(a, 0, end);
-            console.log("siftup: " + a);
-        }
-        return a;
-    }
-    let a = [5,4,2,1,6,8,3,7];
-    console.log("unsort: " + a);
-    console.log("result: " + heapsort(a));
-}
