@@ -81,13 +81,9 @@
 	);
 	
 	
-	let time = gl.getUniformLocation(program, "time");
-	let delta = gl.getUniformLocation(program, "delta");
-	let stamp = gl.getUniformLocation(program, "stamp");
-	let delta_stamp = gl.getUniformLocation(program, "delta_stamp");
-	let mouse = gl.getUniformLocation(program, "mouse");
-	let resolution = gl.getUniformLocation(program, "resolution");
-	let half_res = gl.getUniformLocation(program, "half_res");
+	let time = gl.getUniformLocation(program, "u_time");
+	let mouse = gl.getUniformLocation(program, "u_mouse");
+	let resolution = gl.getUniformLocation(program, "u_resolution");
 	
 	let c = {
 		time: 0.0,
@@ -101,10 +97,6 @@
 		resolution:{
 			w: screenW,
 			h: screenH
-		},
-		half_res: {
-			w: halfW,
-			h: halfH
 		}
 	}
 	
@@ -117,13 +109,9 @@
 		gl.bindBuffer(gl.ARRAY_BUFFER, pbuff);
 		gl.enableVertexAttribArray(ploc);
 		gl.vertexAttribPointer(ploc, 2, gl.FLOAT, false, 0, 0);
-		gl.uniform1f(time, c.time);
-		gl.uniform1f(delta, c.delta);
-		gl.uniform1i(stamp, c.stamp);
-		gl.uniform1i(delta_stamp, c.delta_stamp);
-		gl.uniform2f(mouse, c.mouse.x, c.mouse.y);
-		gl.uniform2f(resolution, c.resolution.w, c.resolution.h);
-		gl.uniform2f(half_res, c.half_res.w, c.half_res.h);
+		gl.uniform1f(u_time, c.time);
+		gl.uniform2f(u_mouse, c.mouse.x, c.mouse.y);
+		gl.uniform2f(u_resolution, c.resolution.w, c.resolution.h);
 		var primitiveType = gl.TRIANGLES;
 		var offset = 0;
 		var count = 4;
