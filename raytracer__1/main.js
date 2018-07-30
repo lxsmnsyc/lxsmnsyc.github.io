@@ -81,9 +81,9 @@
 	);
 	
 	
-	let time = gl.getUniformLocation(program, "u_time");
-	let mouse = gl.getUniformLocation(program, "u_mouse");
-	let resolution = gl.getUniformLocation(program, "u_resolution");
+	let u_time = gl.getUniformLocation(program, "u_time");
+	let u_mouse = gl.getUniformLocation(program, "u_mouse");
+	let u_resolution = gl.getUniformLocation(program, "u_resolution");
 	
 	let c = {
 		time: 0.0,
