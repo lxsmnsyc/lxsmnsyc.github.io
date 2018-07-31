@@ -359,7 +359,7 @@ void main() {
             }
         }
 
-        if(found && found2){
+        if(found || found2){
             if(smallest2 < smallest){
                 vec3 phit = getIntersectionPoint(si2, smallest2);
                 vec3 normal = sp.normal;
@@ -377,22 +377,6 @@ void main() {
                 //final += spheres[x].color*ratio;
                 final = mix(final, s.color, ratio);
             }
-        } else if(found2){
-            vec3 phit = getIntersectionPoint(si2, smallest2);
-            vec3 normal = sp.normal;
-            vec3 v = normalize(ray.origin - phit);
-            float ratio = max(0., dot(normal, v));
-            ray = getReflectionRay(ray, normal);
-            //final += spheres[x].color*ratio;
-            final = mix(final, sp.color, ratio);
-        } else if(found){
-            vec3 phit = getIntersectionPoint(si, smallest);
-            vec3 normal = normalize(phit - s.center);
-            vec3 v = normalize(ray.origin - phit);
-            float ratio = max(0., dot(normal, v));
-            ray = getReflectionRay(ray, normal);
-            //final += spheres[x].color*ratio;
-            final = mix(final, s.color, ratio);
         }
     }
 
