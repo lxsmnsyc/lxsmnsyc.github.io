@@ -246,7 +246,7 @@ void main() {
     float cosine = cos(u_time);
     float sine = sin(u_time);
     // create eye
-    vec3 eye_pos = vec3(10.*cosine, 10.*sine, 0.0);
+    vec3 eye_pos = vec3(10.*cosine, 10.*sine, 10.0 * sine);
     vec3 target = vec3(0, 0, 0.0); 
     vec3 upguide = vec3(0.0, 0.0, 1.0);
     float fov = CAMERA_FOV * DEG2RAD;
