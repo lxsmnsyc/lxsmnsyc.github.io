@@ -307,7 +307,7 @@ void main() {
 
     float ts = intersectSphere(s, i);
     float tp = intersectPlane(p, i);
-    if(ts > 0.0){
+    if(ts >= 0.0){
         // get intersection point
         vec3 phit = i.ray.origin + i.ray.direction*ts;
         
@@ -328,13 +328,13 @@ void main() {
         
         //check if reflect vector hits plane
         float tps = intersectPlane(p, ir);
-        if(tps > 0.0) {
+        if(tps >= 0.0) {
             // if it hits, render plane
             vec3 phits = ir.ray.origin + ir.ray.direction*tps;
             def_color *= vec4(render_plane(p, phits, e.w, e.h), 1.0);
         }
         gl_FragColor = def_color;
-    } else if(tp > 0.0) {
+    } else if(tp >= 0.0) {
         vec3 phit = i.ray.origin + i.ray.direction*tp;
         gl_FragColor = vec4(render_plane(p, phit, e.w, e.h), 1.0);
     } else {
