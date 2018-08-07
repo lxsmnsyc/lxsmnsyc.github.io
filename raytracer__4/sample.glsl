@@ -22,11 +22,11 @@ uniform float u_time;
 #define EMPTY_VEC3 vec3(0, 0, 0)
 #define EMPTY_MATERIAL Material(EMPTY_VEC3, 0., false, 0.0, false, 0.0)
 
-#define LIGHTS 1
+#define LIGHTS 4
 #define SPHERES 4
 #define PLANES 6
 
-#define LIGHTSF 1.
+#define LIGHTSF 4.
 
 #define SPHERE_RADIUS 2.
 #define PLANE_OFFSET 10.
@@ -305,7 +305,7 @@ void main(){
     vec2 halfres = u_resolution*0.5;
     vec2 ms = -normalize(u_mouse - halfres);
     
-    vec3 eye_pos = vec3(CAMERA_OFFSET, CAMERA_OFFSET*ms.y, CAMERA_OFFSET*ms.x);
+    vec3 eye_pos = vec3(-CAMERA_OFFSET, -CAMERA_OFFSET*ms.y, -CAMERA_OFFSET*ms.x);
     vec3 target = vec3(0, 0, 0); // 
     vec3 upguide = vec3(0.0, 0.0, 1.0);
     float fov = CAMERA_FOV * DEG2RAD;
