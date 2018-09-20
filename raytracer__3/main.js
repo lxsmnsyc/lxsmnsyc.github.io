@@ -127,16 +127,17 @@
 		c.resolution.w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 		c.resolution.h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 		
-		glCanvas.width = screenW;
-		glCanvas.height = screenH;
+		glCanvas.width = c.resolution.w;
+		glCanvas.height = c.resolution.h;
 		
 		c.half_res.w = c.resolution.w*0.5;
 		c.half_res.h = c.resolution.h*0.5;
 	
 		gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        alert("hello");
 	}
 	
-	let start = 0
+	let start = 0;
 	function updateTime(ev){
 		if(!start) start = ev;
 		c.delta_stamp = ev - c.stamp;
@@ -152,58 +153,9 @@
 	updateTime(0);
 	
 	glCanvas.addEventListener("mousemove", updateMouse);
-	var optimizedResize = (function() {
+	
+  	window.addEventListener('resize', updateReso);
 
-		var callbacks = [],
-			running = false;
-
-		// fired on resize event
-		function resize() {
-
-			if (!running) {
-				running = true;
-
-				if (window.requestAnimationFrame) {
-					window.requestAnimationFrame(runCallbacks);
-				} else {
-					setTimeout(runCallbacks, 66);
-				}
-			}
-
-		}
-
-		// run the actual callbacks
-		function runCallbacks() {
-
-			callbacks.forEach(function(callback) {
-				callback();
-			});
-
-			running = false;
-		}
-
-		// adds callback to loop
-		function addCallback(callback) {
-
-			if (callback) {
-				callbacks.push(callback);
-			}
-
-		}
-
-		return {
-			// public method to add additional callback
-			add: function(callback) {
-				if (!callbacks.length) {
-					window.addEventListener('resize', resize);
-				}
-				addCallback(callback);
-			}
-		}
-	}());
-
-	// start process
-	optimizedResize.add(updateReso);
 	
 	function update(){ render(); requestAnimationFrame(update); }
 	update();
