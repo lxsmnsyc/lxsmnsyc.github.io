@@ -4,6 +4,17 @@
 	let screenW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	let screenH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	
+	const minWidth = 1366;
+	const minHeight = 768;
+	
+	if(screenW > screenH){
+		screenW = (screenW > minWidth)? minWidth : screenW;
+		screenH = (screenH > minHeight)? minHeight : screenH;
+	} else {
+		screenW = (screenW > minHeight)? minHeight : screenW;
+		screenH = (screenH > minWidth)? minWidth : screenH;
+	}
+	
 	glCanvas.width = screenW;
 	glCanvas.height = screenH;
 	
@@ -124,14 +135,26 @@
 	}
 	
 	function updateReso(ev){
-		c.resolution.w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		c.resolution.h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		screenW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		screenH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);		
+		
+		if(screenW > screenH){
+			screenW = (screenW > minWidth)? minWidth : screenW;
+			screenH = (screenH > minHeight)? minHeight : screenH;
+		} else {
+			screenW = (screenW > minHeight)? minHeight : screenW;
+			screenH = (screenH > minWidth)? minWidth : screenH;
+		}
+		
+		c.resolution.w = screenW;
+		c.resolution.h = screenH;
 		
 		glCanvas.width = c.resolution.w;
 		glCanvas.height = c.resolution.h;
 		
 		c.half_res.w = c.resolution.w*0.5;
 		c.half_res.h = c.resolution.h*0.5;
+	
 	
 		gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         alert("hello");
