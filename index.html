@@ -49,7 +49,7 @@ uniform float u_time;
 #define EMPTY_VEC3 vec3(0, 0, 0)
 #define EMPTY_MATERIAL Material(EMPTY_VEC3, 0., false, 0.0, false, 0.0)
 
-#define DEPTH 4
+#define DEPTH 2
 #define SPHERES 6
 #define PLANES 6
 #define TIME_SCALE 0.25
@@ -161,22 +161,11 @@ vec3 refraction(vec3 I, vec3 N, float ior){
 
 
 vec3 getSurfaceColor(Plane p, vec3 pos){
-    vec2 result = vec2(1, 1);
-    result.x = dot(p.right, p.point - pos);
-    result.y = dot(p.forward, p.point - pos);
 
     return vec3(0, 0, 0);//julia(result.xy, vec2(1, 1)*20.);
 }
 
 vec3 getSurfaceColor(Sphere s, vec3 pos){
-    vec3 diff = normalize(pos - s.center);
-
-    float longi = atan(diff.y/s.radius);
-    float lati = acos(diff.z/s.radius);
-
-    longi = (longi + PI)*RAD2DEG;
-    lati = (lati + PI)*RAD2DEG;
-
     return vec3(1, 1, 1);//julia(vec2(longi, lati), vec2(1, 1)*360.);
 }
 
