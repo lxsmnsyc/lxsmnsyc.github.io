@@ -4,8 +4,8 @@
 	let screenW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	let screenH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	
-	const minWidth = 768;
-	const minHeight = 432;
+	const minWidth = 256;
+	const minHeight = 144;
 	
 	if(screenW > screenH){
 		screenW = (screenW > minWidth)? minWidth : screenW;
