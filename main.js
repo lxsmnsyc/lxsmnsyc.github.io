@@ -15,6 +15,8 @@
 		screenH = (screenH > minWidth)? minWidth : screenH;
 	}
 	
+	alert(screenW + " " + screenH);
+	
 	glCanvas.width = screenW;
 	glCanvas.height = screenH;
 	
