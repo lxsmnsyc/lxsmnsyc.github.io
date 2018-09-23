@@ -10,4 +10,84 @@ body{
 	width: 100vw;
 	height: 100vh;
 	background: #000;
+	
+	z-index: -100;
+}
+
+nav{
+	display: grid;
+	grid-template-areas: 
+	"l . . . w"
+	". . . . ."
+	"m . . . ."
+	". . . . ."
+	"a . . . c";
+	
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	
+	width: 100vw;
+	height: 100vh;
+	
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.logo{
+	grid-area: l;
+	
+	width: 100%;
+	height: 100%;
+	
+	position: relative;
+}
+
+.logo > span{
+	color: white;
+	
+	position: absolute;
+	
+	top: 50%;
+	left: 50%;
+}
+
+.logo > .char1{
+	transform: translate(-50%, -50%) rotate(0deg) translateY(-150%);
+}
+.logo > .char2{
+	transform: translate(-50%, -50%) rotate(45deg) translateY(-150%);
+}
+.logo > .char3{
+	transform: translate(-50%, -50%) rotate(90deg) translateY(-150%);
+}
+.logo > .char4{
+	transform: translate(-50%, -50%) rotate(135deg) translateY(-150%);
+}
+.logo > .char5{
+	transform: translate(-50%, -50%) rotate(180deg) translateY(-150%);
+}
+.logo > .char6{
+	transform: translate(-50%, -50%) rotate(225deg) translateY(-150%);
+}
+.logo > .char7{
+	transform: translate(-50%, -50%) rotate(270deg) translateY(-150%);
+}
+.logo > .char8{
+	transform: translate(-50%, -50%) rotate(315deg) translateY(-150%);
+}
+
+#cursor{
+	width: 32px;
+	height: 32px;
+	
+	transform: translate(-50%, -50%);
+	
+	background: #fff;
+	
+	mix-blend-mode: difference;
+	
+	position: fixed;
+	
+	border-radius: 50%;
 }
