@@ -1,3 +1,6 @@
+
+
+
 (function (window){
 	const MIN_RADIUS = 16;
 	const MAX_RADIUS = 64;
@@ -44,8 +47,6 @@
 	
 	
 	let lerp = (a, b, t) => a + (b-a)*t;
-	
-	
 	
 	
 	window.addEventListener("mousemove", e =>{

@@ -653,9 +653,29 @@
 		gl.drawArrays(gl.TRIANGLES, 0, 6);
 	}
 	
+	const steps = 1/16.;
+	let prevX = 0, prevY = 0;
+	let targetX = 0, targetY = 0;
+	
+	function updateM(){
+		// get coordinate differences
+		let dx = targetX - prevX, dy = targetY - prevY;
+		
+		// update coordinates
+		prevX = prevX + dx*steps;
+		prevY = prevY + dy*steps;
+		
+		c.mouse.x = prevX;
+		c.mouse.y = prevY;
+		
+		requestAnimationFrame(updateM);
+	}
+	
+	updateM();
+	
 	function updateMouse(ev){
-		c.mouse.x = ev.clientX;
-		c.mouse.y = ev.clientY;
+		targetX = ev.clientX;
+		targetY = ev.clientY;
 	}
 	
 	function updateReso(ev){
