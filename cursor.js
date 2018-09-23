@@ -10,27 +10,32 @@
 	let targetsX = [];
 	let targetsY = [];
 	
-	function loadTarget(id){
-		let el = document.getElementById(id);
-		
-		let width = el.clientWidth, height = el.clientHeight;
-		
-		let rect = el.getBoundingClientRect();
-		
-		let top = rect.top,
-			left = rect.left;
+	function loadTargets(){
+		function loadTarget(id){
+			let el = document.getElementById(id);
 			
-		
-		let x = left + width*0.5, 
-			y = top + height*0.5;
+			let width = el.clientWidth, height = el.clientHeight;
 			
-		targetsX[targets] = x;
-		targetsY[targets] = y;
-		targets++;
+			let rect = el.getBoundingClientRect();
+			
+			let top = rect.top,
+				left = rect.left;
+				
+			
+			let x = left + width*0.5, 
+				y = top + height*0.5;
+				
+			targetsX[targets] = x;
+			targetsY[targets] = y;
+			targets++;
+			
+		}
 		
+		loadTarget("logo-1");
 	}
+	loadTargets();
 	
-	loadTarget("logo-1");
+	window.addEventListener("resize", loadTargets);
 	
 	let cursor = document.getElementById('cursor');
 	
@@ -75,7 +80,7 @@
 			dx = tx - prevX;
 			dy = ty - prevY;
 			
-			if(dx*dx + dy*dy <= TARGET_RADIUS*TARGET_RADIUS + MIN_RADIUS*MIN_RADIUS){
+			if(dx*dx + dy*dy <= TARGET_RADIUS*TARGET_RADIUS){
 				growing = true;
 				found = true;
 				break;
