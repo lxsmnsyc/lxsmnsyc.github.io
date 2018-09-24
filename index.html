@@ -19,19 +19,23 @@
 
 <body>
     <canvas id="gl" width="640" height="480"></canvas>
+	
 	<nav>
-		<div class="logo" id="logo-1">LXSMNSYC</div>
+		<a class="logo" id="logo-1" href="">LXSMNSYC</a>
+		<a class="nav-item" id="nav-menu">menu</a>
+		<a class="nav-item" id="nav-about">about</a>
+		<a class="nav-item" id="nav-contacts">contacts</a>
+		<a class="nav-item" id="nav-works">works</a>
 	</nav>
 	
-	
-	<div class="view" id="home">
-	</div>
 
 	<div id="cursor"></div>
 	
 	<script text="type/javascript" src="gl.js"></script>
 	<script text="type/javascript" src="charming.js"></script>
 	<script text="type/javascript" src="cursor.js"></script>
+	<script text="type/javascript" src="string_lerp.js"></script>
+	<script text="type/javascript" src="hover_interpolator.js"></script>
 	<script text="type/javascript">
 		charming(document.getElementById("logo-1"));
 	</script>

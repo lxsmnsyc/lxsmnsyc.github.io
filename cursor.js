@@ -4,11 +4,12 @@
 (function (window){
 	const MIN_RADIUS = 16;
 	const MAX_RADIUS = 64;
-	const TARGET_RADIUS = 64;
+	const DETECTION_RADIUS = 32;
 	
 	let targets = 0;
 	let targetsX = [];
 	let targetsY = [];
+	let targetsR = [];
 	
 	function loadTargets(){
 		function loadTarget(id){
@@ -21,17 +22,25 @@
 			let top = rect.top,
 				left = rect.left;
 				
+			let hw = width*0.5,
+				hh = height*0.5;
+				
 			
-			let x = left + width*0.5, 
-				y = top + height*0.5;
+			let x = left + hw, 
+				y = top + hh;
 				
 			targetsX[targets] = x;
 			targetsY[targets] = y;
+			targetsR[targets] = DETECTION_RADIUS + ((width > height) ? hh : hw);
 			targets++;
 			
 		}
 		
 		loadTarget("logo-1");
+		loadTarget("nav-works");
+		loadTarget("nav-about");
+		loadTarget("nav-menu");
+		loadTarget("nav-contacts");
 	}
 	loadTargets();
 	
@@ -80,7 +89,9 @@
 			dx = tx - prevX;
 			dy = ty - prevY;
 			
-			if(dx*dx + dy*dy <= TARGET_RADIUS*TARGET_RADIUS){
+			let tr = targetsR[i];
+			
+			if(dx*dx + dy*dy <= tr*tr){
 				growing = true;
 				found = true;
 				break;
