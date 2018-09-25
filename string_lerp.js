@@ -1,5 +1,5 @@
 const string_lerp = (function (){
-	let lerp = (a, b, t) => a + (b - a)*t;
+	let lerp = (a, b, t) => a + (b - a)*(t * t * (3 - 2 * t));
 	let charLerp = (a, b, t) => String.fromCharCode(lerp(a.charCodeAt(0), b.charCodeAt(0), t));
 
 	return function (str1, str2, t, mode){

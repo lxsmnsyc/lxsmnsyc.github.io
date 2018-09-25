@@ -1,4 +1,7 @@
-
+const CURSOR = {
+	x: 0,
+	y: 0
+};
 
 
 (function (window){
@@ -75,6 +78,9 @@
 		// update coordinates
 		prevX = prevX + dx*steps;
 		prevY = prevY + dy*steps;
+		
+		CURSOR.x = prevX;
+		CURSOR.y = prevY;
 		
 		// set coordinates to element 
 		cursor.style.top = prevY + "px";

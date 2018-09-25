@@ -6,6 +6,7 @@
 precision mediump int;
 
 uniform vec2 u_resolution;
+uniform vec2 u_oreso;
 uniform vec2 u_mouse;
 uniform float u_time;
 
@@ -19,15 +20,15 @@ const float RAY_T_MAX = 1.0e30;
 
 const vec3 EMPTY_VEC3 = vec3(0, 0, 0);
 
-const int DEPTH = 2;
-const int SPHERES = 6;
-const int PLANES = 6;
+const int DEPTH = 4;
+const int SPHERES = 3;
+const int PLANES = 3;
 const float TIME_SCALE = 0.25;
 
 const float SPHERE_RADIUS = 6.;
 const float SPHERE_STEP = 0.25;
 
-const float SPHERE_RADIUS_GROWTH = 1.5;
+const float SPHERE_RADIUS_GROWTH = 3.;
 const float SPHERE_SCALE_GROWTH = 1.0;
 const float SPHERE_DISP_GROWTH = 1.0;
 const float SPHERE_STEP_GROWTH = 0.25;
@@ -35,15 +36,15 @@ const float SPHERE_STEP_GROWTH = 0.25;
 const vec2 SPHERE_BNS = vec2(8, 8);
 const vec2 PLANE_BNS = vec2(0.25, 0.25);
 
-const int LIGHTS = 2;
+const int LIGHTS = 1;
 
 const float PLANE_OFFSET = 8.;
 const float PLANE_STEP = 0.1;
-const float PLANE_OFFSET_GROWTH = 1.05;
+const float PLANE_OFFSET_GROWTH = 1.5;
 const float PLANE_SCALE_GROWTH = 1.;
 const float PLANE_STEP_GROWTH =1.5;
 
-const vec3 BRIGHTNESS = vec3(0.5, 0.5, 0.5);
+const vec3 BRIGHTNESS = vec3(1, 1, 1);
 
 struct Material{
 	vec3 specular;
@@ -104,8 +105,8 @@ struct Eye{
 
 struct Light{
 	vec3 point, intensity;
+	float attn;
 	float ambient;
-	float  attn;
 };
 
 const Hit NO_HIT = Hit(false, RAY_T_MAX, EMPTY_VEC3, EMPTY_VEC3, EMPTY_MATERIAL, EMPTY_VEC3);
@@ -362,16 +363,17 @@ vec3 ptColor(Hit h, Eye e, Light l, vec3 color){
 
 	vec3 linear = ambient + attn*(specular + diffuse);
 	vec3 gamma = pow(linear, vec3(1./2.2, 1./2.2, 1./2.2));
+	
 	return gamma;
 }
 
 
 Sphere createSphere(float r, vec2 nsc, float nst, vec3 color){
-	return Sphere(vec3(0, 0, 0), r, nsc, vec2(0, 0), nst, Material(color, 0.5, true, 0.5, false, 1.0));
+	return Sphere(vec3(0), r, nsc, vec2(0), nst, Material(color, 1.0, false, 0.5, true, 1.0));
 }
 
 Plane createPlane(float poff, vec2 nsc, float nst, vec3 color){
-	return Plane(vec3(-poff, 0.0, 0.0), vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), vec3(0.0, -1.0, 0.0), nsc, vec2(0, 0), nst, Material(color, 0.5, true, 0.5, false, 1.0));
+	return Plane(vec3(-poff, 0.0, 0.0), vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), vec3(0.0, -1.0, 0.0), nsc, vec2(0, 0), nst, Material(color, 1.0, true, 0.5, false, 1.0));
 }
 void main(){
 	vec2 ms = u_mouse.xy;
@@ -444,23 +446,19 @@ void main(){
 	scale *= PLANE_SCALE_GROWTH;
 	nstep *= PLANE_STEP_GROWTH;
 	p[5] = createPlane(poff, scale, nstep, vec3(0.40, 0, 1));
+	
+	
 	Light l[4];
 
 	
 	l[0] = Light(
-		vec3(9.5, -4.25, 0),
-		vec3(1, 1, 1),
-		0.05,
+		vec3(12, 0, 0),
+		vec3(1),
+		0.1,
 		0.1
 	);
-	l[1] = Light(
-		vec3(0, 0, 0),
-		vec3(1, 1, 1),
-		0.05,
-		0.2
-	);
 	
-	vec2 halfres = u_resolution.xy*0.5;
+	vec2 halfres = u_oreso.xy*0.5;
 
 	
 	ms = halfres - ms;
@@ -469,7 +467,7 @@ void main(){
 	ms *= PI;
 	
 	vec3 eye_pos = vec3(CAMERA_OFFSET + CAMERA_OFFSET*0.5*sin(ms.y*0.5), CAMERA_OFFSET, CAMERA_OFFSET*0.5*cos(ms.x*0.5));
-	vec3 target = vec3(ms.y, 0.0, -ms.x); // 
+	vec3 target = vec3(ms.y, 0.0, ms.x); // 
 	vec3 upguide = vec3(0.0, 0.0, 1.0);
 	float fov = CAMERA_FOV * PI/180.;
 	float aspectRatio = width / height;
@@ -482,7 +480,7 @@ void main(){
 	float t = RAY_T_MAX;
 	Ray ray = eyeMakeRay(e, vec2(scx, scy));
 
-	vec3 final = vec3(0, 0, 0);
+	vec3 final = vec3(0);
 	
 	float ref = 1.0;
 	for(int i = 0; i < DEPTH; i++){
@@ -519,3 +517,4 @@ void main(){
 	}
 	gl_FragColor = vec4(final*BRIGHTNESS, 1);
 }
+`;
