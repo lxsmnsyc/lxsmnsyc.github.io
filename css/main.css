@@ -21,7 +21,7 @@ nav{
 	". . . . . . ."
 	"m . . . . . ."
 	". . . . . . ."
-	"a . . . . . c";
+	"t . . . . a c";
 	
 	grid-template-rows: repeat(5, 1fr);
 	grid-template-columns: repeat(7, 1fr);
@@ -43,6 +43,12 @@ nav > a{
 	color: white;
 	
 	font-size: 1em;
+
+	font-family: "Courier New", monospace;
+	
+	mix-blend-mode: difference;
+	
+	z-index: 100;
 }
 
 #nav-menu{

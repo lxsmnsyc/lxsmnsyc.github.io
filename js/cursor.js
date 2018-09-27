@@ -15,6 +15,7 @@ const CURSOR = {
 	let targetsR = [];
 	
 	function loadTargets(){
+		targets = 0;
 		function loadTarget(id){
 			let el = document.getElementById(id);
 			
@@ -39,7 +40,7 @@ const CURSOR = {
 			
 		}
 		
-		loadTarget("logo-1");
+		loadTarget("nav-logo");
 		loadTarget("nav-works");
 		loadTarget("nav-about");
 		loadTarget("nav-menu");

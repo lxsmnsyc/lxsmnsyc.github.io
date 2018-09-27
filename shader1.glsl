@@ -20,7 +20,7 @@ const float RAY_T_MAX = 1.0e30;
 
 const vec3 EMPTY_VEC3 = vec3(0, 0, 0);
 
-const int DEPTH = 4;
+const int DEPTH = 1;
 const int SPHERES = 3;
 const int PLANES = 3;
 const float TIME_SCALE = 0.25;
@@ -369,12 +369,60 @@ vec3 ptColor(Hit h, Eye e, Light l, vec3 color){
 
 
 Sphere createSphere(float r, vec2 nsc, float nst, vec3 color){
-	return Sphere(vec3(0), r, nsc, vec2(0), nst, Material(color, 1.0, false, 0.5, true, 1.0));
+	return Sphere(vec3(0), r, nsc, vec2(0), nst, Material(color, 1.0, true, 0.5, false, 1.0));
 }
 
 Plane createPlane(float poff, vec2 nsc, float nst, vec3 color){
 	return Plane(vec3(-poff, 0.0, 0.0), vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), vec3(0.0, -1.0, 0.0), nsc, vec2(0, 0), nst, Material(color, 1.0, true, 0.5, false, 1.0));
 }
+
+vec3 getIntersectionScene(Eye e, vec2 coord, Sphere[6] s, Plane[6] p, Light l[4]){
+	float x = coord.x;
+	float y = coord.y;
+	float scx = 2.0*x / u_resolution.x - 1.0;
+	float scy = -2.0*y / u_resolution.y + 1.0;
+	float t = RAY_T_MAX;
+	
+	Ray ray = eyeMakeRay(e, vec2(scx, scy));
+
+	vec3 final = vec3(0);
+	
+	float ref = 1.0;
+	for(int i = 0; i < DEPTH; i++){
+		Hit closest;
+		for(int j = 0; j < SPHERES; j++){
+			Hit h = intersect(ray, s[j], t);
+			if(h.hit){
+				t = h.tMax;
+				closest = h;
+			}
+		}
+		for(int j = 0; j < PLANES; j++){
+			Hit h = intersect(ray, p[j], t);
+			if(h.hit){
+				t = h.tMax;
+				closest = h;
+			}
+		}
+		if(RAY_T_MAX >= t){
+			vec3 mixture = vec3(0, 0, 0);
+			for(int j = 0; j < LIGHTS; j++){
+				mixture += ptColor(closest, e, l[j], closest.color);
+			}
+			final += mixture * ref;
+			if(closest.m.reflective){
+				ray = Ray(closest.point, reflect(ray.direction, closest.normal), RAY_T_MAX);
+				ref *= closest.m.reflectN;
+			} else if(closest.m.refractive) {
+				ray = Ray(closest.point, refraction(ray.direction, closest.normal, closest.m.refractN), RAY_T_MAX);
+			}
+			
+		}
+		t = RAY_T_MAX;
+	}
+	return final;
+}
+
 void main(){
 	vec2 ms = u_mouse.xy;
 	float width = u_resolution.x;
@@ -473,48 +521,5 @@ void main(){
 	float aspectRatio = width / height;
 	Eye e = createEye(eye_pos, target, upguide, fov, aspectRatio);
 
-	float x = gl_FragCoord.x;
-	float y = gl_FragCoord.y;
-	float scx = 2.0*x / width - 1.0;
-	float scy = -2.0*y / height + 1.0;
-	float t = RAY_T_MAX;
-	Ray ray = eyeMakeRay(e, vec2(scx, scy));
-
-	vec3 final = vec3(0);
-	
-	float ref = 1.0;
-	for(int i = 0; i < DEPTH; i++){
-		Hit closest;
-		for(int j = 0; j < SPHERES; j++){
-			Hit h = intersect(ray, s[j], t);
-			if(h.hit){
-				t = h.tMax;
-				closest = h;
-			}
-		}
-		for(int j = 0; j < PLANES; j++){
-			Hit h = intersect(ray, p[j], t);
-			if(h.hit){
-				t = h.tMax;
-				closest = h;
-			}
-		}
-		if(RAY_T_MAX >= t){
-			vec3 mixture = vec3(0, 0, 0);
-			for(int j = 0; j < LIGHTS; j++){
-				mixture += ptColor(closest, e, l[j], closest.color);
-			}
-			final += mixture * ref;
-			if(closest.m.reflective){
-				ray = Ray(closest.point, reflect(ray.direction, closest.normal), RAY_T_MAX);
-				ref *= closest.m.reflectN;
-			} else if(closest.m.refractive) {
-				ray = Ray(closest.point, refraction(ray.direction, closest.normal, closest.m.refractN), RAY_T_MAX);
-			}
-			
-		}
-		t = RAY_T_MAX;
-	}
-	gl_FragColor = vec4(final*BRIGHTNESS, 1);
+	gl_FragColor = vec4(getIntersectionScene(e, gl_FragCoord.xy, s, p, l), 1.0);
 }
-`;
