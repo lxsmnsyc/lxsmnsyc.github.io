@@ -51,6 +51,7 @@
 	precision mediump int;
 
 	uniform vec2 u_resolution;
+	uniform vec2 u_oreso;
 	uniform vec2 u_mouse;
 	uniform float u_time;
 
@@ -59,10 +60,12 @@
 	#define SPHERE_RADIUS 1.0
 	
 	
-	const int MAX_MARCHING_STEPS = 255;
+	const int MAX_MARCHING_STEPS = 256;
 	const float MIN_DIST = 0.0;
-	const float MAX_DIST = 100.0;
+	const float MAX_DIST = 96.0;
 	const float EPSILON = 0.0001;
+	
+	const float BRIGHTNESS = 0.75;
 	
 	/*
 	 * SDF
@@ -119,17 +122,19 @@
 	 */
 	float sceneSDF(vec3 samplePoint) {  
 		float k = 2.;
-		vec3 rep = repeat(samplePoint, vec3(10));
-		float box1 = sdBox(rep, vec3(0.1, 0.1, 5.));
-		float box2 = sdBox(rep, vec3(0.1, 5., 0.1));
-		float box3 = sdBox(rep, vec3(5.0, 0.1, 0.1));
+		vec3 rep = repeat(samplePoint, vec3(16));
+		float boxlen = 4. + sin(u_time)*4.;
+		float box1 = sdBox(rep, vec3(0.1, 0.1, boxlen));
+		float box2 = sdBox(rep, vec3(0.1, boxlen, 0.1));
+		float box3 = sdBox(rep, vec3(boxlen, 0.1, 0.1));
 		
 		float box12 = smin(box1, box2, k);
 		float box123 = smin(box12, box3, k);
 		
-		float sphere1 = sdSphere(repeat(samplePoint + vec3(0., 5., 0.), vec3(10)), 1.0);
-		float sphere2 = sdSphere(repeat(samplePoint + vec3(5., 0., 0.), vec3(10)), 1.0);
-		float sphere3 = sdSphere(repeat(samplePoint + vec3(0., 0., 5.), vec3(10)), 1.0);
+		float sphereoffs = 4. + cos(u_time)*4.;
+		float sphere1 = sdSphere(repeat(samplePoint + vec3(0., sphereoffs, 0.), vec3(16)), 1.0);
+		float sphere2 = sdSphere(repeat(samplePoint + vec3(sphereoffs, 0., 0.), vec3(16)), 1.0);
+		float sphere3 = sdSphere(repeat(samplePoint + vec3(0., 0., sphereoffs), vec3(16)), 1.0);
 		
 		float sphere12 = smin(sphere1, sphere2, k);
 		float sphere = smin(sphere12, sphere3, k);
@@ -278,10 +283,18 @@
 		return mat3(s, u, -f);
 	}
 	
+	vec3 greyscale(vec3 color){
+		float clinear = 0.2126*color.x + 0.7152*color.y + 0.0722*color.z;
+		if(clinear <= 0.0031308){
+			return vec3(clinear*12.92);
+		}
+		return vec3(1.055*pow(clinear, 1./2.4) - 0.055);
+	}
+	
 	vec3 render(vec2 coord){
 		vec3 viewDir = rayDirection(45.0, u_resolution.xy, coord.xy);
 		vec3 eye = vec3(0.0, 2.5, u_time);
-		vec2 halfr = u_resolution*0.5;
+		vec2 halfr = u_oreso*0.5;
 		vec2 mouse = (halfr - u_mouse)/halfr;
 		float pi = 2.*3.14159265358979;
 		float mx = mouse.x;
@@ -308,7 +321,7 @@
 			
 			vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, eye);
 			
-			return color;
+			return greyscale(color);
 		}
 	
 	}
@@ -339,22 +352,14 @@
 		return coord;
 	}
 	
-	vec3 greyscale(vec3 color){
-		float clinear = 0.2126*color.x + 0.7152*color.y + 0.0722*color.z;
-		if(clinear <= 0.0031308){
-			return vec3(clinear*12.92);
-		}
-		return vec3(1.055*pow(clinear, 1./2.4) - 0.055);
-	}
-	
 	vec3 sampleSplit(vec2 coord)
 	{
 		vec3 frag;
 		vec2 ratio = coord/u_resolution;
-		frag.x = render(vec2(ratio.x - 0.005 * sin(u_time), ratio.y)*u_resolution).x;
+		frag.x = render(vec2(ratio.x - 0.001 * sin(u_time), ratio.y)*u_resolution).x;
 		frag.y = render(coord).y;
-		frag.z = render(vec2(ratio.x + 0.005 * sin(u_time), ratio.y)*u_resolution).z;
-		return greyscale(frag);
+		frag.z = render(vec2(ratio.x + 0.001 * sin(u_time), ratio.y)*u_resolution).z;
+		return frag;
 	}
 	
 	void main(){
@@ -374,7 +379,7 @@
 			// Up the bend for the scanline
 			vec2 screenSpace = crtCoords * u_resolution.xy;
 			//vec3 currentJulia = getJulia(gl_FragCoord.xy);
-			gl_FragColor = vec4(scanline(screenSpace, v), 1.0);
+			gl_FragColor = vec4(scanline(screenSpace, v)*BRIGHTNESS, 1.0);
 		}
 	}
 	</script>

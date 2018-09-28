@@ -55,6 +55,7 @@
 		uniform float u_time;
 		uniform vec2 u_mouse;
 		uniform vec2 u_resolution;
+		uniform vec2 u_oreso;
 		
 		const float TIME_SCALE = 0.1;
 		
@@ -65,7 +66,7 @@
 		
 		vec3 getJulia(vec2 pixel){
 		
-			vec2 mid = u_resolution*0.5;
+			vec2 mid = u_oreso*0.5;
 			vec2 m = mid - u_mouse;
 			
 			float w = u_resolution.x;

@@ -53,6 +53,7 @@
 		precision mediump int;
 
 		uniform vec2 u_resolution;
+		uniform vec2 u_oreso;
 		uniform vec2 u_mouse;
 		uniform float u_time;
 
@@ -114,7 +115,7 @@
 		 * negative indicating inside.
 		 */
 		float sceneSDF(vec3 samplePoint) {  
-			return sdBox(repeat(samplePoint, vec3(8)), vec3(1., 0.5, 2.));
+			return sdBox(repeat(samplePoint, vec3(10)), vec3(1., 0.5, 2. + cos(u_time)));
 		}
 		
 		/**
@@ -261,7 +262,7 @@
 		vec3 render(vec2 coord){
 			vec3 viewDir = rayDirection(45.0, u_resolution.xy, coord.xy);
 			vec3 eye = vec3(u_time, 6, u_time);
-			vec2 halfr = u_resolution*0.5;
+			vec2 halfr = u_oreso*0.5;
 			vec2 mouse = (halfr - u_mouse)/halfr;
 			float pi = 2.*3.14159265358979;
 			float mx = mouse.x;
@@ -323,9 +324,9 @@
 		{
 			vec3 frag;
 			vec2 ratio = coord/u_resolution;
-			frag.x = render(vec2(ratio.x - 0.005 * sin(u_time), ratio.y)*u_resolution).x;
+			frag.x = render(vec2(ratio.x - 0.0025 * sin(u_time), ratio.y)*u_resolution).x;
 			frag.y = render(coord).y;
-			frag.z = render(vec2(ratio.x + 0.005 * sin(u_time), ratio.y)*u_resolution).z;
+			frag.z = render(vec2(ratio.x + 0.0025 * sin(u_time), ratio.y)*u_resolution).z;
 			return frag;
 		}
 		
