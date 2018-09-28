@@ -133,7 +133,7 @@
 	 */
 	float sceneSDF(vec3 samplePoint) {  
 		float k = 2.;
-		vec3 rep = repeat(samplePoint, vec3(16));
+		vec3 rep = repeat(samplePoint, vec3(32));
 		float boxlen = 4. + sin(u_time)*4.;
 		float box1 = sdBox(rep, vec3(0.1, 0.1, boxlen));
 		float box2 = sdBox(rep, vec3(0.1, boxlen, 0.1));
@@ -143,12 +143,18 @@
 		float box123 = smin(box12, box3, k);
 		
 		float sphereoffs = 4. + cos(u_time)*4.;
-		float sphere1 = sdSphere(repeat(samplePoint + vec3(0., sphereoffs, 0.), vec3(16)), 1.0);
-		float sphere2 = sdSphere(repeat(samplePoint + vec3(sphereoffs, 0., 0.), vec3(16)), 1.0);
-		float sphere3 = sdSphere(repeat(samplePoint + vec3(0., 0., sphereoffs), vec3(16)), 1.0);
+		float sphere1 = sdSphere(repeat(samplePoint + vec3(0., sphereoffs, 0.), vec3(32)), 1.0);
+		float sphere2 = sdSphere(repeat(samplePoint + vec3(sphereoffs, 0., 0.), vec3(32)), 1.0);
+		float sphere3 = sdSphere(repeat(samplePoint + vec3(0., 0., sphereoffs), vec3(32)), 1.0);
+		float sphere4 = sdSphere(repeat(samplePoint + vec3(0., -sphereoffs, 0.), vec3(32)), 1.0);
+		float sphere5 = sdSphere(repeat(samplePoint + vec3(-sphereoffs, 0., 0.), vec3(32)), 1.0);
+		float sphere6 = sdSphere(repeat(samplePoint + vec3(0., 0., -sphereoffs), vec3(32)), 1.0);
 		
 		float sphere12 = smin(sphere1, sphere2, k);
-		float sphere = smin(sphere12, sphere3, k);
+		float sphere34 = smin(sphere3, sphere4, k);
+		float sphere56 = smin(sphere5, sphere6, k);
+		float sphere1234 = smin(sphere12, sphere34, k);
+		float sphere = smin(sphere1234, sphere56, k);
 		
 		return smin(box123, sphere, k);
 	}

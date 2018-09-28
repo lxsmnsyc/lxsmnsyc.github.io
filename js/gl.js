@@ -4,7 +4,7 @@
 	const minWidth = 640;
 	const minHeight = 360;
 	
-	const scaleScreen = 2/5;
+	const scaleScreen = 1/4;
 	
 	function getResolution(){
 		let screenW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
