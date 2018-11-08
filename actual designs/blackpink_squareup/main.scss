@@ -1,0 +1,183 @@
+$pink: #f48fb1;
+$black: #000;
+$light-pink: #f8bbd0;
+$dark-pink: #f06292;
+$white-pink: #fce4ec;
+$pink-shadowed: linear-gradient(-135deg, $light-pink 60%, $dark-pink);
+$pink-shadowed-2: linear-gradient(135deg, $white-pink 45%, $light-pink 50%, $dark-pink);
+
+$cube-size: 15vmin;
+$offsets: $cube-size / 2;
+
+$back-size: 60vmin;
+
+
+@mixin visual-center{
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	
+	transform: translate(-50%, -50%);
+}
+
+.cube{
+	width: $cube-size;
+	height: $cube-size;
+	
+	@include visual-center;
+	
+	transform-style: preserve-3d;
+	
+	transform: translate(-50%, -50%) rotateX(-15deg);
+}
+
+
+.album{
+	background: $light-pink;
+	width: 100vmin;
+	height: 100vmin;
+	@include visual-center;
+	
+	
+	perspective: 100vmin;
+}
+
+.side-face{
+	
+	transform-style: preserve-3d;
+	width: 100%;
+	height: 100%;
+	
+	@include visual-center;
+	
+	background: linear-gradient(to bottom, $black 35%, $dark-pink 50%, $white-pink);
+}
+
+.cube > .side-face:nth-child(2){
+	transform: translate(-50%, -50%) rotateY(45deg) translateZ($offsets);
+	animation: rotate-cube-1 5s infinite alternate;
+}
+.cube > .side-face:nth-child(3){
+	transform: translate(-50%, -50%) rotateY(-45deg) translateZ($offsets);
+	animation: rotate-cube-2 5s infinite alternate;
+}
+
+.up-face{
+	
+	transform-style: preserve-3d;
+	width: 100%;
+	height: 100%;
+	
+	@include visual-center;
+	
+	background: #000;
+	
+	transform: translate(-50%, -50%) rotateX(90deg)  translateZ($offsets) rotate(45deg);
+	animation: rotate-up 5s infinite alternate;
+}
+
+.back{
+	
+	transform-style: preserve-3d;
+	width: $back-size;
+	height: $back-size;
+	
+	@include visual-center;
+	
+	transform: translate(-50%, -50%) rotateX(-20deg);
+}
+
+.back-container{
+	
+	transform-style: preserve-3d;
+	width: $back-size;
+	height: $back-size;
+	
+	@include visual-center;
+	
+	background: $pink;
+	overflow: hidden;
+}
+
+.wall{
+	
+	transform-style: preserve-3d;
+	width: 100%;
+	height: 100%;
+	
+	@include visual-center;
+}
+
+.wall:nth-child(1){
+	transform: translate(-50%, -50%) rotateY(30deg) translateZ($back-size / 2);
+	background: $pink-shadowed;
+	
+	animation: rotate-back-1 5s infinite alternate;
+}
+.wall:nth-child(2){
+	transform: translate(-50%, -50%) rotateY(-60deg) translateZ($back-size / 2);
+	background: $pink-shadowed-2;
+	animation: rotate-back-2 5s infinite alternate;
+}
+@keyframes rotate-back-1{
+	0%{
+	    transform: translate(-50%, -50%) rotateY(30deg) translateZ($back-size / 2);
+	}
+	100%{
+	    transform: translate(-50%, -50%) rotateY(60deg) translateZ($back-size / 2);
+	}
+}
+
+@keyframes rotate-back-2{
+	0%{
+	    transform: translate(-50%, -50%) rotateY(-60deg) translateZ($back-size / 2);
+	}
+	100%{
+	    transform: translate(-50%, -50%) rotateY(-30deg) translateZ($back-size / 2);
+	}
+}
+
+@keyframes rotate-cube-1{
+	0%{
+	    transform: translate(-50%, -50%) rotateY(60deg) translateZ($offsets);
+	}
+	100%{
+	    transform: translate(-50%, -50%) rotateY(30deg) translateZ($offsets);
+	}
+}
+@keyframes rotate-cube-2{
+	0%{
+	    transform: translate(-50%, -50%) rotateY(-30deg) translateZ($offsets);
+	}
+	100%{
+	    transform: translate(-50%, -50%) rotateY(-60deg) translateZ($offsets);
+	}
+}
+
+@keyframes rotate-up{
+	0%{
+	    transform: translate(-50%, -50%) rotateX(90deg)  translateZ($offsets) rotate(30deg);	
+	}
+	100%{
+	    transform: translate(-50%, -50%) rotateX(90deg)  translateZ($offsets) rotate(60deg);	
+	}
+}
+
+.title{
+	@include visual-center;
+	
+	font-style: "Arial", sans-serif;
+	font-size: 5vmin;
+	
+	top: 90%;
+	font-weight: bold;
+}
+
+.title-2{
+	@include visual-center;
+	font-style: "Arial", sans-serif;
+	font-size: 5vmin;
+	
+	top: 10%;
+	font-weight: bold;
+}

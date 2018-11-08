@@ -1,0 +1,271 @@
+body {
+  background: #000;
+  overflow: hidden;
+}
+
+.particle {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  animation: glow-particle 1s cubic-bezier(0.3642, 0, 0.6358, 1) infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.star {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 25vmin;
+  height: 25vmin;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+  animation: rotate-star 5s ease infinite alternate;
+}
+
+@keyframes glow-particle {
+  0% {
+    box-shadow: 0px 0px 5px 5px #fff;
+  }
+  100% {
+    box-shadow: 0px 0px 20px 20px #fff;
+  }
+}
+.star:nth-child(1) {
+  transform: translate3d(-50%, -50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(1) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 50px);
+  animation-delay: 250ms;
+}
+
+.star:nth-child(2) {
+  transform: translate3d(-50%, -50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(2) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 100px);
+  animation-delay: 500ms;
+}
+
+.star:nth-child(3) {
+  transform: translate3d(-50%, -50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(3) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 150px);
+  animation-delay: 750ms;
+}
+
+.star:nth-child(4) {
+  transform: translate3d(-50%, -50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(4) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 200px);
+  animation-delay: 1000ms;
+}
+
+.star:nth-child(5) {
+  transform: translate3d(-50%, -50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(5) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 250px);
+  animation-delay: 1250ms;
+}
+
+.star:nth-child(6) {
+  transform: translate3d(-50%, -50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(1) {
+  transform: rotate(calc(1*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(2) {
+  transform: rotate(calc(2*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(3) {
+  transform: rotate(calc(3*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(4) {
+  transform: rotate(calc(4*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(5) {
+  transform: rotate(calc(5*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.star:nth-child(6) > .particle:nth-child(6) {
+  transform: rotate(calc(6*60deg)) translate(-50%, 300px);
+  animation-delay: 1500ms;
+}
+
+.sphere {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 50vmin;
+  height: 50vmin;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotate-sphere {
+  0% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateY(360deg);
+  }
+}
+@keyframes rotate-star {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

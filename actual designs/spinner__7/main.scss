@@ -1,0 +1,105 @@
+$particle-color: #fff;
+$particle-size: 5px;
+$particle-blur-size: 20px;
+$particle-spread-size: 20px;
+
+$glow-duration: 1s;
+$glow-ease: cubic-bezier(0.3642, 0, 0.6358, 1);
+
+$star-arms: 6;
+$star-deg: 360deg/$star-arms;
+$star-offset: 50px;
+$star-rotation-speed: 5s;
+$star-rotation-ease: ease;
+
+$layers-count: 6;
+$layers-offset-bonus: 50px;
+$layers-offset: 50px;
+
+$sphere-rotation-duration: 5s;
+$sphere-rotation-ease: linear;
+
+
+body{
+	background: #000;
+    overflow: hidden;
+}
+
+@mixin visual-center{
+	top: 50%;
+	left: 50%;
+	position: absolute;
+}
+
+.particle{
+	@include visual-center;
+	width: #{$particle-size};
+	height: #{$particle-size};
+	
+	border-radius: 50%;
+	background: #{$particle-color};
+	
+	animation: glow-particle #{$glow-duration} #{$glow-ease} infinite alternate;
+	transform-style: preserve-3d;
+}
+
+.star{
+	@include visual-center;
+	width: 25vmin;
+	height: 25vmin;
+	
+	transform: translate(-50%, -50%);
+	transform-style: preserve-3d;
+  
+  
+  animation: rotate-star #{$star-rotation-speed} #{$star-rotation-ease} infinite alternate;
+}
+
+@keyframes glow-particle{
+	0%{
+		box-shadow: 0px 0px #{$particle-size} #{$particle-size} #{$particle-color};
+	}
+	100%{
+		box-shadow: 0px 0px #{$particle-blur-size} #{$particle-spread-size} #{$particle-color};
+	}
+}
+
+@for $j from 1 through $layers-count{
+		.star:nth-child(#{$j}){
+			transform: translate3d(-50%, -50%, $layers-offset * $j);
+			animation-delay: 250ms * $j;
+		}
+  @for $i from 1 through $star-arms{
+			    
+		.star:nth-child(#{$j}) > .particle:nth-child(#{$i}){
+			transform: rotate(calc(#{$i}*#{$star-deg})) translate(-50%, $layers-offset-bonus*($j - 1) + $star-offset);
+	        animation-delay: 250ms * $j;
+		    }
+		}
+	}
+
+.sphere{
+	@include visual-center;
+	
+	width: 50vmin;
+	height: 50vmin;
+	transform: translate(-50%, -50%);
+}
+
+@keyframes rotate-sphere{
+	0%{
+		transform: translate(-50%, -50%) rotateY(0deg);
+	}
+	100%{
+		transform: translate(-50%, -50%) rotateY(360deg);
+	}
+}
+
+@keyframes rotate-star{
+  0%{
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+  100%{
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}

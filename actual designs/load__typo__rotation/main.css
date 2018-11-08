@@ -1,0 +1,293 @@
+body {
+  overflow: hidden;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #000;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+.loader {
+  width: 100vmin;
+  height: 100vmin;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  font-size: 10vmin;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: loading-anim 6s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+}
+
+@keyframes loading-anim {
+  0% {
+    transform: translate(calc(-25vmin - 50%), -50%) rotateY(-90deg);
+  }
+  50% {
+    transform: translate(calc(25vmin - 50%), -50%) rotateY(90deg);
+  }
+  100% {
+    transform: translate(calc(-25vmin - 50%), -50%) rotateY(270deg);
+  }
+}
+.loader:nth-child(2) {
+  top: calc(10% * 2);
+}
+
+.loader:nth-child(3) {
+  top: calc(10% * 3);
+}
+
+.loader:nth-child(4) {
+  top: calc(10% * 4);
+}
+
+.loader:nth-child(5) {
+  top: calc(10% * 5);
+}
+
+.loader:nth-child(6) {
+  top: calc(10% * 6);
+}
+
+.loader:nth-child(7) {
+  top: calc(10% * 7);
+}
+
+.loader:nth-child(8) {
+  top: calc(10% * 8);
+}
+
+.loader:nth-child(2) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(1) {
+  animation-delay: calc(calc(1*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(2) {
+  animation-delay: calc(calc(2*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(3) {
+  animation-delay: calc(calc(3*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(4) {
+  animation-delay: calc(calc(4*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(5) {
+  animation-delay: calc(calc(5*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(6) {
+  animation-delay: calc(calc(6*250ms) + calc(7*250ms));
+}
+
+.loader:nth-child(2) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(1*250ms));
+}
+
+.loader:nth-child(3) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(2*250ms));
+}
+
+.loader:nth-child(4) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(3*250ms));
+}
+
+.loader:nth-child(5) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(4*250ms));
+}
+
+.loader:nth-child(6) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(5*250ms));
+}
+
+.loader:nth-child(7) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(6*250ms));
+}
+
+.loader:nth-child(8) > .text:nth-child(7) {
+  animation-delay: calc(calc(7*250ms) + calc(7*250ms));
+}

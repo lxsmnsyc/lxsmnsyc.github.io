@@ -1,0 +1,201 @@
+body {
+  overflow: hidden;
+  background: #000;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+.loader {
+  width: 50vmin;
+  height: 50vmin;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-perspective: 400px;
+          perspective: 400px;
+}
+
+.panel {
+  width: 10%;
+  height: 100%;
+  background: #f06292;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 15vmin);
+          transform: translate3d(-50%, -50%, 15vmin);
+  -webkit-animation: sine-rotate 5s infinite;
+          animation: sine-rotate 5s infinite;
+}
+
+@-webkit-keyframes sine-rotate {
+  0% {
+    background: #f06292;
+    -webkit-transform: translate(-50%, -50%, 15vmin) rotateY(0deg);
+            transform: translate(-50%, -50%, 15vmin) rotateY(0deg);
+    -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+            animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  25% {
+    background: #d81b60;
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateY(30deg);
+            transform: translate3d(-50%, -50%, 0) rotateY(30deg);
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+            animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  50% {
+    background: #880e4f;
+    -webkit-transform: translate3d(-50%, -50%, -15vmin) rotateY(0deg);
+            transform: translate3d(-50%, -50%, -15vmin) rotateY(0deg);
+    -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+            animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  75% {
+    background: #d81b60;
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateY(-30deg);
+            transform: translate3d(-50%, -50%, 0) rotateY(-30deg);
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+            animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  100% {
+    background: #f06292;
+    -webkit-transform: translate3d(-50%, -50%, 15vmin) rotateY(0deg);
+            transform: translate3d(-50%, -50%, 15vmin) rotateY(0deg);
+  }
+}
+
+@keyframes sine-rotate {
+  0% {
+    background: #f06292;
+    -webkit-transform: translate(-50%, -50%, 15vmin) rotateY(0deg);
+            transform: translate(-50%, -50%, 15vmin) rotateY(0deg);
+    -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+            animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  25% {
+    background: #d81b60;
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateY(-45deg);
+            transform: translate3d(-50%, -50%, 0) rotateY(-45deg);
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+            animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  50% {
+    background: #880e4f;
+    -webkit-transform: translate3d(-50%, -50%, -15vmin) rotateY(0deg);
+            transform: translate3d(-50%, -50%, -15vmin) rotateY(0deg);
+    -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+            animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  75% {
+    background: #d81b60;
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateY(45deg);
+            transform: translate3d(-50%, -50%, 0) rotateY(45deg);
+    -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+            animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  100% {
+    background: #f06292;
+    -webkit-transform: translate3d(-50%, -50%, 15vmin) rotateY(0deg);
+            transform: translate3d(-50%, -50%, 15vmin) rotateY(0deg);
+  }
+}
+.loader .panel:nth-child(1) {
+  left: calc(10%*1 - 5%);
+  -webkit-animation-delay: calc(200ms*1);
+          animation-delay: calc(200ms*1);
+}
+
+.loader .panel:nth-child(2) {
+  left: calc(10%*2 - 5%);
+  -webkit-animation-delay: calc(200ms*2);
+          animation-delay: calc(200ms*2);
+}
+
+.loader .panel:nth-child(3) {
+  left: calc(10%*3 - 5%);
+  -webkit-animation-delay: calc(200ms*3);
+          animation-delay: calc(200ms*3);
+}
+
+.loader .panel:nth-child(4) {
+  left: calc(10%*4 - 5%);
+  -webkit-animation-delay: calc(200ms*4);
+          animation-delay: calc(200ms*4);
+}
+
+.loader .panel:nth-child(5) {
+  left: calc(10%*5 - 5%);
+  -webkit-animation-delay: calc(200ms*5);
+          animation-delay: calc(200ms*5);
+}
+
+.loader .panel:nth-child(6) {
+  left: calc(10%*6 - 5%);
+  -webkit-animation-delay: calc(200ms*6);
+          animation-delay: calc(200ms*6);
+}
+
+.loader .panel:nth-child(7) {
+  left: calc(10%*7 - 5%);
+  -webkit-animation-delay: calc(200ms*7);
+          animation-delay: calc(200ms*7);
+}
+
+.loader .panel:nth-child(8) {
+  left: calc(10%*8 - 5%);
+  -webkit-animation-delay: calc(200ms*8);
+          animation-delay: calc(200ms*8);
+}
+
+.loader .panel:nth-child(9) {
+  left: calc(10%*9 - 5%);
+  -webkit-animation-delay: calc(200ms*9);
+          animation-delay: calc(200ms*9);
+}
+
+.loader .panel:nth-child(10) {
+  left: calc(10%*10 - 5%);
+  -webkit-animation-delay: calc(200ms*10);
+          animation-delay: calc(200ms*10);
+}

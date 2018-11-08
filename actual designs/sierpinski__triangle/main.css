@@ -1,0 +1,106 @@
+body {
+  overflow: hidden;
+  background: #000;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+
+.base{
+  top: 60%;
+  left: 50%;
+  position: absolute;
+  width: 50vmin;
+  height: 50vmin;
+  
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.arm{
+  width: 2px;
+  height: 50%;
+  
+  transform-origin: top center;
+  
+  background: #e91e63;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: fade 12s infinite;
+}
+
+.arm:nth-child(1){
+}
+
+.arm:nth-child(2){
+  transform: rotate(120deg);
+}
+
+.arm:nth-child(3){
+  transform: rotate(-120deg);
+}
+
+.arm > .arm:nth-child(1){
+  transform: translate(-50%, 100%);
+  animation-delay: -500ms;
+}
+.arm > .arm:nth-child(2){
+  transform: translate(-50%, 100%) rotate(120deg);
+  animation-delay: -1000ms;
+}
+.arm > .arm:nth-child(3){
+  transform: translate(-50%, 100%) rotate(-120deg);
+  animation-delay: -1500ms;
+}
+
+@keyframes fade{
+  0%{
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  45%{
+    opacity: 1;
+  }
+  55%{
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100%{
+    opacity: 0;
+  }
+}

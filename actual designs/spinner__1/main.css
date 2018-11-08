@@ -1,0 +1,108 @@
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+.margin div {
+    position: fixed;
+    width: 2px;
+    height: 100vh;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+}
+
+@media screen and (orientation: landscape) {
+    .margin div:nth-child(1) {
+        left: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        left: calc(50vmax + 50vmin);
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .margin div {
+        position: fixed;
+        width: 100vw;
+        height: 2px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #000;
+    }
+    .margin div:nth-child(1) {
+        top: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        top: calc(50vmax + 50vmin);
+    }
+}
+
+.spinner {
+    width: 50vmin;
+    height: 50vmin;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #000;
+}
+
+.spinner>.dot {
+    width: 25%;
+    height: 25%;
+    background: #0ff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate-dots 4s infinite;
+    mix-blend-mode: difference;
+}
+
+.spinner>.dot:nth-child(1) {
+    width: 5%;
+    height: 5%;
+    animation-timing-function: linear;
+}
+
+.spinner>.dot:nth-child(2) {
+    width: 10%;
+    height: 10%;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.spinner>.dot:nth-child(3) {
+    width: 15%;
+    height: 15%;
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.spinner>.dot:nth-child(4) {
+    width: 20%;
+    height: 20%;
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.spinner>.dot:nth-child(5) {
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes rotate-dots {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-20vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg) translateY(-20vmin);
+    }
+}
+
+@keyframes rotate-spinner {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}

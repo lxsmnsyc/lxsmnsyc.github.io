@@ -1,0 +1,103 @@
+body {
+  overflow: hidden;
+  background: #000;
+  margin: 0;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+
+.base{
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 32.5vmin;
+  height: 32.5vmin;
+  
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.arm{
+  width: 2px;
+  height: 75%;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+.base > .arm{
+  animation: rotate 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+
+.arm > .arm:nth-child(1){
+  transform: translate(-50%, 17.5%) rotate(90deg);
+  animation: rotate-1 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+.arm > .arm:nth-child(2){
+  transform: translate(-50%, -117.5%) rotate(-90deg);
+  animation: rotate-2 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+
+@keyframes rotate{
+  0%{
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotate-1{
+  0%{
+    transform: translate(-50%, 17.5%) rotate(90deg);
+  }
+  100%{
+    transform: translate(-50%, 17.5%) rotate(450deg);
+  }
+}
+@keyframes rotate-2{
+  0%{
+    transform: translate(-50%, -117.5%) rotate(-90deg);
+  }
+  100%{
+    transform: translate(-50%, -117.5%) rotate(270deg);
+  }
+}

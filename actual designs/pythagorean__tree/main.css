@@ -1,0 +1,115 @@
+body {
+  overflow: hidden;
+  background: #000;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+
+.tree{
+  width: 15vmin;
+  height: 15vmin;
+  
+  background: #4caf50;
+  transform: translate(-50%, -50%);
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.child{
+  width: 70.7106781%;
+  height: 70.7106781%;
+  transform: translate(-120%, -190%) rotate(-45deg);
+  animation: fade-right-1 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+}
+
+.tree .child:nth-child(2){
+  transform: translate(20%, -190%) rotate(45deg);
+  animation: fade-right-2 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+}
+.tree .child:nth-child(3){
+  transform: translate(20%, 90%) rotate(135deg);
+  animation: fade-right-3 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+}
+.tree .child:nth-child(4){
+  transform: translate(-120%, 90%) rotate(-135deg);
+  animation: fade-right-4 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+}
+
+@keyframes fade-right-1{
+	0%{ 
+		opacity: 0.25; 
+		transform: translate(-120%, -190%) rotate(-135deg);
+	}
+	100%{ 
+		opacity: 1; 
+		transform: translate(-120%, -190%) rotate(-45deg);
+	}
+}
+@keyframes fade-right-2{
+	0%{ 
+		opacity: 0.25; 
+		transform: translate(20%, -190%) rotate(-45deg);
+	}
+	100%{ 
+		opacity: 1; 
+		transform: translate(20%, -190%) rotate(45deg);
+	}
+}
+
+@keyframes fade-right-3{
+	0%{ 
+		opacity: 0.25; 
+		transform: translate(20%, 90%) rotate(45deg);
+	}
+	100%{ 
+		opacity: 1; 
+		transform: translate(20%, 90%) rotate(135deg);
+	}
+}
+@keyframes fade-right-4{
+	0%{ 
+		opacity: 0.25; 
+		transform: translate(-120%, 90%) rotate(-225deg);
+	}
+	100%{ 
+		opacity: 1; 
+		transform: translate(-120%, 90%) rotate(-135deg);
+	}
+}

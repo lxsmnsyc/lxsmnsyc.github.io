@@ -1,0 +1,71 @@
+$particle-size: 5px;
+$particle-color-start: #004d40;
+$particle-color-end: #80cbc4;
+$particle-speed: 2s;
+
+$wave-crest: 10vh;
+
+$wave-width: 50vmin;
+$wave-height: 50vmin;
+
+$wave-ease: cubic-bezier(0.3642, 0, 0.6358, 1);
+
+@mixin wave-func($x, $y){
+	animation-delay: calc((#{$x}*-100ms) + (-50ms*#{$y}));
+}
+
+body{
+	background: #000;
+}
+
+.particle{
+  width: #{$particle-size};
+	height: #{$particle-size};
+	
+	background: #{$particle-color-start};
+	
+	border-radius: 50%;
+	
+	animation: float-particle #{$particle-speed} #{$wave-ease} infinite alternate;
+	
+}
+
+@keyframes float-particle{
+	0%{
+    transform: translate(#{$wave-crest}, #{$wave-crest});
+	    background: #{$particle-color-start};
+	}
+	100%{
+		transform: translate(-#{$wave-crest}, -#{$wave-crest});
+	    background: #{$particle-color-end};
+	}
+}
+
+.wave-grid{
+	display: grid;
+	
+  width: #{$wave-width};
+	height: #{$wave-height};
+	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scaleY(0.86602) rotate(30deg) skew(-30deg);
+	
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	
+	align-items: center;
+	justify-content: center;
+}
+
+
+@for $i from 0 through 19{
+	@for $j from 1 through 20{
+    $k: $i*20 + $j;
+		.particle:nth-child(#{$k}){
+			@include wave-func($i, $j);
+		}
+	}
+}
+

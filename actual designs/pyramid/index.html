@@ -1,0 +1,151 @@
+<!doctype HTML>
+<html>
+	<head>
+		<style>
+			body{
+				background: #000;
+				margin: 0;
+			}
+			.spinner{
+				width: 100vmin;
+				height: 100vmin;
+				top: 50%;
+				left: 50%;
+				
+				position: absolute;
+				
+				transform: translate(-50%, -50%) rotateX(45deg);
+				
+				transform-style: preserve-3d;
+			}
+			
+			.spin{
+				width: 25%;
+				height: 25%;
+				
+				background: red;
+				
+				position: absolute;
+				
+				top: 50%;
+				left: 50%;
+				
+				
+			}
+			
+			@keyframes spinning-1{
+				from{ transform: translate3d(-50%, -50%, 144px) rotate(0deg) scale(1); background: #fff;}
+				to{ transform: translate3d(-50%, -50%, 144px) rotate(720deg) scale(0.25); background: #666;}
+			}	
+			@keyframes spinning-2{
+				from{ transform: translate3d(-50%, -50%, 128px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 128px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-3{
+				from{ transform: translate3d(-50%, -50%, 112px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 112px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-4{
+				from{ transform: translate3d(-50%, -50%, 96px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 96px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-5{
+				from{ transform: translate3d(-50%, -50%, 80px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 80px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-6{
+				from{ transform: translate3d(-50%, -50%, 64px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 64px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-7{
+				from{ transform: translate3d(-50%, -50%, 48px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 48px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-8{
+				from{ transform: translate3d(-50%, -50%, 32px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 32px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-9{
+				from{ transform: translate3d(-50%, -50%, 16px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 16px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			@keyframes spinning-10{
+				from{ transform: translate3d(-50%, -50%, 0px) rotate(0deg) scale(1); background: #fff; }
+				to{ transform: translate3d(-50%, -50%, 0px) rotate(720deg) scale(0.25); background: #666; }
+			}	
+			
+			.spinner > .spin:nth-child(1){
+				animation: spinning-1 3s ease-in infinite alternate;
+				animation-delay: -2250ms;
+				
+				background: #666;
+			}
+			.spinner > .spin:nth-child(2){
+				animation: spinning-2 3s ease-in infinite alternate;
+				animation-delay: -2s;
+				
+				background: #777;
+			}
+			.spinner > .spin:nth-child(3){
+				animation: spinning-3 3s ease-in infinite alternate;
+				animation-delay: -1750ms;
+				
+				background: #888;
+			}
+			.spinner > .spin:nth-child(4){
+				animation: spinning-4 3s ease-in infinite alternate;
+				animation-delay: -1500ms;
+				
+				background: #999;
+			}
+			.spinner > .spin:nth-child(5){
+				animation: spinning-5 3s ease-in infinite alternate;
+				animation-delay: -1250ms;
+				
+				background: #aaa;
+			}
+			.spinner > .spin:nth-child(6){
+				animation: spinning-6 3s ease-in infinite alternate;
+				animation-delay: -1s;
+				
+				background: #bbb;
+			}
+			.spinner > .spin:nth-child(7){
+				animation: spinning-7 3s ease-in infinite alternate;
+				animation-delay: -750ms;
+				
+				background: #ccc;
+			}
+			.spinner > .spin:nth-child(8){
+				animation: spinning-8 3s ease-in infinite alternate;
+				animation-delay: -500ms;
+				
+				background: #ddd;
+			}
+			.spinner > .spin:nth-child(9){
+				animation: spinning-9 3s ease-in infinite alternate;
+				animation-delay: -250ms;
+				
+				background: #eee;
+			}
+			.spinner > .spin:nth-child(10){
+				animation: spinning-10 3s ease-in infinite alternate;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="spinner">
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+			<div class="spin"></div>
+		</div>
+	</body>
+</html>

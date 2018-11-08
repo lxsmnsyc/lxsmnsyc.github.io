@@ -1,0 +1,129 @@
+$particle-color: #fff;
+$particle-size: 1px;
+$particle-blur-size: 10px;
+$particle-spread-size: 10px;
+
+$glow-duration: 2.5s;
+$glow-ease: cubic-bezier(0.3642, 0, 0.6358, 1);
+
+$latitude-segments: 16;
+$segment-seperation: 360deg / $latitude-segments;
+
+$sphere-latitudes: 8;
+$latitude-seperation: 180deg / $sphere-latitudes;
+
+$start-radius: 50px;
+$end-radius: 300px;
+
+$expansion-speed: 5s;
+$expansion-ease: cubic-bezier(0.3642, 0, 0.6358, 1);
+
+$sphere-rotation-speed: 10s;
+$sphere-rotation-ease: cubic-bezier(0.3642, 0, 0.6358, 1);
+
+@mixin visual-center{
+	top: 50%;
+	left: 50%;
+	position: absolute;
+}
+
+body{
+  background: #000; overflow: hidden; 
+  
+  perspective: 100vmax;
+  
+  width: 100vmax;
+  height: 100vmin;
+}
+
+.content{
+	@include visual-center;
+	width: $particle-size;
+  height: $particle-size;
+  background: #fff;
+	transform-style: preserve-3d;
+  
+  border-radius: 50%;
+}
+
+.segment{
+	@include visual-center;
+	
+	transform-style: preserve-3d;
+  
+}
+
+.latitude{
+	@include visual-center;
+	
+	transform-style: preserve-3d;
+}
+
+.sphere{
+	@include visual-center;
+  
+	transform-style: preserve-3d;
+  
+  animation: rotate-sphere $sphere-rotation-speed $sphere-rotation-ease infinite;
+}
+
+@for $i from 1 through $sphere-latitudes{
+  .sphere > .latitude:nth-child(#{$i}){
+    transform: rotateY($i * $latitude-seperation);
+  }
+  @for $j from 1 through $latitude-segments{
+    .sphere > .latitude:nth-child(#{$i}) > .segment:nth-child(#{$j}){
+      animation: expansion-#{$i}-#{$j} $expansion-speed $expansion-ease infinite alternate;
+    }
+    .sphere > .latitude:nth-child(#{$i}) > .segment:nth-child(#{$j}) .content{
+      animation: reverse-content-#{$i}-#{$j} $sphere-rotation-speed $sphere-rotation-ease infinite, glow-particle $glow-duration calc(100ms * (#{$i} - 1)  + 100ms * #{$j}) $glow-ease infinite alternate;
+    }
+  
+  @keyframes expansion-#{$i}-#{$j}{
+    0%{
+      
+      transform: rotate($j * $segment-seperation) translateY($start-radius);
+    }
+    100%{
+      
+      transform: rotate($j * $segment-seperation) translateY($end-radius);
+    }
+  }
+    
+    @keyframes reverse-content-#{$i}-#{$j}{
+      0%{
+        transform: translate(-50%, -50%) rotate(-1 * $j * $segment-seperation) rotateY(-1 * $i * $latitude-seperation) rotateZ(0deg) rotateY(0deg) rotateX(0deg) ;
+      }
+      100%{
+        transform: translate(-50%, -50%) rotate(-1 * $j * $segment-seperation) rotateY(-1 * $i * $latitude-seperation) rotateZ(-360deg) rotateY(-360deg) rotateX(-360deg) ;
+      }
+      
+    }
+  }
+}
+
+@keyframes glow-particle{
+  0%{
+    -webkit-box-shadow: 0px 0px $particle-size $particle-size $particle-color;
+    -moz-box-shadow: 0px 0px $particle-size $particle-size $particle-color;
+    -o-box-shadow: 0px 0px $particle-size $particle-size $particle-color;
+    -ms-box-shadow: 0px 0px $particle-size $particle-size $particle-color;
+    box-shadow: 0px 0px $particle-size $particle-size $particle-color;
+  }
+  100%{
+    -webkit-box-shadow: 0px 0px $particle-blur-size $particle-spread-size $particle-color;
+    -moz-box-shadow: 0px 0px $particle-blur-size $particle-spread-size $particle-color;
+    -o-box-shadow: 0px 0px $particle-blur-size $particle-spread-size $particle-color;
+    -ms-box-shadow: 0px 0px $particle-blur-size $particle-spread-size $particle-color;
+    box-shadow: 0px 0px $particle-blur-size $particle-spread-size $particle-color;
+  }
+}
+
+@keyframes rotate-sphere{
+  0%{
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100%{
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}

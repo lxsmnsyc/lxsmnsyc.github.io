@@ -1,0 +1,59 @@
+$letters: 18;
+$letter-spread-deg: 360deg / $letters;
+$letter-size: 10vmin;
+$letter-radius: 25vmin;
+$ease: linear;
+$sphere-tilt-x: 10deg;
+$sphere-tilt-z: 30deg;
+@mixin visual-center{
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+body{
+  background: #000;
+}
+
+.container{
+  width: 50vmin;
+  height: 50vmin;
+  @include visual-center;
+  perspective: 50vmin;
+}
+
+.sphere{
+  width: 100%;
+  height: 100%;
+  
+  @include visual-center;
+  
+  transform-style: preserve-3d;
+  
+  animation: rotate-sphere 5s $ease infinite;
+  
+  color: #fff;
+}
+
+.letter{
+  font-size: $letter-size;
+  
+  @include visual-center;
+  transform-style: preserve-3d;
+}
+
+@for $i from 1 through $letters{
+  .letter:nth-child(#{$i}){
+    transform: translate(-50%, -50%) rotateY($i * $letter-spread-deg) translateZ($letter-radius);
+  }
+}
+
+@keyframes rotate-sphere{
+  0%{
+    transform: translate(-50%, -50%) rotateZ($sphere-tilt-z) rotateX($sphere-tilt-x) rotateY(0deg);
+  }
+  100%{
+    transform: translate(-50%, -50%) rotateZ($sphere-tilt-z) rotateX($sphere-tilt-x) rotateY(360deg);
+  }
+}

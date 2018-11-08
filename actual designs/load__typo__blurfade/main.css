@@ -1,0 +1,120 @@
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+.margin div {
+    position: fixed;
+    width: 2px;
+    height: 100vh;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+}
+
+@media screen and (orientation: landscape) {
+    .margin div:nth-child(1) {
+        left: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        left: calc(50vmax + 50vmin);
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .margin div {
+        position: fixed;
+        width: 100vw;
+        height: 2px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #000;
+    }
+    .margin div:nth-child(1) {
+        top: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        top: calc(50vmax + 50vmin);
+    }
+}
+
+.loader {
+    width: 50vmin;
+    height: 50vmin;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #000;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+.loader>.letter {
+    color: #fff0;
+    font-size: 10vmin;
+    margin: auto;
+    text-align: center;
+    animation: fade-text 2s infinite alternate, blur-text 2s infinite alternate;
+}
+
+.letter:nth-child(1) {
+    animation-delay: 143ms;
+}
+
+.letter:nth-child(2) {
+    animation-delay: 286ms;
+}
+
+.letter:nth-child(3) {
+    animation-delay: 429ms;
+}
+
+.letter:nth-child(4) {
+    animation-delay: 572ms;
+}
+
+.letter:nth-child(5) {
+    animation-delay: 715ms;
+}
+
+.letter:nth-child(6) {
+    animation-delay: 858ms;
+}
+
+.letter:nth-child(7) {
+    animation-delay: 1s;
+}
+
+@keyframes fade-text {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes blur-text {
+    0% {
+        text-shadow: 0px 0px 5vmin #fff;
+    }
+    25% {
+        text-shadow: 0px 0px 5vmin #fff;
+    }
+    75% {
+        text-shadow: 0px 0px 0vmin #fff;
+    }
+    100% {
+        text-shadow: 0px 0px 0vmin #fff;
+    }
+}

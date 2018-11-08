@@ -1,0 +1,169 @@
+body {
+  overflow: hidden;
+  background: #fff;
+  margin: 0;
+}
+
+.margin div {
+  position: fixed;
+  width: 2px;
+  height: 100vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #000;
+}
+
+@media screen and (orientation: landscape) {
+  .margin div:nth-child(1) {
+    left: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    left: calc(50vmax + 50vmin);
+  }
+}
+@media screen and (orientation: portrait) {
+  .margin div {
+    position: fixed;
+    width: 100vw;
+    height: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .margin div:nth-child(1) {
+    top: calc(50vmax - 50vmin);
+  }
+
+  .margin div:nth-child(2) {
+    top: calc(50vmax + 50vmin);
+  }
+}
+
+.base{
+  width: 50vmin;
+  height: 50vmin;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+}
+
+.emoji-cont{
+  width: 25%;
+  height: 25%;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: bounce 750ms infinite;
+}
+
+.emoji{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  
+  top: 50%;
+  left: 50%;
+  
+}
+
+.emoji::after{
+  font-size: 12.5vmin;
+   content: '😮';
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  
+  animation: rotate-emoji 750ms linear infinite, change-emoji 6s -375ms linear infinite;
+}
+
+.shadow{
+  width: 25%;
+  height: 5px;
+  background: #263238;
+  
+  transform: translate(-50%, -50%);
+  
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  
+  animation: shadow-bounce 750ms linear infinite;
+}
+
+@keyframes change-emoji{
+  0%{
+    content: '😮';
+  }
+  12.5%{
+    content: '😵';
+  }
+  25%{
+    content: '😳';
+  }
+  37.5%{
+    content: '🤣';
+  }
+  50%{
+    content: '😇';
+  }
+  62.5%{
+    content: '😎';
+  }
+  75%{
+    content: '🙄';
+  }
+  87.5%{
+    content: '🤢';
+  }
+  100%{
+    content: '😮';
+  }
+}
+
+@keyframes rotate-emoji{
+  0%{
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes bounce{
+  0%{
+    transform: translate(-50%, 50%) scale(1.5, 0.5);
+	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  50%{
+    transform: translate(-50%, -150%) scale(0.75, 1.25);
+	animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  100%{
+    transform: translate(-50%, 50%) scale(1.5, 0.5);
+  }
+}
+
+@keyframes shadow-bounce{
+  0%{
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scaleX(1.5);
+	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  50%{
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(0.75);
+	animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
+  100%{
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scaleX(1.5);
+  }
+}

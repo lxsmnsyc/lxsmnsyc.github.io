@@ -1,0 +1,406 @@
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+.margin div {
+    position: fixed;
+    width: 2px;
+    height: 100vh;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+}
+
+@media screen and (orientation: landscape) {
+    .margin div:nth-child(1) {
+        left: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        left: calc(50vmax + 50vmin);
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .margin div {
+        position: fixed;
+        width: 100vw;
+        height: 2px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #000;
+    }
+    .margin div:nth-child(1) {
+        top: calc(50vmax - 50vmin);
+    }
+    .margin div:nth-child(2) {
+        top: calc(50vmax + 50vmin);
+    }
+}
+
+.spinner {
+    width: 50vmin;
+    height: 50vmin;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #000;
+    animation: rotate-spinner 4s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+
+.spinner>.dot {
+    width: 10%;
+    height: 10%;
+    background: #0ff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner>.dot:nth-child(1) {
+    animation: dash-dot-1 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*1);
+}
+
+@keyframes dash-dot-1 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 1)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 1)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(2) {
+    animation: dash-dot-2 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*2);
+}
+
+@keyframes dash-dot-2 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 2)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 2)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(3) {
+    animation: dash-dot-3 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*3);
+}
+
+@keyframes dash-dot-3 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 3)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 3)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(4) {
+    animation: dash-dot-4 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*4);
+}
+
+@keyframes dash-dot-4 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 4)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 4)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(5) {
+    animation: dash-dot-5 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*5);
+}
+
+@keyframes dash-dot-5 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 5)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 5)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(6) {
+    animation: dash-dot-6 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*6);
+}
+
+@keyframes dash-dot-6 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 6)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 6)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(7) {
+    animation: dash-dot-7 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*7);
+}
+
+@keyframes dash-dot-7 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 7)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 7)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(8) {
+    animation: dash-dot-8 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*8);
+}
+
+@keyframes dash-dot-8 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 8)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 8)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(9) {
+    animation: dash-dot-9 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*9);
+}
+
+@keyframes dash-dot-9 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 9)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 9)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(10) {
+    animation: dash-dot-10 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*10);
+}
+
+@keyframes dash-dot-10 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 10)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 10)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(11) {
+    animation: dash-dot-11 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*11);
+}
+
+@keyframes dash-dot-11 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 11)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 11)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(12) {
+    animation: dash-dot-12 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*12);
+}
+
+@keyframes dash-dot-12 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 12)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 12)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(13) {
+    animation: dash-dot-13 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*13);
+}
+
+@keyframes dash-dot-13 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 13)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 13)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(14) {
+    animation: dash-dot-14 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*14);
+}
+
+@keyframes dash-dot-14 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 14)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 14)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(15) {
+    animation: dash-dot-15 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*15);
+}
+
+@keyframes dash-dot-15 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 15)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 15)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(16) {
+    animation: dash-dot-16 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*16);
+}
+
+@keyframes dash-dot-16 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 16)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 16)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(17) {
+    animation: dash-dot-17 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*17);
+}
+
+@keyframes dash-dot-17 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 17)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 17)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(18) {
+    animation: dash-dot-18 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*18);
+}
+
+@keyframes dash-dot-18 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 18)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 18)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(19) {
+    animation: dash-dot-19 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*19);
+}
+
+@keyframes dash-dot-19 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 19)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 19)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(20) {
+    animation: dash-dot-20 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*20);
+}
+
+@keyframes dash-dot-20 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 20)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 20)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(21) {
+    animation: dash-dot-21 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*21);
+}
+
+@keyframes dash-dot-21 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 21)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 21)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(22) {
+    animation: dash-dot-22 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*22);
+}
+
+@keyframes dash-dot-22 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 22)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 22)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(23) {
+    animation: dash-dot-23 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*23);
+}
+
+@keyframes dash-dot-23 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 23)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 23)) translateY(25vmin);
+    }
+}
+
+.spinner>.dot:nth-child(24) {
+    animation: dash-dot-24 2s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate, dash-dot 1s cubic-bezier(0.645, 0.045, 0.355, 1) infinite alternate;
+    animation-delay: calc((2000ms/24)*24);
+}
+
+@keyframes dash-dot-24 {
+    0% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 24)) translateY(-25vmin);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(calc(15deg * 24)) translateY(25vmin);
+    }
+}
+
+@keyframes dash-dot {
+    0% {
+        width: 10%;
+    }
+    100% {
+        width: 5%;
+    }
+}
