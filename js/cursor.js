@@ -1,10 +1,11 @@
 const CURSOR = {
 	x: 0,
-	y: 0
+	y: 0,
+	radius: 0
 };
 
 
-(function (window){
+var Cursor = (function (window){
 	const MIN_RADIUS = 16;
 	const MAX_RADIUS = 64;
 	const DETECTION_RADIUS = 32;
@@ -66,6 +67,7 @@ const CURSOR = {
 	
 	let lerp = (a, b, t) => a + (b-a)*t;
 	
+	let listeners = [];
 	
 	window.addEventListener("mousemove", e =>{
 		targetY = e.clientY;
@@ -77,16 +79,15 @@ const CURSOR = {
 		let dx = targetX - prevX, dy = targetY - prevY;
 		
 		// update coordinates
-		prevX = prevX + dx*steps;
-		prevY = prevY + dy*steps;
+		prevX += dx*steps;
+		prevY += dy*steps;
 		
 		CURSOR.x = prevX;
 		CURSOR.y = prevY;
 		
 		// set coordinates to element 
-		cursor.style.top = prevY + "px";
-		cursor.style.left = prevX + "px";
-		
+		let transform = 'translate(' + (prevX - DETECTION_RADIUS) + 'px, ' + (prevY - DETECTION_RADIUS) + 'px)';
+
 		// check for targets 
 		let found = false;
 		for(let i = 0; i < targets; i++){
@@ -107,25 +108,46 @@ const CURSOR = {
 		if(!found){
 			growing = false;
 		}
+		let MIN_SCALE = MIN_RADIUS/MAX_RADIUS;
 		if(growing){
 			if(timer < GROWTH_TIME){
-				let rad = lerp(MIN_RADIUS, MAX_RADIUS, timer/GROWTH_TIME);
-				cursor.style.width =  rad + "px";
-				cursor.style.height = rad + "px";
+				let t = timer/GROWTH_TIME;
+				let rad = MIN_SCALE + lerp(0, 1, t*t*t)*(1. - MIN_SCALE);
+
+				CURSOR.radius = rad*MAX_RADIUS;
+
+				transform += 'scale(' + rad + ')';
 				
 				timer += GROWTH_STEP;
 			}
 		} else {
 			if(timer > 0.0){
-				let rad = lerp(MIN_RADIUS, MAX_RADIUS, timer/GROWTH_TIME);
-				cursor.style.width =  rad + "px";
-				cursor.style.height = rad + "px";
+				let t = timer/GROWTH_TIME;
+				let rad = MIN_SCALE + lerp(0, 1, t*t*t)*(1. - MIN_SCALE);
+
+				CURSOR.radius = rad*MAX_RADIUS;
+
+				transform += 'scale(' + rad + ')';
 				
 				timer -= GROWTH_STEP;
+			} else {
+				CURSOR.radius = MIN_RADIUS;
+				transform += 'scale(' + MIN_SCALE + ')';
 			}
 		}
+
+		cursor.style.webkitTransform = transform;
+		cursor.style.mozTransform = transform;
+		cursor.style.msTransform = transform;
+		cursor.style.oTransform = transform;
+		cursor.style.transform = transform;
+
 		requestAnimationFrame(update);
 	}
 
 	update();
+
+	return () => {
+
+	};
 })(window);
