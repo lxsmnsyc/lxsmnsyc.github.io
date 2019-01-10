@@ -10,44 +10,49 @@ var Cursor = (function (window){
 	const MAX_RADIUS = 64;
 	const DETECTION_RADIUS = 32;
 	
-	let targets = 0;
-	let targetsX = [];
-	let targetsY = [];
-	let targetsR = [];
+	let targets = 0,
+		targetsL = [],
+		targetsX = [],
+		targetsY = [],
+		targetsR = [];
+	
+	targets = 0;
+	function loadTarget(id){
+		let el = document.getElementById(id);
+		
+		let width = el.clientWidth, height = el.clientHeight;
+		
+		let rect = el.getBoundingClientRect();
+		
+		let top = rect.top,
+			left = rect.left;
+			
+		let hw = width*0.5,
+			hh = height*0.5;
+			
+		
+		let x = left + hw, 
+			y = top + hh;
+			
+		targetsX[targets] = x;
+		targetsY[targets] = y;
+		targetsR[targets] = DETECTION_RADIUS + ((width > height) ? hh : hw);
+		targets++;
+		
+	}
 	
 	function loadTargets(){
 		targets = 0;
-		function loadTarget(id){
-			let el = document.getElementById(id);
-			
-			let width = el.clientWidth, height = el.clientHeight;
-			
-			let rect = el.getBoundingClientRect();
-			
-			let top = rect.top,
-				left = rect.left;
-				
-			let hw = width*0.5,
-				hh = height*0.5;
-				
-			
-			let x = left + hw, 
-				y = top + hh;
-				
-			targetsX[targets] = x;
-			targetsY[targets] = y;
-			targetsR[targets] = DETECTION_RADIUS + ((width > height) ? hh : hw);
-			targets++;
-			
+		for(let target in targetsL){
+			loadTarget(target);
 		}
-		
-		loadTarget("nav-logo");
-		loadTarget("nav-works");
-		loadTarget("nav-about");
-		loadTarget("nav-menu");
-		loadTarget("nav-contacts");
 	}
-	loadTargets();
+
+	function addTarget(id){
+		targetsL.push(id);
+		loadTarget(id);
+	}
+	
 	
 	window.addEventListener("resize", loadTargets);
 	
@@ -66,14 +71,13 @@ var Cursor = (function (window){
 	
 	
 	let lerp = (a, b, t) => a + (b-a)*t;
-	
-	let listeners = [];
-	
+
 	window.addEventListener("mousemove", e =>{
 		targetY = e.clientY;
 		targetX = e.clientX;
 	});
-	
+
+	let listeners = [];
 	function update(){
 		// get coordinate differences
 		let dx = targetX - prevX, dy = targetY - prevY;
@@ -142,12 +146,34 @@ var Cursor = (function (window){
 		cursor.style.oTransform = transform;
 		cursor.style.transform = transform;
 
+		for(let listener of listeners){
+			listener(prevX, prevY);
+		}
+
 		requestAnimationFrame(update);
 	}
 
 	update();
 
-	return () => {
+	function addEventListener(fn){
+		listeners.push(fn);
+	}
 
+	function removeEventListener(fn){
+		listeners.filter(e => e != fn);
+	}
+
+	return {
+		addEventListener: addEventListener,
+		removeEventListener: removeEventListener,
+		addTarget: addTarget
 	};
 })(window);
+
+(_ => {
+	Cursor.addTarget("nav-logo");
+	Cursor.addTarget("nav-works");
+	Cursor.addTarget("nav-about");
+	Cursor.addTarget("nav-menu");
+	Cursor.addTarget("nav-contacts");
+})();

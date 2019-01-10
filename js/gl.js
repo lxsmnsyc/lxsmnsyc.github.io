@@ -123,6 +123,7 @@
 	}
 	
 	gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
 	function render(ev){
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -148,8 +149,6 @@
 		glCanvas.width = reso.w;
 		glCanvas.height = reso.h;
 		
-	
-	
 		gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 	}
 	
@@ -163,8 +162,6 @@
 		c.time = c.stamp/1000.0;
 		
 		requestAnimationFrame(updateTime);
-		
-		
 	}
 	updateTime(0);
 	
