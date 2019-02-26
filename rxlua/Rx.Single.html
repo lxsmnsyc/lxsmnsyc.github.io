@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Single - RxLua</title>
+    
+    <meta name="description" content="Reactive Extensions for Lua" />
+    
+        <meta name="keywords" content="reactivex,lua,observable,rx" />
+        <meta name="keyword" content="reactivex,lua,observable,rx" />
+    
+    
+    
+    <meta property="og:title" content="RxLua"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://reactivex.io/assets/Rx_Icon.png"/>
+    <meta property="og:site_name" content="RxLua Documentation"/>
+    <meta property="og:url" content="lxsmnsyc.github.io/rxlua"/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/lxsmnsyc/rxlua" target="_blank" class="menu-item" id="website_link" >Github Repo</a></h2><h3>Classes</h3><ul><li><a href="Rx.CompositeDisposable.html">CompositeDisposable</a><ul class='methods'><li data-type='method'><a href="Rx.CompositeDisposable.html#add">add</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#clear">clear</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#delete">delete</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#remove">remove</a></li></ul></li><li><a href="Rx.Single.html">Single</a><ul class='methods'><li data-type='method'><a href="Rx.Single.html#.amb">amb</a></li><li data-type='method'><a href="Rx.Single.html#.create">create</a></li><li data-type='method'><a href="Rx.Single.html#.defer">defer</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="Rx.html">Rx</a></li></ul><h3>Interfaces</h3><ul><li><a href="Rx.Action.html">Action</a><ul class='methods'><li data-type='method'><a href="Rx.Action.html#run">run</a></li></ul></li><li><a href="Rx.BiConsumer.html">BiConsumer</a><ul class='methods'><li data-type='method'><a href="Rx.BiConsumer.html#accept">accept</a></li></ul></li><li><a href="Rx.BiPredicate.html">BiPredicate</a><ul class='methods'><li data-type='method'><a href="Rx.BiPredicate.html#test">test</a></li></ul></li><li><a href="Rx.Consumer.html">Consumer</a><ul class='methods'><li data-type='method'><a href="Rx.Consumer.html#accept">accept</a></li></ul></li><li><a href="Rx.Disposable.html">Disposable</a><ul class='methods'><li data-type='method'><a href="Rx.Disposable.html#dispose">dispose</a></li><li data-type='method'><a href="Rx.Disposable.html#isDisposed">isDisposed</a></li></ul></li><li><a href="Rx.Predicate.html">Predicate</a><ul class='methods'><li data-type='method'><a href="Rx.Predicate.html#test">test</a></li></ul></li><li><a href="Rx.SingleEmitter.html">SingleEmitter</a><ul class='methods'><li data-type='method'><a href="Rx.SingleEmitter.html#isDisposed">isDisposed</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#onError">onError</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#onSuccess">onSuccess</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#setDisposable">setDisposable</a></li></ul></li><li><a href="Rx.SingleObserver.html">SingleObserver</a><ul class='methods'><li data-type='method'><a href="Rx.SingleObserver.html#onError">onError</a></li><li data-type='method'><a href="Rx.SingleObserver.html#onSubscribe">onSubscribe</a></li><li data-type='method'><a href="Rx.SingleObserver.html#onSuccess">onSuccess</a></li></ul></li><li><a href="Rx.SingleOnSubscribe.html">SingleOnSubscribe</a><ul class='methods'><li data-type='method'><a href="Rx.SingleOnSubscribe.html#subscribe">subscribe</a></li></ul></li><li><a href="SingleSource.html">SingleSource</a><ul class='methods'><li data-type='method'><a href="SingleSource.html#subscribe">subscribe</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Single</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
+        
+        Single
+        </h2>
+        
+            <div class="class-description"><p>The </code>Single</code> class implements the Reactive Pattern for a single value response.</p>
+<p><p>
+</code>Single</code> behaves similarly to Observable except that it can only emit either a single successful
+value or an error (there is no &quot;onComplete&quot; notification as there is for an Observable).</p>
+<p><p>
+The </code>Single</code> class implements the <a href="SingleSource.html">SingleSource</a> base interface and the default consumer
+type it interacts with is the SingleObserver via the subscribe(SingleObserver) method.</p>
+<p><p>
+The </code>Single</code> operates with the following sequential protocol:</p>
+<p><pre>
+    <code>onSubscribe (onSuccess | onError)?</code>
+</pre></p>
+<p><p>
+Note that </code>onSuccess</code> and </code>onError</code> are mutually exclusive events; unlike </code>Observable</code>,
+</code>onSuccess</code> is never followed by </code>onError</code>.</p>
+<p><p>
+Like </code>Observable</code>, a running </code>Single</code> can be stopped through the Disposable instance
+provided to consumers through SingleObserver#onSubscribe.</p>
+<p><p>
+Like an </code>Observable</code>, a </code>Single</code> is lazy, can be either &quot;hot&quot; or &quot;cold&quot;, synchronous or
+asynchronous. </code>Single</code> instances returned by the methods of this class are <em>cold</em>
+and there is a standard <em>hot</em> implementation in the form of a subject:
+SingleSubject.</p>
+<p><p>
+The documentation for this class makes use of marble diagrams. The following legend explains these diagrams:</p>
+<p><p>
+<img width="640" height="301" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Single.legend.png" alt=""></p>
+<p><p>
+See Flowable or Observable for the
+implementation of the Reactive Pattern for a stream or vector of values.</p>
+<p><p>
+For more information see the <a href="http://reactivex.io/documentation/single.html">ReactiveX
+documentation</a>.</p>
+<p><p>
+Note that by design, subscriptions via subscribe(SingleObserver) can't be disposed
+from the outside (hence the
+</code>void</code> return of the subscribe(SingleObserver) method) and it is the
+responsibility of the implementor of the </code>SingleObserver</code> to allow this to happen.</p></div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Single"><span class="type-signature"></span>new Single<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html">SingleSource</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local Single = require "RxLua.single"</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".amb"><span class="type-signature">(static) </span>amb<span class="signature">(sources<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Single}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Runs multiple SingleSources and signals the events of the first one that signals (disposing
+the rest).</p>
+<p><p>
+<img width="640" height="515" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Single.amb.png" alt=""></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local A = Single.create(function (emitter)
+    emitter:onSuccess("Hello")
+end)
+local B = Single.create(function (emitter)
+    emitter:onError("World")
+end)
+
+Single.amb({A, B}):subscribe(print, print)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sources</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">table</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the table sequence of sources. A subscription to each source will occur in the same order as in this table.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>the new Single instance</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Single</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".create"><span class="type-signature">(static) </span>create<span class="signature">(source<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Single}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Provides an API (via a cold Single) that bridges the reactive world with the callback-style world.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local d = Single.create(function (e)
+     e:onSuccess("Hello World")
+end):subscribe(print, print)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">SingleOnSubscribe</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>the emitter that is called when a SingleObserver subscribes to the returned <code>Single</code></p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Single</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".defer"><span class="type-signature">(static) </span>defer<span class="signature">(singleSupplier<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Single}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Calls a function for each individual SingleObserver to return the actual <a href="SingleSource.html">SingleSource</a> to
+be subscribed to.</p>
+<p><p>
+<img width="640" height="515" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Single.defer.png" alt=""></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local deferred = Rx.Single.defer(function ()
+    return Rx.Single.create(function (emitter)
+        emitter:onSuccess("Hello World")
+    end)
+end)
+
+deferred:subscribe(
+    function (x)
+        print("A single has been born, emitted \""..x.."\"")
+    end,
+    print
+)</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>singleSupplier</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the function that is called for each individual <code>SingleObserver</code> and
+returns a SingleSource instance to subscribe to</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>the new Single instance</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Single</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(observer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html#subscribe">SingleSource#subscribe</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>observer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">SingleObserver</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">()</span><span class="type-signature"> &rarr; {Disposable}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html#subscribe">SingleSource#subscribe</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Subscribes to a Single but ignore its emission or notification.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Disposable</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(onSuccess, onError)</span><span class="type-signature"> &rarr; {Disposable}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html#subscribe">SingleSource#subscribe</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Subscribes to a Single and provides callbacks to handle the item it emits or any error notification it
+ issues.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>onSuccess</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Consumer</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onError</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Consumer</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Disposable</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(onSuccess)</span><span class="type-signature"> &rarr; {Disposable}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html#subscribe">SingleSource#subscribe</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Subscribes to a Single and provides a callback to handle the item it emits.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>onSuccess</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Consumer</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Disposable</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(onCallback<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Disposable}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="SingleSource.html#subscribe">SingleSource#subscribe</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Subscribes to a Single and provides a composite callback to handle the item it emits
+ or any error notification it issues.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>onCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">BiConsumer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Disposable</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+
+
+</body>
+</html>

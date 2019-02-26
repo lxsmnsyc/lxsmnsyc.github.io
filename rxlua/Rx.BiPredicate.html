@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>BiPredicate - RxLua</title>
+    
+    <meta name="description" content="Reactive Extensions for Lua" />
+    
+        <meta name="keywords" content="reactivex,lua,observable,rx" />
+        <meta name="keyword" content="reactivex,lua,observable,rx" />
+    
+    
+    
+    <meta property="og:title" content="RxLua"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://reactivex.io/assets/Rx_Icon.png"/>
+    <meta property="og:site_name" content="RxLua Documentation"/>
+    <meta property="og:url" content="lxsmnsyc.github.io/rxlua"/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/lxsmnsyc/rxlua" target="_blank" class="menu-item" id="website_link" >Github Repo</a></h2><h3>Classes</h3><ul><li><a href="Rx.CompositeDisposable.html">CompositeDisposable</a><ul class='methods'><li data-type='method'><a href="Rx.CompositeDisposable.html#add">add</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#clear">clear</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#delete">delete</a></li><li data-type='method'><a href="Rx.CompositeDisposable.html#remove">remove</a></li></ul></li><li><a href="Rx.Single.html">Single</a><ul class='methods'><li data-type='method'><a href="Rx.Single.html#.amb">amb</a></li><li data-type='method'><a href="Rx.Single.html#.create">create</a></li><li data-type='method'><a href="Rx.Single.html#.defer">defer</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="Rx.html">Rx</a></li></ul><h3>Interfaces</h3><ul><li><a href="Rx.Action.html">Action</a><ul class='methods'><li data-type='method'><a href="Rx.Action.html#run">run</a></li></ul></li><li><a href="Rx.BiConsumer.html">BiConsumer</a><ul class='methods'><li data-type='method'><a href="Rx.BiConsumer.html#accept">accept</a></li></ul></li><li><a href="Rx.BiPredicate.html">BiPredicate</a><ul class='methods'><li data-type='method'><a href="Rx.BiPredicate.html#test">test</a></li></ul></li><li><a href="Rx.Consumer.html">Consumer</a><ul class='methods'><li data-type='method'><a href="Rx.Consumer.html#accept">accept</a></li></ul></li><li><a href="Rx.Disposable.html">Disposable</a><ul class='methods'><li data-type='method'><a href="Rx.Disposable.html#dispose">dispose</a></li><li data-type='method'><a href="Rx.Disposable.html#isDisposed">isDisposed</a></li></ul></li><li><a href="Rx.Predicate.html">Predicate</a><ul class='methods'><li data-type='method'><a href="Rx.Predicate.html#test">test</a></li></ul></li><li><a href="Rx.SingleEmitter.html">SingleEmitter</a><ul class='methods'><li data-type='method'><a href="Rx.SingleEmitter.html#isDisposed">isDisposed</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#onError">onError</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#onSuccess">onSuccess</a></li><li data-type='method'><a href="Rx.SingleEmitter.html#setDisposable">setDisposable</a></li></ul></li><li><a href="Rx.SingleObserver.html">SingleObserver</a><ul class='methods'><li data-type='method'><a href="Rx.SingleObserver.html#onError">onError</a></li><li data-type='method'><a href="Rx.SingleObserver.html#onSubscribe">onSubscribe</a></li><li data-type='method'><a href="Rx.SingleObserver.html#onSuccess">onSuccess</a></li></ul></li><li><a href="Rx.SingleOnSubscribe.html">SingleOnSubscribe</a><ul class='methods'><li data-type='method'><a href="Rx.SingleOnSubscribe.html#subscribe">subscribe</a></li></ul></li><li><a href="SingleSource.html">SingleSource</a><ul class='methods'><li data-type='method'><a href="SingleSource.html#subscribe">subscribe</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">BiPredicate</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
+        
+        BiPredicate
+        </h2>
+        
+            <div class="class-description"><p>A functional interface (callback) that returns a value for the given input values.</p></div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+
+            
+                <h3>Example</h3>
+                
+    <pre class="prettyprint"><code>local BiPredicate = require "RxLua.functions.bipredicate"
+
+local equals = BiPredicate(function (a, b)
+    return a == b
+end)</code></pre>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="test"><span class="type-signature"></span>test<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Test the given input values and return a value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>a</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+
+
+</body>
+</html>

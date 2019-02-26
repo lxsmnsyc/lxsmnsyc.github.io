@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>CompositeDisposable - RxLua</title>
+    
+    <meta name="description" content="Reactive Extensions for Lua" />
+    
+        <meta name="keywords" content="reactivex,lua,observable,rx" />
+        <meta name="keyword" content="reactivex,lua,observable,rx" />
+    
+    
+    
+    <meta property="og:title" content="RxLua"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://reactivex.io/assets/Rx_Icon.png"/>
+    <meta property="og:site_name" content="RxLua Documentation"/>
+    <meta property="og:url" content="lxsmnsyc.github.io/rxlua"/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/lxsmnsyc/rxlua" target="_blank" class="menu-item" id="website_link" >Github Repo</a></h2><h3>Classes</h3><ul><li><a href="CompositeDisposable.html">CompositeDisposable</a><ul class='methods'><li data-type='method'><a href="CompositeDisposable.html#add">add</a></li><li data-type='method'><a href="CompositeDisposable.html#clear">clear</a></li><li data-type='method'><a href="CompositeDisposable.html#delete">delete</a></li><li data-type='method'><a href="CompositeDisposable.html#remove">remove</a></li></ul></li><li><a href="Rx.Single.html">Single</a><ul class='methods'><li data-type='method'><a href="Rx.Single.html#.amb">amb</a></li><li data-type='method'><a href="Rx.Single.html#.create">create</a></li><li data-type='method'><a href="Rx.Single.html#.defer">defer</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li><li data-type='method'><a href="Rx.Single.html#subscribe">subscribe</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="Rx.html">Rx</a></li></ul><h3>Interfaces</h3><ul><li><a href="Action.html">Action</a><ul class='methods'><li data-type='method'><a href="Action.html#run">run</a></li></ul></li><li><a href="BiConsumer.html">BiConsumer</a><ul class='methods'><li data-type='method'><a href="BiConsumer.html#accept">accept</a></li></ul></li><li><a href="BiPredicate.html">BiPredicate</a><ul class='methods'><li data-type='method'><a href="BiPredicate.html#test">test</a></li></ul></li><li><a href="Consumer.html">Consumer</a><ul class='methods'><li data-type='method'><a href="Consumer.html#accept">accept</a></li></ul></li><li><a href="Disposable.html">Disposable</a><ul class='methods'><li data-type='method'><a href="Disposable.html#dispose">dispose</a></li><li data-type='method'><a href="Disposable.html#isDisposed">isDisposed</a></li></ul></li><li><a href="Predicate.html">Predicate</a><ul class='methods'><li data-type='method'><a href="Predicate.html#test">test</a></li></ul></li><li><a href="SingleEmitter.html">SingleEmitter</a><ul class='methods'><li data-type='method'><a href="SingleEmitter.html#isDisposed">isDisposed</a></li><li data-type='method'><a href="SingleEmitter.html#onError">onError</a></li><li data-type='method'><a href="SingleEmitter.html#onSuccess">onSuccess</a></li><li data-type='method'><a href="SingleEmitter.html#setDisposable">setDisposable</a></li></ul></li><li><a href="SingleObserver.html">SingleObserver</a><ul class='methods'><li data-type='method'><a href="SingleObserver.html#onError">onError</a></li><li data-type='method'><a href="SingleObserver.html#onSubscribe">onSubscribe</a></li><li data-type='method'><a href="SingleObserver.html#onSuccess">onSuccess</a></li></ul></li><li><a href="SingleOnSubscribe.html">SingleOnSubscribe</a><ul class='methods'><li data-type='method'><a href="SingleOnSubscribe.html#subscribe">subscribe</a></li></ul></li><li><a href="SingleSource.html">SingleSource</a><ul class='methods'><li data-type='method'><a href="SingleSource.html#subscribe">subscribe</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">CompositeDisposable</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        CompositeDisposable
+        </h2>
+        
+            <div class="class-description"><p>A disposable container that can hold onto multiple other disposables and
+offers O(1) add and removal complexity.</p></div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="CompositeDisposable"><span class="type-signature"></span>new CompositeDisposable<span class="signature">(resources<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Disposable.html">Disposable</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Creates a CompositeDisposables with the given array of initial elements.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resources</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Disposable.html">Disposable</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>the array of Disposables to start with</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="add"><span class="type-signature"></span>add<span class="signature">(d)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a disposable to this container or disposes it if the
+container has been disposed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Disposable.html">Disposable</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the disposable to add, not null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if successful, false if this container has been disposed</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="clear"><span class="type-signature"></span>clear<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Atomically clears the container, then disposes all the previously contained Disposables.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="delete"><span class="type-signature"></span>delete<span class="signature">(d<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes (but does not dispose) the given disposable if it is part of this
+container.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Disposable.html">Disposable</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the disposable to remove, not null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if the operation was successful</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(d<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes and disposes the given disposable if it is part of this
+container.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Disposable.html">Disposable</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the disposable to remove and dispose, not null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if the operation was successful</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+
+
+</body>
+</html>
