@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MaybeSource - RxLua</title>
+    <title>Tutorial: Getting Started - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,244 +45,30 @@
 
 <div id="main">
     
-    <h1 class="page-title">MaybeSource</h1>
+    <h1 class="page-title">Tutorial: Getting Started</h1>
     
 
-    
-
-
-
-
-<section>
+    <section>
 
 <header>
     
-        <h2>
-            <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
-        
-        MaybeSource
-        </h2>
-        
-            <div class="class-description"><p>Represents a basic <a href="Rx.Maybe.html">Rx.Maybe</a> source base interface,
-consumable via an <a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a>.</p>
-<p><p>
-This class also serves the base type for custom operators wrapped into
-Maybe via Rx.Maybe.create.</p></div>
-        
-    
+
+    <h2>Getting Started</h2>
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(observer)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Subscribes the given MaybeObserver to this MaybeSource instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>observer</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the MaybeObserver, not nil</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
+    <h1>Installation</h1><ul>
+<li>To install RxLua, you can get the whole library from the <a href="https://github.com/lxsmnsyc/rxlua">Github Repo</a>.</li>
+<li>Download the repo and extract its contents. Make sure that the files are inside the &quot;RxLua&quot; folder. (or whatever folder you want to name it.)</li>
+</ul>
+<h1>Usage</h1><p>Use the require function along with the name of your folder (in our case, &quot;RxLua&quot;).</p>
+<pre class="prettyprint source lang-lua"><code>local Rx = require &quot;RxLua&quot;</code></pre><p>RxLua returns a table which includes all of the RxLua classes and interfaces. (see <a href="Rx.html">Rx Namespace</a>)</p>
+<h2>Specific require</h2><p>You can require specific parts of RxLua by referring to the directory structure.</p>
+<p>For example, if we want to use the Single class, we can use:</p>
+<pre class="prettyprint source lang-lua"><code>local Single = require &quot;Rx.single&quot;</code></pre>
 </article>
 
 </section>
-
-
-
 
     
     

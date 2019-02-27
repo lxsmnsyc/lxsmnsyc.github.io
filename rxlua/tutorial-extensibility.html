@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MaybeSource - RxLua</title>
+    <title>Tutorial: Extensibility - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,244 +45,44 @@
 
 <div id="main">
     
-    <h1 class="page-title">MaybeSource</h1>
+    <h1 class="page-title">Tutorial: Extensibility</h1>
     
 
-    
-
-
-
-
-<section>
+    <section>
 
 <header>
     
-        <h2>
-            <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
-        
-        MaybeSource
-        </h2>
-        
-            <div class="class-description"><p>Represents a basic <a href="Rx.Maybe.html">Rx.Maybe</a> source base interface,
-consumable via an <a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a>.</p>
-<p><p>
-This class also serves the base type for custom operators wrapped into
-Maybe via Rx.Maybe.create.</p></div>
-        
-    
+
+    <h2>Extensibility</h2>
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(observer)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Subscribes the given MaybeObserver to this MaybeSource instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>observer</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the MaybeObserver, not nil</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
+    <p>RxLua classes and interfaces are extensible, similar to the other OOP-based ReactiveX implementations (such as RxJava).</p>
+<p>To achieve extensibility, we can use the <a href="Rx.Class.html">Rx.Class</a>.
+This way, we can create our own definitions of RxLua classes.</p>
+<p>For example, if we want to create our own definition of <a href="Rx.Disposable.html">Rx.Disposable</a>:</p>
+<pre class="prettyprint source lang-lua"><code>local Disposable = require &quot;RxLua.disposable&quot;
+
+local MyDisposable = Rx.Class(&quot;MyDisposable&quot;, Disposable){
+    new = function (self)
+        self._active = true
+    end,
+
+    dispose = function (self)
+        self._active = false
+    end,
+
+    isDisposed = function (self)
+        return self._active
+    end
+}</code></pre><p>Then using it:</p>
+<pre class="prettyprint source"><code>local disposable = MyDisposable()
+print(disposable:isDisposed())
+disposable:dispose()
+print(disposable:isDisposed())</code></pre>
 </article>
 
 </section>
-
-
-
 
     
     

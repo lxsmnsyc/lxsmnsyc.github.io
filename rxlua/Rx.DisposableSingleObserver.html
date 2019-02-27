@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MaybeSource - RxLua</title>
+    <title>DisposableSingleObserver - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">MaybeSource</h1>
+    <h1 class="page-title">DisposableSingleObserver</h1>
     
 
     
@@ -60,67 +60,25 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        MaybeSource
+        DisposableSingleObserver
         </h2>
         
-            <div class="class-description"><p>Represents a basic <a href="Rx.Maybe.html">Rx.Maybe</a> source base interface,
-consumable via an <a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a>.</p>
-<p><p>
-This class also serves the base type for custom operators wrapped into
-Maybe via Rx.Maybe.create.</p></div>
+            <div class="class-description"><p>An abstract <a href="Rx.SingleObserver.html">Rx.SingleObserver</a> that allows asynchronous cancellation by implementing Disposable.</p>
+<p><p>Like all other consumers, <code>DisposableSingleObserver</code> can be subscribed only once.
+Any subsequent attempt to subscribe it to a new source will yield a ProtocolViolation with messages:</p>
+<ul>
+ <li><code>&quot;It is not allowed to subscribe with a(n) <class name> multiple times.&quot;</code></li>
+ <li><code>&quot;Disposable already set!</code>.</li>
+</ul> 
+
+<p><p>Implementation of <a href="Rx.DisposableSingleObserver.html#onStart">onStart()</a>, <a href="Rx.DisposableSingleObserver.html#onSuccess">onSuccess(Object)</a>
+and <a href="Rx.DisposableSingleObserver.html#onSuccess">onError(Throwable)</a>
+are not allowed to throw any unchecked exceptions.</p></div>
         
     
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-        
-        </div>
     
 
     
@@ -145,7 +103,349 @@ Maybe via Rx.Maybe.create.</p></div>
 
     
 
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(observer)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="dispose"><span class="type-signature"></span>dispose<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Disposable.html#dispose">Rx.Disposable#dispose</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Dispose the resource, the operation should be idempotent.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="isDisposed"><span class="type-signature"></span>isDisposed<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Disposable.html#isDisposed">Rx.Disposable#isDisposed</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns true if this resource has been disposed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>true if this resource has been disposed</li>
+</ul>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onError"><span class="type-signature"></span>onError<span class="signature">(e)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.SingleObserver.html#onError">Rx.SingleObserver#onError</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Notifies the SingleObserver that the <a href="Rx.Single.html">Rx.Single</a> has experienced an error condition.</p>
+<p><p>
+If the <a href="Rx.Single.html">Rx.Single</a> calls this method, it will not thereafter call <a href="Rx.SingleObserver.html#onSuccess">onSuccess</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the exception encountered by the Single</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onStart"><span class="type-signature">(protected) </span>onStart<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -192,7 +492,99 @@ Maybe via Rx.Maybe.create.</p></div>
 
 
 <div class="description">
-    <p>Subscribes the given MaybeObserver to this MaybeSource instance.</p>
+    <p>Called once the single upstream Disposable is set via onSubscribe.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onSuccess"><span class="type-signature"></span>onSuccess<span class="signature">(t)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.SingleObserver.html#onSuccess">Rx.SingleObserver#onSuccess</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Notifies the SingleObserver with a single item and that the <a href="Rx.Single.html">Rx.Single</a> has finished sending
+push-based notifications.</p>
+<p><p>
+The <a href="Rx.Single.html">Rx.Single</a> will not call this method if it calls <a href="Rx.SingleObserver.html#onError">onError(Throwable)</a>.</p>
 </div>
 
 
@@ -230,13 +622,13 @@ Maybe via Rx.Maybe.create.</p></div>
 
         <tr>
             
-                <td class="name"><code>observer</code></td>
+                <td class="name"><code>t</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a></span>
+<span class="param-type">*</span>
 
 
             
@@ -246,7 +638,7 @@ Maybe via Rx.Maybe.create.</p></div>
 
             
 
-            <td class="description last"><p>the MaybeObserver, not nil</p></td>
+            <td class="description last"><p>the item emitted by the Single</p></td>
         </tr>
 
     
