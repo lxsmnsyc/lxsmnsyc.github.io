@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>MaybeObserver - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">MaybeObserver</h1>
     
 
     
@@ -60,10 +60,39 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        MaybeObserver
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Provides a mechanism for receiving push-based notification of a single value, an error or completion without any value.</p>
+<p><p>
+When a <code>MaybeObserver</code> is subscribed to a <a href="Rx.MaybeSource.html">Rx.MaybeSource</a> through the <a href="Rx.MaybeSource.html#subscribe">subscribe(MaybeObserver)</a> method,
+the <code>MaybeSource</code> calls <a href="Rx.MaybeObserver.html#onSubscribe">onSubscribe(Disposable)</a>  with a <a href="Rx.Disposable.html">Rx.Disposable</a> that allows
+disposing the sequence at any time. A well-behaved
+<code>MaybeSource</code> will call a <code>MaybeObserver</code>'s <a href="Rx.MaybeObserver.html#onSuccess">onSuccess(Object)</a>, <a href="Rx.MaybeObserver.html#onError">onError(Throwable)</a>
+or <a href="Rx.MaybeObserver.html#onComplete">onComplete()</a> method exactly once as they are considered mutually exclusive <strong>terminal signals</strong>.</p>
+<p><p>
+Calling the <code>MaybeObserver</code>'s method must happen in a serialized fashion, that is, they must not
+be invoked concurrently by multiple threads in an overlapping fashion and the invocation pattern must
+adhere to the following protocol:</p>
+<p><pre><code>    onSubscribe (onSuccess | onError | onComplete)?</code></pre></p>
+<p><p>
+Note that unlike with the <code>Observable</code> protocol, <a href="Rx.MaybeObserver.html#onComplete">Rx.MaybeObserver#onComplete</a> is not called after the success item has been
+signalled via <a href="Rx.MaybeObserver.html#onSuccess">onSuccess(Object)</a>.</p>
+<p><p>
+Subscribing a <code>MaybeObserver</code> to multiple <code>MaybeSource</code>s is not recommended. If such reuse
+happens, it is the duty of the <code>MaybeObserver</code> implementation to be ready to receive multiple calls to
+its methods and ensure proper concurrent behavior of its business logic.</p>
+<p><p>
+Calling <a href="Rx.MaybeObserver.html#onSubscribe">onSubscribe(Disposable)</a>, <a href="Rx.MaybeObserver.html#onSuccess">onSuccess(Object)</a> or <a href="Rx.MaybeObserver.html#onError">onError(Throwable)</a> with a
+<code>nil</code> argument is forbidden.</p>
+<p><p>
+The implementations of the <code>onXXX</code> methods should avoid throwing runtime exceptions other than the following cases:</p>
+<ul>
+<li>If the argument is <code>nil</code>, the methods can throw an error.
+Note though that RxJava prevents <code>nil</code>s to enter into the flow and thus there is generally no
+need to check for nulls in flows assembled from standard sources and intermediate operators.
+</li>
+</ul></div>
         
     
 </header>
@@ -105,6 +134,13 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="http://reactivex.io/documentation/observable.html">ReactiveX documentation: Observable</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -113,15 +149,6 @@
 
 
             
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
 
             
         
@@ -150,7 +177,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onComplete"><span class="type-signature"></span>onComplete<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +224,91 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Called once the deferred computation completes normally.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onError"><span class="type-signature"></span>onError<span class="signature">(e)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Notifies the MaybeObserver that the <a href="Rx.Maybe.html">Rx.Maybe</a> has experienced an error condition.</p>
+<p><p>
+If the <a href="Rx.Maybe.html">Rx.Maybe</a> calls this method, it will not thereafter call MaybeObserver#onSuccess.</p>
 </div>
 
 
@@ -235,7 +346,7 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>e</code></td>
             
 
             <td class="type">
@@ -251,7 +362,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the exception encountered by the Maybe</p></td>
         </tr>
 
     
@@ -271,18 +382,274 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onSubscribe"><span class="type-signature"></span>onSubscribe<span class="signature">(d)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Provides the MaybeObserver with the means of cancelling (disposing) the
+connection (channel) with the Maybe in both
+synchronous (from within <code>onSubscribe(Disposable)} itself) and asynchronous manner.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
 
-    <div class="param-desc">
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
-        <p>Exception on error</p>
-    
-    </div>
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rx.Disposable.html">Rx.Disposable</a></span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the Disposable instance whose Disposable#dispose can
+be called anytime to cancel the connection</p></td>
+        </tr>
+
     
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onSuccess"><span class="type-signature"></span>onSuccess<span class="signature">(t)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Notifies the MaybeObserver with one item and that the <a href="Rx.Maybe.html">Rx.Maybe</a> has finished sending
+push-based notifications.</p>
+<p><p>
+The <a href="Rx.Maybe.html">Rx.Maybe</a> will not call this method if it calls MaybeObserver#onError.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>t</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the item emitted by the Maybe</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

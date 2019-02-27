@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Completable - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Completable</h1>
     
 
     
@@ -60,72 +60,51 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Completable
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>The <code>Completable</code> class represents a deferred computation without any value but
+only indication for completion or exception.</p>
+<p><p>
+<code>Completable</code> behaves similarly to <a href="Rx.Observable.html">Rx.Observable</a> except that it can only emit either
+a completion or error signal (there is no <code>onNext</code> or <code>onSuccess</code> as with the other
+reactive types).</p>
+<p><p>
+The <code>Completable</code> class implements the <a href="Rx.CompletableSource.html">Rx.CompletableSource</a> base interface and the default consumer
+type it interacts with is the <a href="Rx.CompletableObserver.html">Rx.CompletableObserver</a> via the subscribe(CompletableObserver) method.
+The <code>Completable</code> operates with the following sequential protocol:</p>
+<p><pre><code>
+    onSubscribe (onError | onComplete)?
+</code></pre></p>
+<p><p>
+Note that as with the <code>Observable</code> protocol, <code>onError</code> and <code>onComplete</code> are mutually exclusive events.</p>
+<p><p>
+Like <a href="Rx.Observable.html">Rx.Observable</a>, a running <code>Completable</code> can be stopped through the <a href="Rx.Disposable.html">Rx.Disposable</a> instance
+provided to consumers through <a href="Rx.CompletableObserver.html#onSubscribe">Rx.CompletableObserver#onSubscribe</a>.</p>
+<p><p>
+Like an <code>Observable</code>, a <code>Completable</code> is lazy, can be either &quot;hot&quot; or &quot;cold&quot;, synchronous or
+asynchronous. <code>Completable</code> instances returned by the methods of this class are <em>cold</em>
+and there is a standard <em>hot</em> implementation in the form of a subject:
+CompletableSubject.</p>
+<p><p>
+The documentation for this class makes use of marble diagrams. The following legend explains these diagrams:</p>
+<p><p>
+<img width="640" height="577" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Completable.png" alt=""></p>
+<p><p>
+See Flowable or <a href="Rx.Observable.html">Rx.Observable</a> for the
+implementation of the Reactive Pattern for a stream or vector of values.</p>
+<p><p>
+Note that by design, subscriptions via subscribe(CompletableObserver) can't be disposed
+from the outside (hence the
+<code>void</code> return of the subscribe(CompletableObserver) method) and it is the
+responsibility of the implementor of the <code>CompletableObserver</code> to allow this to happen.</p>
+<p><p>
+RxLua supports such usage with the standard Rx.DisposableCompletableObserver instance.</p></div>
         
     
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
-        
-        </div>
     
 
     
@@ -150,7 +129,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="subscribeActual"><span class="type-signature">(abstract, protected) </span>subscribeActual<span class="signature">(observer)</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +176,11 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Implement this method to handle the incoming <a href="Rx.CompletableObserver.html">Rx.CompletableObserver</a>s and
+perform the business logic in your operator.</p>
+<p><p>There is no need to call any of the plugin hooks on the current <code>Completable</code> instance or
+the <code>CompletableObserver</code>; all hooks and basic safeguards have been
+applied by subscribe(CompletableObserver) before this method gets called.</p>
 </div>
 
 
@@ -235,15 +218,10 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>observer</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
             
             </td>
 
@@ -251,7 +229,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the CompletableObserver instance, never nil</p></td>
         </tr>
 
     
@@ -271,18 +249,6 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        <p>Exception on error</p>
-    
-    </div>
-
-
-    
 
 
 

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>ObservableEmitter - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">ObservableEmitter</h1>
     
 
     
@@ -60,10 +60,26 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        ObservableEmitter
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Abstraction over an <a href="Rx.Observer.html">Rx.Observer</a> that allows associating
+a resource with it.</p>
+<p><p>
+The <a href="Rx.ObservableEmitter.html#onNext">onNext(Object)</a>, <a href="Rx.ObservableEmitter.html#onError">onError(Throwable)</a>
+and <a href="Rx.ObservableEmitter.html#onComplete">onComplete()</a> methods should be called in a sequential manner, just like the
+<a href="Rx.Observer.html">Rx.Observer</a>'s methods should be.</p>
+<p><p>
+The emitter allows the registration of a single resource, in the form of a <a href="Rx.Disposable.html">Rx.Disposable</a>
+via <a href="Rx.ObservableEmitter.html#setDisposable">setDisposable(Disposable)</a>
+respectively. The emitter implementations will dispose/cancel this instance when the
+downstream cancels the flow or after the event generator logic calls <a href="Rx.ObservableEmitter.html#onError">onError(Throwable)</a> or
+<a href="Rx.ObservableEmitter.html#onComplete">onComplete()</a> succeeds.</p>
+<p><p>
+Only one <code>Disposable</code> object can be associated with the emitter at
+a time. Calling <code>setDisposable</code> method will dispose any previous object. If there
+is a need for handling multiple resources, one can create a <a href="Rx.CompositeDisposable.html">Rx.CompositeDisposable</a>
+and associate that with the emitter instead.</p></div>
         
     
 </header>
@@ -89,6 +105,13 @@
     
 
     
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Emitter.html">Rx.Emitter</a></li>
+        
+    </ul></dd>
+    
 
     
 
@@ -113,15 +136,6 @@
 
 
             
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
 
             
         
@@ -150,7 +164,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="isDisposed"><span class="type-signature"></span>isDisposed<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -197,7 +211,208 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Returns true if the downstream disposed the sequence or the
+emitter was terminated via <a href="Rx.ObservableEmitter.html#onError">onError(Throwable)</a> or <a href="Rx.ObservableEmitter.html#onComplete">onComplete()</a></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>true if the downstream disposed the sequence or the emitter was terminated</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onComplete"><span class="type-signature"></span>onComplete<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Emitter.html#onComplete">Rx.Emitter#onComplete</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Signal a completion.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onError"><span class="type-signature"></span>onError<span class="signature">(t<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Emitter.html#onError">Rx.Emitter#onError</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Signal an exception.</p>
 </div>
 
 
@@ -235,7 +450,7 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>t</code></td>
             
 
             <td class="type">
@@ -251,7 +466,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the exception, not nil</p></td>
         </tr>
 
     
@@ -271,18 +486,276 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onNext"><span class="type-signature"></span>onNext<span class="signature">(value<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="Rx.Emitter.html#onNext">Rx.Emitter#onNext</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Signal a normal value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
 
-    <div class="param-desc">
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
-        <p>Exception on error</p>
-    
-    </div>
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the value to signal, not nil</p></td>
+        </tr>
+
     
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setDisposable"><span class="type-signature"></span>setDisposable<span class="signature">(d)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Sets a Disposable on this emitter; any previous <a href="Rx.Disposable.html">Rx.Disposable</a>
+will be disposed/cancelled.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Disposable</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the disposable, nil is allowed</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

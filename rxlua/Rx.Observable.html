@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Observable - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Observable</h1>
     
 
     
@@ -60,72 +60,37 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Observable
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>The Observable class is the non-backpressured, optionally multi-valued base reactive class that
+offers factory methods, intermediate operators and the ability to consume synchronous
+and/or asynchronous reactive dataflows.</p>
+<p><p>
+Many operators in the class accept ObservableSource(s), the base reactive interface
+for such non-backpressured flows, which <code>Observable</code> itself implements as well.</p>
+<p><p>
+The documentation for this class makes use of marble diagrams. The following legend explains these diagrams:</p>
+<p><p>
+<img width="640" height="317" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/legend.png" alt=""></p>
+<p><p>
+The <code>Observable</code> follows the protocol</p>
+<p><pre><code>
+     onSubscribe onNext* (onError | onComplete)?
+</code></pre>
+where
+the stream can be disposed through the <a href="Rx.Disposable.html">Rx.Disposable</a> instance provided to consumers through
+<a href="Rx.Observer.html#onSubscribe">Rx.Observer#onSubscribe</a></p>
+<p><p>
+subscribe(Observer) does not allow external disposal
+of a subscription and the <a href="Rx.Observer.html">Rx.Observer</a> instance is expected to expose such capability.</p>
+<p><p>
+RxLua supports such usage with the standard Rx.DisposableObserver instance.</p></div>
         
     
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
-        
-        </div>
     
 
     
@@ -150,7 +115,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="subscribeActual"><span class="type-signature">(abstract, protected) </span>subscribeActual<span class="signature">(observer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +162,11 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Operator implementations (both source and intermediate) should implement this method that
+performs the necessary business logic and handles the incoming <a href="Rx.Observer.html">Rx.Observer</a>s.</p>
+<p><p>There is no need to call any of the plugin hooks on the current <code>Observable</code> instance or
+the <code>Observer</code>; all hooks and basic safeguards have been
+applied by subscribe(Observer)  before this method gets called.</p>
 </div>
 
 
@@ -235,13 +204,13 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>observer</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="Rx.Observer.html">Rx.Observer</a></span>
 
 
             
@@ -251,7 +220,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the incoming Observer, never nil</p></td>
         </tr>
 
     
@@ -271,18 +240,6 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        <p>Exception on error</p>
-    
-    </div>
-
-
-    
 
 
 

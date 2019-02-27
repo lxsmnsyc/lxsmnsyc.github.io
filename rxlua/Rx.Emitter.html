@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Emitter - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Emitter</h1>
     
 
     
@@ -60,10 +60,16 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Emitter
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Base interface for emitting signals in a push-fashion in various generator-like source
+operators (create, generate).</p>
+<p><p>
+Note that the <a href="Rx.Emitter.html#onNext">Rx.Emitter#onNext</a>, <a href="Rx.Emitter.html#onError">Rx.Emitter#onError</a> and
+<a href="Rx.Emitter.html#onComplete">Rx.Emitter#onComplete</a> methods provided to the function via the <a href="Rx.Emitter.html">Rx.Emitter</a> instance should be called synchronously,
+never concurrently. Calling them from multiple threads is not supported and leads to an
+undefined behavior.</p></div>
         
     
 </header>
@@ -115,15 +121,6 @@
             
 
             
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
         
         </div>
     
@@ -150,7 +147,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onComplete"><span class="type-signature"></span>onComplete<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +194,89 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Signal a completion.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onError"><span class="type-signature"></span>onError<span class="signature">(t<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Signal an exception.</p>
 </div>
 
 
@@ -235,7 +314,7 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>t</code></td>
             
 
             <td class="type">
@@ -251,7 +330,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the exception, not nil</p></td>
         </tr>
 
     
@@ -271,18 +350,137 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onNext"><span class="type-signature"></span>onNext<span class="signature">(value<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Signal a normal value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
 
-    <div class="param-desc">
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
-        <p>Exception on error</p>
-    
-    </div>
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the value to signal, not nil</p></td>
+        </tr>
+
     
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

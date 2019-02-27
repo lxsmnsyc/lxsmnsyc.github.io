@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>SingleSource - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">SingleSource</h1>
     
 
     
@@ -60,10 +60,14 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        SingleSource
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Represents a basic <a href="Rx.Single.html">Rx.Single</a> source base interface,
+consumable via an <a href="Rx.SingleObserver.html">Rx.SingleObserver</a>.</p>
+<p><p>
+This class also serves the base type for custom operators wrapped into
+Single via <a href="Rx.Single.html#.create">Rx.Single.create</a>.</p></div>
         
     
 </header>
@@ -115,15 +119,6 @@
             
 
             
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
         
         </div>
     
@@ -150,7 +145,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(observer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +192,7 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Subscribes the given SingleObserver to this SingleSource instance.</p>
 </div>
 
 
@@ -235,13 +230,13 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>observer</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="Rx.SingleObserver.html">Rx.SingleObserver</a></span>
 
 
             
@@ -251,7 +246,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the SingleObserver, not nil</p></td>
         </tr>
 
     
@@ -271,18 +266,6 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        <p>Exception on error</p>
-    
-    </div>
-
-
-    
 
 
 

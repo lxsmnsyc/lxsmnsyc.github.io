@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Observer - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Observer</h1>
     
 
     
@@ -60,10 +60,46 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Observer
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Provides a mechanism for receiving push-based notifications.</p>
+<p><p>
+When an <code>Observer</code> is subscribed to an <a href="Rx.ObservableSource.html">Rx.ObservableSource</a> through the <a href="Rx.ObservableSource.html#subscribe">Rx.ObservableSource#subscribe</a> method,
+the <code>ObservableSource</code> calls <a href="Rx.Observer.html#onSubscribe">onSubscribe(Disposable)</a> with a <a href="Rx.Disposable.html">Rx.Disposable</a> that allows
+disposing the sequence at any time, then the
+<code>ObservableSource</code> may call the Observer's <a href="Rx.Observer.html#onNext">onNext</a> method any number of times
+to provide notifications. A well-behaved
+<code>ObservableSource</code> will call an <code>Observer</code>'s <a href="Rx.Observer.html#onComplete">onComplete</a> method exactly once or the <code>Observer</code>'s
+<a href="Rx.Observer.html#onError">onError</a> method exactly once.</p>
+<p><p>
+Calling the <code>Observer</code>'s method must happen in a serialized fashion, that is, they must not
+be invoked concurrently by multiple threads in an overlapping fashion and the invocation pattern must
+adhere to the following protocol:</p>
+<p><pre><code>    onSubscribe onNext* (onError | onComplete)?</code></pre></p>
+<p><p>
+Subscribing an <code>Observer</code> to multiple <code>ObservableSource</code>s is not recommended. If such reuse
+happens, it is the duty of the <code>Observer</code> implementation to be ready to receive multiple calls to
+its methods and ensure proper concurrent behavior of its business logic.</p>
+<p><p>
+Calling <a href="Rx.Observer.html#onSubscribe">onSubscribe(Disposable)</a>, <a href="Rx.Observer.html#onNext">onNext(Object)</a> or <a href="Rx.Observer.html#onError">onError(Throwable)</a> with a
+<code>nil</code>  argument is forbidden.</p>
+<p><p>
+The implementations of the <code>onXXX</code> methods should avoid throwing runtime exceptions other than the following cases
+(see <a href="https://github.com/reactive-streams/reactive-streams-jvm#2.13">Rule 2.13</a> of the Reactive Streams specification):</p>
+<p><ul></p>
+<p><li>If the argument is <code>nil</code>, the methods can throw a error.
+Note though that RxLua prevents <code>nil</code>s to enter into the flow and thus there is generally no
+need to check for nils in flows assembled from standard sources and intermediate operators.
+</li>
+</ul>
+From the <code>Observable</code>'s perspective, an <code>Observer</code> is the end consumer thus it is the <code>Observer</code>'s
+responsibility to handle the error case and signal it &quot;further down&quot;. This means unreliable code in the <code>onXXX</code>
+methods should be wrapped into <code>pcall</code> or <code>xpcall</code> {@see <a href="https://%3Ca">href="http://www.lua.org/pil/8.4.html</a>}">www.lua.org/pil/8.4.html}}</a>, specifically in <a href="Rx.Observer.html#onError">onError(Throwable)</a> or <a href="Rx.Observer.html#onComplete">onComplete</a>, and handled there
+(for example, by logging it or presenting the user with an error dialog). However, if the error would be thrown from
+#onNext(Object), <a href="https://github.com/reactive-streams/reactive-streams-jvm#2.13">Rule 2.13</a> mandates
+the implementation calls Disposable#dispose and signals the exception in a way that is adequate to the target context,
+for example, by calling <a href="Rx.Observer.html#onError">onError(Throwable)</a> on the same <code>Observer</code> instance.</p></div>
         
     
 </header>
@@ -105,6 +141,13 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="http://reactivex.io/documentation/observable.html">ReactiveX documentation: Observable</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -113,15 +156,6 @@
 
 
             
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
 
             
         
@@ -150,7 +184,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onComplete"><span class="type-signature"></span>onComplete<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +231,94 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Notifies the Observer that the <a href="Rx.Observable.html">Rx.Observable</a> has finished sending push-based notifications.</p>
+<p><p>
+The <a href="Rx.Observable.html">Rx.Observable</a> will not call this method if it calls <a href="Rx.Observer.html#onError">onError</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onError"><span class="type-signature"></span>onError<span class="signature">(e)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Notifies the Observer that the <a href="Rx.Observable.html">Rx.Observable</a> has experienced an error condition.</p>
+<p><p>
+If the <a href="Rx.Observable.html">Rx.Observable</a> calls this method, it will not thereafter call <a href="Rx.Observer.html#onNext">onNext</a> or
+<a href="Rx.Observer.html#onComplete">onComplete</a>.</p>
 </div>
 
 
@@ -235,7 +356,7 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>e</code></td>
             
 
             <td class="type">
@@ -251,7 +372,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the exception encountered by the Observable</p></td>
         </tr>
 
     
@@ -271,18 +392,276 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onNext"><span class="type-signature"></span>onNext<span class="signature">(t)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Provides the Observer with a new item to observe.</p>
+<p><p>
+The <a href="Rx.Observable.html">Rx.Observable</a> may call this method 0 or more times.</p>
+<p><p>
+The <code>Observable}</code> will not call this method again after it calls either <a href="Rx.Observer.html#onComplete">onComplete</a> or
+<a href="Rx.Observer.html#onError">onError</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
 
-    <div class="param-desc">
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
-        <p>Exception on error</p>
-    
-    </div>
+
+        <tr>
+            
+                <td class="name"><code>t</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the item emitted by the Observable</p></td>
+        </tr>
+
     
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onSubscribe"><span class="type-signature"></span>onSubscribe<span class="signature">(d)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Provides the Observer with the means of cancelling (disposing) the
+connection (channel) with the Observable in both
+synchronous (from within <a href="Rx.Observer.html#onNext">onNext(Object)</a>) and asynchronous manner.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rx.Disposable.html">Rx.Disposable</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the Disposable instance whose Disposable#dispose can
+be called anytime to cancel the connection</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

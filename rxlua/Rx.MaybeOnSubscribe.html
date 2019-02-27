@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>MaybeOnSubscribe - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">MaybeOnSubscribe</h1>
     
 
     
@@ -60,10 +60,12 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        MaybeOnSubscribe
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>A functional interface that has a {@code subscribe()} method that receives
+an instance of a <a href="Rx.MaybeEmitter.html">Rx.MaybeEmitter</a> instance that allows pushing
+an event in a cancellation-safe manner.</p></div>
         
     
 </header>
@@ -115,15 +117,6 @@
             
 
             
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
         
         </div>
     
@@ -150,7 +143,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(emitter)</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +190,7 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Called for each MaybeObserver that subscribes.</p>
 </div>
 
 
@@ -235,13 +228,13 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>emitter</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="Rx.MaybeEmitter.html">Rx.MaybeEmitter</a></span>
 
 
             
@@ -251,7 +244,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the safe emitter instance, never nil</p></td>
         </tr>
 
     
@@ -271,18 +264,6 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        <p>Exception on error</p>
-    
-    </div>
-
-
-    
 
 
 

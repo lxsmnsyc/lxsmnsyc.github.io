@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Maybe - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Maybe</h1>
     
 
     
@@ -60,72 +60,48 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Maybe
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>The <code>Maybe</code> class represents a deferred computation and emission of a single value, no value at all or an exception.</p>
+<p><p>
+The <code>Maybe</code> class implements the <a href="Rx.MaybeSource.html">Rx.MaybeSource</a> base interface and the default consumer
+type it interacts with is the <a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a> via the subscribe(MaybeObserver) method.</p>
+<p><p>
+The <code>Maybe</code> operates with the following sequential protocol:</p>
+<p><pre><code>
+    onSubscribe (onSuccess | onError | onComplete)?
+</code></pre></p>
+<p><p>
+Note that <code>onSuccess</code>, <code>onError</code> and <code>onComplete</code> are mutually exclusive events; unlike <code>Observable</code>,
+<code>onSuccess</code> is never followed by <code>onError</code> or <code>onComplete</code>.</p>
+<p><p>
+Like <a href="Rx.Observable.html">Rx.Observable</a>, a running <code>Maybe</code> can be stopped through the <a href="Rx.Disposable.html">Rx.Disposable</a> instance
+provided to consumers through MaybeObserver#onSubscribe.</p>
+<p><p>
+Like an <code>Observable</code>, a <code>Maybe</code> is lazy, can be either &quot;hot&quot; or &quot;cold&quot;, synchronous or
+asynchronous. <code>Maybe</code> instances returned by the methods of this class are <em>cold</em>
+and there is a standard <em>hot</em> implementation in the form of a subject:
+MaybeSubject.</p>
+<p><p>
+The documentation for this class makes use of marble diagrams. The following legend explains these diagrams:</p>
+<p><p>
+<img width="640" height="370" src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/maybe.png" alt=""></p>
+<p><p>
+See Flowable or <a href="Rx.Observable.html">Rx.Observable</a> for the
+implementation of the Reactive Pattern for a stream or vector of values.</p>
+<p><p>
+Note that by design, subscriptions via subscribe(MaybeObserver) can't be disposed
+from the outside (hence the
+<code>void</code> return of the subscribe(MaybeObserver) method) and it is the
+responsibility of the implementor of the <code>MaybeObserver</code> to allow this to happen.</p>
+<p><p>
+RxLua supports such usage with the standard Rx.DisposableMaybeObserver instance.</p></div>
         
     
 </header>
 
 <article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-            
-
-            
-                <h3>Example</h3>
-                
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
-
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
-
-            
-        
-        </div>
     
 
     
@@ -150,7 +126,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="subscribeActual"><span class="type-signature">(abstract, protected) </span>subscribeActual<span class="signature">(observer)</span><span class="type-signature"></span></h4>
 
     
 
@@ -197,7 +173,10 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Implement this method in subclasses to handle the incoming <a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a>s.</p>
+<p><p>There is no need to call any of the plugin hooks on the current <code>Maybe</code> instance or
+the <code>MaybeObserver</code>; all hooks and basic safeguards have been
+applied by subscribe(MaybeObserver) before this method gets called.</p>
 </div>
 
 
@@ -235,13 +214,13 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>observer</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type"><a href="Rx.MaybeObserver.html">Rx.MaybeObserver</a></span>
 
 
             
@@ -251,7 +230,7 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>the MaybeObserver to handle, not nil</p></td>
         </tr>
 
     
@@ -271,18 +250,6 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        <p>Exception on error</p>
-    
-    </div>
-
-
-    
 
 
 

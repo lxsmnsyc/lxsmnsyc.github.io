@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Consumer - RxLua</title>
+    <title>Class - RxLua</title>
     
     <meta name="description" content="Reactive Extensions for Lua" />
     
@@ -45,7 +45,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Consumer</h1>
+    <h1 class="page-title">Class</h1>
     
 
     
@@ -60,10 +60,12 @@
         <h2>
             <span class="ancestors"><a href="Rx.html">Rx</a>.</span>
         
-        Consumer
+        Class
         </h2>
         
-            <div class="class-description"><p>A functional interface (callback) that accepts a single value.</p></div>
+            <div class="class-description"><p>Abstraction layer for implementing object-oriented paradigm for RxLua.
+Rx.Class provides both classes and interfaces as one, and can inherit from
+more than one parent.</p></div>
         
     
 </header>
@@ -73,6 +75,17 @@
         <div class="container-overview">
         
             
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Class"><span class="type-signature"></span>new Class<span class="signature">(name, &hellip;parents<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
 
 <dl class="details">
 
@@ -112,18 +125,152 @@
 
 
 
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local Disposable = require "RxLua.disposable"
+
+local MyDisposable = Rx.Class("MyDisposable", Disposable){
+    new = function (self)
+        self._active = true
+    end,
+
+    dispose = function (self)
+        self._active = false
+    end,
+
+    isDisposed = function (self)
+        return self._active
+    end
+}
+
+local disposable = MyDisposable()
+print(disposable:isDisposed())
+disposable:dispose()
+print(disposable:isDisposed())</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
             
 
+            <td class="type">
             
-                <h3>Example</h3>
                 
-    <pre class="prettyprint"><code>local Consumer = require "RxLua.functions.consumer"
+<span class="param-type">string</span>
 
-local c = Consumer(function (a)
-    someFunction(a)
-end)</code></pre>
 
             
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>name of the class</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parents</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rx.Class.html">Rx.Class</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Parent classes to inherit the traits from.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         </div>
     
@@ -150,7 +297,7 @@ end)</code></pre>
 
     
 
-    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">(a)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".instanceof"><span class="type-signature">(static) </span>instanceof<span class="signature">(object, class)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -197,7 +344,9 @@ end)</code></pre>
 
 
 <div class="description">
-    <p>Performs an operation on the given value.</p>
+    <p>Checks if an object is an instance of a class or of a parent class.</p>
+<p>All Rx.Class instances inherits this method as both static and non-static
+methods</p>
 </div>
 
 
@@ -206,6 +355,14 @@ end)</code></pre>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local d = Rx.Disposable()
+
+print(Rx.Disposable.instanceof(d, Rx.Disposable))
+ </code></pre>
 
 
 
@@ -235,7 +392,7 @@ end)</code></pre>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>object</code></td>
             
 
             <td class="type">
@@ -251,7 +408,30 @@ end)</code></pre>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>an object instanciated from Rx.Class instances</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>class</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rx.Class.html">Rx.Class</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Rx.Class instance</p></td>
         </tr>
 
     
@@ -271,20 +451,182 @@ end)</code></pre>
 
 
 
-<h5>Throws:</h5>
+
+
+<h5>Returns:</h5>
 
         
 
-    <div class="param-desc">
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
     
-        <p>Exception on error</p>
+
+
+
+        
+            
+
     
-    </div>
 
+    <h4 class="name" id="instanceof"><span class="type-signature"></span>instanceof<span class="signature">(class)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
 
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Checks if an object is an instance of a class or of a parent class.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>local d = Rx.Disposable()
+
+print(d:instanceof(Rx.Disposable))</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>class</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rx.Class.html">Rx.Class</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Rx.Class instance</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
