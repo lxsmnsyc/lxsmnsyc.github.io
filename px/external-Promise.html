@@ -72,7 +72,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line248">line 248</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -120,7 +120,7 @@
     
 
     
-    <h4 class="name" id=".compare"><span class="type-signature">(static) </span>compare<span class="signature">(a<span class="signature-attributes">non-null</span>, b<span class="signature-attributes">non-null</span>, comparator<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".compare"><span class="type-signature">(static) </span>compare<span class="signature">(a<span class="signature-attributes">non-null</span>, b<span class="signature-attributes">non-null</span>, comparator<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -170,7 +170,7 @@
             <td class="type">
             
                 
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
             
@@ -193,7 +193,7 @@
             <td class="type">
             
                 
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
             
@@ -267,7 +267,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line296">line 296</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line315">line 315</a>
     </li></ul></dd>
     
 
@@ -301,7 +301,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -428,7 +428,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line333">line 333</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line352">line 352</a>
     </li></ul></dd>
     
 
@@ -485,7 +485,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
     
 
     
-    <h4 class="name" id=".equals"><span class="type-signature">(static) </span>equals<span class="signature">(a<span class="signature-attributes">non-null</span>, b<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".equals"><span class="type-signature">(static) </span>equals<span class="signature">(a<span class="signature-attributes">non-null</span>, b<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -535,7 +535,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
             <td class="type">
             
                 
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
             
@@ -558,7 +558,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
             <td class="type">
             
                 
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
             
@@ -609,7 +609,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line315">line 315</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line334">line 334</a>
     </li></ul></dd>
     
 
@@ -643,7 +643,7 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -660,6 +660,327 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
 let b = Promise.resolve(25);
 
 Promise.equals(a, b);</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".fromCallable"><span class="type-signature">(static) </span>fromCallable<span class="signature">(executor)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Converts a function into an executor function. 
+Returned values are interpreted as a resolved value, while
+thrown errors are interpreted as a rejected value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>executor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#VanillaExecutor">VanillaExecutor</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line451">line 451</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Promise.html">Promise</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>let promise = Promise.fromCallable(() => "hello world");</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".fromCallableDeferred"><span class="type-signature">(static) </span>fromCallableDeferred<span class="signature">(executor)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Converts a function into an executor function. 
+Returned values are interpreted as a resolved value, while
+thrown errors are interpreted as a rejected value.</p>
+<p>This is a deferred version of Promise.fromCallable</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>executor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#VanillaExecutor">VanillaExecutor</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line473">line 473</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Promise.html">Promise</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>let promise = Promise.fromCallableDeferred(() => "hello world");</code></pre>
 
 
 
@@ -770,7 +1091,7 @@ Promise.equals(a, b);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line360">line 360</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line379">line 379</a>
     </li></ul></dd>
     
 
@@ -831,7 +1152,7 @@ promise.resolve(50);</code></pre>
     
 
     
-    <h4 class="name" id=".timer"><span class="type-signature">(static) </span>timer<span class="signature">(amount)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".timer"><span class="type-signature">(static) </span>timer<span class="signature">(amount)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -932,7 +1253,7 @@ promise.resolve(50);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line376">line 376</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line395">line 395</a>
     </li></ul></dd>
     
 
@@ -966,7 +1287,7 @@ promise.resolve(50);</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -989,7 +1310,7 @@ promise.resolve(50);</code></pre>
     
 
     
-    <h4 class="name" id="contains"><span class="type-signature"></span>contains<span class="signature">(value, bipredicate<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="contains"><span class="type-signature"></span>contains<span class="signature">(value, bipredicate<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -1135,7 +1456,7 @@ and resolves to the function's result.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line254">line 254</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line273">line 273</a>
     </li></ul></dd>
     
 
@@ -1169,7 +1490,7 @@ and resolves to the function's result.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -1193,7 +1514,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
 
     
-    <h4 class="name" id="defer"><span class="type-signature"></span>defer<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="defer"><span class="type-signature"></span>defer<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -1245,7 +1566,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line346">line 346</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line365">line 365</a>
     </li></ul></dd>
     
 
@@ -1279,7 +1600,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -1302,7 +1623,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
 
     
-    <h4 class="name" id="delay"><span class="type-signature"></span>delay<span class="signature">(amount)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="delay"><span class="type-signature"></span>delay<span class="signature">(amount)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -1403,7 +1724,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line275">line 275</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line294">line 294</a>
     </li></ul></dd>
     
 
@@ -1437,7 +1758,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -1460,7 +1781,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
 
     
-    <h4 class="name" id="timeout"><span class="type-signature"></span>timeout<span class="signature">(amount)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="timeout"><span class="type-signature"></span>timeout<span class="signature">(amount)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
     
 
     
@@ -1561,7 +1882,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line390">line 390</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line409">line 409</a>
     </li></ul></dd>
     
 
@@ -1595,7 +1916,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -1634,7 +1955,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Mar 05 2019 16:51:03 GMT+0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Mar 05 2019 17:12:28 GMT+0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>
