@@ -38,7 +38,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.delayedReject">delayedReject</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.delayedReject">delayedReject</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#test">test</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -995,6 +995,183 @@
 
     
 
+    <h4 class="name" id="PromiseTester"><span class="type-signature"></span>PromiseTester<span class="signature">(value, isResolved)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line526">line 526</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>A tester function that is to be passed to Promise#test</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the fulfilled value of the given Promise</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isResolved</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a boolean that checks whether the given value was a resolved value or not.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+            
+                
+
+    
+
     <h4 class="name" id="RetryTester"><span class="type-signature"></span>RetryTester<span class="signature">(tries, value)</span><span class="type-signature"></span></h4>
 
     
@@ -1254,7 +1431,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 06 2019 08:38:41 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 06 2019 10:29:08 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
