@@ -38,7 +38,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -504,6 +504,370 @@ Promise.compare(a, b, (x, y) => x%y == 0);</code></pre>
     <dd>
         
 <span class="param-type"><a href="DeferredPromise.html">DeferredPromise</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".delayedResolve"><span class="type-signature">(static) </span>delayedResolve<span class="signature">(value, amount)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line490">line 490</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Resolves the promise after a significant amount of time.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Promise.delayedResolve("Expired after 100ms", 100);</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the value to be resolved.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>amount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the amount of time in milliseconds</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Promise.html">Promise</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".delayedResolve"><span class="type-signature">(static) </span>delayedResolve<span class="signature">(value, amount)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line508">line 508</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Rejects the promise after a significant amount of time.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Promise.delayedResolve("Expired after 100ms", 100);</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the value to be rejected.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>amount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the amount of time in milliseconds</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Promise.html">Promise</a></span>
 
 
     </dd>
@@ -1605,7 +1969,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
 
 
 <div class="description">
-    <p>Creates a DeferredPromise whose value depends on the fulfillment of the given Promise.</p>
+    <p>Transforms the fulfillment value into a DeferredPromise that fulfills the value.</p>
 </div>
 
 
@@ -1996,7 +2360,7 @@ Promise.resolve(50).contains(50, (a, b) => a % b == 0);</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Mar 05 2019 18:31:27 GMT+0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 06 2019 08:32:38 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

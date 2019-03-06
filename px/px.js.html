@@ -38,7 +38,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DeferredPromise.html">DeferredPromise</a><ul class='methods'><li data-type='method'><a href="DeferredPromise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="DeferredPromise.html#.reject">reject</a></li><li data-type='method'><a href="DeferredPromise.html#.resolve">resolve</a></li><li data-type='method'><a href="DeferredPromise.html#catch">catch</a></li><li data-type='method'><a href="DeferredPromise.html#delay">delay</a></li><li data-type='method'><a href="DeferredPromise.html#finally">finally</a></li><li data-type='method'><a href="DeferredPromise.html#retry">retry</a></li><li data-type='method'><a href="DeferredPromise.html#then">then</a></li><li data-type='method'><a href="DeferredPromise.html#toPromise">toPromise</a></li></ul></li><li><a href="PublishedPromise.html">PublishedPromise</a><ul class='methods'><li data-type='method'><a href="PublishedPromise.html#catch">catch</a></li><li data-type='method'><a href="PublishedPromise.html#finally">finally</a></li><li data-type='method'><a href="PublishedPromise.html#reject">reject</a></li><li data-type='method'><a href="PublishedPromise.html#resolve">resolve</a></li><li data-type='method'><a href="PublishedPromise.html#then">then</a></li><li data-type='method'><a href="PublishedPromise.html#toPromise">toPromise</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Promise.html">Promise</a><ul class='methods'><li data-type='method'><a href="external-Promise.html#.compare">compare</a></li><li data-type='method'><a href="external-Promise.html#.deferred">deferred</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.delayedResolve">delayedResolve</a></li><li data-type='method'><a href="external-Promise.html#.equals">equals</a></li><li data-type='method'><a href="external-Promise.html#.fromCallable">fromCallable</a></li><li data-type='method'><a href="external-Promise.html#.fromCallableDeferred">fromCallableDeferred</a></li><li data-type='method'><a href="external-Promise.html#.publish">publish</a></li><li data-type='method'><a href="external-Promise.html#.timer">timer</a></li><li data-type='method'><a href="external-Promise.html#contains">contains</a></li><li data-type='method'><a href="external-Promise.html#defer">defer</a></li><li data-type='method'><a href="external-Promise.html#delay">delay</a></li><li data-type='method'><a href="external-Promise.html#timeout">timeout</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -420,7 +420,7 @@ Promise.deferred = function (fn){
 /**
  * @function external:Promise#defer
  * @description
- * Creates a DeferredPromise whose value depends on the fulfillment of the given Promise.
+ * Transforms the fulfillment value into a DeferredPromise that fulfills the value.
  * @example
  * Promise.resolve(50).defer().delay(5000);
  * @return {Promise}
@@ -429,7 +429,7 @@ Promise.prototype.defer = function (){
     return this.then(
         x => DeferredPromise.resolve(x),
         x => DeferredPromise.reject(x)
-    )
+    );
 }
 /**
  * @function external:Promise.publish
@@ -540,6 +540,42 @@ Promise.fromCallable = function (executor){
   */
 Promise.fromCallableDeferred = function (executor){
     return DeferredPromise.fromCallable(executor);
+}
+
+/**
+ * @function external:Promise.delayedResolve
+ * @description
+ * Resolves the promise after a significant amount of time.
+ * 
+ * @example
+ * Promise.delayedResolve("Expired after 100ms", 100);
+ * 
+ * @param {*} value the value to be resolved.
+ * @param {Number} amount the amount of time in milliseconds
+ * @returns {Promise}
+ */
+Promise.delayedResolve = function (value, amount){
+    return new Promise(res => {
+        setTimeout(res, amount, value);
+    });
+}
+
+/**
+ * @function external:Promise.delayedResolve
+ * @description
+ * Rejects the promise after a significant amount of time.
+ * 
+ * @example
+ * Promise.delayedResolve("Expired after 100ms", 100);
+ * 
+ * @param {*} value the value to be rejected.
+ * @param {Number} amount the amount of time in milliseconds
+ * @returns {Promise}
+ */
+Promise.delayedReject = function (value, amount){
+    return new Promise((res, rej) => {
+        setTimeout(res, amount, value);
+    });
 }</code></pre>
         </article>
     </section>
@@ -554,7 +590,7 @@ Promise.fromCallableDeferred = function (executor){
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Mar 05 2019 18:31:27 GMT+0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 06 2019 08:32:38 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
