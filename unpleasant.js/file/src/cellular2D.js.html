@@ -16,7 +16,7 @@
   
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+  <a href="test.html" data-ice="testLink">Test</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic12D">generic12D</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic2">generic2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic3">generic3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-simplex2D">simplex2D</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -83,6 +84,10 @@ const KO = 0.42857142857;
  * @ignore
  */
 const JITTER = 1.0;
+/**
+ * @ignore
+ */
+const swapIfLess = (a, b) =&gt; ((a &lt; b) ? [a, b] : [b, a]);
 /**
  * @memberof Unpleasant
  * @description
@@ -229,17 +234,8 @@ const cellular2D = (x, y) =&gt; {
   d2y = max(d1ay, d2y);
   d2z = max(d1az, d2z);
 
-  if (d1y &lt; d1x) {
-    const tmp = d1x;
-    d1x = d1y;
-    d1y = tmp;
-  }
-
-  if (d1z &lt; d1x) {
-    const tmp = d1z;
-    d1z = d1x;
-    d1x = tmp;
-  }
+  [d1x, d1y] = swapIfLess(d1x, d1y);
+  [d1x, d1z] = swapIfLess(d1x, d1z);
 
   d1y = min(d1y, d2y);
   d1z = min(d1z, d2z);

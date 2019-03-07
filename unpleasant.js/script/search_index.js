@@ -42,6 +42,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "unpleasant/src/simplex2d.js~simplex2d",
+    "function/index.html#static-function-simplex2D",
+    "<span>simplex2D</span> <span class=\"search-result-import-path\">unpleasant/src/simplex2D.js</span>",
+    "function"
+  ],
+  [
     "src/.external-ecmascript.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "src/.external-ecmascript.js~Array",
@@ -372,9 +378,123 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/simplex2d.js",
+    "file/src/simplex2D.js.html",
+    "src/simplex2D.js",
+    "file"
+  ],
+  [
     "src/utils.js",
     "file/src/utils.js.html",
     "src/utils.js",
     "file"
+  ],
+  [
+    "test/test.js",
+    "test-file/test/test.js.html",
+    "test/test.js",
+    "testFile"
+  ],
+  [
+    "unpleasant unpleasant,unpleasant",
+    "test-file/test/test.js.html#lineNumber12",
+    "unpleasant",
+    "test"
+  ],
+  [
+    "unpleasant#basicperlinnoise unpleasant#basicperlinnoise,unpleasant#basicperlinnoise",
+    "test-file/test/test.js.html#lineNumber58",
+    "unpleasant .basicPerlinNoise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber59",
+    "unpleasant .basicPerlinNoise should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#cellular2dnoise unpleasant#cellular2dnoise,unpleasant#cellular2dnoise",
+    "test-file/test/test.js.html#lineNumber88",
+    "unpleasant .cellular2DNoise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber89",
+    "unpleasant .cellular2DNoise should return an array of 2 numbers",
+    "test"
+  ],
+  [
+    "unpleasant#classicperlin2dnoise unpleasant#classicperlin2dnoise,unpleasant#classicperlin2dnoise",
+    "test-file/test/test.js.html#lineNumber68",
+    "unpleasant .classicPerlin2DNoise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber69",
+    "unpleasant .classicPerlin2DNoise should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#generic1noise1d unpleasant#generic1noise1d,unpleasant#generic1noise1d",
+    "test-file/test/test.js.html#lineNumber16",
+    "unpleasant .generic1Noise1D",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber17",
+    "unpleasant .generic1Noise1D should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#generic1noise2d unpleasant#generic1noise2d,unpleasant#generic1noise2d",
+    "test-file/test/test.js.html#lineNumber26",
+    "unpleasant .generic1Noise2D",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber27",
+    "unpleasant .generic1Noise2D should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#generic2noise unpleasant#generic2noise,unpleasant#generic2noise",
+    "test-file/test/test.js.html#lineNumber36",
+    "unpleasant .generic2Noise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber37",
+    "unpleasant .generic2Noise should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#generic3noise unpleasant#generic3noise,unpleasant#generic3noise",
+    "test-file/test/test.js.html#lineNumber46",
+    "unpleasant .generic3Noise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber47",
+    "unpleasant .generic3Noise should return a number",
+    "test"
+  ],
+  [
+    "unpleasant#simplex2dnoise unpleasant#simplex2dnoise,unpleasant#simplex2dnoise",
+    "test-file/test/test.js.html#lineNumber78",
+    "unpleasant .simplex2DNoise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/test.js.html#lineNumber79",
+    "unpleasant .simplex2DNoise should return a number",
+    "test"
   ]
 ]

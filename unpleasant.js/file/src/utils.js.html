@@ -16,7 +16,7 @@
   
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+  <a href="test.html" data-ice="testLink">Test</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic12D">generic12D</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic2">generic2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generic3">generic3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-simplex2D">simplex2D</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -127,6 +128,10 @@ export const perlinRand = (x, y) =&gt; (sin(x * 12.9898 + y * 78.233) * NOISE_CO
  * @ignore
  */
 export const fade = t =&gt; t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+/**
+ * @ignore
+ */
+export const taylorInvSqrt = x =&gt; 1.79284291400159 - 0.85373472095314 * x;
 </code></pre>
 
 </div>

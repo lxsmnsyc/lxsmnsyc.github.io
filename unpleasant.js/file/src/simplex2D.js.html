@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/classicPerlin2D.js | unpleasant</title>
+  <title data-ice="title">src/simplex2D.js | unpleasant</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,7 +41,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classicPerlin2D.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/simplex2D.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * @license
  * MIT License
@@ -70,87 +70,101 @@
  * @copyright Alexis Munsayac 2019
  */
 import {
-  floor, permute289, K_41, abs, fade, mix, taylorInvSqrt,
+  floor, permute289, max, taylorInvSqrt, abs,
 } from &apos;./utils&apos;;
-
+/**
+ * @ignore
+ */
+const C_X = 0.211324865405187;
+/**
+ * @ignore
+ */
+const C_Y = 0.366025403784439;
+/**
+ * @ignore
+ */
+const C_Z = -0.577350269189626;
+/**
+ * @ignore
+ */
+const C_W = 0.024390243902439;
 /**
  * @memberof Unpleasant
- * Classic Perlin 2D Noise
+ * @desc
+ * Simplex 2D Noise
  * @example
- * import { classicPerlin2DNoise } from &apos;unpleasant&apos;;
- * let noise = classicPerlin2DNoise(Math.random(), Math.random());
+ * import { simplex2DNoise } from &apos;unpleasant&apos;;
+ * const noise = simplex2DNoise(Math.random(), Math.random());
+ * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
  * @param {!Number} x
  * @param {!Number} y
  * @returns {Number}
  */
-const classicPerlin2D = (x, y) =&gt; {
-  const Pix = floor(x) % 289;
-  const Piy = floor(y) % 289;
-  const Piz = floor(x + 1.0) % 289;
-  const Piw = floor(y + 1.0) % 289;
+const simplex2D = (x, y) =&gt; {
+  const dotVCY = x * C_Y + y * C_Y;
+  let ix = floor(x + dotVCY);
+  let iy = floor(y + dotVCY);
 
-  const Pfx = x % 1;
-  const Pfy = y % 1;
-  const Pfz = (x - 1) % 1;
-  const Pfw = (y - 1) % 1;
+  const dotICX = ix * C_X + iy * C_X;
+  const x0x = x - ix + dotICX;
+  const x0y = y - iy + dotICX;
 
-  const ix = permute289(permute289(Pix) + Piy);
-  const iy = permute289(permute289(Piz) + Piy);
-  const iz = permute289(permute289(Pix) + Piw);
-  const iw = permute289(permute289(Piz) + Piw);
+  let i1x = 0.0;
+  let i1y = 1.0;
 
-  const gxx = 2.0 * ((ix * K_41) % 1) - 1.0;
-  const gxy = 2.0 * ((iy * K_41) % 1) - 1.0;
-  const gxz = 2.0 * ((iz * K_41) % 1) - 1.0;
-  const gxw = 2.0 * ((iw * K_41) % 1) - 1.0;
+  if (x0x &gt; x0y) {
+    i1x = 1.0;
+    i1y = 0.0;
+  }
 
-  const gyx = abs(gxx) - 0.5 + floor(gxx + 0.5);
-  const gyy = abs(gxy) - 0.5 + floor(gxy + 0.5);
-  const gyz = abs(gxz) - 0.5 + floor(gxw + 0.5);
-  const gyw = abs(gxw) - 0.5 + floor(gxz + 0.5);
+  const x12x = x0x + C_X - i1x;
+  const x12y = x0y + C_X - i1y;
+  const x12z = x0x + C_Z;
+  const x12w = x0y + C_Z;
 
-  let g00x = gxx;
-  let g00y = gyx;
-  let g01x = gxy;
-  let g01y = gyy;
-  let g10x = gxz;
-  let g10y = gyz;
-  let g11x = gxw;
-  let g11y = gyw;
+  ix %= 289;
+  iy %= 289;
 
-  const normx = taylorInvSqrt(g00x * g00x + g00y * g00y);
-  const normy = taylorInvSqrt(g01x * g01x + g01y * g01y);
-  const normz = taylorInvSqrt(g10x * g10x + g10y * g10y);
-  const normw = taylorInvSqrt(g11x * g11x + g11y * g11y);
+  const px = permute289(permute289(iy) + ix);
+  const py = permute289(permute289(iy + i1y) + ix + i1x);
+  const pz = permute289(permute289(iy + 1.0) + ix + 1.0);
 
-  g00x *= normx;
-  g00y *= normx;
+  let mx = max(0.5 - (x0x * x0x + x0y * x0y), 0);
+  let my = max(0.5 - (x12x * x12x + x12y * x12y), 0);
+  let mz = max(0.5 - (x12z * x12z + x12w * x12w), 0);
 
-  g01x *= normy;
-  g01y *= normy;
+  mx *= mx * mx;
+  my *= my * my;
+  mz *= mz * mz;
 
-  g10x *= normz;
-  g10y *= normz;
+  const xx = 2.0 * ((px * C_W) % 1) - 1.0;
+  const xy = 2.0 * ((py * C_W) % 1) - 1.0;
+  const xz = 2.0 * ((pz * C_W) % 1) - 1.0;
 
-  g11x *= normw;
-  g11y *= normw;
+  const hx = abs(xx) - 0.5;
+  const hy = abs(xy) - 0.5;
+  const hz = abs(xz) - 0.5;
 
-  const n00 = g00x * Pfx + g00y * Pfy;
-  const n10 = g10x * Pfz + g10y * Pfy;
-  const n01 = g01x * Pfx + g01y * Pfw;
-  const n11 = g11x * Pfz + g11y * Pfw;
+  const oxx = floor(xx + 0.5);
+  const oxy = floor(xy + 0.5);
+  const oxz = floor(xz + 0.5);
 
-  const fadex = fade(Pfx);
-  const fadey = fade(Pfy);
+  const a0x = xx - oxx;
+  const a0y = xy - oxy;
+  const a0z = xz - oxz;
 
-  const nx = mix(n00, n10, fadex);
-  const ny = mix(n01, n11, fadex);
+  mx *= taylorInvSqrt(a0x * a0x + hx * hx);
+  my *= taylorInvSqrt(a0y * a0y + hy * hy);
+  mz *= taylorInvSqrt(a0z * a0z + hz * hz);
 
-  const n = mix(nx, ny, fadey);
-  return 2.3 * n;
+  const gx = a0x * x0x + hx * x0y;
+  const gy = a0y * x12x + hy * x12y;
+  const gz = a0z * x12z + hz * x12w;
+
+  return 130 * (mx * gx + my * gy + mz * gz);
 };
 
-export default classicPerlin2D;
+export default simplex2D;
 </code></pre>
 
 </div>

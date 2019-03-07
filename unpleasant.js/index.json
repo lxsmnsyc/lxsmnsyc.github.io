@@ -634,7 +634,7 @@
     "__docId__": 50,
     "kind": "file",
     "name": "src/cellular2D.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, min, max, sqrt, permute289 as permute,\n} from './utils';\n/**\n * @ignore\n */\nconst K = 0.14285714285;\n/**\n * @ignore\n */\nconst KO = 0.42857142857;\n/**\n * @ignore\n */\nconst JITTER = 1.0;\n/**\n * @memberof Unpleasant\n * @description\n * The basic idea is to take random points in space (2- or 3-dimensional)\n * and then for every point in space take the distance to the nth-closest\n * point (e.g. the second-closest point) as some kind of color information.\n * More precisely:\n *\n *  Randomly distribute feature points in space\n *  Noise Fn(x) is distance to nth-closest point to x\n *\n * Typical implementations, in three dimensions, divide the space into cubes.\n * A fixed number of positions are generated for each cube.\n * In the case of three dimensions, nine cubes' points need to be generated,\n * to be sure to find the closest.\n *\n * @see https://en.wikipedia.org/wiki/Worley_noise\n * @see https://github.com/ashima/webgl-noise/blob/master/src/cellular2D.glsl\n * @param {!Number} x - x component of a 2D vector\n * @param {!Number} y - y component of a 2D vector\n * @returns {Array} a 2D vector\n */\nconst cellular2D = (x, y) => {\n  const Pix = floor(x) % 289;\n  const Piy = floor(y) % 289;\n\n  const Pfx = x % 1;\n  const Pfy = y % 1;\n\n  const oix = -1.0;\n  const oiy = 0.0;\n  const oiz = 1.0;\n\n  const ofx = -0.5;\n  const ofy = 0.5;\n  const ofz = -1.5;\n\n  const pxx = permute(Pix + oix);\n  const pxy = permute(Pix + oiy);\n  const pxz = permute(Pix + oiz);\n\n  let px = permute(pxx + Piy + oix);\n  let py = permute(pxx + Piy + oiy);\n  let pz = permute(pxx + Piy + oiz);\n\n  let Kpx = px * K;\n  let Kpy = py * K;\n  let Kpz = pz * K;\n\n  let oxx = (Kpx % 1) - KO;\n  let oxy = (Kpy % 1) - KO;\n  let oxz = (Kpz % 1) - KO;\n\n  let oyx = (floor(Kpx) % 7) * K - KO;\n  let oyy = (floor(Kpy) % 7) * K - KO;\n  let oyz = (floor(Kpz) % 7) * K - KO;\n\n  let dxx = Pfx + 0.5 + JITTER * oxx;\n  let dxy = Pfx + 0.5 + JITTER * oxy;\n  let dxz = Pfx + 0.5 + JITTER * oxz;\n\n  let dyx = Pfy - ofx + JITTER * oyx;\n  let dyy = Pfy - ofy + JITTER * oyy;\n  let dyz = Pfy - ofz + JITTER * oyz;\n\n  let d1x = dxx * dxx + dyx * dyx;\n  let d1y = dxy * dxy + dyy * dyy;\n  let d1z = dxz * dxz + dyz * dyz;\n\n  px = permute(pxy + Piy + oix);\n  py = permute(pxy + Piy + oiy);\n  pz = permute(pxy + Piy + oiz);\n\n  Kpx = px * K;\n  Kpy = py * K;\n  Kpz = pz * K;\n\n  oxx = (Kpx % 1) - KO;\n  oxy = (Kpy % 1) - KO;\n  oxz = (Kpz % 1) - KO;\n\n  oyx = (floor(Kpx) % 7) * K - KO;\n  oyy = (floor(Kpy) % 7) * K - KO;\n  oyz = (floor(Kpz) % 7) * K - KO;\n\n  dxx = Pfx + 0.5 + JITTER * oxx;\n  dxy = Pfx + 0.5 + JITTER * oxy;\n  dxz = Pfx + 0.5 + JITTER * oxz;\n\n  dyx = Pfy - ofx + JITTER * oyx;\n  dyy = Pfy - ofy + JITTER * oyy;\n  dyz = Pfy - ofz + JITTER * oyz;\n\n  let d2x = dxx * dxx + dyx * dyx;\n  let d2y = dxy * dxy + dyy * dyy;\n  let d2z = dxz * dxz + dyz * dyz;\n\n  px = permute(pxz + Piy + oix);\n  py = permute(pxz + Piy + oiy);\n  pz = permute(pxz + Piy + oiz);\n\n  Kpx = px * K;\n  Kpy = py * K;\n  Kpz = pz * K;\n\n  oxx = (Kpx % 1) - KO;\n  oxy = (Kpy % 1) - KO;\n  oxz = (Kpz % 1) - KO;\n\n  oyx = (floor(Kpx) % 7) * K - KO;\n  oyy = (floor(Kpy) % 7) * K - KO;\n  oyz = (floor(Kpz) % 7) * K - KO;\n\n  dxx = Pfx + 0.5 + JITTER * oxx;\n  dxy = Pfx + 0.5 + JITTER * oxy;\n  dxz = Pfx + 0.5 + JITTER * oxz;\n\n  dyx = Pfy - ofx + JITTER * oyx;\n  dyy = Pfy - ofy + JITTER * oyy;\n  dyz = Pfy - ofz + JITTER * oyz;\n\n  const d3x = dxx * dxx + dyx * dyx;\n  const d3y = dxy * dxy + dyy * dyy;\n  const d3z = dxz * dxz + dyz * dyz;\n\n  const d1ax = min(d1x, d2x);\n  const d1ay = min(d1y, d2y);\n  const d1az = min(d1z, d2z);\n\n  d2x = max(d1x, d2x);\n  d2y = max(d1y, d2y);\n  d2z = max(d1z, d2z);\n\n  d2x = max(d2x, d3x);\n  d2y = max(d2y, d3y);\n  d2z = max(d2z, d3z);\n\n  d1x = min(d1ax, d2x);\n  d1y = min(d1ay, d2y);\n  d1z = min(d1az, d2z);\n\n\n  d2x = max(d1ax, d2x);\n  d2y = max(d1ay, d2y);\n  d2z = max(d1az, d2z);\n\n  if (d1y < d1x) {\n    const tmp = d1x;\n    d1x = d1y;\n    d1y = tmp;\n  }\n\n  if (d1z < d1x) {\n    const tmp = d1z;\n    d1z = d1x;\n    d1x = tmp;\n  }\n\n  d1y = min(d1y, d2y);\n  d1z = min(d1z, d2z);\n\n  d1y = min(d1y, d1z);\n  d1y = min(d1y, d2x);\n\n  return [sqrt(d1x), sqrt(d1y)];\n};\n\nexport default cellular2D;\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, min, max, sqrt, permute289 as permute,\n} from './utils';\n/**\n * @ignore\n */\nconst K = 0.14285714285;\n/**\n * @ignore\n */\nconst KO = 0.42857142857;\n/**\n * @ignore\n */\nconst JITTER = 1.0;\n/**\n * @ignore\n */\nconst swapIfLess = (a, b) => ((a < b) ? [a, b] : [b, a]);\n/**\n * @memberof Unpleasant\n * @description\n * The basic idea is to take random points in space (2- or 3-dimensional)\n * and then for every point in space take the distance to the nth-closest\n * point (e.g. the second-closest point) as some kind of color information.\n * More precisely:\n *\n *  Randomly distribute feature points in space\n *  Noise Fn(x) is distance to nth-closest point to x\n *\n * Typical implementations, in three dimensions, divide the space into cubes.\n * A fixed number of positions are generated for each cube.\n * In the case of three dimensions, nine cubes' points need to be generated,\n * to be sure to find the closest.\n *\n * @see https://en.wikipedia.org/wiki/Worley_noise\n * @see https://github.com/ashima/webgl-noise/blob/master/src/cellular2D.glsl\n * @param {!Number} x - x component of a 2D vector\n * @param {!Number} y - y component of a 2D vector\n * @returns {Array} a 2D vector\n */\nconst cellular2D = (x, y) => {\n  const Pix = floor(x) % 289;\n  const Piy = floor(y) % 289;\n\n  const Pfx = x % 1;\n  const Pfy = y % 1;\n\n  const oix = -1.0;\n  const oiy = 0.0;\n  const oiz = 1.0;\n\n  const ofx = -0.5;\n  const ofy = 0.5;\n  const ofz = -1.5;\n\n  const pxx = permute(Pix + oix);\n  const pxy = permute(Pix + oiy);\n  const pxz = permute(Pix + oiz);\n\n  let px = permute(pxx + Piy + oix);\n  let py = permute(pxx + Piy + oiy);\n  let pz = permute(pxx + Piy + oiz);\n\n  let Kpx = px * K;\n  let Kpy = py * K;\n  let Kpz = pz * K;\n\n  let oxx = (Kpx % 1) - KO;\n  let oxy = (Kpy % 1) - KO;\n  let oxz = (Kpz % 1) - KO;\n\n  let oyx = (floor(Kpx) % 7) * K - KO;\n  let oyy = (floor(Kpy) % 7) * K - KO;\n  let oyz = (floor(Kpz) % 7) * K - KO;\n\n  let dxx = Pfx + 0.5 + JITTER * oxx;\n  let dxy = Pfx + 0.5 + JITTER * oxy;\n  let dxz = Pfx + 0.5 + JITTER * oxz;\n\n  let dyx = Pfy - ofx + JITTER * oyx;\n  let dyy = Pfy - ofy + JITTER * oyy;\n  let dyz = Pfy - ofz + JITTER * oyz;\n\n  let d1x = dxx * dxx + dyx * dyx;\n  let d1y = dxy * dxy + dyy * dyy;\n  let d1z = dxz * dxz + dyz * dyz;\n\n  px = permute(pxy + Piy + oix);\n  py = permute(pxy + Piy + oiy);\n  pz = permute(pxy + Piy + oiz);\n\n  Kpx = px * K;\n  Kpy = py * K;\n  Kpz = pz * K;\n\n  oxx = (Kpx % 1) - KO;\n  oxy = (Kpy % 1) - KO;\n  oxz = (Kpz % 1) - KO;\n\n  oyx = (floor(Kpx) % 7) * K - KO;\n  oyy = (floor(Kpy) % 7) * K - KO;\n  oyz = (floor(Kpz) % 7) * K - KO;\n\n  dxx = Pfx + 0.5 + JITTER * oxx;\n  dxy = Pfx + 0.5 + JITTER * oxy;\n  dxz = Pfx + 0.5 + JITTER * oxz;\n\n  dyx = Pfy - ofx + JITTER * oyx;\n  dyy = Pfy - ofy + JITTER * oyy;\n  dyz = Pfy - ofz + JITTER * oyz;\n\n  let d2x = dxx * dxx + dyx * dyx;\n  let d2y = dxy * dxy + dyy * dyy;\n  let d2z = dxz * dxz + dyz * dyz;\n\n  px = permute(pxz + Piy + oix);\n  py = permute(pxz + Piy + oiy);\n  pz = permute(pxz + Piy + oiz);\n\n  Kpx = px * K;\n  Kpy = py * K;\n  Kpz = pz * K;\n\n  oxx = (Kpx % 1) - KO;\n  oxy = (Kpy % 1) - KO;\n  oxz = (Kpz % 1) - KO;\n\n  oyx = (floor(Kpx) % 7) * K - KO;\n  oyy = (floor(Kpy) % 7) * K - KO;\n  oyz = (floor(Kpz) % 7) * K - KO;\n\n  dxx = Pfx + 0.5 + JITTER * oxx;\n  dxy = Pfx + 0.5 + JITTER * oxy;\n  dxz = Pfx + 0.5 + JITTER * oxz;\n\n  dyx = Pfy - ofx + JITTER * oyx;\n  dyy = Pfy - ofy + JITTER * oyy;\n  dyz = Pfy - ofz + JITTER * oyz;\n\n  const d3x = dxx * dxx + dyx * dyx;\n  const d3y = dxy * dxy + dyy * dyy;\n  const d3z = dxz * dxz + dyz * dyz;\n\n  const d1ax = min(d1x, d2x);\n  const d1ay = min(d1y, d2y);\n  const d1az = min(d1z, d2z);\n\n  d2x = max(d1x, d2x);\n  d2y = max(d1y, d2y);\n  d2z = max(d1z, d2z);\n\n  d2x = max(d2x, d3x);\n  d2y = max(d2y, d3y);\n  d2z = max(d2z, d3z);\n\n  d1x = min(d1ax, d2x);\n  d1y = min(d1ay, d2y);\n  d1z = min(d1az, d2z);\n\n\n  d2x = max(d1ax, d2x);\n  d2y = max(d1ay, d2y);\n  d2z = max(d1az, d2z);\n\n  [d1x, d1y] = swapIfLess(d1x, d1y);\n  [d1x, d1z] = swapIfLess(d1x, d1z);\n\n  d1y = min(d1y, d2y);\n  d1z = min(d1z, d2z);\n\n  d1y = min(d1y, d1z);\n  d1y = min(d1y, d2x);\n\n  return [sqrt(d1x), sqrt(d1y)];\n};\n\nexport default cellular2D;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/src/cellular2D.js",
     "access": "public",
@@ -704,6 +704,38 @@
   {
     "__docId__": 54,
     "kind": "function",
+    "name": "swapIfLess",
+    "memberof": "src/cellular2D.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/cellular2D.js~swapIfLess",
+    "access": "public",
+    "export": false,
+    "importPath": "unpleasant/src/cellular2D.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 46,
+    "ignore": true,
+    "params": [
+      {
+        "name": "a",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "b",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 55,
+    "kind": "function",
     "name": "cellular2D",
     "memberof": "src/cellular2D.js",
     "generator": false,
@@ -719,7 +751,7 @@
       "https://en.wikipedia.org/wiki/Worley_noise",
       "https://github.com/ashima/webgl-noise/blob/master/src/cellular2D.glsl"
     ],
-    "lineNumber": 65,
+    "lineNumber": 69,
     "unknown": [
       {
         "tagName": "@description",
@@ -762,10 +794,10 @@
     }
   },
   {
-    "__docId__": 55,
+    "__docId__": 56,
     "kind": "file",
     "name": "src/classicPerlin2D.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, permute289, K_41, abs, fade, mix,\n} from './utils';\n\n/**\n * @memberof Unpleasant\n * Classic Perlin 2D Noise\n * @example\n * import { classicPerlin2DNoise } from 'unpleasant';\n * let noise = classicPerlin2DNoise(Math.random(), Math.random());\n * @param {!Number} x\n * @param {!Number} y\n * @returns {Number}\n */\nconst classicPerlin2D = (x, y) => {\n  const Pix = floor(x) % 289;\n  const Piy = floor(y) % 289;\n  const Piz = floor(x + 1.0) % 289;\n  const Piw = floor(y + 1.0) % 289;\n\n  const Pfx = x % 1;\n  const Pfy = y % 1;\n  const Pfz = (x - 1) % 1;\n  const Pfw = (y - 1) % 1;\n\n  const ix = permute289(permute289(Pix) + Piy);\n  const iy = permute289(permute289(Piz) + Piy);\n  const iz = permute289(permute289(Pix) + Piw);\n  const iw = permute289(permute289(Piz) + Piw);\n\n  const gxx = 2.0 * ((ix * K_41) % 1) - 1.0;\n  const gxy = 2.0 * ((iy * K_41) % 1) - 1.0;\n  const gxz = 2.0 * ((iz * K_41) % 1) - 1.0;\n  const gxw = 2.0 * ((iw * K_41) % 1) - 1.0;\n\n  const gyx = abs(gxx) - 0.5 + floor(gxx + 0.5);\n  const gyy = abs(gxy) - 0.5 + floor(gxy + 0.5);\n  const gyz = abs(gxz) - 0.5 + floor(gxw + 0.5);\n  const gyw = abs(gxw) - 0.5 + floor(gxz + 0.5);\n\n  let g00x = gxx;\n  let g00y = gyx;\n  let g01x = gxy;\n  let g01y = gyy;\n  let g10x = gxz;\n  let g10y = gyz;\n  let g11x = gxw;\n  let g11y = gyw;\n\n  const normx = 1.79284291400159 - 0.85373472095314 * g00x * g00x + g00y * g00y;\n  const normy = 1.79284291400159 - 0.85373472095314 * g01x * g01x + g01y * g01y;\n  const normz = 1.79284291400159 - 0.85373472095314 * g10x * g10x + g10y * g10y;\n  const normw = 1.79284291400159 - 0.85373472095314 * g11x * g11x + g11y * g11y;\n\n  g00x *= normx;\n  g00y *= normx;\n\n  g01x *= normy;\n  g01y *= normy;\n\n  g10x *= normz;\n  g10y *= normz;\n\n  g11x *= normw;\n  g11y *= normw;\n\n  const n00 = g00x * Pfx + g00y * Pfy;\n  const n10 = g10x * Pfz + g10y * Pfy;\n  const n01 = g01x * Pfx + g01y * Pfw;\n  const n11 = g11x * Pfz + g11y * Pfw;\n\n  const fadex = fade(Pfx);\n  const fadey = fade(Pfy);\n\n  const nx = mix(n00, n10, fadex);\n  const ny = mix(n01, n11, fadex);\n\n  const n = mix(nx, ny, fadey);\n  return 2.3 * n;\n};\n\nexport default classicPerlin2D;\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, permute289, K_41, abs, fade, mix, taylorInvSqrt,\n} from './utils';\n\n/**\n * @memberof Unpleasant\n * Classic Perlin 2D Noise\n * @example\n * import { classicPerlin2DNoise } from 'unpleasant';\n * let noise = classicPerlin2DNoise(Math.random(), Math.random());\n * @param {!Number} x\n * @param {!Number} y\n * @returns {Number}\n */\nconst classicPerlin2D = (x, y) => {\n  const Pix = floor(x) % 289;\n  const Piy = floor(y) % 289;\n  const Piz = floor(x + 1.0) % 289;\n  const Piw = floor(y + 1.0) % 289;\n\n  const Pfx = x % 1;\n  const Pfy = y % 1;\n  const Pfz = (x - 1) % 1;\n  const Pfw = (y - 1) % 1;\n\n  const ix = permute289(permute289(Pix) + Piy);\n  const iy = permute289(permute289(Piz) + Piy);\n  const iz = permute289(permute289(Pix) + Piw);\n  const iw = permute289(permute289(Piz) + Piw);\n\n  const gxx = 2.0 * ((ix * K_41) % 1) - 1.0;\n  const gxy = 2.0 * ((iy * K_41) % 1) - 1.0;\n  const gxz = 2.0 * ((iz * K_41) % 1) - 1.0;\n  const gxw = 2.0 * ((iw * K_41) % 1) - 1.0;\n\n  const gyx = abs(gxx) - 0.5 + floor(gxx + 0.5);\n  const gyy = abs(gxy) - 0.5 + floor(gxy + 0.5);\n  const gyz = abs(gxz) - 0.5 + floor(gxw + 0.5);\n  const gyw = abs(gxw) - 0.5 + floor(gxz + 0.5);\n\n  let g00x = gxx;\n  let g00y = gyx;\n  let g01x = gxy;\n  let g01y = gyy;\n  let g10x = gxz;\n  let g10y = gyz;\n  let g11x = gxw;\n  let g11y = gyw;\n\n  const normx = taylorInvSqrt(g00x * g00x + g00y * g00y);\n  const normy = taylorInvSqrt(g01x * g01x + g01y * g01y);\n  const normz = taylorInvSqrt(g10x * g10x + g10y * g10y);\n  const normw = taylorInvSqrt(g11x * g11x + g11y * g11y);\n\n  g00x *= normx;\n  g00y *= normx;\n\n  g01x *= normy;\n  g01y *= normy;\n\n  g10x *= normz;\n  g10y *= normz;\n\n  g11x *= normw;\n  g11y *= normw;\n\n  const n00 = g00x * Pfx + g00y * Pfy;\n  const n10 = g10x * Pfz + g10y * Pfy;\n  const n01 = g01x * Pfx + g01y * Pfw;\n  const n11 = g11x * Pfz + g11y * Pfw;\n\n  const fadex = fade(Pfx);\n  const fadey = fade(Pfy);\n\n  const nx = mix(n00, n10, fadex);\n  const ny = mix(n01, n11, fadex);\n\n  const n = mix(nx, ny, fadey);\n  return 2.3 * n;\n};\n\nexport default classicPerlin2D;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/src/classicPerlin2D.js",
     "access": "public",
@@ -773,7 +805,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 56,
+    "__docId__": 57,
     "kind": "function",
     "name": "classicPerlin2D",
     "memberof": "src/classicPerlin2D.js",
@@ -828,7 +860,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 58,
     "kind": "file",
     "name": "src/generic11D.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport { mix, floor, generic1rand as rand } from './utils';\n/**\n * @memberof Unpleasant\n * @desc\n * 1-dimensional Generic 1 Noise\n * @example\n * import { generic1Noise1D } from 'unpleasant';\n * const noise = generic1Noise1D(Math.random());\n * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n * @param {!Number} x\n * @returns {Number}\n */\nconst generic11D = (x) => {\n  const fl = floor(x);\n  const fc = x % 1;\n\n  return mix(rand(fl), rand(fl + 1.0), fc);\n};\nexport default generic11D;\n",
@@ -839,7 +871,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 58,
+    "__docId__": 59,
     "kind": "function",
     "name": "generic11D",
     "memberof": "src/generic11D.js",
@@ -887,7 +919,7 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 60,
     "kind": "file",
     "name": "src/generic12D.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  mix, floor, smoothstep, generic2rand as rand,\n} from './utils';\n/**\n * @memberof Unpleasant\n * @desc\n * 2-dimensional Generic 1 Noise\n * @example\n * import { generic1Noise2D } from 'unpleasant';\n * const noise = generic1Noise2D(Math.random(), Math.random());\n * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n * @param {!Number} x\n * @param {!Number} y\n * @returns {Number}\n */\nconst generic12D = (x, y) => {\n  const bx = floor(x);\n  const by = floor(y);\n\n  const fx = smoothstep(0.0, 1.0, x % 1);\n  const fy = smoothstep(0.0, 1.0, y % 1);\n\n  const a = mix(rand(bx, by), rand(bx + 1.0, by), fx);\n  const b = mix(rand(bx, by + 1.0), rand(bx + 1.0, by + 1.0), fx);\n  return mix(a, b, fy);\n};\nexport default generic12D;\n",
@@ -898,7 +930,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 60,
+    "__docId__": 61,
     "kind": "function",
     "name": "generic12D",
     "memberof": "src/generic12D.js",
@@ -956,7 +988,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 62,
     "kind": "file",
     "name": "src/generic2.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  mix, generic2rand as rand, floor, smooth,\n} from './utils';\n/**\n * @memberof Unpleasant\n * @desc\n * Generic 2 Noise\n * @example\n * import { generic2Noise } from 'unpleasant';\n * const noise = generic2Noise(Math.random(), Math.random());\n * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n * @param {!Number} x\n * @param {!Number} y\n * @returns {Number}\n */\nconst generic2 = (x, y) => {\n  const ix = floor(x);\n  const iy = floor(y);\n\n  const ux = smooth(x % 1);\n  const uy = smooth(y % 1);\n\n  const a = mix(rand(ix, iy), rand(ix + 1.0, iy), ux);\n  const b = mix(rand(ix, iy + 1.0), rand(ix + 1.0, iy + 1.0), ux);\n\n  const res = mix(a, b, uy);\n  return res * res;\n};\nexport default generic2;\n",
@@ -967,7 +999,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 62,
+    "__docId__": 63,
     "kind": "function",
     "name": "generic2",
     "memberof": "src/generic2.js",
@@ -1025,7 +1057,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 64,
     "kind": "file",
     "name": "src/generic3.js",
     "content": "\n\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, smooth, permute289, mix, K_41,\n} from './utils';\n/**\n * @memberof Unpleasant\n * Generic 3 Noise\n * @example\n * import { generic3Noise } from 'unpleasant';\n * let noise = generic3Noise(Math.random(), Math.random(), Math.random());\n * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n * @param {!Number} x\n * @param {!Number} y\n * @param {!Number} z\n * @return {Number}\n */\nconst generic3 = (x, y, z) => {\n  const ax = floor(x);\n  const ay = floor(y);\n  const az = floor(z);\n\n  const dx = smooth(x - ax);\n  const dy = smooth(y - ay);\n  const dz = smooth(z - az);\n\n  const bx = ax + 1.0;\n  const by = ay + 1.0;\n\n  const k1x = permute289(ax);\n  const k1y = permute289(bx);\n\n  const k2x = permute289(k1x + ay);\n  const k2y = permute289(k1y + ay);\n  const k2z = permute289(k1x + by);\n  const k2w = permute289(k1y + by);\n\n  const cx = k2x + az;\n  const cy = k2y + az;\n  const cz = k2z + az;\n  const cw = k2w + az;\n\n  const k3x = permute289(cx);\n  const k3y = permute289(cy);\n  const k3z = permute289(cz);\n  const k3w = permute289(cw);\n\n  const k4x = permute289(cx + 1);\n  const k4y = permute289(cy + 1);\n  const k4z = permute289(cz + 1);\n  const k4w = permute289(cw + 1);\n\n  const o1x = (k3x * K_41) % 1;\n  const o1y = (k3y * K_41) % 1;\n  const o1z = (k3z * K_41) % 1;\n  const o1w = (k3w * K_41) % 1;\n\n  const o2x = (k4x * K_41) % 1;\n  const o2y = (k4y * K_41) % 1;\n  const o2z = (k4z * K_41) % 1;\n  const o2w = (k4w * K_41) % 1;\n\n  const o3x = mix(o1x, o2x, dz);\n  const o3y = mix(o1y, o2y, dz);\n  const o3z = mix(o1z, o2z, dz);\n  const o3w = mix(o1w, o2w, dz);\n\n  const o4x = mix(o3x, o3y, dx);\n  const o4y = mix(o3z, o3w, dx);\n\n  return mix(o4x, o4y, dy);\n};\n\nexport default generic3;\n",
@@ -1036,7 +1068,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 64,
+    "__docId__": 65,
     "kind": "function",
     "name": "generic3",
     "memberof": "src/generic3.js",
@@ -1098,10 +1130,10 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 66,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\n/**\n * @namespace Unpleasant\n */\nexport { default as generic1Noise1D } from './generic11D';\nexport { default as generic1Noise2D } from './generic12D';\nexport { default as generic2Noise } from './generic2';\nexport { default as generic3Noise } from './generic3';\n\nexport { default as cellular2DNoise } from './cellular2D';\n\nexport { default as basicPerlinNoise } from './basicPerlin';\nexport { default as classicPerlinNoise } from './classicPerlin';\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\n/**\n * @namespace Unpleasant\n */\nexport { default as generic1Noise1D } from './generic11D';\nexport { default as generic1Noise2D } from './generic12D';\nexport { default as generic2Noise } from './generic2';\nexport { default as generic3Noise } from './generic3';\n\nexport { default as cellular2DNoise } from './cellular2D';\n\nexport { default as basicPerlinNoise } from './basicPerlin';\nexport { default as classicPerlin2DNoise } from './classicPerlin2D';\n\nexport { default as simplex2DNoise } from './simplex2D';\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/src/index.js",
     "access": "public",
@@ -1109,10 +1141,159 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 66,
+    "__docId__": 67,
+    "kind": "file",
+    "name": "src/simplex2D.js",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport {\n  floor, permute289, max, taylorInvSqrt, abs,\n} from './utils';\n/**\n * @ignore\n */\nconst C_X = 0.211324865405187;\n/**\n * @ignore\n */\nconst C_Y = 0.366025403784439;\n/**\n * @ignore\n */\nconst C_Z = -0.577350269189626;\n/**\n * @ignore\n */\nconst C_W = 0.024390243902439;\n/**\n * @memberof Unpleasant\n * @desc\n * Simplex 2D Noise\n * @example\n * import { simplex2DNoise } from 'unpleasant';\n * const noise = simplex2DNoise(Math.random(), Math.random());\n * @see https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83\n * @param {!Number} x\n * @param {!Number} y\n * @returns {Number}\n */\nconst simplex2D = (x, y) => {\n  const dotVCY = x * C_Y + y * C_Y;\n  let ix = floor(x + dotVCY);\n  let iy = floor(y + dotVCY);\n\n  const dotICX = ix * C_X + iy * C_X;\n  const x0x = x - ix + dotICX;\n  const x0y = y - iy + dotICX;\n\n  let i1x = 0.0;\n  let i1y = 1.0;\n\n  if (x0x > x0y) {\n    i1x = 1.0;\n    i1y = 0.0;\n  }\n\n  const x12x = x0x + C_X - i1x;\n  const x12y = x0y + C_X - i1y;\n  const x12z = x0x + C_Z;\n  const x12w = x0y + C_Z;\n\n  ix %= 289;\n  iy %= 289;\n\n  const px = permute289(permute289(iy) + ix);\n  const py = permute289(permute289(iy + i1y) + ix + i1x);\n  const pz = permute289(permute289(iy + 1.0) + ix + 1.0);\n\n  let mx = max(0.5 - (x0x * x0x + x0y * x0y), 0);\n  let my = max(0.5 - (x12x * x12x + x12y * x12y), 0);\n  let mz = max(0.5 - (x12z * x12z + x12w * x12w), 0);\n\n  mx *= mx * mx;\n  my *= my * my;\n  mz *= mz * mz;\n\n  const xx = 2.0 * ((px * C_W) % 1) - 1.0;\n  const xy = 2.0 * ((py * C_W) % 1) - 1.0;\n  const xz = 2.0 * ((pz * C_W) % 1) - 1.0;\n\n  const hx = abs(xx) - 0.5;\n  const hy = abs(xy) - 0.5;\n  const hz = abs(xz) - 0.5;\n\n  const oxx = floor(xx + 0.5);\n  const oxy = floor(xy + 0.5);\n  const oxz = floor(xz + 0.5);\n\n  const a0x = xx - oxx;\n  const a0y = xy - oxy;\n  const a0z = xz - oxz;\n\n  mx *= taylorInvSqrt(a0x * a0x + hx * hx);\n  my *= taylorInvSqrt(a0y * a0y + hy * hy);\n  mz *= taylorInvSqrt(a0z * a0z + hz * hz);\n\n  const gx = a0x * x0x + hx * x0y;\n  const gy = a0y * x12x + hy * x12y;\n  const gz = a0z * x12z + hz * x12w;\n\n  return 130 * (mx * gx + my * gy + mz * gz);\n};\n\nexport default simplex2D;\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/src/simplex2D.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 68,
+    "kind": "variable",
+    "name": "C_X",
+    "memberof": "src/simplex2D.js",
+    "static": true,
+    "longname": "src/simplex2D.js~C_X",
+    "access": "public",
+    "export": false,
+    "importPath": "unpleasant/src/simplex2D.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 34,
+    "ignore": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "variable",
+    "name": "C_Y",
+    "memberof": "src/simplex2D.js",
+    "static": true,
+    "longname": "src/simplex2D.js~C_Y",
+    "access": "public",
+    "export": false,
+    "importPath": "unpleasant/src/simplex2D.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 38,
+    "ignore": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "variable",
+    "name": "C_Z",
+    "memberof": "src/simplex2D.js",
+    "static": true,
+    "longname": "src/simplex2D.js~C_Z",
+    "access": "public",
+    "export": false,
+    "importPath": "unpleasant/src/simplex2D.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 42,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 71,
+    "kind": "variable",
+    "name": "C_W",
+    "memberof": "src/simplex2D.js",
+    "static": true,
+    "longname": "src/simplex2D.js~C_W",
+    "access": "public",
+    "export": false,
+    "importPath": "unpleasant/src/simplex2D.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 46,
+    "ignore": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "function",
+    "name": "simplex2D",
+    "memberof": "src/simplex2D.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/simplex2D.js~simplex2D",
+    "access": "public",
+    "export": true,
+    "importPath": "unpleasant/src/simplex2D.js",
+    "importStyle": "simplex2D",
+    "description": "Simplex 2D Noise",
+    "examples": [
+      "import { simplex2DNoise } from 'unpleasant';\nconst noise = simplex2DNoise(Math.random(), Math.random());"
+    ],
+    "see": [
+      "https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83"
+    ],
+    "lineNumber": 59,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Number}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": ""
+      },
+      {
+        "nullable": false,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 73,
     "kind": "file",
     "name": "src/utils.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\n/**\n * @ignore\n */\nexport const {\n  sin, cos, floor, min, max, PI, sqrt,\n  abs,\n} = Math;\n/**\n * @ignore\n */\nexport const mix = (x, y, t) => x + (y - x) * t;\n/**\n * @ignore\n */\nexport const clamp = (a, b, c) => max(a, min(b, c));\n/**\n * @ignore\n */\nexport const smooth = x => x * x * (3.0 - 2.0 * x);\n/**\n * @ignore\n */\nexport const smoothstep = (x, y, t) => {\n  const a = clamp((t - x) / (y - x), 0.0, 1.0);\n  return smooth(a * a * (3.0 - 2.0 * a));\n};\n/**\n * @ignore\n */\nexport const NOISE_CONSTANT = 43758.5453123;\n/**\n * @ignore\n */\nexport const MOD_7_CONST = 0.14285714285;\n/**\n * @ignore\n */\nexport const K_41 = 0.0243902439;\n/**\n * @ignore\n */\nexport const permute289 = x => ((34.0 * x + 1.0) * x) % 289;\n/**\n * @ignore\n */\nexport const generic1rand = x => (sin(x) * NOISE_CONSTANT) % 1;\n/**\n * @ignore\n */\nexport const generic2rand = (x, y) => (sin(x * 12.9898 + y * 4.1414) * NOISE_CONSTANT) % 1;\n/**\n * @ignore\n */\nexport const perlinRand = (x, y) => (sin(x * 12.9898 + y * 78.233) * NOISE_CONSTANT);\n/**\n * @ignore\n */\nexport const fade = t => t * t * t * (t * (t * 6.0 - 15.0) + 10.0);\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\n/**\n * @ignore\n */\nexport const {\n  sin, cos, floor, min, max, PI, sqrt,\n  abs,\n} = Math;\n/**\n * @ignore\n */\nexport const mix = (x, y, t) => x + (y - x) * t;\n/**\n * @ignore\n */\nexport const clamp = (a, b, c) => max(a, min(b, c));\n/**\n * @ignore\n */\nexport const smooth = x => x * x * (3.0 - 2.0 * x);\n/**\n * @ignore\n */\nexport const smoothstep = (x, y, t) => {\n  const a = clamp((t - x) / (y - x), 0.0, 1.0);\n  return smooth(a * a * (3.0 - 2.0 * a));\n};\n/**\n * @ignore\n */\nexport const NOISE_CONSTANT = 43758.5453123;\n/**\n * @ignore\n */\nexport const MOD_7_CONST = 0.14285714285;\n/**\n * @ignore\n */\nexport const K_41 = 0.0243902439;\n/**\n * @ignore\n */\nexport const permute289 = x => ((34.0 * x + 1.0) * x) % 289;\n/**\n * @ignore\n */\nexport const generic1rand = x => (sin(x) * NOISE_CONSTANT) % 1;\n/**\n * @ignore\n */\nexport const generic2rand = (x, y) => (sin(x * 12.9898 + y * 4.1414) * NOISE_CONSTANT) % 1;\n/**\n * @ignore\n */\nexport const perlinRand = (x, y) => (sin(x * 12.9898 + y * 78.233) * NOISE_CONSTANT);\n/**\n * @ignore\n */\nexport const fade = t => t * t * t * (t * (t * 6.0 - 15.0) + 10.0);\n/**\n * @ignore\n */\nexport const taylorInvSqrt = x => 1.79284291400159 - 0.85373472095314 * x;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/src/utils.js",
     "access": "public",
@@ -1120,7 +1301,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 67,
+    "__docId__": 74,
     "kind": "variable",
     "name": "sin",
     "memberof": "src/utils.js",
@@ -1140,7 +1321,7 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 75,
     "kind": "function",
     "name": "mix",
     "memberof": "src/utils.js",
@@ -1178,7 +1359,7 @@
     "return": null
   },
   {
-    "__docId__": 69,
+    "__docId__": 76,
     "kind": "function",
     "name": "clamp",
     "memberof": "src/utils.js",
@@ -1216,7 +1397,7 @@
     "return": null
   },
   {
-    "__docId__": 70,
+    "__docId__": 77,
     "kind": "function",
     "name": "smooth",
     "memberof": "src/utils.js",
@@ -1242,7 +1423,7 @@
     "return": null
   },
   {
-    "__docId__": 71,
+    "__docId__": 78,
     "kind": "function",
     "name": "smoothstep",
     "memberof": "src/utils.js",
@@ -1284,7 +1465,7 @@
     }
   },
   {
-    "__docId__": 72,
+    "__docId__": 79,
     "kind": "variable",
     "name": "NOISE_CONSTANT",
     "memberof": "src/utils.js",
@@ -1304,7 +1485,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 80,
     "kind": "variable",
     "name": "MOD_7_CONST",
     "memberof": "src/utils.js",
@@ -1324,7 +1505,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 81,
     "kind": "variable",
     "name": "K_41",
     "memberof": "src/utils.js",
@@ -1344,7 +1525,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 82,
     "kind": "function",
     "name": "permute289",
     "memberof": "src/utils.js",
@@ -1370,7 +1551,7 @@
     "return": null
   },
   {
-    "__docId__": 76,
+    "__docId__": 83,
     "kind": "function",
     "name": "generic1rand",
     "memberof": "src/utils.js",
@@ -1396,7 +1577,7 @@
     "return": null
   },
   {
-    "__docId__": 77,
+    "__docId__": 84,
     "kind": "function",
     "name": "generic2rand",
     "memberof": "src/utils.js",
@@ -1428,7 +1609,7 @@
     "return": null
   },
   {
-    "__docId__": 78,
+    "__docId__": 85,
     "kind": "function",
     "name": "perlinRand",
     "memberof": "src/utils.js",
@@ -1460,7 +1641,7 @@
     "return": null
   },
   {
-    "__docId__": 79,
+    "__docId__": 86,
     "kind": "function",
     "name": "fade",
     "memberof": "src/utils.js",
@@ -1486,8 +1667,34 @@
     "return": null
   },
   {
+    "__docId__": 87,
+    "kind": "function",
+    "name": "taylorInvSqrt",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~taylorInvSqrt",
+    "access": "public",
+    "export": true,
+    "importPath": "unpleasant/src/utils.js",
+    "importStyle": "{taylorInvSqrt}",
+    "description": "",
+    "lineNumber": 90,
+    "ignore": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
     "kind": "index",
-    "content": "# unpleasant.js\n💫 Noise functions for JS \n",
+    "content": "# unpleasant.js\n\n💫 Noise functions for JS \n\n[![Build Status](https://travis-ci.org/LXSMNSYC/unpleasant.js.svg?branch=master)](https://travis-ci.org/LXSMNSYC/unpleasant.js)\n[![codecov](https://codecov.io/gh/LXSMNSYC/unpleasant.js/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/unpleasant.js)\n\n## Introdcution\nunpleasant.js provides noise functions for JS, useful for procedural texturing and other graphics-related stuffs.\n\n## Usage\n\n## Build\n\n## License\nMIT License\n\nCopyright (c) 2019 Alexis Munsayac\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n",
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/README.md",
     "name": "./README.md",
     "static": true,
@@ -1495,10 +1702,269 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"unpleasant\",\n  \"version\": \"0.1.0\",\n  \"description\": \"💫 Noise functions for JS \",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"nyc --reporter=html mocha -R spec\",\n    \"esdoc\": \"./node_modules/.bin/esdoc\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/unpleasant.js.git\"\n  },\n  \"keywords\": [\n    \"noise\",\n    \"webgl\",\n    \"math\",\n    \"vector\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/unpleasant.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/unpleasant.js#readme\",\n  \"dependencies\": {\n    \"eslint-plugin-import\": \"^2.16.0\"\n  },\n  \"devDependencies\": {\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"unpleasant\",\n  \"version\": \"0.1.0\",\n  \"description\": \"💫 Noise functions for JS \",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"nyc --reporter=html ./node_modules/.bin/mocha --require @babel/register -R spec\",\n    \"esdoc\": \"./node_modules/.bin/esdoc\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/unpleasant.js.git\"\n  },\n  \"keywords\": [\n    \"noise\",\n    \"webgl\",\n    \"math\",\n    \"vector\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/unpleasant.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/unpleasant.js#readme\",\n  \"dependencies\": {\n    \"eslint-plugin-import\": \"^2.16.0\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
+  },
+  {
+    "__docId__": 88,
+    "kind": "testFile",
+    "name": "test/test.js",
+    "content": "import assert from 'assert';\nimport {\n  generic3Noise, generic2Noise, generic1Noise1D, generic1Noise2D,\n  basicPerlinNoise, classicPerlin2DNoise, cellular2DNoise, simplex2DNoise,\n} from '../src';\n\nconst randomizer = () => Math.random() * 10000;\n\n/**\n * @test {unpleasant}\n */\ndescribe('unpleasant', () => {\n  /**\n   * @test {unpleasant#generic1Noise1D}\n   */\n  describe('.generic1Noise1D', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof generic1Noise1D(randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#generic1Noise2D}\n   */\n  describe('.generic1Noise2D', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof generic1Noise2D(randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#generic2Noise}\n   */\n  describe('.generic2Noise', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof generic2Noise(randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#generic3Noise}\n   */\n  describe('.generic3Noise', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof generic3Noise(randomizer(), randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n\n\n  /**\n   * @test {unpleasant#basicPerlinNoise}\n   */\n  describe('.basicPerlinNoise', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof basicPerlinNoise(randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#classicPerlin2DNoise}\n   */\n  describe('.classicPerlin2DNoise', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof classicPerlin2DNoise(randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#simplex2DNoise}\n   */\n  describe('.simplex2DNoise', () => {\n    it('should return a number', () => {\n      for (let i = 0; i < 1000; i++) {\n        assert(typeof simplex2DNoise(randomizer(), randomizer()) === 'number');\n      }\n    });\n  });\n  /**\n   * @test {unpleasant#cellular2DNoise}\n   */\n  describe('.cellular2DNoise', () => {\n    it('should return an array of 2 numbers', () => {\n      for (let i = 0; i < 1000; i++) {\n        const result = cellular2DNoise(randomizer(), randomizer());\n        assert(result instanceof Array);\n        assert(typeof result[0] === 'number');\n        assert(typeof result[1] === 'number');\n      }\n    });\n  });\n});\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/unpleasant.js/test/test.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 89,
+    "kind": "test",
+    "name": "describe0",
+    "testId": 0,
+    "memberof": "test/test.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "test/test.js~describe0",
+    "access": "public",
+    "description": "unpleasant",
+    "lineNumber": 12,
+    "testTargets": [
+      "unpleasant"
+    ]
+  },
+  {
+    "__docId__": 90,
+    "kind": "test",
+    "name": "describe1",
+    "testId": 1,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe1",
+    "access": "public",
+    "description": ".generic1Noise1D",
+    "lineNumber": 16,
+    "testTargets": [
+      "unpleasant#generic1Noise1D"
+    ]
+  },
+  {
+    "__docId__": 91,
+    "kind": "test",
+    "name": "it2",
+    "testId": 2,
+    "memberof": "test/test.js~describe0.describe1",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe1.it2",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 17
+  },
+  {
+    "__docId__": 92,
+    "kind": "test",
+    "name": "describe3",
+    "testId": 3,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe3",
+    "access": "public",
+    "description": ".generic1Noise2D",
+    "lineNumber": 26,
+    "testTargets": [
+      "unpleasant#generic1Noise2D"
+    ]
+  },
+  {
+    "__docId__": 93,
+    "kind": "test",
+    "name": "it4",
+    "testId": 4,
+    "memberof": "test/test.js~describe0.describe3",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe3.it4",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 27
+  },
+  {
+    "__docId__": 94,
+    "kind": "test",
+    "name": "describe5",
+    "testId": 5,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe5",
+    "access": "public",
+    "description": ".generic2Noise",
+    "lineNumber": 36,
+    "testTargets": [
+      "unpleasant#generic2Noise"
+    ]
+  },
+  {
+    "__docId__": 95,
+    "kind": "test",
+    "name": "it6",
+    "testId": 6,
+    "memberof": "test/test.js~describe0.describe5",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe5.it6",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 37
+  },
+  {
+    "__docId__": 96,
+    "kind": "test",
+    "name": "describe7",
+    "testId": 7,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe7",
+    "access": "public",
+    "description": ".generic3Noise",
+    "lineNumber": 46,
+    "testTargets": [
+      "unpleasant#generic3Noise"
+    ]
+  },
+  {
+    "__docId__": 97,
+    "kind": "test",
+    "name": "it8",
+    "testId": 8,
+    "memberof": "test/test.js~describe0.describe7",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe7.it8",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 47
+  },
+  {
+    "__docId__": 98,
+    "kind": "test",
+    "name": "describe9",
+    "testId": 9,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe9",
+    "access": "public",
+    "description": ".basicPerlinNoise",
+    "lineNumber": 58,
+    "testTargets": [
+      "unpleasant#basicPerlinNoise"
+    ]
+  },
+  {
+    "__docId__": 99,
+    "kind": "test",
+    "name": "it10",
+    "testId": 10,
+    "memberof": "test/test.js~describe0.describe9",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe9.it10",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 59
+  },
+  {
+    "__docId__": 100,
+    "kind": "test",
+    "name": "describe11",
+    "testId": 11,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe11",
+    "access": "public",
+    "description": ".classicPerlin2DNoise",
+    "lineNumber": 68,
+    "testTargets": [
+      "unpleasant#classicPerlin2DNoise"
+    ]
+  },
+  {
+    "__docId__": 101,
+    "kind": "test",
+    "name": "it12",
+    "testId": 12,
+    "memberof": "test/test.js~describe0.describe11",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe11.it12",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 69
+  },
+  {
+    "__docId__": 102,
+    "kind": "test",
+    "name": "describe13",
+    "testId": 13,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe13",
+    "access": "public",
+    "description": ".simplex2DNoise",
+    "lineNumber": 78,
+    "testTargets": [
+      "unpleasant#simplex2DNoise"
+    ]
+  },
+  {
+    "__docId__": 103,
+    "kind": "test",
+    "name": "it14",
+    "testId": 14,
+    "memberof": "test/test.js~describe0.describe13",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe13.it14",
+    "access": "public",
+    "description": "should return a number",
+    "lineNumber": 79
+  },
+  {
+    "__docId__": 104,
+    "kind": "test",
+    "name": "describe15",
+    "testId": 15,
+    "memberof": "test/test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/test.js~describe0.describe15",
+    "access": "public",
+    "description": ".cellular2DNoise",
+    "lineNumber": 88,
+    "testTargets": [
+      "unpleasant#cellular2DNoise"
+    ]
+  },
+  {
+    "__docId__": 105,
+    "kind": "test",
+    "name": "it16",
+    "testId": 16,
+    "memberof": "test/test.js~describe0.describe15",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/test.js~describe0.describe15.it16",
+    "access": "public",
+    "description": "should return an array of 2 numbers",
+    "lineNumber": 89
   }
 ]
