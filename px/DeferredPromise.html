@@ -235,7 +235,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line109">line 109</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -384,7 +384,7 @@ thrown errors are interpreted as a rejected value.</p>
 
     
 
-    <h4 class="name" id=".reject"><span class="type-signature">(static) </span>reject<span class="signature">(value)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".reject"><span class="type-signature">(static) </span>reject<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="DeferredPromise.html">DeferredPromise</a>}</span></h4>
 
     
 
@@ -396,7 +396,7 @@ thrown errors are interpreted as a rejected value.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line96">line 96</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line102">line 102</a>
     </li></ul></dd>
     
 
@@ -447,6 +447,11 @@ thrown errors are interpreted as a rejected value.</p>
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>DeferredPromise.reject("Hello World").catch(console.log);</code></pre>
+
+
 
 
     <h5>Parameters:</h5>
@@ -512,6 +517,24 @@ thrown errors are interpreted as a rejected value.</p>
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="DeferredPromise.html">DeferredPromise</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -520,7 +543,7 @@ thrown errors are interpreted as a rejected value.</p>
 
     
 
-    <h4 class="name" id=".resolve"><span class="type-signature">(static) </span>resolve<span class="signature">(value)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".resolve"><span class="type-signature">(static) </span>resolve<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="DeferredPromise.html">DeferredPromise</a>}</span></h4>
 
     
 
@@ -532,7 +555,7 @@ thrown errors are interpreted as a rejected value.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line88">line 88</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -583,6 +606,11 @@ thrown errors are interpreted as a rejected value.</p>
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>DeferredPromise.resolve("Hello World").then(console.log);</code></pre>
+
+
 
 
     <h5>Parameters:</h5>
@@ -648,6 +676,24 @@ thrown errors are interpreted as a rejected value.</p>
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="DeferredPromise.html">DeferredPromise</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -668,7 +714,7 @@ thrown errors are interpreted as a rejected value.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line133">line 133</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -822,7 +868,7 @@ thrown errors are interpreted as a rejected value.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line185">line 185</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -964,7 +1010,7 @@ before running the executor.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line142">line 142</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -1013,6 +1059,12 @@ before running the executor.</p>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>DeferredPromise.resolve(50).finally(() => console.log("Finally"));
+DeferredPromise.reject(50).finally(() => console.log("Finally"));</code></pre>
 
 
 
@@ -1106,7 +1158,7 @@ before running the executor.</p>
 
     
 
-    <h4 class="name" id="retry"><span class="type-signature"></span>retry<span class="signature">(predicate<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 class="name" id="retry"><span class="type-signature"></span>retry<span class="signature">(fn<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
     
 
@@ -1118,7 +1170,7 @@ before running the executor.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line158">line 158</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -1205,7 +1257,7 @@ will return a rejected Promise with the propagated error.</p>
 
         <tr>
             
-                <td class="name"><code>predicate</code></td>
+                <td class="name"><code>fn</code></td>
             
 
             <td class="type">
@@ -1291,7 +1343,7 @@ will return a rejected Promise with the propagated error.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line124">line 124</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line130">line 130</a>
     </li></ul></dd>
     
 
@@ -1488,7 +1540,7 @@ will return a rejected Promise with the propagated error.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="px.js.html">px.js</a>, <a href="px.js.html#line198">line 198</a>
+        <a href="px.js.html">px.js</a>, <a href="px.js.html#line206">line 206</a>
     </li></ul></dd>
     
 
@@ -1596,7 +1648,7 @@ will return a rejected Promise with the propagated error.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 06 2019 15:53:31 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 07 2019 12:52:51 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
