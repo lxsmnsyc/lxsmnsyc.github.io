@@ -38,7 +38,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/lxsmnsyc/relays.js" target="_blank" class="menu-item" id="website_link" >Github Repo</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-andGate.html">AND Gate</a></li><li><a href="tutorial-byteMultiplexer.html">Byte Multiplexer</a></li><li><a href="tutorial-sleepyAdder.html">Sleepy Adder</a></li></ul><h3>Classes</h3><ul><li><a href="Relay.html">Relay</a><ul class='methods'><li data-type='method'><a href="Relay.html#connectFrom">connectFrom</a></li><li data-type='method'><a href="Relay.html#connectTo">connectTo</a></li><li data-type='method'><a href="Relay.html#disconnectFrom">disconnectFrom</a></li><li data-type='method'><a href="Relay.html#disconnectTo">disconnectTo</a></li><li data-type='method'><a href="Relay.html#pass">pass</a></li><li data-type='method'><a href="Relay.html#receive">receive</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/lxsmnsyc/relays.js" target="_blank" class="menu-item" id="website_link" >Github Repo</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-andGate.html">AND Gate</a></li><li><a href="tutorial-byteMultiplexer.html">Byte Multiplexer</a></li><li><a href="tutorial-sleepyAdder.html">Sleepy Adder</a></li></ul><h3>Classes</h3><ul><li><a href="Relay.html">Relay</a><ul class='methods'><li data-type='method'><a href="Relay.html#connectFrom">connectFrom</a></li><li data-type='method'><a href="Relay.html#connectTo">connectTo</a></li><li data-type='method'><a href="Relay.html#disconnectFrom">disconnectFrom</a></li><li data-type='method'><a href="Relay.html#disconnectTo">disconnectTo</a></li><li data-type='method'><a href="Relay.html#isConnected">isConnected</a></li><li data-type='method'><a href="Relay.html#isConnectedBothways">isConnectedBothways</a></li><li data-type='method'><a href="Relay.html#isConnectedFrom">isConnectedFrom</a></li><li data-type='method'><a href="Relay.html#isConnectedTo">isConnectedTo</a></li><li data-type='method'><a href="Relay.html#pass">pass</a></li><li data-type='method'><a href="Relay.html#receive">receive</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -85,7 +85,7 @@
 /**
  * @ignore
  */
-const isPromise = obj =>!!obj &amp;&amp; (typeof obj === 'object' || typeof obj === 'function') &amp;&amp; typeof obj.then === 'function';
+const isPromise = (obj =>!!obj &amp;&amp; (typeof obj === 'object' || typeof obj === 'function') &amp;&amp; typeof obj.then === 'function') || result instanceof Promise;
 /**
  * @ignore
  */
@@ -229,7 +229,7 @@ class Relay{
                 this._output = output.filter(x => x !== outputRelay);
             }
 
-            if(!input.includes(this)){
+            if(input.includes(this)){
                 outputRelay._input = input.filter(x => x !== this);
             }
         }
@@ -249,9 +249,57 @@ class Relay{
         return this;
     }
     /**
+     * Checks if the given relay is connected to an output relay
+     * @param {Relay} outputRelay 
+     * @returns {boolean}
+     */
+    isConnectedTo(outputRelay){
+        /**
+         * Relay check
+         * @ignore
+         */
+        if(outputRelay instanceof Relay){
+            return this._output.includes(outputRelay);
+        }
+        return false;
+    }
+    /**
+     * Checks if the given relay is connected to an input relay
+     * @param {Relay} inputRelay 
+     * @returns {boolean}
+     */
+    isConnectedFrom(inputRelay){
+        /**
+         * Relay check
+         * @ignore
+         */
+        if(inputRelay instanceof Relay){
+            return this._input.includes(inputRelay);
+        }
+        return false;
+    }
+    /**
+     * Checks if the given relay is connected to another relay
+     * in any way.
+     * @param {Relay} relay
+     * @returns {boolean} 
+     */
+    isConnected(relay){
+        return this.isConnectedTo(relay) || this.isConnectedFrom(relay);
+    }
+    /**
+     * Checks if the given relay and the othe relay are connected
+     * to each other
+     * @param {Relay} relay
+     * @returns {boolean} 
+     */
+    isConnectedBothways(relay){
+        return this.isConnected(relay) &amp;&amp; relay.isConnected(this);
+    }
+    /**
      * Receive inputs and process them if the required amount of inputs are
      * met or save the inputs as a pending input
-     * @param {...*} args 
+     * @param {...any} args 
      * @return {Relay} for chaining purposes, the given relay is returned. 
      */
     receive(...args){
@@ -343,9 +391,7 @@ class Relay{
              */
             processArgs(received.slice(0, inputSize));
             this._received = received.slice(inputSize);
-            
         }
-
         /**
          * Return the reference for chaining
          * @ignore
@@ -378,7 +424,7 @@ module.exports = Relay;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 08 2019 11:09:42 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 08 2019 11:44:28 GMT+0800 (Philippine Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
