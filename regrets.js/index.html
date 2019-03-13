@@ -48,6 +48,9 @@
 </nav>
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="regrets-js">regrets.js</h1><p>&#x23F0; Asynchronous control structures in JS</p>
+<p><a href="https://nodei.co/npm/regrets-js/"><img src="https://nodei.co/npm/regrets-js.png" alt="NPM"></a></p>
+<p><a href="http://hits.dwyl.io/lxsmnsyc/regrets.js"><img src="http://hits.dwyl.io/lxsmnsyc/regrets.js.svg" alt="HitCount"></a>
+<a href="https://www.jsdelivr.com/package/npm/regrets-js"><img src="https://data.jsdelivr.com/v1/package/npm/regrets-js/badge" alt></a></p>
 <table>
 <thead>
 <tr>
@@ -77,10 +80,27 @@
 <li>boolean expressions (and, or, not)</li>
 <li>comparisons (eq, ne, gt, lt, ge, le)</li>
 <li>switch-case-default</li>
-<li>for</li>
 <li>foreach</li>
 </ul>
-<h2 id="usage">Usage</h2><h2 id="build">Build</h2><p>Clone the repo first then run in Terminal:</p>
+<p>You can read more here: <a href="https://lxsmnsyc.github.io/regrets.js/">https://lxsmnsyc.github.io/regrets.js/</a></p>
+<h2 id="usage">Usage</h2><h3 id="installation">Installation</h3><p>NPM</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm i regrets-js</code>
+</code></pre>
+<p>CDN</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/regrets-js/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+<h3 id="loading-the-module">Loading the module</h3><p>CommonJS</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const regrets = require(&apos;regrets-js&apos;);</code>
+</code></pre>
+<h3 id="example">Example</h3><h4 id="delayed-odd-or-even">Delayed odd or even</h4><p>Checks asynchronously if the number is an odd or an even number.</p>
+<p>The result is resolved after 5 seconds.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const sleep = (x, y) =&gt; new Promise(z =&gt; setTimeout(z, y, x));
+
+const checkParity = x =&gt; new regrets.if(sleep(x % 2 === 0, 5000))
+  .then(() =&gt; console.log(&apos;The number is even&apos;))
+  .else(() =&gt; console.log(&apos;The number is odd))</code>
+</code></pre>
+<h2 id="build">Build</h2><p>Clone the repo first then run in Terminal:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
 </code></pre>
 <p>This installs the dependencies, then run:</p>
