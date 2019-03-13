@@ -100,6 +100,23 @@ const checkParity = x =&gt; new regrets.if(sleep(x % 2 === 0, 5000))
   .then(() =&gt; console.log(&apos;The number is even&apos;))
   .else(() =&gt; console.log(&apos;The number is odd&apos;))</code>
 </code></pre>
+<h4 id="sleepy-switch">Sleepy Switch</h4><pre><code class="lang-js"><code class="source-code prettyprint">const sleep = (x, y) =&gt; new Promise(z =&gt; setTimeout(z, y, x));
+
+const sleepySwitch = x =&gt; new regrets.switch(sleep(x % 3, 2500))
+  .case(0).do(() =&gt; console.log(&apos;The number is a multiple of 3&apos;)).break()
+  .case(1).do(() =&gt; console.log(&apos;The number is 1 greater than a multiple of 3&apos;)).break()
+  .default(() =&gt; console.log(&apos;The number is 2 greater than a multiple of 3&apos;))
+
+sleepySwitch(14634)
+sleepySwitch(1243)
+sleepySwitch(5432)</code>
+</code></pre>
+<h4 id="iterate-items-at-an-interval">Iterate items at an interval</h4><pre><code class="lang-js"><code class="source-code prettyprint">const sleep = (x, y) =&gt; new Promise(z =&gt; setTimeout(z, y, x));
+
+const interval = (x, y) =&gt; new regrets.forEach(x).do(v =&gt; sleep(v, y).then(console.log));
+
+interval([1, 2, 3, 4, 5], 500);</code>
+</code></pre>
 <h2 id="build">Build</h2><p>Clone the repo first then run in Terminal:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
 </code></pre>
