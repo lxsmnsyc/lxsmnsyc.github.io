@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/index.js",
-    "content": "\n/* eslint-disable no-plusplus */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the 'Software'), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Array} https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array\n */\n/**\n * @ignore\n */\nconst { isNaN } = Number;\n\n/**\n * @desc\n * Represents an infinite-size Array.\n */\nexport default class Endless {\n  /**\n   * @desc\n   * Creates an Endless from a function\n   * that generates values given an index.\n   * @param {EndlessCallback} expr\n   */\n  constructor(expr) {\n    /**\n     * @typdef {function} EndlessCallback\n     * @param {number} index\n     * @return {any}\n     */\n    /**\n     * @ignore\n     */\n    this.expr = expr;\n\n    const memory = [];\n    /**\n     * @ignore\n     */\n    this.memory = memory;\n\n    /**\n     * @ignore\n     */\n    this.generator = (() => {\n      let i = 0;\n      let s = 0;\n\n      return () => {\n        while (1) {\n          const r = expr(i++);\n\n          if (typeof r !== 'undefined') {\n            // eslint-disable-next-line no-return-assign\n            return (memory[s++] = r);\n          }\n        }\n      };\n    })();\n\n    /**\n     * To gain access to the [] operator, we need to wrap\n     * the Endless instance into a Proxy instance.\n     * @ignore\n     */\n    return new Proxy(this, {\n      get: (t, k) => ((k in t && t[k]) || (!isNaN(k) ? this.get(k) : undefined)),\n      // eslint-disable-next-line no-return-assign\n      set: (_t, k, v) => (!isNaN(k) && (memory[k] = v)),\n    });\n  }\n\n  /**\n   * @ignore\n   */\n  get(i) {\n    const { memory } = this;\n\n    while (typeof memory[i] === 'undefined') {\n      this.generator();\n    }\n\n    return memory[i];\n  }\n\n  /**\n   * @desc\n   * Flattens an Endless of finite lists into an Endless of elements.\n   * That is, remove one level of nesting.\n   * @example\n   * const e = new Endless(x => [x, x*2]);\n   * const f = e.flat();\n   * f.take(4); // 0, 0, 1, 2\n   * @return {Endless}\n   */\n  flat() {\n    let c = [];\n    let n = 0;\n    return new Endless((x) => {\n      while (typeof c[x] === 'undefined') {\n        c = c.concat(this[n++]);\n      }\n      return c[x];\n    });\n  }\n\n  /**\n   * @desc\n   * Expands all elements of an Endless into finite lists\n   * and flattens them.\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.flatMap(x => [x, x*2]);\n   * f.take(4); // 0, 0, 1, 2\n   * @param {FlatMapCallback} mutator\n   * @return {Endless}\n   */\n  flatMap(mutator) {\n    /**\n     * @typedef {function} FlatMapCallback\n     * @param {!any} element an element of an Endless\n     * @return {Array}\n     */\n    return this.map(x => mutator(x)).flat();\n  }\n\n  /**\n   * @desc\n   * Apply a mapping function to each element of an Endless,\n   * yielding a new Endless of results\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.map(x => x*2);\n   * f.take(4); // 0, 2, 4, 6\n   * @param {MapCallback} expr\n   * @return {Endless}\n   */\n  map(expr) {\n    /**\n     * @typdef {function} MapCallback\n     * @param {!any} element an element of an Endless\n     * @return {any}\n     */\n    return new Endless(x => expr(this[x]));\n  }\n\n  /**\n   * @desc\n   * Select the elements of a list that satisfy a predicate.\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.filter(x => x % 3 === 0);\n   * f.take(4); // 0, 3, 6, 9\n   * @param {FilterCallback} expr\n   * @return {Endless}\n   */\n  filter(expr) {\n    /**\n     * @typdef {function} FilterCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    return this.map(x => (expr(x) ? x : undefined));\n  }\n\n  /**\n   * @desc\n   * Finds the index of the first element that satisfy a predicate.\n   * @example\n   * new Endless(x => x).find(x => x % 5 === 0); // 5\n   * @param {FindCallback} expr\n   * @return {number}\n   */\n  find(expr) {\n    /**\n     * @typdef {function} FindCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    let index = 0;\n    while (!expr(this[index])) index += 1;\n    return index;\n  }\n\n  /**\n   * @desc\n   * Selects the indeces of the elements that satisfy a predicate.\n   * @example\n   * const ex = new Endless(x => x + 1).findIndeces(x => x % 2 === 0);\n   * ex.take(5); // [1, 3, 5, 7, 9]\n   * @param {FindIndecesCallback} expr\n   * @return {Endless}\n   */\n  findIndeces(expr) {\n    /**\n     * @typdef {function} FindIndecesCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    return new Endless(x => (expr(this[x]) ? x : undefined));\n  }\n\n  /**\n   * @desc\n   * Finds the index of the first element that is equal to the given value.\n   * @example\n   * new Endless(x => x).indexOf(100); // 100\n   * @param {!any} value\n   * @return {number}\n   */\n  indexOf(value) {\n    return this.find(x => x === value);\n  }\n\n  /**\n   * @desc\n   * Deletes the first element that satisfy the predicate.\n   * @example\n   * const ex = new Endless(x => x).deleteBy(x => x > 0 && x % 2 === 0);\n   * ex.take(5); // [0, 1, 3, 4, 5]\n   * @param {DeleteByCallback} expr\n   * @return {Endless}\n   */\n  deleteBy(expr) {\n    /**\n     * @typdef {function} DeleteByCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    const index = this.find(expr);\n    return new Endless(x => (x === index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * Deletes the first element that is equal to the given value.\n   * @example\n   * const ex = new Endless(x => x).delete(0);\n   * ex.take(5); // [1, 2, 3, 4, 5]\n   * @param {!any} value\n   * @return {Endless}\n   */\n  delete(value) {\n    return this.deleteBy(x => x === value);\n  }\n\n  /**\n   * @desc\n   * Skips the first set of elements.\n   * @example\n   * const ex = new Endless(x => x).skip(10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  skip(amount) {\n    return new Endless(x => this[x + amount]);\n  }\n\n  /**\n   * @desc\n   * Skips elements while they satisfy a predicate.\n   * @example\n   * const ex = new Endless(x => x).skipWhile(x => x < 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {SkipWhileCallback} expr\n   * @return {Endless}\n   */\n  skipWhile(expr) {\n    /**\n     * @typdef {function} SkipWhileCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    const index = this.find(x => !expr(x));\n    return new Endless(x => (x < index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * Skips elements until an element satifies a predicate.\n   * @example\n   * const ex = new Endless(x => x).skipUntil(x => x === 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {SkipUntilCallback} expr\n   * @return {Endless}\n   */\n  skipUntil(expr) {\n    /**\n     * @typdef {function} SkipUntilCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    const index = this.find(x => expr(x));\n    return new Endless(x => (x < index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * alias for 'skip'\n   * @example\n   * const ex = new Endless(x => x).drop(10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skip}\n   * @param {number} amount\n   * @return {Endless}\n   */\n  drop(amount) {\n    return this.skip(amount);\n  }\n\n  /**\n   * @desc\n   * alias for 'skipWhile'\n   * @example\n   * const ex = new Endless(x => x).dropWhile(x => x < 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skipWhile}\n   * @param {SkipWhileCallback} expr\n   * @return {Endless}\n   */\n  dropWhile(expr) {\n    return this.skipWhile(expr);\n  }\n\n  /**\n   * @desc\n   * alias for 'skipUntil'\n   * @example\n   * const ex = new Endless(x => x).dropUntil(x => x === 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skipUntil}\n   * @param {SkipUntilCallback} expr\n   * @return {Endless}\n   */\n  dropUntil(expr) {\n    return this.skipUntil(expr);\n  }\n\n  /**\n   * @desc\n   * Selects elements on every given amount.\n   * @example\n   * const ex = new Endless(x => x).step(2);\n   * ex.take(5); // [0, 2, 4, 6, 8]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  step(amount) {\n    return new Endless(x => this[x * amount]);\n  }\n\n  /**\n   * @desc\n   * Concats an array at the beginning of an Endless\n   * @example\n   * const ex = new Endless(x => x).startWith([1, 2, 3, 4, 5]);\n   * ex.take(10); // [1, 2, 3, 4, 5, 0, 1, 2, 3, 4]\n   * @param {Array} arr\n   * @return {Endless}\n   */\n  startWith(arr) {\n    return new Endless(x => (arr.length > x ? arr[x] : this[x - arr.length]));\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements from the beginning\n   * @example\n   * const ex = new Endless(x => x).take(100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {number} amount\n   * @return {Array}\n   */\n  take(amount) {\n    const result = [];\n    for (let i = 0; i < amount;) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements while the elements satisfy a predicate\n   * @example\n   * const ex = new Endless(x => x).takeWhile(x => x < 100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {TakeWhileCallback} expr\n   * @return {Array}\n   */\n  takeWhile(expr) {\n    /**\n     * @typdef {function} TakeWhileCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    const result = [];\n    for (let i = 0; expr(this[i]);) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements until an element satisfy a predicate\n   * @example\n   * const ex = new Endless(x => x).takeUntil(x => x === 100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {TakeUntilCallback} expr\n   * @return {Array}\n   */\n  takeUntil(expr) {\n    /**\n     * @typdef {function} TakeUntilCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    const result = [];\n    for (let i = 0; !expr(this[i]);) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Given an index, get a two-tuple of the finite list\n   * of that many elements from the start of a given Endless,\n   * and the Endless that follows them.\n   * @example\n   * const ex = new Endless(x => x).splitAt(10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {number} index\n   * @return {Array}\n   */\n  splitAt(index) {\n    return [this.take(index), this.skip(index)];\n  }\n\n  /**\n   * @desc\n   * Split an Endless into a longest prefix such that all\n   * the elements of it satisfy a given predicate,\n   * and the rest of the list following them.\n   * @example\n   * const ex = new Endless(x => x).span(x => x < 10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {SpanCallback} expr\n   * @return {Array}\n   */\n  span(expr) {\n    /**\n     * @typdef {function} SpanCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    return [this.takeWhile(expr), this.skipWhile(expr)];\n  }\n\n  /**\n   * @desc\n   * Split an Endless into a longest prefix such that all\n   * the elements of it do not satisfy a given predicate,\n   * and the rest of the list following them.\n   * @example\n   * const ex = new Endless(x => x).break(x => x === 10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {BreakCallback} expr\n   * @return {Array}\n   */\n  break(expr) {\n    /**\n     * @typdef {function} BreakCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    return [this.takeUntil(expr), this.skipUntil(expr)];\n  }\n\n  /**\n   * @desc\n   * Given a predicate and an Endless, return a pair of Endless of elements\n   * which do and do not satisfy the predicate, respectively.\n   * @example\n   * const ex = new Endless(x => x).partition(x => x % 2 === 0);\n   * const evens = ex[0];\n   * const odds = ex[1];\n   * evens.take(10); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\n   * odds.take(10); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]\n   * @param {PartitionCallback} expr\n   * @return {Array}\n   */\n  partition(expr) {\n    /**\n     * @typdef {function} PartitionCallback\n     * @param {!any} element an element of an Endless\n     * @return {boolean}\n     */\n    return [\n      this.filter(expr),\n      this.filter(x => !expr(x)),\n    ];\n  }\n\n  /**\n   * @desc\n   * Given an Endless of finite lists, intersperse the Endless\n   * with a given finite list, and concatenate it.\n   * @example\n   * const ex = new Endless(x => x).intercalate([1, 2, 3]);\n   * ex.take(10); // [0, 1, 2, 3, 1, 1, 2, 3, 2, 1]\n   * @param {Array} values\n   * @return {Endless}\n   */\n  intercalate(values) {\n    return this.flatMap(x => [x, ...values]);\n  }\n\n  /**\n   * @desc\n   * Place a given elements between every adjacent two elements of a given Endless.\n   * @example\n   * const ex = new Endless(x => x).intersperse(3.14);\n   * ex.take(5); // [0, 3.14, 1, 3.14, 2]\n   * @param {...any} values\n   * @return {Endless}\n   */\n  intersperse(...values) {\n    return this.intercalate(values);\n  }\n\n  /**\n   * @desc\n   * Given an Endless, split it into maximal-length finite lists\n   * where every element in each list is equal.\n   * @example\n   * const ex = new Endless(x => x).group(3);\n   * ex.take(3); // [[0, 1, 2], [3, 4, 5], [6, 7, 8]]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  group(amount) {\n    return new Endless(x => this.skip(x * amount).take(amount));\n  }\n\n  /**\n   * @desc\n   * Repeat the elements of a non-empty finite list.\n   * @example\n   * const ex = Endless.cycle([1, 2, 3, 4]);\n   * ex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]\n   * @param {Array} arr\n   * @return {Endless}\n   */\n  static cycle(arr) {\n    const size = arr.length;\n    return new Endless(x => arr[x % size]);\n  }\n\n  /**\n   * @desc\n   * Given a list element, use that as every element in an infinite list.\n   * @example\n   * const ex = Endless.repeat(1, 2, 3, 4);\n   * ex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]\n   * @param {...any} values\n   * @return {Endless}\n   */\n  static repeat(...values) {\n    return Endless.cycle(values);\n  }\n\n  /**\n   * @desc\n   * Zip two or more Endless into an Endless of n-tuples,\n   * where `(a,b,c,..)` in the nth tuple are the nth elements\n   * of the given Endless instances respectively.\n   * @example\n   * const a = new Endless(x => x);\n   * const b = new Endless(x => x + 1);\n   * const c = new Endless(x => x + 2);\n   * const ex = Endless.zip(a, b, c);\n   * ex.take(4) // [[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]]\n   * @param  {...any} lists\n   * @return {Endless}\n   */\n  static zip(...lists) {\n    return new Endless((x) => {\n      const r = [];\n      // eslint-disable-next-line no-restricted-syntax\n      for (const i of lists) {\n        r.push(i[x]);\n      }\n      return r;\n    });\n  }\n\n  /**\n   * @desc\n   * Iterator function for an Endless instance\n   * Use at your own risk.\n   */\n  [Symbol.iterator]() {\n    let i = 0;\n    return {\n      next: () => this[i++],\n    };\n  }\n}\n",
+    "content": "\n/* eslint-disable no-plusplus */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the 'Software'), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @ignore\n */\nconst { isNaN } = Number;\n\n/**\n * @desc\n * Represents an infinite-size Array.\n */\nexport default class Endless {\n  /**\n   * @desc\n   * Creates an Endless from a function\n   * that generates values given an index.\n   * @param {function(x: number): any} expr\n   */\n  constructor(expr) {\n    /**\n     * @ignore\n     */\n    this.expr = expr;\n\n    const memory = [];\n    /**\n     * @ignore\n     */\n    this.memory = memory;\n\n    /**\n     * @ignore\n     */\n    this.generator = (() => {\n      let i = 0;\n      let s = 0;\n\n      return () => {\n        while (1) {\n          const r = expr(i++);\n\n          if (typeof r !== 'undefined') {\n            // eslint-disable-next-line no-return-assign\n            return (memory[s++] = r);\n          }\n        }\n      };\n    })();\n\n    /**\n     * To gain access to the [] operator, we need to wrap\n     * the Endless instance into a Proxy instance.\n     * @ignore\n     */\n    return new Proxy(this, {\n      get: (t, k) => ((k in t && t[k]) || (!isNaN(k) ? this.get(k) : undefined)),\n      // eslint-disable-next-line no-return-assign\n      set: (_t, k, v) => (!isNaN(k) && (memory[k] = v)),\n    });\n  }\n\n  /**\n   * @ignore\n   */\n  get(i) {\n    const { memory } = this;\n\n    while (typeof memory[i] === 'undefined') {\n      this.generator();\n    }\n\n    return memory[i];\n  }\n\n  /**\n   * @desc\n   * Flattens an Endless of finite lists into an Endless of elements.\n   * That is, remove one level of nesting.\n   * @example\n   * const e = new Endless(x => [x, x*2]);\n   * const f = e.flat();\n   * f.take(4); // 0, 0, 1, 2\n   * @return {Endless}\n   */\n  flat() {\n    let c = [];\n    let n = 0;\n    return new Endless((x) => {\n      while (typeof c[x] === 'undefined') {\n        c = c.concat(this[n++]);\n      }\n      return c[x];\n    });\n  }\n\n  /**\n   * @desc\n   * Expands all elements of an Endless into finite lists\n   * and flattens them.\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.flatMap(x => [x, x*2]);\n   * f.take(4); // 0, 0, 1, 2\n   * @param {function(x: any): Array} mutator\n   * @return {Endless}\n   */\n  flatMap(mutator) {\n    return this.map(x => mutator(x)).flat();\n  }\n\n  /**\n   * @desc\n   * Apply a mapping function to each element of an Endless,\n   * yielding a new Endless of results\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.map(x => x*2);\n   * f.take(4); // 0, 2, 4, 6\n   * @param {function(x: any): any} expr\n   * @return {Endless}\n   */\n  map(expr) {\n    return new Endless(x => expr(this[x]));\n  }\n\n  /**\n   * @desc\n   * Select the elements of a list that satisfy a predicate.\n   * @example\n   * const e = new Endless(x => x);\n   * const f = e.filter(x => x % 3 === 0);\n   * f.take(4); // 0, 3, 6, 9\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  filter(expr) {\n    return this.map(x => (expr(x) ? x : undefined));\n  }\n\n  /**\n   * @desc\n   * Finds the index of the first element that satisfy a predicate.\n   * @example\n   * new Endless(x => x + 1).find(x => x % 5 === 0); // 4\n   * @param {function(x: any): boolean} expr\n   * @return {number}\n   */\n  find(expr) {\n    let index = 0;\n    while (!expr(this[index])) index += 1;\n    return index;\n  }\n\n  /**\n   * @desc\n   * Selects the indeces of the elements that satisfy a predicate.\n   * @example\n   * const ex = new Endless(x => x + 1).findIndeces(x => x % 2 === 0);\n   * ex.take(5); // [1, 3, 5, 7, 9]\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  findIndeces(expr) {\n    return new Endless(x => (expr(this[x]) ? x : undefined));\n  }\n\n  /**\n   * @desc\n   * Finds the index of the first element that is equal to the given value.\n   * @example\n   * new Endless(x => x).indexOf(100); // 100\n   * @param {!any} value\n   * @return {number}\n   */\n  indexOf(value) {\n    return this.find(x => x === value);\n  }\n\n  /**\n   * @desc\n   * Deletes the first element that satisfy the predicate.\n   * @example\n   * const ex = new Endless(x => x).deleteBy(x => x > 0 && x % 2 === 0);\n   * ex.take(5); // [0, 1, 3, 4, 5]\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  deleteBy(expr) {\n    const index = this.find(expr);\n    return new Endless(x => (x === index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * Deletes the first element that is equal to the given value.\n   * @example\n   * const ex = new Endless(x => x).delete(0);\n   * ex.take(5); // [1, 2, 3, 4, 5]\n   * @param {!any} value\n   * @return {Endless}\n   */\n  delete(value) {\n    return this.deleteBy(x => x === value);\n  }\n\n  /**\n   * @desc\n   * Skips the first set of elements.\n   * @example\n   * const ex = new Endless(x => x).skip(10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  skip(amount) {\n    return new Endless(x => this[x + amount]);\n  }\n\n  /**\n   * @desc\n   * Skips elements while they satisfy a predicate.\n   * @example\n   * const ex = new Endless(x => x).skipWhile(x => x < 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  skipWhile(expr) {\n    const index = this.find(x => !expr(x));\n    return new Endless(x => (x < index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * Skips elements until an element satifies a predicate.\n   * @example\n   * const ex = new Endless(x => x).skipUntil(x => x === 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  skipUntil(expr) {\n    const index = this.find(x => expr(x));\n    return new Endless(x => (x < index ? undefined : this[x]));\n  }\n\n  /**\n   * @desc\n   * alias for 'skip'\n   * @example\n   * const ex = new Endless(x => x).drop(10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skip}\n   * @param {number} amount\n   * @return {Endless}\n   */\n  drop(amount) {\n    return this.skip(amount);\n  }\n\n  /**\n   * @desc\n   * alias for 'skipWhile'\n   * @example\n   * const ex = new Endless(x => x).dropWhile(x => x < 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skipWhile}\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  dropWhile(expr) {\n    return this.skipWhile(expr);\n  }\n\n  /**\n   * @desc\n   * alias for 'skipUntil'\n   * @example\n   * const ex = new Endless(x => x).dropUntil(x => x === 10);\n   * ex.take(5); // [10, 11, 12, 13, 14]\n   * @see {@link Endless#skipUntil}\n   * @param {function(x: any): boolean} expr\n   * @return {Endless}\n   */\n  dropUntil(expr) {\n    return this.skipUntil(expr);\n  }\n\n  /**\n   * @desc\n   * Selects elements on every given amount.\n   * @example\n   * const ex = new Endless(x => x).step(2);\n   * ex.take(5); // [0, 2, 4, 6, 8]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  step(amount) {\n    return new Endless(x => this[x * amount]);\n  }\n\n  /**\n   * @desc\n   * Concats an array at the beginning of an Endless\n   * @example\n   * const ex = new Endless(x => x).startWith([1, 2, 3, 4, 5]);\n   * ex.take(10); // [1, 2, 3, 4, 5, 0, 1, 2, 3, 4]\n   * @param {Array} arr\n   * @return {Endless}\n   */\n  startWith(arr) {\n    return new Endless(x => (arr.length > x ? arr[x] : this[x - arr.length]));\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements from the beginning\n   * @example\n   * const ex = new Endless(x => x).take(100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {number} amount\n   * @return {Array}\n   */\n  take(amount) {\n    const result = [];\n    for (let i = 0; i < amount;) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements while the elements satisfy a predicate\n   * @example\n   * const ex = new Endless(x => x).takeWhile(x => x < 100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {function(x: any): boolean} expr\n   * @return {Array}\n   */\n  takeWhile(expr) {\n    const result = [];\n    for (let i = 0; expr(this[i]);) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Takes a finite amount of elements until an element satisfy a predicate\n   * @example\n   * const ex = new Endless(x => x).takeUntil(x => x === 100);\n   * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]\n   * @param {function(x: any): boolean} expr\n   * @return {Array}\n   */\n  takeUntil(expr) {\n    const result = [];\n    for (let i = 0; !expr(this[i]);) result.push(this[i++]);\n    return result;\n  }\n\n  /**\n   * @desc\n   * Given an index, get a two-tuple of the finite list\n   * of that many elements from the start of a given Endless,\n   * and the Endless that follows them.\n   * @example\n   * const ex = new Endless(x => x).splitAt(10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {number} index\n   * @return {Array}\n   */\n  splitAt(index) {\n    return [this.take(index), this.skip(index)];\n  }\n\n  /**\n   * @desc\n   * Split an Endless into a longest prefix such that all\n   * the elements of it satisfy a given predicate,\n   * and the rest of the list following them.\n   * @example\n   * const ex = new Endless(x => x).span(x => x < 10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {function(x: any): boolean} expr\n   * @return {Array}\n   */\n  span(expr) {\n    return [this.takeWhile(expr), this.skipWhile(expr)];\n  }\n\n  /**\n   * @desc\n   * Split an Endless into a longest prefix such that all\n   * the elements of it do not satisfy a given predicate,\n   * and the rest of the list following them.\n   * @example\n   * const ex = new Endless(x => x).break(x => x === 10);\n   * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n   * ex[1].take(5) // [10, 11, 12, 13, 14]\n   * @param {function(x: any): boolean} expr\n   * @return {Array}\n   */\n  break(expr) {\n    return [this.takeUntil(expr), this.skipUntil(expr)];\n  }\n\n  /**\n   * @desc\n   * Given a predicate and an Endless, return a pair of Endless of elements\n   * which do and do not satisfy the predicate, respectively.\n   * @example\n   * const ex = new Endless(x => x).partition(x => x % 2 === 0);\n   * const evens = ex[0];\n   * const odds = ex[1];\n   * evens.take(10); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\n   * odds.take(10); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]\n   * @param {function(x: any): boolean} expr\n   * @return {Array}\n   */\n  partition(expr) {\n    return [\n      this.filter(expr),\n      this.filter(x => !expr(x)),\n    ];\n  }\n\n  /**\n   * @desc\n   * Given an Endless of finite lists, intersperse the Endless\n   * with a given finite list, and concatenate it.\n   * @example\n   * const ex = new Endless(x => x).intercalate([1, 2, 3]);\n   * ex.take(10); // [0, 1, 2, 3, 1, 1, 2, 3, 2, 1]\n   * @param {Array} values\n   * @return {Endless}\n   */\n  intercalate(values) {\n    return this.flatMap(x => [x, ...values]);\n  }\n\n  /**\n   * @desc\n   * Place a given elements between every adjacent two elements of a given Endless.\n   * @example\n   * const ex = new Endless(x => x).intersperse(3.14);\n   * ex.take(5); // [0, 3.14, 1, 3.14, 2]\n   * @param {...any} values\n   * @return {Endless}\n   */\n  intersperse(...values) {\n    return this.intercalate(values);\n  }\n\n  /**\n   * @desc\n   * Given an Endless, split it into maximal-length finite lists\n   * where every element in each list is equal.\n   * @example\n   * const ex = new Endless(x => x).group(3);\n   * ex.take(3); // [[0, 1, 2], [3, 4, 5], [6, 7, 8]]\n   * @param {number} amount\n   * @return {Endless}\n   */\n  group(amount) {\n    return new Endless(x => this.skip(x * amount).take(amount));\n  }\n\n  /**\n   * @desc\n   * Repeat the elements of a non-empty finite list.\n   * @example\n   * const ex = Endless.cycle([1, 2, 3, 4]);\n   * ex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]\n   * @param {Array} arr\n   * @return {Endless}\n   */\n  static cycle(arr) {\n    const size = arr.length;\n    return new Endless(x => arr[x % size]);\n  }\n\n  /**\n   * @desc\n   * Given a list element, use that as every element in an infinite list.\n   * @example\n   * const ex = Endless.repeat(1, 2, 3, 4);\n   * ex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]\n   * @param {...any} values\n   * @return {Endless}\n   */\n  static repeat(...values) {\n    return Endless.cycle(values);\n  }\n\n  /**\n   * @desc\n   * Zip two or more Endless into an Endless of n-tuples,\n   * where `(a,b,c,..)` in the nth tuple are the nth elements\n   * of the given Endless instances respectively.\n   * @example\n   * const a = new Endless(x => x);\n   * const b = new Endless(x => x + 1);\n   * const c = new Endless(x => x + 2);\n   * const ex = Endless.zip(a, b, c);\n   * ex.take(4) // [[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]]\n   * @param  {...any} lists\n   * @return {Endless}\n   */\n  static zip(...lists) {\n    return new Endless((x) => {\n      const r = [];\n      // eslint-disable-next-line no-restricted-syntax\n      for (const i of lists) {\n        r.push(i[x]);\n      }\n      return r;\n    });\n  }\n\n  /**\n   * @desc\n   * Iterator function for an Endless instance\n   * Use at your own risk.\n   */\n  [Symbol.iterator]() {\n    let i = 0;\n    return {\n      next: () => this[i++],\n    };\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/endless.js/src/index.js",
     "access": "public",
@@ -576,17 +576,6 @@
   },
   {
     "__docId__": 49,
-    "kind": "external",
-    "name": "Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~Array",
-    "access": "public",
-    "description": ""
-  },
-  {
-    "__docId__": 50,
     "kind": "variable",
     "name": "isNaN",
     "memberof": "src/index.js",
@@ -597,7 +586,7 @@
     "importPath": "endless-js/src/index.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 36,
+    "lineNumber": 33,
     "ignore": true,
     "type": {
       "types": [
@@ -606,7 +595,7 @@
     }
   },
   {
-    "__docId__": 51,
+    "__docId__": 50,
     "kind": "class",
     "name": "Endless",
     "memberof": "src/index.js",
@@ -617,11 +606,11 @@
     "importPath": "endless-js/src/index.js",
     "importStyle": "Endless",
     "description": "Represents an infinite-size Array.",
-    "lineNumber": 42,
+    "lineNumber": 39,
     "interface": false
   },
   {
-    "__docId__": 52,
+    "__docId__": 51,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/index.js~Endless",
@@ -631,12 +620,12 @@
     "longname": "src/index.js~Endless#constructor",
     "access": "public",
     "description": "Creates an Endless from a function\nthat generates values given an index.",
-    "lineNumber": 49,
+    "lineNumber": 46,
     "params": [
       {
         "nullable": null,
         "types": [
-          "EndlessCallback"
+          "function(x: number): any"
         ],
         "spread": false,
         "optional": false,
@@ -646,7 +635,7 @@
     ]
   },
   {
-    "__docId__": 53,
+    "__docId__": 52,
     "kind": "member",
     "name": "expr",
     "memberof": "src/index.js~Endless",
@@ -654,7 +643,24 @@
     "longname": "src/index.js~Endless#expr",
     "access": "public",
     "description": "",
-    "lineNumber": 58,
+    "lineNumber": 50,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "member",
+    "name": "memory",
+    "memberof": "src/index.js~Endless",
+    "static": false,
+    "longname": "src/index.js~Endless#memory",
+    "access": "public",
+    "description": "",
+    "lineNumber": 56,
     "ignore": true,
     "type": {
       "types": [
@@ -665,13 +671,13 @@
   {
     "__docId__": 54,
     "kind": "member",
-    "name": "memory",
+    "name": "generator",
     "memberof": "src/index.js~Endless",
     "static": false,
-    "longname": "src/index.js~Endless#memory",
+    "longname": "src/index.js~Endless#generator",
     "access": "public",
     "description": "",
-    "lineNumber": 64,
+    "lineNumber": 61,
     "ignore": true,
     "type": {
       "types": [
@@ -681,23 +687,6 @@
   },
   {
     "__docId__": 55,
-    "kind": "member",
-    "name": "generator",
-    "memberof": "src/index.js~Endless",
-    "static": false,
-    "longname": "src/index.js~Endless#generator",
-    "access": "public",
-    "description": "",
-    "lineNumber": 69,
-    "ignore": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 56,
     "kind": "method",
     "name": "get",
     "memberof": "src/index.js~Endless",
@@ -707,7 +696,7 @@
     "longname": "src/index.js~Endless#get",
     "access": "public",
     "description": "",
-    "lineNumber": 100,
+    "lineNumber": 92,
     "ignore": true,
     "params": [
       {
@@ -724,7 +713,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 56,
     "kind": "method",
     "name": "flat",
     "memberof": "src/index.js~Endless",
@@ -737,7 +726,7 @@
     "examples": [
       "const e = new Endless(x => [x, x*2]);\nconst f = e.flat();\nf.take(4); // 0, 0, 1, 2"
     ],
-    "lineNumber": 120,
+    "lineNumber": 112,
     "return": {
       "nullable": null,
       "types": [
@@ -749,7 +738,7 @@
     "params": []
   },
   {
-    "__docId__": 58,
+    "__docId__": 57,
     "kind": "method",
     "name": "flatMap",
     "memberof": "src/index.js~Endless",
@@ -762,12 +751,12 @@
     "examples": [
       "const e = new Endless(x => x);\nconst f = e.flatMap(x => [x, x*2]);\nf.take(4); // 0, 0, 1, 2"
     ],
-    "lineNumber": 142,
+    "lineNumber": 134,
     "params": [
       {
         "nullable": null,
         "types": [
-          "FlatMapCallback"
+          "function(x: any): Array"
         ],
         "spread": false,
         "optional": false,
@@ -785,45 +774,7 @@
     }
   },
   {
-    "__docId__": 59,
-    "kind": "typedef",
-    "name": "FlatMapCallback",
-    "memberof": "src/index.js~Endless",
-    "static": true,
-    "longname": "src/index.js~Endless.FlatMapCallback",
-    "access": "public",
-    "description": "",
-    "lineNumber": 148,
-    "params": [
-      {
-        "nullable": false,
-        "types": [
-          "any"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "element",
-        "description": "an element of an Endless"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Array"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "type": {
-      "types": [
-        "function"
-      ],
-      "optional": false,
-      "name": "FlatMapCallback"
-    }
-  },
-  {
-    "__docId__": 60,
+    "__docId__": 58,
     "kind": "method",
     "name": "map",
     "memberof": "src/index.js~Endless",
@@ -836,12 +787,12 @@
     "examples": [
       "const e = new Endless(x => x);\nconst f = e.map(x => x*2);\nf.take(4); // 0, 2, 4, 6"
     ],
-    "lineNumber": 162,
+    "lineNumber": 149,
     "params": [
       {
         "nullable": null,
         "types": [
-          "MapCallback"
+          "function(x: any): any"
         ],
         "spread": false,
         "optional": false,
@@ -859,7 +810,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 59,
     "kind": "method",
     "name": "filter",
     "memberof": "src/index.js~Endless",
@@ -872,12 +823,84 @@
     "examples": [
       "const e = new Endless(x => x);\nconst f = e.filter(x => x % 3 === 0);\nf.take(4); // 0, 3, 6, 9"
     ],
-    "lineNumber": 181,
+    "lineNumber": 163,
     "params": [
       {
         "nullable": null,
         "types": [
-          "FilterCallback"
+          "function(x: any): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expr",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Endless"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 60,
+    "kind": "method",
+    "name": "find",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#find",
+    "access": "public",
+    "description": "Finds the index of the first element that satisfy a predicate.",
+    "examples": [
+      "new Endless(x => x + 1).find(x => x % 5 === 0); // 4"
+    ],
+    "lineNumber": 175,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: any): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expr",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "method",
+    "name": "findIndeces",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#findIndeces",
+    "access": "public",
+    "description": "Selects the indeces of the elements that satisfy a predicate.",
+    "examples": [
+      "const ex = new Endless(x => x + 1).findIndeces(x => x % 2 === 0);\nex.take(5); // [1, 3, 5, 7, 9]"
+    ],
+    "lineNumber": 190,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -897,27 +920,27 @@
   {
     "__docId__": 62,
     "kind": "method",
-    "name": "find",
+    "name": "indexOf",
     "memberof": "src/index.js~Endless",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/index.js~Endless#find",
+    "longname": "src/index.js~Endless#indexOf",
     "access": "public",
-    "description": "Finds the index of the first element that satisfy a predicate.",
+    "description": "Finds the index of the first element that is equal to the given value.",
     "examples": [
-      "new Endless(x => x).find(x => x % 5 === 0); // 5"
+      "new Endless(x => x).indexOf(100); // 100"
     ],
-    "lineNumber": 198,
+    "lineNumber": 202,
     "params": [
       {
-        "nullable": null,
+        "nullable": false,
         "types": [
-          "FindCallback"
+          "any"
         ],
         "spread": false,
         "optional": false,
-        "name": "expr",
+        "name": "value",
         "description": ""
       }
     ],
@@ -933,23 +956,23 @@
   {
     "__docId__": 63,
     "kind": "method",
-    "name": "findIndeces",
+    "name": "deleteBy",
     "memberof": "src/index.js~Endless",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/index.js~Endless#findIndeces",
+    "longname": "src/index.js~Endless#deleteBy",
     "access": "public",
-    "description": "Selects the indeces of the elements that satisfy a predicate.",
+    "description": "Deletes the first element that satisfy the predicate.",
     "examples": [
-      "const ex = new Endless(x => x + 1).findIndeces(x => x % 2 === 0);\nex.take(5); // [1, 3, 5, 7, 9]"
+      "const ex = new Endless(x => x).deleteBy(x => x > 0 && x % 2 === 0);\nex.take(5); // [0, 1, 3, 4, 5]"
     ],
-    "lineNumber": 218,
+    "lineNumber": 215,
     "params": [
       {
         "nullable": null,
         "types": [
-          "FindIndecesCallback"
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -969,78 +992,6 @@
   {
     "__docId__": 64,
     "kind": "method",
-    "name": "indexOf",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#indexOf",
-    "access": "public",
-    "description": "Finds the index of the first element that is equal to the given value.",
-    "examples": [
-      "new Endless(x => x).indexOf(100); // 100"
-    ],
-    "lineNumber": 235,
-    "params": [
-      {
-        "nullable": false,
-        "types": [
-          "any"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "number"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 65,
-    "kind": "method",
-    "name": "deleteBy",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#deleteBy",
-    "access": "public",
-    "description": "Deletes the first element that satisfy the predicate.",
-    "examples": [
-      "const ex = new Endless(x => x).deleteBy(x => x > 0 && x % 2 === 0);\nex.take(5); // [0, 1, 3, 4, 5]"
-    ],
-    "lineNumber": 248,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "DeleteByCallback"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "expr",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Endless"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 66,
-    "kind": "method",
     "name": "delete",
     "memberof": "src/index.js~Endless",
     "generator": false,
@@ -1052,7 +1003,7 @@
     "examples": [
       "const ex = new Endless(x => x).delete(0);\nex.take(5); // [1, 2, 3, 4, 5]"
     ],
-    "lineNumber": 267,
+    "lineNumber": 229,
     "params": [
       {
         "nullable": false,
@@ -1075,7 +1026,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 65,
     "kind": "method",
     "name": "skip",
     "memberof": "src/index.js~Endless",
@@ -1088,7 +1039,7 @@
     "examples": [
       "const ex = new Endless(x => x).skip(10);\nex.take(5); // [10, 11, 12, 13, 14]"
     ],
-    "lineNumber": 280,
+    "lineNumber": 242,
     "params": [
       {
         "nullable": null,
@@ -1111,7 +1062,7 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 66,
     "kind": "method",
     "name": "skipWhile",
     "memberof": "src/index.js~Endless",
@@ -1124,12 +1075,12 @@
     "examples": [
       "const ex = new Endless(x => x).skipWhile(x => x < 10);\nex.take(5); // [10, 11, 12, 13, 14]"
     ],
-    "lineNumber": 293,
+    "lineNumber": 255,
     "params": [
       {
         "nullable": null,
         "types": [
-          "SkipWhileCallback"
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -1147,7 +1098,7 @@
     }
   },
   {
-    "__docId__": 69,
+    "__docId__": 67,
     "kind": "method",
     "name": "skipUntil",
     "memberof": "src/index.js~Endless",
@@ -1160,12 +1111,90 @@
     "examples": [
       "const ex = new Endless(x => x).skipUntil(x => x === 10);\nex.take(5); // [10, 11, 12, 13, 14]"
     ],
-    "lineNumber": 312,
+    "lineNumber": 269,
     "params": [
       {
         "nullable": null,
         "types": [
-          "SkipUntilCallback"
+          "function(x: any): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expr",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Endless"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 68,
+    "kind": "method",
+    "name": "drop",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#drop",
+    "access": "public",
+    "description": "alias for 'skip'",
+    "examples": [
+      "const ex = new Endless(x => x).drop(10);\nex.take(5); // [10, 11, 12, 13, 14]"
+    ],
+    "see": [
+      "{@link Endless#skip}"
+    ],
+    "lineNumber": 284,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "amount",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Endless"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "method",
+    "name": "dropWhile",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#dropWhile",
+    "access": "public",
+    "description": "alias for 'skipWhile'",
+    "examples": [
+      "const ex = new Endless(x => x).dropWhile(x => x < 10);\nex.take(5); // [10, 11, 12, 13, 14]"
+    ],
+    "see": [
+      "{@link Endless#skipWhile}"
+    ],
+    "lineNumber": 298,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -1185,30 +1214,30 @@
   {
     "__docId__": 70,
     "kind": "method",
-    "name": "drop",
+    "name": "dropUntil",
     "memberof": "src/index.js~Endless",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/index.js~Endless#drop",
+    "longname": "src/index.js~Endless#dropUntil",
     "access": "public",
-    "description": "alias for 'skip'",
+    "description": "alias for 'skipUntil'",
     "examples": [
-      "const ex = new Endless(x => x).drop(10);\nex.take(5); // [10, 11, 12, 13, 14]"
+      "const ex = new Endless(x => x).dropUntil(x => x === 10);\nex.take(5); // [10, 11, 12, 13, 14]"
     ],
     "see": [
-      "{@link Endless#skip}"
+      "{@link Endless#skipUntil}"
     ],
-    "lineNumber": 332,
+    "lineNumber": 312,
     "params": [
       {
         "nullable": null,
         "types": [
-          "number"
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
-        "name": "amount",
+        "name": "expr",
         "description": ""
       }
     ],
@@ -1224,84 +1253,6 @@
   {
     "__docId__": 71,
     "kind": "method",
-    "name": "dropWhile",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#dropWhile",
-    "access": "public",
-    "description": "alias for 'skipWhile'",
-    "examples": [
-      "const ex = new Endless(x => x).dropWhile(x => x < 10);\nex.take(5); // [10, 11, 12, 13, 14]"
-    ],
-    "see": [
-      "{@link Endless#skipWhile}"
-    ],
-    "lineNumber": 346,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "SkipWhileCallback"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "expr",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Endless"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 72,
-    "kind": "method",
-    "name": "dropUntil",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#dropUntil",
-    "access": "public",
-    "description": "alias for 'skipUntil'",
-    "examples": [
-      "const ex = new Endless(x => x).dropUntil(x => x === 10);\nex.take(5); // [10, 11, 12, 13, 14]"
-    ],
-    "see": [
-      "{@link Endless#skipUntil}"
-    ],
-    "lineNumber": 360,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "SkipUntilCallback"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "expr",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Endless"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 73,
-    "kind": "method",
     "name": "step",
     "memberof": "src/index.js~Endless",
     "generator": false,
@@ -1313,7 +1264,7 @@
     "examples": [
       "const ex = new Endless(x => x).step(2);\nex.take(5); // [0, 2, 4, 6, 8]"
     ],
-    "lineNumber": 373,
+    "lineNumber": 325,
     "params": [
       {
         "nullable": null,
@@ -1336,7 +1287,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 72,
     "kind": "method",
     "name": "startWith",
     "memberof": "src/index.js~Endless",
@@ -1349,7 +1300,7 @@
     "examples": [
       "const ex = new Endless(x => x).startWith([1, 2, 3, 4, 5]);\nex.take(10); // [1, 2, 3, 4, 5, 0, 1, 2, 3, 4]"
     ],
-    "lineNumber": 386,
+    "lineNumber": 338,
     "params": [
       {
         "nullable": null,
@@ -1372,7 +1323,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 73,
     "kind": "method",
     "name": "take",
     "memberof": "src/index.js~Endless",
@@ -1385,7 +1336,7 @@
     "examples": [
       "const ex = new Endless(x => x).take(100);\nex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]"
     ],
-    "lineNumber": 399,
+    "lineNumber": 351,
     "params": [
       {
         "nullable": null,
@@ -1408,7 +1359,7 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 74,
     "kind": "method",
     "name": "takeWhile",
     "memberof": "src/index.js~Endless",
@@ -1421,12 +1372,12 @@
     "examples": [
       "const ex = new Endless(x => x).takeWhile(x => x < 100);\nex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]"
     ],
-    "lineNumber": 414,
+    "lineNumber": 366,
     "params": [
       {
         "nullable": null,
         "types": [
-          "TakeWhileCallback"
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -1444,7 +1395,7 @@
     }
   },
   {
-    "__docId__": 77,
+    "__docId__": 75,
     "kind": "method",
     "name": "takeUntil",
     "memberof": "src/index.js~Endless",
@@ -1457,12 +1408,12 @@
     "examples": [
       "const ex = new Endless(x => x).takeUntil(x => x === 100);\nex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]"
     ],
-    "lineNumber": 434,
+    "lineNumber": 381,
     "params": [
       {
         "nullable": null,
         "types": [
-          "TakeUntilCallback"
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -1480,7 +1431,7 @@
     }
   },
   {
-    "__docId__": 78,
+    "__docId__": 76,
     "kind": "method",
     "name": "splitAt",
     "memberof": "src/index.js~Endless",
@@ -1493,7 +1444,7 @@
     "examples": [
       "const ex = new Endless(x => x).splitAt(10);\nex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nex[1].take(5) // [10, 11, 12, 13, 14]"
     ],
-    "lineNumber": 457,
+    "lineNumber": 399,
     "params": [
       {
         "nullable": null,
@@ -1516,7 +1467,7 @@
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 77,
     "kind": "method",
     "name": "span",
     "memberof": "src/index.js~Endless",
@@ -1529,12 +1480,84 @@
     "examples": [
       "const ex = new Endless(x => x).span(x => x < 10);\nex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nex[1].take(5) // [10, 11, 12, 13, 14]"
     ],
-    "lineNumber": 473,
+    "lineNumber": 415,
     "params": [
       {
         "nullable": null,
         "types": [
-          "SpanCallback"
+          "function(x: any): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expr",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "method",
+    "name": "break",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#break",
+    "access": "public",
+    "description": "Split an Endless into a longest prefix such that all\nthe elements of it do not satisfy a given predicate,\nand the rest of the list following them.",
+    "examples": [
+      "const ex = new Endless(x => x).break(x => x === 10);\nex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nex[1].take(5) // [10, 11, 12, 13, 14]"
+    ],
+    "lineNumber": 431,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: any): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expr",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "method",
+    "name": "partition",
+    "memberof": "src/index.js~Endless",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~Endless#partition",
+    "access": "public",
+    "description": "Given a predicate and an Endless, return a pair of Endless of elements\nwhich do and do not satisfy the predicate, respectively.",
+    "examples": [
+      "const ex = new Endless(x => x).partition(x => x % 2 === 0);\nconst evens = ex[0];\nconst odds = ex[1];\nevens.take(10); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\nodds.take(10); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]"
+    ],
+    "lineNumber": 448,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: any): boolean"
         ],
         "spread": false,
         "optional": false,
@@ -1554,78 +1577,6 @@
   {
     "__docId__": 80,
     "kind": "method",
-    "name": "break",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#break",
-    "access": "public",
-    "description": "Split an Endless into a longest prefix such that all\nthe elements of it do not satisfy a given predicate,\nand the rest of the list following them.",
-    "examples": [
-      "const ex = new Endless(x => x).break(x => x === 10);\nex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nex[1].take(5) // [10, 11, 12, 13, 14]"
-    ],
-    "lineNumber": 494,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "BreakCallback"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "expr",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Array"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 81,
-    "kind": "method",
-    "name": "partition",
-    "memberof": "src/index.js~Endless",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/index.js~Endless#partition",
-    "access": "public",
-    "description": "Given a predicate and an Endless, return a pair of Endless of elements\nwhich do and do not satisfy the predicate, respectively.",
-    "examples": [
-      "const ex = new Endless(x => x).partition(x => x % 2 === 0);\nconst evens = ex[0];\nconst odds = ex[1];\nevens.take(10); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\nodds.take(10); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]"
-    ],
-    "lineNumber": 516,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "PartitionCallback"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "expr",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Array"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
-    "__docId__": 82,
-    "kind": "method",
     "name": "intercalate",
     "memberof": "src/index.js~Endless",
     "generator": false,
@@ -1637,7 +1588,7 @@
     "examples": [
       "const ex = new Endless(x => x).intercalate([1, 2, 3]);\nex.take(10); // [0, 1, 2, 3, 1, 1, 2, 3, 2, 1]"
     ],
-    "lineNumber": 538,
+    "lineNumber": 465,
     "params": [
       {
         "nullable": null,
@@ -1660,7 +1611,7 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 81,
     "kind": "method",
     "name": "intersperse",
     "memberof": "src/index.js~Endless",
@@ -1673,7 +1624,7 @@
     "examples": [
       "const ex = new Endless(x => x).intersperse(3.14);\nex.take(5); // [0, 3.14, 1, 3.14, 2]"
     ],
-    "lineNumber": 551,
+    "lineNumber": 478,
     "params": [
       {
         "nullable": null,
@@ -1696,7 +1647,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 82,
     "kind": "method",
     "name": "group",
     "memberof": "src/index.js~Endless",
@@ -1709,7 +1660,7 @@
     "examples": [
       "const ex = new Endless(x => x).group(3);\nex.take(3); // [[0, 1, 2], [3, 4, 5], [6, 7, 8]]"
     ],
-    "lineNumber": 565,
+    "lineNumber": 492,
     "params": [
       {
         "nullable": null,
@@ -1732,7 +1683,7 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 83,
     "kind": "method",
     "name": "cycle",
     "memberof": "src/index.js~Endless",
@@ -1745,7 +1696,7 @@
     "examples": [
       "const ex = Endless.cycle([1, 2, 3, 4]);\nex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]"
     ],
-    "lineNumber": 578,
+    "lineNumber": 505,
     "params": [
       {
         "nullable": null,
@@ -1768,7 +1719,7 @@
     }
   },
   {
-    "__docId__": 86,
+    "__docId__": 84,
     "kind": "method",
     "name": "repeat",
     "memberof": "src/index.js~Endless",
@@ -1781,7 +1732,7 @@
     "examples": [
       "const ex = Endless.repeat(1, 2, 3, 4);\nex.take(8) // [1, 2, 3, 4, 1, 2, 3, 4]"
     ],
-    "lineNumber": 592,
+    "lineNumber": 519,
     "params": [
       {
         "nullable": null,
@@ -1804,7 +1755,7 @@
     }
   },
   {
-    "__docId__": 87,
+    "__docId__": 85,
     "kind": "method",
     "name": "zip",
     "memberof": "src/index.js~Endless",
@@ -1817,7 +1768,7 @@
     "examples": [
       "const a = new Endless(x => x);\nconst b = new Endless(x => x + 1);\nconst c = new Endless(x => x + 2);\nconst ex = Endless.zip(a, b, c);\nex.take(4) // [[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]]"
     ],
-    "lineNumber": 610,
+    "lineNumber": 537,
     "params": [
       {
         "nullable": null,
@@ -1840,7 +1791,7 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 86,
     "kind": "method",
     "name": "[Symbol.iterator]",
     "memberof": "src/index.js~Endless",
@@ -1850,7 +1801,7 @@
     "longname": "src/index.js~Endless#[Symbol.iterator]",
     "access": "public",
     "description": "Iterator function for an Endless instance\nUse at your own risk.",
-    "lineNumber": 626,
+    "lineNumber": 553,
     "params": [],
     "return": {
       "types": [
@@ -1868,14 +1819,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"endless-js\",\n  \"version\": \"0.1.2\",\n  \"description\": \"Infinite List in JS\",\n  \"main\": \"index.js\",\n  \"dependencies\": {},\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Endless\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Endless\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Endless\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Endless\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/endless.js.git\"\n  },\n  \"keywords\": [\n    \"infinite\",\n    \"endless\",\n    \"array\",\n    \"data-structure\",\n    \"list\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/endless.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/endless.js#readme\"\n}\n",
+    "content": "{\n  \"name\": \"endless-js\",\n  \"version\": \"0.1.3\",\n  \"description\": \"Infinite List in JS\",\n  \"main\": \"index.js\",\n  \"dependencies\": {},\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Endless\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Endless\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Endless\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Endless\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/endless.js.git\"\n  },\n  \"keywords\": [\n    \"infinite\",\n    \"endless\",\n    \"array\",\n    \"data-structure\",\n    \"list\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/endless.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/endless.js#readme\"\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/endless.js/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 89,
+    "__docId__": 87,
     "kind": "testFile",
     "name": "test/index.js",
     "content": "/* eslint-disable no-plusplus */\n/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Endless from '../src';\n\n/**\n *\n */\ndescribe('Endless', () => {\n  /**\n   *\n   */\n  describe('#flat', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).flat() instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => [x * 2, x + 1]).flat();\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === (i % 2 === 0 ? i : (i + 1) / 2));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#flatMap', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).flatMap(() => []) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).flatMap(x => [x * 2, x + 1]);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === (i % 2 === 0 ? i : (i + 1) / 2));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#map', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).map(x => x) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).map(x => x * 2);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i * 2);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#filter', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).filter(() => true) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).filter(x => x % 2 === 0);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i * 2);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#find', () => {\n    /**\n     *\n     */\n    it('should return a number', () => {\n      /**\n       *\n       */\n      assert(typeof new Endless(x => x).find(() => 1) === 'number');\n    });\n    /**\n     *\n     */\n    it('should correctly output the index', () => {\n      const ex = new Endless(x => x);\n      for (let i = 0; i < 100; i++) {\n        assert(ex.find(x => x === i) === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#findIndeces', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).findIndeces(x => x % 2 === 0) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).findIndeces(x => x % 2 === 0);\n      for (let i = 0; i < 100; i++) {\n        if (i % 2 === 0) {\n          assert(ex[i] === i * 2);\n        }\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#indexOf', () => {\n    /**\n     *\n     */\n    it('should return a number', () => {\n      /**\n       *\n       */\n      assert(typeof new Endless(x => x).indexOf(1) === 'number');\n    });\n    /**\n     *\n     */\n    it('should correctly output the index', () => {\n      const ex = new Endless(x => x);\n      for (let i = 0; i < 100; i++) {\n        assert(ex.indexOf(i) === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#deleteBy', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).deleteBy(x => x % 2 === 0) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).deleteBy(x => x === 0);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#delete', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).delete(0) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).delete(0);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#skip', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).skip(1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).skip(1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#skipWhile', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).skipWhile(x => x < 1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).skipWhile(x => x < 1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#skipUntil', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).skipUntil(x => x === 1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).skipUntil(x => x === 1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#drop', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).drop(1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).drop(1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#dropWhile', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).dropWhile(x => x < 1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).dropWhile(x => x < 1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#dropUntil', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).dropUntil(x => x === 1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).dropUntil(x => x === 1);\n      assert(ex[0] !== 0);\n      for (let i = 1; i < 100; i++) {\n        assert(ex[i - 1] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#step', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).step(2) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).step(2);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i * 2);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#startWith', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).startWith([1, 2, 3, 4, 5]) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const arr = [1, 2, 3, 4, 5];\n      const ex = new Endless(x => x).startWith(arr);\n      for (let i = 0; i < 100; i++) {\n        if (i < 5) {\n          assert(arr[i] === i + 1);\n        } else {\n          assert(ex[i] === i - 5);\n        }\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#take', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).take(100) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).take(100);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#takeWhile', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).takeWhile(x => x < 100) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).takeWhile(x => x < 100);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#takeUntil', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).takeUntil(x => x === 100) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).takeUntil(x => x === 100);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === i);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#splitAt', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).splitAt(10) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).splitAt(10);\n\n      for (let i = 0; i < 10; i++) {\n        assert(ex[0][i] === i);\n      }\n      for (let i = 0; i < 100; i++) {\n        assert(ex[1][i] === i + 10);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#span', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).span(x => x < 10) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).span(x => x < 10);\n\n      for (let i = 0; i < 10; i++) {\n        assert(ex[0][i] === i);\n      }\n      for (let i = 0; i < 100; i++) {\n        assert(ex[1][i] === i + 10);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#break', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).break(x => x === 10) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).break(x => x === 10);\n\n      for (let i = 0; i < 10; i++) {\n        assert(ex[0][i] === i);\n      }\n      for (let i = 0; i < 100; i++) {\n        assert(ex[1][i] === i + 10);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#intercalate', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).intercalate([1]) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).intercalate([1]);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === (i % 2 === 0 ? i / 2 : 1));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#intersperse', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).intersperse(1) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).intersperse(1);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === (i % 2 === 0 ? i / 2 : 1));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#group', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).group(3) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = new Endless(x => x).group(3);\n      for (let i = 0; i < 100; i++) {\n        const el = ex[i];\n        assert(el.length === 3);\n        assert(el[0] === i * 3);\n        assert(el[1] === i * 3 + 1);\n        assert(el[2] === i * 3 + 2);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#partition', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Endless(x => x).partition(x => x % 2 === 0) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should correctly output an Array', () => {\n      const ex = new Endless(x => x).partition(x => x % 2 === 0);\n\n      for (let i = 0; i < 10; i++) {\n        assert(ex[0][i] === i * 2);\n      }\n      for (let i = 0; i < 100; i++) {\n        assert(ex[1][i] === i * 2 + 1);\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#cycle', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(Endless.cycle([1, 2, 3, 4]) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = Endless.cycle([1, 2, 3, 4]);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === ((i % 4) + 1));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#repeat', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(Endless.repeat(1, 2, 3, 4) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const ex = Endless.repeat(1, 2, 3, 4);\n      for (let i = 0; i < 100; i++) {\n        assert(ex[i] === ((i % 4) + 1));\n      }\n    });\n  });\n  /**\n   *\n   */\n  describe('#zip', () => {\n    /**\n     *\n     */\n    it('should return an Endless', () => {\n      /**\n       *\n       */\n      assert(Endless.zip(new Endless(x => x), new Endless(x => x + 1)) instanceof Endless);\n    });\n    /**\n     *\n     */\n    it('should correctly output the Endless', () => {\n      const a = new Endless(x => x);\n      const b = new Endless(x => x + 1);\n      const c = new Endless(x => x + 2);\n      const ex = Endless.zip(a, b, c);\n      for (let i = 0; i < 100; i++) {\n        const el = ex[i];\n        assert(el.length === 3);\n        assert(el[0] === i);\n        assert(el[1] === i + 1);\n        assert(el[2] === i + 2);\n      }\n    });\n  });\n});\n",
@@ -1886,7 +1837,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 90,
+    "__docId__": 88,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -1899,7 +1850,7 @@
     "lineNumber": 9
   },
   {
-    "__docId__": 91,
+    "__docId__": 89,
     "kind": "test",
     "name": "describe1",
     "testId": 1,
@@ -1912,7 +1863,7 @@
     "lineNumber": 13
   },
   {
-    "__docId__": 92,
+    "__docId__": 90,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -1925,7 +1876,7 @@
     "lineNumber": 17
   },
   {
-    "__docId__": 93,
+    "__docId__": 91,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -1938,7 +1889,7 @@
     "lineNumber": 26
   },
   {
-    "__docId__": 94,
+    "__docId__": 92,
     "kind": "test",
     "name": "describe4",
     "testId": 4,
@@ -1951,7 +1902,7 @@
     "lineNumber": 36
   },
   {
-    "__docId__": 95,
+    "__docId__": 93,
     "kind": "test",
     "name": "it5",
     "testId": 5,
@@ -1964,7 +1915,7 @@
     "lineNumber": 40
   },
   {
-    "__docId__": 96,
+    "__docId__": 94,
     "kind": "test",
     "name": "it6",
     "testId": 6,
@@ -1977,7 +1928,7 @@
     "lineNumber": 49
   },
   {
-    "__docId__": 97,
+    "__docId__": 95,
     "kind": "test",
     "name": "describe7",
     "testId": 7,
@@ -1990,7 +1941,7 @@
     "lineNumber": 59
   },
   {
-    "__docId__": 98,
+    "__docId__": 96,
     "kind": "test",
     "name": "it8",
     "testId": 8,
@@ -2003,7 +1954,7 @@
     "lineNumber": 63
   },
   {
-    "__docId__": 99,
+    "__docId__": 97,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -2016,7 +1967,7 @@
     "lineNumber": 72
   },
   {
-    "__docId__": 100,
+    "__docId__": 98,
     "kind": "test",
     "name": "describe10",
     "testId": 10,
@@ -2029,7 +1980,7 @@
     "lineNumber": 82
   },
   {
-    "__docId__": 101,
+    "__docId__": 99,
     "kind": "test",
     "name": "it11",
     "testId": 11,
@@ -2042,7 +1993,7 @@
     "lineNumber": 86
   },
   {
-    "__docId__": 102,
+    "__docId__": 100,
     "kind": "test",
     "name": "it12",
     "testId": 12,
@@ -2055,7 +2006,7 @@
     "lineNumber": 95
   },
   {
-    "__docId__": 103,
+    "__docId__": 101,
     "kind": "test",
     "name": "describe13",
     "testId": 13,
@@ -2068,7 +2019,7 @@
     "lineNumber": 105
   },
   {
-    "__docId__": 104,
+    "__docId__": 102,
     "kind": "test",
     "name": "it14",
     "testId": 14,
@@ -2081,7 +2032,7 @@
     "lineNumber": 109
   },
   {
-    "__docId__": 105,
+    "__docId__": 103,
     "kind": "test",
     "name": "it15",
     "testId": 15,
@@ -2094,7 +2045,7 @@
     "lineNumber": 118
   },
   {
-    "__docId__": 106,
+    "__docId__": 104,
     "kind": "test",
     "name": "describe16",
     "testId": 16,
@@ -2107,7 +2058,7 @@
     "lineNumber": 128
   },
   {
-    "__docId__": 107,
+    "__docId__": 105,
     "kind": "test",
     "name": "it17",
     "testId": 17,
@@ -2120,7 +2071,7 @@
     "lineNumber": 132
   },
   {
-    "__docId__": 108,
+    "__docId__": 106,
     "kind": "test",
     "name": "it18",
     "testId": 18,
@@ -2133,7 +2084,7 @@
     "lineNumber": 141
   },
   {
-    "__docId__": 109,
+    "__docId__": 107,
     "kind": "test",
     "name": "describe19",
     "testId": 19,
@@ -2146,7 +2097,7 @@
     "lineNumber": 153
   },
   {
-    "__docId__": 110,
+    "__docId__": 108,
     "kind": "test",
     "name": "it20",
     "testId": 20,
@@ -2159,7 +2110,7 @@
     "lineNumber": 157
   },
   {
-    "__docId__": 111,
+    "__docId__": 109,
     "kind": "test",
     "name": "it21",
     "testId": 21,
@@ -2172,7 +2123,7 @@
     "lineNumber": 166
   },
   {
-    "__docId__": 112,
+    "__docId__": 110,
     "kind": "test",
     "name": "describe22",
     "testId": 22,
@@ -2185,7 +2136,7 @@
     "lineNumber": 176
   },
   {
-    "__docId__": 113,
+    "__docId__": 111,
     "kind": "test",
     "name": "it23",
     "testId": 23,
@@ -2198,7 +2149,7 @@
     "lineNumber": 180
   },
   {
-    "__docId__": 114,
+    "__docId__": 112,
     "kind": "test",
     "name": "it24",
     "testId": 24,
@@ -2211,7 +2162,7 @@
     "lineNumber": 189
   },
   {
-    "__docId__": 115,
+    "__docId__": 113,
     "kind": "test",
     "name": "describe25",
     "testId": 25,
@@ -2224,7 +2175,7 @@
     "lineNumber": 200
   },
   {
-    "__docId__": 116,
+    "__docId__": 114,
     "kind": "test",
     "name": "it26",
     "testId": 26,
@@ -2237,7 +2188,7 @@
     "lineNumber": 204
   },
   {
-    "__docId__": 117,
+    "__docId__": 115,
     "kind": "test",
     "name": "it27",
     "testId": 27,
@@ -2250,7 +2201,7 @@
     "lineNumber": 213
   },
   {
-    "__docId__": 118,
+    "__docId__": 116,
     "kind": "test",
     "name": "describe28",
     "testId": 28,
@@ -2263,7 +2214,7 @@
     "lineNumber": 224
   },
   {
-    "__docId__": 119,
+    "__docId__": 117,
     "kind": "test",
     "name": "it29",
     "testId": 29,
@@ -2276,7 +2227,7 @@
     "lineNumber": 228
   },
   {
-    "__docId__": 120,
+    "__docId__": 118,
     "kind": "test",
     "name": "it30",
     "testId": 30,
@@ -2289,7 +2240,7 @@
     "lineNumber": 237
   },
   {
-    "__docId__": 121,
+    "__docId__": 119,
     "kind": "test",
     "name": "describe31",
     "testId": 31,
@@ -2302,7 +2253,7 @@
     "lineNumber": 248
   },
   {
-    "__docId__": 122,
+    "__docId__": 120,
     "kind": "test",
     "name": "it32",
     "testId": 32,
@@ -2315,7 +2266,7 @@
     "lineNumber": 252
   },
   {
-    "__docId__": 123,
+    "__docId__": 121,
     "kind": "test",
     "name": "it33",
     "testId": 33,
@@ -2328,7 +2279,7 @@
     "lineNumber": 261
   },
   {
-    "__docId__": 124,
+    "__docId__": 122,
     "kind": "test",
     "name": "describe34",
     "testId": 34,
@@ -2341,7 +2292,7 @@
     "lineNumber": 272
   },
   {
-    "__docId__": 125,
+    "__docId__": 123,
     "kind": "test",
     "name": "it35",
     "testId": 35,
@@ -2354,7 +2305,7 @@
     "lineNumber": 276
   },
   {
-    "__docId__": 126,
+    "__docId__": 124,
     "kind": "test",
     "name": "it36",
     "testId": 36,
@@ -2367,7 +2318,7 @@
     "lineNumber": 285
   },
   {
-    "__docId__": 127,
+    "__docId__": 125,
     "kind": "test",
     "name": "describe37",
     "testId": 37,
@@ -2380,7 +2331,7 @@
     "lineNumber": 296
   },
   {
-    "__docId__": 128,
+    "__docId__": 126,
     "kind": "test",
     "name": "it38",
     "testId": 38,
@@ -2393,7 +2344,7 @@
     "lineNumber": 300
   },
   {
-    "__docId__": 129,
+    "__docId__": 127,
     "kind": "test",
     "name": "it39",
     "testId": 39,
@@ -2406,7 +2357,7 @@
     "lineNumber": 309
   },
   {
-    "__docId__": 130,
+    "__docId__": 128,
     "kind": "test",
     "name": "describe40",
     "testId": 40,
@@ -2419,7 +2370,7 @@
     "lineNumber": 320
   },
   {
-    "__docId__": 131,
+    "__docId__": 129,
     "kind": "test",
     "name": "it41",
     "testId": 41,
@@ -2432,7 +2383,7 @@
     "lineNumber": 324
   },
   {
-    "__docId__": 132,
+    "__docId__": 130,
     "kind": "test",
     "name": "it42",
     "testId": 42,
@@ -2445,7 +2396,7 @@
     "lineNumber": 333
   },
   {
-    "__docId__": 133,
+    "__docId__": 131,
     "kind": "test",
     "name": "describe43",
     "testId": 43,
@@ -2458,7 +2409,7 @@
     "lineNumber": 344
   },
   {
-    "__docId__": 134,
+    "__docId__": 132,
     "kind": "test",
     "name": "it44",
     "testId": 44,
@@ -2471,7 +2422,7 @@
     "lineNumber": 348
   },
   {
-    "__docId__": 135,
+    "__docId__": 133,
     "kind": "test",
     "name": "it45",
     "testId": 45,
@@ -2484,7 +2435,7 @@
     "lineNumber": 357
   },
   {
-    "__docId__": 136,
+    "__docId__": 134,
     "kind": "test",
     "name": "describe46",
     "testId": 46,
@@ -2497,7 +2448,7 @@
     "lineNumber": 368
   },
   {
-    "__docId__": 137,
+    "__docId__": 135,
     "kind": "test",
     "name": "it47",
     "testId": 47,
@@ -2510,7 +2461,7 @@
     "lineNumber": 372
   },
   {
-    "__docId__": 138,
+    "__docId__": 136,
     "kind": "test",
     "name": "it48",
     "testId": 48,
@@ -2523,7 +2474,7 @@
     "lineNumber": 381
   },
   {
-    "__docId__": 139,
+    "__docId__": 137,
     "kind": "test",
     "name": "describe49",
     "testId": 49,
@@ -2536,7 +2487,7 @@
     "lineNumber": 391
   },
   {
-    "__docId__": 140,
+    "__docId__": 138,
     "kind": "test",
     "name": "it50",
     "testId": 50,
@@ -2549,7 +2500,7 @@
     "lineNumber": 395
   },
   {
-    "__docId__": 141,
+    "__docId__": 139,
     "kind": "test",
     "name": "it51",
     "testId": 51,
@@ -2562,7 +2513,7 @@
     "lineNumber": 404
   },
   {
-    "__docId__": 142,
+    "__docId__": 140,
     "kind": "test",
     "name": "describe52",
     "testId": 52,
@@ -2575,7 +2526,7 @@
     "lineNumber": 419
   },
   {
-    "__docId__": 143,
+    "__docId__": 141,
     "kind": "test",
     "name": "it53",
     "testId": 53,
@@ -2588,7 +2539,7 @@
     "lineNumber": 423
   },
   {
-    "__docId__": 144,
+    "__docId__": 142,
     "kind": "test",
     "name": "it54",
     "testId": 54,
@@ -2601,7 +2552,7 @@
     "lineNumber": 432
   },
   {
-    "__docId__": 145,
+    "__docId__": 143,
     "kind": "test",
     "name": "describe55",
     "testId": 55,
@@ -2614,7 +2565,7 @@
     "lineNumber": 442
   },
   {
-    "__docId__": 146,
+    "__docId__": 144,
     "kind": "test",
     "name": "it56",
     "testId": 56,
@@ -2627,7 +2578,7 @@
     "lineNumber": 446
   },
   {
-    "__docId__": 147,
+    "__docId__": 145,
     "kind": "test",
     "name": "it57",
     "testId": 57,
@@ -2640,7 +2591,7 @@
     "lineNumber": 455
   },
   {
-    "__docId__": 148,
+    "__docId__": 146,
     "kind": "test",
     "name": "describe58",
     "testId": 58,
@@ -2653,7 +2604,7 @@
     "lineNumber": 465
   },
   {
-    "__docId__": 149,
+    "__docId__": 147,
     "kind": "test",
     "name": "it59",
     "testId": 59,
@@ -2666,7 +2617,7 @@
     "lineNumber": 469
   },
   {
-    "__docId__": 150,
+    "__docId__": 148,
     "kind": "test",
     "name": "it60",
     "testId": 60,
@@ -2679,7 +2630,7 @@
     "lineNumber": 478
   },
   {
-    "__docId__": 151,
+    "__docId__": 149,
     "kind": "test",
     "name": "describe61",
     "testId": 61,
@@ -2692,7 +2643,7 @@
     "lineNumber": 488
   },
   {
-    "__docId__": 152,
+    "__docId__": 150,
     "kind": "test",
     "name": "it62",
     "testId": 62,
@@ -2705,7 +2656,7 @@
     "lineNumber": 492
   },
   {
-    "__docId__": 153,
+    "__docId__": 151,
     "kind": "test",
     "name": "it63",
     "testId": 63,
@@ -2718,7 +2669,7 @@
     "lineNumber": 501
   },
   {
-    "__docId__": 154,
+    "__docId__": 152,
     "kind": "test",
     "name": "describe64",
     "testId": 64,
@@ -2731,7 +2682,7 @@
     "lineNumber": 515
   },
   {
-    "__docId__": 155,
+    "__docId__": 153,
     "kind": "test",
     "name": "it65",
     "testId": 65,
@@ -2744,7 +2695,7 @@
     "lineNumber": 519
   },
   {
-    "__docId__": 156,
+    "__docId__": 154,
     "kind": "test",
     "name": "it66",
     "testId": 66,
@@ -2757,7 +2708,7 @@
     "lineNumber": 528
   },
   {
-    "__docId__": 157,
+    "__docId__": 155,
     "kind": "test",
     "name": "describe67",
     "testId": 67,
@@ -2770,7 +2721,7 @@
     "lineNumber": 542
   },
   {
-    "__docId__": 158,
+    "__docId__": 156,
     "kind": "test",
     "name": "it68",
     "testId": 68,
@@ -2783,7 +2734,7 @@
     "lineNumber": 546
   },
   {
-    "__docId__": 159,
+    "__docId__": 157,
     "kind": "test",
     "name": "it69",
     "testId": 69,
@@ -2796,7 +2747,7 @@
     "lineNumber": 555
   },
   {
-    "__docId__": 160,
+    "__docId__": 158,
     "kind": "test",
     "name": "describe70",
     "testId": 70,
@@ -2809,7 +2760,7 @@
     "lineNumber": 569
   },
   {
-    "__docId__": 161,
+    "__docId__": 159,
     "kind": "test",
     "name": "it71",
     "testId": 71,
@@ -2822,7 +2773,7 @@
     "lineNumber": 573
   },
   {
-    "__docId__": 162,
+    "__docId__": 160,
     "kind": "test",
     "name": "it72",
     "testId": 72,
@@ -2835,7 +2786,7 @@
     "lineNumber": 582
   },
   {
-    "__docId__": 163,
+    "__docId__": 161,
     "kind": "test",
     "name": "describe73",
     "testId": 73,
@@ -2848,7 +2799,7 @@
     "lineNumber": 592
   },
   {
-    "__docId__": 164,
+    "__docId__": 162,
     "kind": "test",
     "name": "it74",
     "testId": 74,
@@ -2861,7 +2812,7 @@
     "lineNumber": 596
   },
   {
-    "__docId__": 165,
+    "__docId__": 163,
     "kind": "test",
     "name": "it75",
     "testId": 75,
@@ -2874,7 +2825,7 @@
     "lineNumber": 605
   },
   {
-    "__docId__": 166,
+    "__docId__": 164,
     "kind": "test",
     "name": "describe76",
     "testId": 76,
@@ -2887,7 +2838,7 @@
     "lineNumber": 615
   },
   {
-    "__docId__": 167,
+    "__docId__": 165,
     "kind": "test",
     "name": "it77",
     "testId": 77,
@@ -2900,7 +2851,7 @@
     "lineNumber": 619
   },
   {
-    "__docId__": 168,
+    "__docId__": 166,
     "kind": "test",
     "name": "it78",
     "testId": 78,
@@ -2913,7 +2864,7 @@
     "lineNumber": 628
   },
   {
-    "__docId__": 169,
+    "__docId__": 167,
     "kind": "test",
     "name": "describe79",
     "testId": 79,
@@ -2926,7 +2877,7 @@
     "lineNumber": 642
   },
   {
-    "__docId__": 170,
+    "__docId__": 168,
     "kind": "test",
     "name": "it80",
     "testId": 80,
@@ -2939,7 +2890,7 @@
     "lineNumber": 646
   },
   {
-    "__docId__": 171,
+    "__docId__": 169,
     "kind": "test",
     "name": "it81",
     "testId": 81,
@@ -2952,7 +2903,7 @@
     "lineNumber": 655
   },
   {
-    "__docId__": 172,
+    "__docId__": 170,
     "kind": "test",
     "name": "describe82",
     "testId": 82,
@@ -2965,7 +2916,7 @@
     "lineNumber": 669
   },
   {
-    "__docId__": 173,
+    "__docId__": 171,
     "kind": "test",
     "name": "it83",
     "testId": 83,
@@ -2978,7 +2929,7 @@
     "lineNumber": 673
   },
   {
-    "__docId__": 174,
+    "__docId__": 172,
     "kind": "test",
     "name": "it84",
     "testId": 84,
@@ -2991,7 +2942,7 @@
     "lineNumber": 682
   },
   {
-    "__docId__": 175,
+    "__docId__": 173,
     "kind": "test",
     "name": "describe85",
     "testId": 85,
@@ -3004,7 +2955,7 @@
     "lineNumber": 692
   },
   {
-    "__docId__": 176,
+    "__docId__": 174,
     "kind": "test",
     "name": "it86",
     "testId": 86,
@@ -3017,7 +2968,7 @@
     "lineNumber": 696
   },
   {
-    "__docId__": 177,
+    "__docId__": 175,
     "kind": "test",
     "name": "it87",
     "testId": 87,
@@ -3030,7 +2981,7 @@
     "lineNumber": 705
   },
   {
-    "__docId__": 178,
+    "__docId__": 176,
     "kind": "test",
     "name": "describe88",
     "testId": 88,
@@ -3043,7 +2994,7 @@
     "lineNumber": 715
   },
   {
-    "__docId__": 179,
+    "__docId__": 177,
     "kind": "test",
     "name": "it89",
     "testId": 89,
@@ -3056,7 +3007,7 @@
     "lineNumber": 719
   },
   {
-    "__docId__": 180,
+    "__docId__": 178,
     "kind": "test",
     "name": "it90",
     "testId": 90,

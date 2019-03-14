@@ -30,8 +30,6 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Endless.html">Endless</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-FlatMapCallback">FlatMapCallback</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -67,9 +65,6 @@
  * @copyright Alexis Munsayac 2019
  */
 /**
- * @external {Array} https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
- */
-/**
  * @ignore
  */
 const { isNaN } = Number;
@@ -83,14 +78,9 @@ export default class Endless {
    * @desc
    * Creates an Endless from a function
    * that generates values given an index.
-   * @param {EndlessCallback} expr
+   * @param {function(x: number): any} expr
    */
   constructor(expr) {
-    /**
-     * @typdef {function} EndlessCallback
-     * @param {number} index
-     * @return {any}
-     */
     /**
      * @ignore
      */
@@ -175,15 +165,10 @@ export default class Endless {
    * const e = new Endless(x =&gt; x);
    * const f = e.flatMap(x =&gt; [x, x*2]);
    * f.take(4); // 0, 0, 1, 2
-   * @param {FlatMapCallback} mutator
+   * @param {function(x: any): Array} mutator
    * @return {Endless}
    */
   flatMap(mutator) {
-    /**
-     * @typedef {function} FlatMapCallback
-     * @param {!any} element an element of an Endless
-     * @return {Array}
-     */
     return this.map(x =&gt; mutator(x)).flat();
   }
 
@@ -195,15 +180,10 @@ export default class Endless {
    * const e = new Endless(x =&gt; x);
    * const f = e.map(x =&gt; x*2);
    * f.take(4); // 0, 2, 4, 6
-   * @param {MapCallback} expr
+   * @param {function(x: any): any} expr
    * @return {Endless}
    */
   map(expr) {
-    /**
-     * @typdef {function} MapCallback
-     * @param {!any} element an element of an Endless
-     * @return {any}
-     */
     return new Endless(x =&gt; expr(this[x]));
   }
 
@@ -214,15 +194,10 @@ export default class Endless {
    * const e = new Endless(x =&gt; x);
    * const f = e.filter(x =&gt; x % 3 === 0);
    * f.take(4); // 0, 3, 6, 9
-   * @param {FilterCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   filter(expr) {
-    /**
-     * @typdef {function} FilterCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     return this.map(x =&gt; (expr(x) ? x : undefined));
   }
 
@@ -230,16 +205,11 @@ export default class Endless {
    * @desc
    * Finds the index of the first element that satisfy a predicate.
    * @example
-   * new Endless(x =&gt; x).find(x =&gt; x % 5 === 0); // 5
-   * @param {FindCallback} expr
+   * new Endless(x =&gt; x + 1).find(x =&gt; x % 5 === 0); // 4
+   * @param {function(x: any): boolean} expr
    * @return {number}
    */
   find(expr) {
-    /**
-     * @typdef {function} FindCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     let index = 0;
     while (!expr(this[index])) index += 1;
     return index;
@@ -251,15 +221,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x + 1).findIndeces(x =&gt; x % 2 === 0);
    * ex.take(5); // [1, 3, 5, 7, 9]
-   * @param {FindIndecesCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   findIndeces(expr) {
-    /**
-     * @typdef {function} FindIndecesCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     return new Endless(x =&gt; (expr(this[x]) ? x : undefined));
   }
 
@@ -281,15 +246,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x).deleteBy(x =&gt; x &gt; 0 &amp;&amp; x % 2 === 0);
    * ex.take(5); // [0, 1, 3, 4, 5]
-   * @param {DeleteByCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   deleteBy(expr) {
-    /**
-     * @typdef {function} DeleteByCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     const index = this.find(expr);
     return new Endless(x =&gt; (x === index ? undefined : this[x]));
   }
@@ -326,15 +286,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x).skipWhile(x =&gt; x &lt; 10);
    * ex.take(5); // [10, 11, 12, 13, 14]
-   * @param {SkipWhileCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   skipWhile(expr) {
-    /**
-     * @typdef {function} SkipWhileCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     const index = this.find(x =&gt; !expr(x));
     return new Endless(x =&gt; (x &lt; index ? undefined : this[x]));
   }
@@ -345,15 +300,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x).skipUntil(x =&gt; x === 10);
    * ex.take(5); // [10, 11, 12, 13, 14]
-   * @param {SkipUntilCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   skipUntil(expr) {
-    /**
-     * @typdef {function} SkipUntilCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     const index = this.find(x =&gt; expr(x));
     return new Endless(x =&gt; (x &lt; index ? undefined : this[x]));
   }
@@ -379,7 +329,7 @@ export default class Endless {
    * const ex = new Endless(x =&gt; x).dropWhile(x =&gt; x &lt; 10);
    * ex.take(5); // [10, 11, 12, 13, 14]
    * @see {@link Endless#skipWhile}
-   * @param {SkipWhileCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   dropWhile(expr) {
@@ -393,7 +343,7 @@ export default class Endless {
    * const ex = new Endless(x =&gt; x).dropUntil(x =&gt; x === 10);
    * ex.take(5); // [10, 11, 12, 13, 14]
    * @see {@link Endless#skipUntil}
-   * @param {SkipUntilCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Endless}
    */
   dropUntil(expr) {
@@ -447,15 +397,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x).takeWhile(x =&gt; x &lt; 100);
    * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]
-   * @param {TakeWhileCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Array}
    */
   takeWhile(expr) {
-    /**
-     * @typdef {function} TakeWhileCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     const result = [];
     for (let i = 0; expr(this[i]);) result.push(this[i++]);
     return result;
@@ -467,15 +412,10 @@ export default class Endless {
    * @example
    * const ex = new Endless(x =&gt; x).takeUntil(x =&gt; x === 100);
    * ex; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 99]
-   * @param {TakeUntilCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Array}
    */
   takeUntil(expr) {
-    /**
-     * @typdef {function} TakeUntilCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     const result = [];
     for (let i = 0; !expr(this[i]);) result.push(this[i++]);
     return result;
@@ -506,15 +446,10 @@ export default class Endless {
    * const ex = new Endless(x =&gt; x).span(x =&gt; x &lt; 10);
    * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    * ex[1].take(5) // [10, 11, 12, 13, 14]
-   * @param {SpanCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Array}
    */
   span(expr) {
-    /**
-     * @typdef {function} SpanCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     return [this.takeWhile(expr), this.skipWhile(expr)];
   }
 
@@ -527,15 +462,10 @@ export default class Endless {
    * const ex = new Endless(x =&gt; x).break(x =&gt; x === 10);
    * ex[0]; // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    * ex[1].take(5) // [10, 11, 12, 13, 14]
-   * @param {BreakCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Array}
    */
   break(expr) {
-    /**
-     * @typdef {function} BreakCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     return [this.takeUntil(expr), this.skipUntil(expr)];
   }
 
@@ -549,15 +479,10 @@ export default class Endless {
    * const odds = ex[1];
    * evens.take(10); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
    * odds.take(10); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-   * @param {PartitionCallback} expr
+   * @param {function(x: any): boolean} expr
    * @return {Array}
    */
   partition(expr) {
-    /**
-     * @typdef {function} PartitionCallback
-     * @param {!any} element an element of an Endless
-     * @return {boolean}
-     */
     return [
       this.filter(expr),
       this.filter(x =&gt; !expr(x)),

@@ -840,12 +840,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.js~array",
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-    "src/index.js~Array",
-    "external"
-  ],
-  [
     "src/index.js~endless#[symbol.iterator]",
     "class/src/index.js~Endless.html#instance-method-[Symbol.iterator]",
     "src/index.js~Endless#[Symbol.iterator]",
@@ -1018,12 +1012,6 @@ window.esdocSearchIndex = [
     "class/src/index.js~Endless.html#instance-method-takeWhile",
     "src/index.js~Endless#takeWhile",
     "method"
-  ],
-  [
-    "src/index.js~endless.flatmapcallback",
-    "typedef/index.html#static-typedef-FlatMapCallback",
-    "src/index.js~Endless.FlatMapCallback",
-    "typedef"
   ],
   [
     "src/index.js~endless.cycle",
