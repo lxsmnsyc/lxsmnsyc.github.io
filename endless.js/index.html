@@ -64,6 +64,13 @@
 <p>CDN</p>
 <pre><code class="lang-html"><code class="source-code prettyprint">&lt;script style=&quot;https://cdn.jsdelivr.net/npm/endless-js/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
+<h2 id="usage">Usage</h2><p>Endless behaves similarly to a normal Array instance. The only difference is that Endless can only be constructed given a function that produces values.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const example = new Endless(x =&gt; x); // [0, 1, 2, 3, 4, 5, ...]</code>
+</code></pre>
+<p>You can set/get through brackets notation:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">example[0] = 100;
+example[0]; // 100</code>
+</code></pre>
 <h2 id="documentation">Documentation</h2><p><a href="http://inch-ci.org/github/lxsmnsyc/endless.js"><img src="http://inch-ci.org/github/lxsmnsyc/endless.js.svg?branch=master" alt="Inline docs"></a></p>
 <p>Online documentation available at the <a href="https://lxsmnsyc.github.io/endless.js">Official endless.js docs site</a></p>
 <h2 id="build">Build</h2><p>Clone the repo first, then run:</p>
