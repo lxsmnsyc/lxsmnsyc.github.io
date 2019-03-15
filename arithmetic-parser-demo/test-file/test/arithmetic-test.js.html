@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/arithmetic-test.js | arithmetic-parser-demo</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Arithmetic Parser Demo using parexgram.js"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="arithmetic-parser-demo"><meta property="twitter:description" content="Arithmetic Parser Demo using parexgram.js"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/arithmetic-parser-demo"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/addition.js~Addition.html">Addition</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/atom.js~Atom.html">Atom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/exponentation.js~Exponentiation.html">Exponentiation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~ArithmeticParser.html">ArithmeticParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/multiplication.js~Multiplication.html">Multiplication</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/negation.js~Negation.html">Negation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/value.js~Value.html">Value</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/arithmetic-test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+
+import assert from &apos;assert&apos;;
+import { Feed } from &apos;parexgram-js&apos;;
+import ArithmeticParser from &apos;../src&apos;;
+
+const { parseInt } = Number;
+
+const rand = () =&gt; parseInt(Math.random() * 100);
+
+describe(&apos;ArithmeticParser&apos;, () =&gt; {
+  const parser = new ArithmeticParser();
+  it(&apos;should negate&apos;, () =&gt; {
+    const x = rand();
+    assert(parser.parse(new Feed(`-${x}`)) === -x);
+  });
+  it(&apos;should add&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`${x}+${y}`)) === x + y);
+  });
+  it(&apos;should subtract&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`${x}-${y}`)) === x - y);
+  });
+  it(&apos;should multiply&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`${x}*${y}`)) === x * y);
+  });
+  it(&apos;should divide&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`${x}/${y}`)) === x / y);
+  });
+  it(&apos;should power&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`${x}^${y}`)) === x ** y);
+  });
+  it(&apos;should multiply before add&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}*${y}+${z}`)) === x * y + z);
+    assert(parser.parse(new Feed(`${x}+${y}*${z}`)) === x + y * z);
+  });
+  it(&apos;should divide before add&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}/${y}+${z}`)) === x / y + z);
+    assert(parser.parse(new Feed(`${x}+${y}/${z}`)) === x + y / z);
+  });
+  it(&apos;should multiply before subtract&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}*${y}-${z}`)) === x * y - z);
+    assert(parser.parse(new Feed(`${x}-${y}*${z}`)) === x - y * z);
+  });
+  it(&apos;should divide before subtract&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}/${y}-${z}`)) === x / y - z);
+    assert(parser.parse(new Feed(`${x}-${y}/${z}`)) === x - y / z);
+  });
+  it(&apos;should exponentiate before multiply&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}^${y}*${z}`)) === x ** y * z);
+    assert(parser.parse(new Feed(`${x}*${y}^${z}`)) === x * y ** z);
+  });
+  it(&apos;should exponentiate before divide&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`${x}^${y}/${z}`)) === x ** y / z);
+    assert(parser.parse(new Feed(`${x}/${y}^${z}`)) === x / y ** z);
+  });
+  it(&apos;should negate before exponentiate&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    assert(parser.parse(new Feed(`-${x}^${y}`)) === (-x) ** y);
+  });
+  it(&apos;should evaluate first the parentheses expression&apos;, () =&gt; {
+    const x = rand();
+    const y = rand();
+    const z = rand();
+    assert(parser.parse(new Feed(`(${x}+${y})*${z}`)) === (x + y) * z);
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
