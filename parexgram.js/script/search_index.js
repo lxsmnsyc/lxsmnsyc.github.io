@@ -205,43 +205,43 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber6",
+    "test-file/test/quantifier.js.html#lineNumber8",
     "Quantifier",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber10",
+    "test-file/test/quantifier.js.html#lineNumber12",
     "Quantifier #parse",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber14",
+    "test-file/test/quantifier.js.html#lineNumber16",
     "Quantifier #parse should return a undefined if a non-Feed is received",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber29",
+    "test-file/test/quantifier.js.html#lineNumber31",
     "Quantifier #parse should return a undefined if there is no matcher",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber43",
+    "test-file/test/quantifier.js.html#lineNumber45",
     "Quantifier #parse should return an empty array if Quantifier(match, 0) matches no result",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber35",
+    "test-file/test/quantifier.js.html#lineNumber37",
     "Quantifier #parse should return the correct sequence",
     "test"
   ],
   [
     "",
-    "test-file/test/quantifier.js.html#lineNumber50",
+    "test-file/test/quantifier.js.html#lineNumber52",
     "Quantifier #parse should return undefiend if the required matches is not met",
     "test"
   ],
