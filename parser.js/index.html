@@ -98,6 +98,7 @@ console.log(new Alternation([alpha, alpha]).parse(feed)); // &apos;s&apos;;</cod
 const alpha = new Range(&apos;a&apos;, &apos;z&apos;);
 console.log(new Quantifier(alpha, 0).parse(feed)); // [&apos;s&apos;, &apos;o&apos;, &apos;m&apos;, &apos;e&apos;]</code>
 </code></pre>
+<h4 id="matcher">Matcher</h4><p>Matcher is an interface used for the above classes. This signifies that the object can consume a Feed prefix. You can extend the Matcher to create your own custom Matcher.</p>
 <h2 id="documentation">Documentation</h2><p>Online Documentation can be found  at the <a href="https://lxsmnsyc.github.io/parser.js/">official Doc Site</a>.</p>
 <h2 id="examples">Examples</h2><ul>
 <li><a href="https://github.com/LXSMNSYC/parser.js/tree/master/example/arithmetic">Arithmetic Parser</a></li>
