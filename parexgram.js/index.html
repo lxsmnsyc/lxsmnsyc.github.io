@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | parexgram-js</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Parsing Expression Grammar for JS"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="parexgram-js"><meta property="twitter:description" content="Parsing Expression Grammar for JS"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/parexgram.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/alternation.js~Alternation.html">Alternation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/charset.js~CharSet.html">CharSet</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/feed.js~Feed.html">Feed</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/quantifier.js~Quantifier.html">Quantifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/range.js~Range.html">Range</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/sequence.js~Sequence.html">Sequence</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/matcher.js~Matcher.html">Matcher</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="parexgram-js">parexgram.js</h1><p>&#x1F520; Parsing Expression Grammars for JS</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Build Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><a href="https://travis-ci.org/LXSMNSYC/parexgram.js"><img src="https://travis-ci.org/LXSMNSYC/parexgram.js.svg?branch=master" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><a href="https://ci.appveyor.com/project/LXSMNSYC/parexgram-js"><img src="https://ci.appveyor.com/api/projects/status/2hs8vhxown8y8k8v?svg=true" alt="Build status"></a></td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://codecov.io/gh/LXSMNSYC/parexgram.js"><img src="https://codecov.io/gh/LXSMNSYC/parexgram.js/branch/master/graph/badge.svg" alt="codecov"></a></p>
+<h2 id="install">Install</h2><p>NPM</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm i parexgram-js</code>
+</code></pre>
+<p>CDN</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script style=&quot;https://cdn.jsdelivr.net/npm/parexgram-js/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Parexgram = require(&apos;parexgram-js&apos;);</code>
+</code></pre>
+<h4 id="browser">Browser</h4><p>The Browser version provides an object named &apos;Parexgram&apos; which you can use to access the provided classes.</p>
+<h3 id="using-the-classes">Using the classes</h3><h4 id="feed">Feed</h4><p>Feed serves as the consumable string for the Parexgram. Matchers relies on a Feed for extracting/consuming strings. If a Matcher successfully consumes the Feed prefix, the Feed value changes.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);</code>
+</code></pre>
+<h4 id="charset">CharSet</h4><p>CharSet is a Matcher class which extracts an exact sequence of a string from the Feed prefix.</p>
+<p>If a CharSet attempts to consume the Feed, it will return the exact match if the match was successful, otherwise, the CharSet will return an undefined result.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+console.log(new CharSet(&apos;some&apos;).parse(feed)); // some</code>
+</code></pre>
+<h4 id="range">Range</h4><p>Range is a Matcher class which extracts a single character from the Feed prefix if the character lies within the Character range.</p>
+<p>If a Range attempts to consume the Feed, it will return the character that matches, otherwise, undefined is returned.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+console.log(new Range(&apos;a&apos;, &apos;z&apos;).parse(feed)); // s</code>
+</code></pre>
+<h4 id="sequence">Sequence</h4><p>Sequence is a Matcher class which extracts an exact sequence of matches given a sequence of matchers from a Feed prefix.</p>
+<p>If a CharSet attempts to consume the Feed, it will return the exact matches inside of an array if the match was successful, otherwise, the CharSet will return an undefined result.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+const alpha = new Range(&apos;a&apos;, &apos;z&apos;);
+console.log(new Sequence([alpha, alpha]).parse(feed)); // [&apos;s&apos;, &apos;o&apos;];</code>
+</code></pre>
+<h4 id="alternation">Alternation</h4><p>Alternation is a Matcher class which extracts an exact match given a sequence of matchers from a Feed prefix. Unlike Sequence, Alternation will only return one of the matchers result.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+const alpha = new Range(&apos;a&apos;, &apos;z&apos;);
+console.log(new Alternation([alpha, alpha]).parse(feed)); // &apos;s&apos;;</code>
+</code></pre>
+<h4 id="quantifier">Quantifier</h4><p>Quantifier is a Matcher class which extracts a series of matches by a given matcher from a Feed prefix. Given a range, if a Quantifier collects an amount of matches between the given range, the Quantifier returns an array of those matches, whereas if the Quantifier collects an amount less than the minimum boundary of the range, the Quantifier returns undefined.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+const alpha = new Range(&apos;a&apos;, &apos;z&apos;);
+console.log(new Quantifier(alpha, 0).parse(feed)); // [&apos;s&apos;, &apos;o&apos;, &apos;m&apos;, &apos;e&apos;]</code>
+</code></pre>
+<h4 id="matcher">Matcher</h4><p>Matcher is an interface used for the above classes. This signifies that the object can consume a Feed prefix. You can extend the Matcher to create your own custom Matcher.</p>
+<h2 id="documentation">Documentation</h2><p>Online Documentation can be found  at the <a href="https://lxsmnsyc.github.io/parexgram.js/">official Doc Site</a>.</p>
+<h2 id="examples">Examples</h2><ul>
+<li><a href="https://github.com/LXSMNSYC/parexgram.js/tree/master/example/arithmetic">Arithmetic Parser</a></li>
+</ul>
+<h2 id="build">Build</h2><p>Clone the repo then run:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
+</code></pre>
+<p>To build the docs, coverages, commonjs and browser module:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
+</code></pre>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
