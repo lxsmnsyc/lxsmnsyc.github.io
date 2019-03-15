@@ -43,86 +43,80 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber11",
-    "ArithmeticParser",
+    "test-file/test/alternation.js.html#lineNumber8",
+    "Alternation",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber17",
-    "ArithmeticParser should add",
+    "test-file/test/alternation.js.html#lineNumber12",
+    "Alternation #parse",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber32",
-    "ArithmeticParser should divide",
+    "test-file/test/alternation.js.html#lineNumber16",
+    "Alternation #parse should return an Array if a matcher returns an Array",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber49",
-    "ArithmeticParser should divide before add",
+    "test-file/test/alternation.js.html#lineNumber31",
+    "Alternation #parse should return an String if a matcher returns a String",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber63",
-    "ArithmeticParser should divide before subtract",
+    "test-file/test/alternation.js.html#lineNumber68",
+    "Alternation #parse should return the other matches if the previous matches fails",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber77",
-    "ArithmeticParser should exponentiate before divide",
+    "test-file/test/alternation.js.html#lineNumber42",
+    "Alternation #parse should return undefined if there are no matchers",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber70",
-    "ArithmeticParser should exponentiate before multiply",
+    "test-file/test/alternation.js.html#lineNumber53",
+    "Alternation #parse should return undefined if there are no matchers",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber27",
-    "ArithmeticParser should multiply",
+    "test-file/test/charset.js.html#lineNumber5",
+    "CharSet",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber42",
-    "ArithmeticParser should multiply before add",
+    "test-file/test/charset.js.html#lineNumber9",
+    "CharSet #parse",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber56",
-    "ArithmeticParser should multiply before subtract",
+    "test-file/test/charset.js.html#lineNumber13",
+    "CharSet #parse should return a String",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber13",
-    "ArithmeticParser should negate",
+    "test-file/test/charset.js.html#lineNumber22",
+    "CharSet #parse should return a String equal to the CharSet if successful",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber84",
-    "ArithmeticParser should negate before exponentiate",
+    "test-file/test/charset.js.html#lineNumber40",
+    "CharSet #parse should return a undefined if a non-Feed is received",
     "test"
   ],
   [
     "",
-    "test-file/test/arithmetic-test.js.html#lineNumber37",
-    "ArithmeticParser should power",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/arithmetic-test.js.html#lineNumber22",
-    "ArithmeticParser should subtract",
+    "test-file/test/charset.js.html#lineNumber31",
+    "CharSet #parse should return a undefined if unsuccessful",
     "test"
   ],
   [
@@ -207,6 +201,120 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/feed.js.html#lineNumber109",
     "Feed #size should return the size equal to the received string of the Feed, if #eat is not called.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber6",
+    "Quantifier",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber10",
+    "Quantifier #parse",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber14",
+    "Quantifier #parse should return a undefined if a non-Feed is received",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber29",
+    "Quantifier #parse should return a undefined if there is no matcher",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber43",
+    "Quantifier #parse should return an empty array if Quantifier(match, 0) matches no result",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber35",
+    "Quantifier #parse should return the correct sequence",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/quantifier.js.html#lineNumber50",
+    "Quantifier #parse should return undefiend if the required matches is not met",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber5",
+    "Range",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber6",
+    "Range #parse",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber7",
+    "Range #parse should return a String",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber16",
+    "Range #parse should return a String equal to the CharSet if successful",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber34",
+    "Range #parse should return a undefined if a non-Feed is received",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/range.js.html#lineNumber25",
+    "Range #parse should return a undefined if unsuccessful",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber6",
+    "Sequence",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber10",
+    "Sequence #parse",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber14",
+    "Sequence #parse should return an Array",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber23",
+    "Sequence #parse should return an Array equal to the Matchers if successful",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber36",
+    "Sequence #parse should return undefined if no matchers were passed",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/sequence.js.html#lineNumber46",
+    "Sequence #parse should return undefined if one of the matchers fails",
     "test"
   ],
   [
@@ -654,9 +762,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "test/arithmetic-test.js",
-    "test-file/test/arithmetic-test.js.html",
-    "test/arithmetic-test.js",
+    "test/alternation.js",
+    "test-file/test/alternation.js.html",
+    "test/alternation.js",
     "testFile"
   ],
   [
@@ -669,6 +777,24 @@ window.esdocSearchIndex = [
     "test/feed.js",
     "test-file/test/feed.js.html",
     "test/feed.js",
+    "testFile"
+  ],
+  [
+    "test/quantifier.js",
+    "test-file/test/quantifier.js.html",
+    "test/quantifier.js",
+    "testFile"
+  ],
+  [
+    "test/range.js",
+    "test-file/test/range.js.html",
+    "test/range.js",
+    "testFile"
+  ],
+  [
+    "test/sequence.js",
+    "test-file/test/sequence.js.html",
+    "test/sequence.js",
     "testFile"
   ]
 ]

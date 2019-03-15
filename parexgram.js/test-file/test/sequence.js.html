@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">test/charset.js | parexgram-js</title>
+  <title data-ice="title">test/sequence.js | parexgram-js</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -40,12 +40,13 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">test/charset.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+<div class="content" data-ice="content"><h1 data-ice="title">test/sequence.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
-import { CharSet, Feed } from &apos;../src&apos;;
+import { Sequence, CharSet, Feed } from &apos;../src&apos;;
 
-describe(&apos;CharSet&apos;, () =&gt; {
+describe(&apos;Sequence&apos;, () =&gt; {
   /**
    *
    */
@@ -53,44 +54,47 @@ describe(&apos;CharSet&apos;, () =&gt; {
     /**
      *
      */
-    it(&apos;should return a String&apos;, () =&gt; {
+    it(&apos;should return an Array&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse(new Feed(&apos;test&apos;)) === &apos;string&apos;);
+      assert(new Sequence([new CharSet(&apos;t&apos;)]).parse(new Feed(&apos;test&apos;)) instanceof Array);
     });
     /**
      *
      */
-    it(&apos;should return a String equal to the CharSet if successful&apos;, () =&gt; {
+    it(&apos;should return an Array equal to the Matchers if successful&apos;, () =&gt; {
       /**
        *
        */
-      assert(new CharSet(&apos;test&apos;).parse(new Feed(&apos;test&apos;)) === &apos;test&apos;);
+      const m1 = new CharSet(&apos;t&apos;);
+      const m2 = new CharSet(&apos;e&apos;);
+      const s = new Sequence([m1, m2]).parse(new Feed(&apos;test&apos;));
+      assert(s[0] === &apos;t&apos;);
+      assert(s[1] === &apos;e&apos;);
     });
     /**
      *
      */
-    it(&apos;should return a undefined if unsuccessful&apos;, () =&gt; {
+    it(&apos;should return undefined if no matchers were passed&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse(new Feed(&apos;tset&apos;)) === &apos;undefined&apos;);
+      const s = new Sequence([]).parse(new Feed(&apos;test&apos;));
+      assert(typeof s === &apos;undefined&apos;);
     });
     /**
      *
      */
-    it(&apos;should return a undefined if a non-Feed is received&apos;, () =&gt; {
+    it(&apos;should return undefined if one of the matchers fails&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse() === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(1) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(true) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(&apos;&apos;) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse([]) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse({}) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(() =&gt; {}) === &apos;undefined&apos;);
+      const m1 = new CharSet(&apos;t&apos;);
+      const m2 = new CharSet(&apos;e&apos;);
+      const m3 = new CharSet(&apos;t&apos;);
+      const s = new Sequence([new Sequence([m1, m2]), m3]).parse(new Feed(&apos;test&apos;));
+      assert(typeof s === &apos;undefined&apos;);
     });
   });
 });

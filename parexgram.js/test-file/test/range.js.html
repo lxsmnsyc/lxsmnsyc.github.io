@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">test/charset.js | parexgram-js</title>
+  <title data-ice="title">test/range.js | parexgram-js</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -40,24 +40,18 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">test/charset.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">test/range.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
-import { CharSet, Feed } from &apos;../src&apos;;
+import { Range, Feed } from &apos;../src&apos;;
 
-describe(&apos;CharSet&apos;, () =&gt; {
-  /**
-   *
-   */
+describe(&apos;Range&apos;, () =&gt; {
   describe(&apos;#parse&apos;, () =&gt; {
-    /**
-     *
-     */
     it(&apos;should return a String&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse(new Feed(&apos;test&apos;)) === &apos;string&apos;);
+      assert(typeof new Range().parse(new Feed(&apos;test&apos;)) === &apos;string&apos;);
     });
     /**
      *
@@ -66,7 +60,7 @@ describe(&apos;CharSet&apos;, () =&gt; {
       /**
        *
        */
-      assert(new CharSet(&apos;test&apos;).parse(new Feed(&apos;test&apos;)) === &apos;test&apos;);
+      assert(new Range().parse(new Feed(&apos;test&apos;)) === &apos;t&apos;);
     });
     /**
      *
@@ -75,7 +69,7 @@ describe(&apos;CharSet&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse(new Feed(&apos;tset&apos;)) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse(new Feed(&apos;tset&apos;)) === &apos;undefined&apos;);
     });
     /**
      *
@@ -84,13 +78,13 @@ describe(&apos;CharSet&apos;, () =&gt; {
       /**
        *
        */
-      assert(typeof new CharSet(&apos;test&apos;).parse() === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(1) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(true) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(&apos;&apos;) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse([]) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse({}) === &apos;undefined&apos;);
-      assert(typeof new CharSet(&apos;test&apos;).parse(() =&gt; {}) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse() === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse(1) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse(true) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse(&apos;&apos;) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse([]) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse({}) === &apos;undefined&apos;);
+      assert(typeof new Range(&apos;0&apos;, &apos;9&apos;).parse(() =&gt; {}) === &apos;undefined&apos;);
     });
   });
 });
