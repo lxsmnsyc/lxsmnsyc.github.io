@@ -1095,7 +1095,7 @@
     "__docId__": 75,
     "kind": "file",
     "name": "src/pattern.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\n\n/**\n * @desc\n * Represents a RegExp\n */\nexport default class Pattern extends Matcher {\n  /**\n   * Constructs a Pattern from a given value.\n   * @param {!(RegExp|String)} value\n   */\n  constructor(value) {\n    super();\n    /**\n     * @ignore\n     */\n    if (typeof value === 'string') {\n      try {\n        /**\n         * @ignore\n         */\n        this.value = new RegExp(value);\n      } catch (e) {\n        /**\n         * @ignore\n         */\n        this.value = undefined;\n      }\n    }\n    if (value instanceof RegExp) {\n      /**\n       * @ignore\n       */\n      this.value = value;\n    }\n  }\n\n  /**\n   * Attempts to consume the prefix of the feed\n   * if it matches the Pattern's RegExp value\n   * @param {!Feed} feed\n   * @return {String}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      const r = feed.peek();\n      if (typeof this.value !== 'undefined') {\n        if (this.value.test(r)) {\n          const m = this.value.exec(r);\n          if (m !== null && r.startsWith(m[0])) {\n            return m[0];\n          }\n        }\n      }\n    }\n    return undefined;\n  }\n}\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\n\n/**\n * @desc\n * Represents a RegExp\n */\nexport default class Pattern extends Matcher {\n  /**\n   * Constructs a Pattern from a given value.\n   * @param {!(RegExp|String)} value\n   */\n  constructor(value) {\n    super();\n    /**\n     * @ignore\n     */\n    if (typeof value === 'string') {\n      try {\n        /**\n         * @ignore\n         */\n        this.value = new RegExp(value);\n      } catch (e) {\n        /**\n         * @ignore\n         */\n        this.value = undefined;\n      }\n    }\n    if (value instanceof RegExp) {\n      /**\n       * @ignore\n       */\n      this.value = value;\n    }\n  }\n\n  /**\n   * Attempts to consume the prefix of the feed\n   * if it matches the Pattern's RegExp value\n   * @param {!Feed} feed\n   * @return {String}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      const r = feed.peek();\n      if (typeof this.value !== 'undefined') {\n        if (this.value.test(r)) {\n          const m = this.value.exec(r);\n          if (m !== null && feed.eat(m[0])) {\n            return m[0];\n          }\n        }\n      }\n    }\n    return undefined;\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/src/pattern.js",
     "access": "public",
@@ -1652,7 +1652,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"parexgram-js\",\n  \"version\": \"0.1.4\",\n  \"description\": \"Parsing Expression Grammar for JS\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/parexgram.js.git\"\n  },\n  \"keywords\": [\n    \"parser\",\n    \"lexer\",\n    \"peg\",\n    \"grammar\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/parexgram.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/parexgram.js#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"parexgram-js\",\n  \"version\": \"0.2.4\",\n  \"description\": \"Parsing Expression Grammar for JS\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/parexgram.js.git\"\n  },\n  \"keywords\": [\n    \"parser\",\n    \"lexer\",\n    \"peg\",\n    \"grammar\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/parexgram.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/parexgram.js#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/package.json",
     "name": "package.json",
     "static": true,
@@ -2046,7 +2046,7 @@
     "__docId__": 132,
     "kind": "testFile",
     "name": "test/pattern.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Pattern, Feed } from '../src';\n\nconst feed = new Feed('some expression');\nconsole.log(new Pattern('[a-z]+').parse(feed)); // 'some'\n\ndescribe('Pattern', () => {\n  it('it should match correctly given a RegExp', () => {\n    assert(new Pattern(/[a-zA-Z]/).parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should match correctly given a String', () => {\n    assert(new Pattern('[a-zA-Z]').parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should return undefined if there is a non-Feed', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse() === 'undefined');\n    assert(typeof new Pattern().parse(1) === 'undefined');\n    assert(typeof new Pattern().parse(true) === 'undefined');\n    assert(typeof new Pattern().parse('') === 'undefined');\n    assert(typeof new Pattern().parse([]) === 'undefined');\n    assert(typeof new Pattern().parse({}) === 'undefined');\n    assert(typeof new Pattern().parse(() => {}) === 'undefined');\n  });\n  it('it should return undefined if there is a no valid RegExp', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse(new Feed('Hello World')) === 'undefined');\n    assert(typeof new Pattern('[a').parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp match fails', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[0-9]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp matches but is not a prefix', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[a-z]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Pattern, Feed } from '../src';\n\ndescribe('Pattern', () => {\n  it('it should match correctly given a RegExp', () => {\n    assert(new Pattern(/[a-zA-Z]/).parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should match correctly given a String', () => {\n    assert(new Pattern('[a-zA-Z]').parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should return undefined if there is a non-Feed', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse() === 'undefined');\n    assert(typeof new Pattern().parse(1) === 'undefined');\n    assert(typeof new Pattern().parse(true) === 'undefined');\n    assert(typeof new Pattern().parse('') === 'undefined');\n    assert(typeof new Pattern().parse([]) === 'undefined');\n    assert(typeof new Pattern().parse({}) === 'undefined');\n    assert(typeof new Pattern().parse(() => {}) === 'undefined');\n  });\n  it('it should return undefined if there is a no valid RegExp', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse(new Feed('Hello World')) === 'undefined');\n    assert(typeof new Pattern('[a').parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp match fails', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[0-9]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp matches but is not a prefix', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[a-z]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/test/pattern.js",
     "access": "public",
@@ -2064,7 +2064,7 @@
     "longname": "test/pattern.js~describe27",
     "access": "public",
     "description": "Pattern",
-    "lineNumber": 8
+    "lineNumber": 5
   },
   {
     "__docId__": 134,
@@ -2077,7 +2077,7 @@
     "longname": "test/pattern.js~describe27.it28",
     "access": "public",
     "description": "it should match correctly given a RegExp",
-    "lineNumber": 9
+    "lineNumber": 6
   },
   {
     "__docId__": 135,
@@ -2090,7 +2090,7 @@
     "longname": "test/pattern.js~describe27.it29",
     "access": "public",
     "description": "it should match correctly given a String",
-    "lineNumber": 12
+    "lineNumber": 9
   },
   {
     "__docId__": 136,
@@ -2103,7 +2103,7 @@
     "longname": "test/pattern.js~describe27.it30",
     "access": "public",
     "description": "it should return undefined if there is a non-Feed",
-    "lineNumber": 15
+    "lineNumber": 12
   },
   {
     "__docId__": 137,
@@ -2116,7 +2116,7 @@
     "longname": "test/pattern.js~describe27.it31",
     "access": "public",
     "description": "it should return undefined if there is a no valid RegExp",
-    "lineNumber": 27
+    "lineNumber": 24
   },
   {
     "__docId__": 138,
@@ -2129,7 +2129,7 @@
     "longname": "test/pattern.js~describe27.it32",
     "access": "public",
     "description": "it should return undefined if RegExp match fails",
-    "lineNumber": 34
+    "lineNumber": 31
   },
   {
     "__docId__": 139,
@@ -2142,7 +2142,7 @@
     "longname": "test/pattern.js~describe27.it33",
     "access": "public",
     "description": "it should return undefined if RegExp matches but is not a prefix",
-    "lineNumber": 40
+    "lineNumber": 37
   },
   {
     "__docId__": 140,

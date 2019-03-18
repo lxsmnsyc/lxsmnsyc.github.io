@@ -211,43 +211,43 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber8",
+    "test-file/test/pattern.js.html#lineNumber5",
     "Pattern",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber9",
+    "test-file/test/pattern.js.html#lineNumber6",
     "Pattern it should match correctly given a RegExp",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber12",
+    "test-file/test/pattern.js.html#lineNumber9",
     "Pattern it should match correctly given a String",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber34",
+    "test-file/test/pattern.js.html#lineNumber31",
     "Pattern it should return undefined if RegExp match fails",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber40",
+    "test-file/test/pattern.js.html#lineNumber37",
     "Pattern it should return undefined if RegExp matches but is not a prefix",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber27",
+    "test-file/test/pattern.js.html#lineNumber24",
     "Pattern it should return undefined if there is a no valid RegExp",
     "test"
   ],
   [
     "",
-    "test-file/test/pattern.js.html#lineNumber15",
+    "test-file/test/pattern.js.html#lineNumber12",
     "Pattern it should return undefined if there is a non-Feed",
     "test"
   ],

@@ -46,9 +46,6 @@
 import assert from &apos;assert&apos;;
 import { Pattern, Feed } from &apos;../src&apos;;
 
-const feed = new Feed(&apos;some expression&apos;);
-console.log(new Pattern(&apos;[a-z]+&apos;).parse(feed)); // &apos;some&apos;
-
 describe(&apos;Pattern&apos;, () =&gt; {
   it(&apos;it should match correctly given a RegExp&apos;, () =&gt; {
     assert(new Pattern(/[a-zA-Z]/).parse(new Feed(&apos;Hello World&apos;)) === &apos;H&apos;);
