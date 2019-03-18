@@ -32,6 +32,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/alternation.js~Alternation.html">Alternation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/charset.js~CharSet.html">CharSet</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/feed.js~Feed.html">Feed</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pattern.js~Pattern.html">Pattern</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/quantifier.js~Quantifier.html">Quantifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/range.js~Range.html">Range</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/sequence.js~Sequence.html">Sequence</a></span></span></li>
@@ -103,6 +104,10 @@ console.log(new Alternation([alpha, alpha]).parse(feed)); // &apos;s&apos;;</cod
 const alpha = new Range(&apos;a&apos;, &apos;z&apos;);
 console.log(new Quantifier(alpha, 0).parse(feed)); // [&apos;s&apos;, &apos;o&apos;, &apos;m&apos;, &apos;e&apos;]</code>
 </code></pre>
+<h4 id="pattern">Pattern</h4><p>Pattern is a Matcher class which extracts the Feed prefix if it matches the RegExp provided.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const feed = new Feed(&apos;some expression&apos;);
+console.log(new Pattern(&apos;[a-z]+&apos;).parse(feed)); // [&apos;s&apos;, &apos;o&apos;, &apos;m&apos;, &apos;e&apos;]</code>
+</code></pre>
 <h4 id="matcher">Matcher</h4><p>Matcher is an interface used for the above classes. This signifies that the object can consume a Feed prefix. You can extend the Matcher to create your own custom Matcher.</p>
 <h2 id="documentation">Documentation</h2><p>Online Documentation can be found  at the <a href="https://lxsmnsyc.github.io/parexgram.js/">official Doc Site</a>.</p>
 <h2 id="examples">Examples</h2><ul>
@@ -114,6 +119,11 @@ console.log(new Quantifier(alpha, 0).parse(feed)); // [&apos;s&apos;, &apos;o&ap
 <p>To build the docs, coverages, commonjs and browser module:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
+<h2 id="changelogs">Changelogs</h2><p>0.2.0</p>
+<ul>
+<li>Feed.peek(undefined) returns the rest of the Feed string.</li>
+<li>Pattern class which allows the use of RegExp for matching Feeds.</li>
+</ul>
 </div>
 </div>
 

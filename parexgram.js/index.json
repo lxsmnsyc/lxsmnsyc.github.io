@@ -782,7 +782,7 @@
     "__docId__": 58,
     "kind": "file",
     "name": "src/feed.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nconst { min, max } = Math;\n\n/**\n * @desc\n * Represents the consumable string for parsing purposes\n */\nexport default class Feed {\n  /**\n   * Constructs a Feed from a given string.\n   * @param {!String} feed\n   */\n  constructor(feed) {\n    /**\n     * @ignore\n     */\n    this.feed = feed;\n    /**\n     * @ignore\n     */\n    this.feedSize = feed.length;\n    /**\n     * @ignore\n     */\n    this.cursor = 0;\n  }\n\n  /**\n   * @desc\n   * Get the first set of string from the Feed\n   * @param {!number} size\n   * @return {String}\n   */\n  peek(size) {\n    const { cursor } = this;\n    return this.feed.substring(cursor, min(cursor + size, this.feedSize));\n  }\n\n  /**\n   * @desc\n   * Checks if the given string is a prefix of the Feed,\n   * then eats the prefix.\n   * @param {!String} str\n   * @return {Boolean}\n   */\n  eat(str) {\n    const size = str.length;\n    if (this.peek(size) === str) {\n      this.cursor = min(this.cursor + size, this.feedSize);\n      return true;\n    }\n    return false;\n  }\n\n  /**\n   * Reverts the previous feed state.\n   * @param {Number} size\n   */\n  revert(size) {\n    this.cursor = max(this.cursor - size, 0);\n  }\n\n  /**\n   * @desc\n   * Get the unconsumed size of the Feed\n   * @type {Number}\n   */\n  get size() {\n    return this.feedSize - this.cursor;\n  }\n}\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nconst { min, max } = Math;\n\n/**\n * @desc\n * Represents the consumable string for parsing purposes\n */\nexport default class Feed {\n  /**\n   * Constructs a Feed from a given string.\n   * @param {!String} feed\n   */\n  constructor(feed) {\n    /**\n     * @ignore\n     */\n    this.feed = feed;\n    /**\n     * @ignore\n     */\n    this.feedSize = feed.length;\n    /**\n     * @ignore\n     */\n    this.cursor = 0;\n  }\n\n  /**\n   * @desc\n   * Get the first set of string from the Feed\n   * @param {!number} size\n   * @return {String}\n   */\n  peek(size) {\n    const { cursor } = this;\n    return this.feed.substring(cursor, typeof size !== 'undefined' ? min(cursor + size, this.feedSize) : this.feedSize);\n  }\n\n  /**\n   * @desc\n   * Checks if the given string is a prefix of the Feed,\n   * then eats the prefix.\n   * @param {!String} str\n   * @return {Boolean}\n   */\n  eat(str) {\n    const size = str.length;\n    if (this.peek(size) === str) {\n      this.cursor = min(this.cursor + size, this.feedSize);\n      return true;\n    }\n    return false;\n  }\n\n  /**\n   * Reverts the previous feed state.\n   * @param {Number} size\n   */\n  revert(size) {\n    this.cursor = max(this.cursor - size, 0);\n  }\n\n  /**\n   * @desc\n   * Get the unconsumed size of the Feed\n   * @type {Number}\n   */\n  get size() {\n    return this.feedSize - this.cursor;\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/src/feed.js",
     "access": "public",
@@ -1031,7 +1031,7 @@
     "__docId__": 71,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\nexport { default as Feed } from './feed';\n\nexport { default as Matcher } from './matcher';\n\nexport { default as CharSet } from './charset';\nexport { default as Range } from './range';\n\nexport { default as Quantifier } from './quantifier';\n\nexport { default as Sequence } from './sequence';\nexport { default as Alternation } from './alternation';\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\nexport { default as Feed } from './feed';\n\nexport { default as Matcher } from './matcher';\n\nexport { default as CharSet } from './charset';\nexport { default as Range } from './range';\n\nexport { default as Quantifier } from './quantifier';\n\nexport { default as Pattern } from './pattern';\n\nexport { default as Sequence } from './sequence';\nexport { default as Alternation } from './alternation';\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/src/index.js",
     "access": "public",
@@ -1094,6 +1094,111 @@
   {
     "__docId__": 75,
     "kind": "file",
+    "name": "src/pattern.js",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\n\n/**\n * @desc\n * Represents a RegExp\n */\nexport default class Pattern extends Matcher {\n  /**\n   * Constructs a Pattern from a given value.\n   * @param {!(RegExp|String)} value\n   */\n  constructor(value) {\n    super();\n    /**\n     * @ignore\n     */\n    if (typeof value === 'string') {\n      try {\n        /**\n         * @ignore\n         */\n        this.value = new RegExp(value);\n      } catch (e) {\n        /**\n         * @ignore\n         */\n        this.value = undefined;\n      }\n    }\n    if (value instanceof RegExp) {\n      /**\n       * @ignore\n       */\n      this.value = value;\n    }\n  }\n\n  /**\n   * Attempts to consume the prefix of the feed\n   * if it matches the Pattern's RegExp value\n   * @param {!Feed} feed\n   * @return {String}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      const r = feed.peek();\n      if (typeof this.value !== 'undefined') {\n        if (this.value.test(r)) {\n          const m = this.value.exec(r);\n          if (m !== null && r.startsWith(m[0])) {\n            return m[0];\n          }\n        }\n      }\n    }\n    return undefined;\n  }\n}\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/src/pattern.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 76,
+    "kind": "class",
+    "name": "Pattern",
+    "memberof": "src/pattern.js",
+    "static": true,
+    "longname": "src/pattern.js~Pattern",
+    "access": "public",
+    "export": true,
+    "importPath": "parexgram-js/src/pattern.js",
+    "importStyle": "Pattern",
+    "description": "Represents a RegExp",
+    "lineNumber": 35,
+    "interface": false,
+    "extends": [
+      "src/matcher.js~Matcher"
+    ]
+  },
+  {
+    "__docId__": 77,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/pattern.js~Pattern",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pattern.js~Pattern#constructor",
+    "access": "public",
+    "description": "Constructs a Pattern from a given value.",
+    "lineNumber": 40,
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "RegExp",
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 78,
+    "kind": "member",
+    "name": "value",
+    "memberof": "src/pattern.js~Pattern",
+    "static": false,
+    "longname": "src/pattern.js~Pattern#value",
+    "access": "public",
+    "description": "",
+    "lineNumber": 50,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 81,
+    "kind": "method",
+    "name": "parse",
+    "memberof": "src/pattern.js~Pattern",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pattern.js~Pattern#parse",
+    "access": "public",
+    "description": "Attempts to consume the prefix of the feed\nif it matches the Pattern's RegExp value",
+    "lineNumber": 72,
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "Feed"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feed",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 82,
+    "kind": "file",
     "name": "src/quantifier.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\nimport revert from './utils';\n/**\n * @desc\n * Represents a pattern quantifier which collects\n * successive matches given a range.\n */\nexport default class Quantifier extends Matcher {\n  /**\n   *\n   * @param {?Number} min\n   * @param {?Number} max\n   */\n  constructor(matcher, min, max) {\n    super();\n    if (matcher instanceof Matcher) {\n      /**\n       * @ignore\n       */\n      this.matcher = matcher;\n      /**\n       * @ignore\n       */\n      this.min = typeof min === 'number' ? min : 0;\n      /**\n       * @ignore\n       */\n      this.max = typeof max === 'number' ? max : undefined;\n    }\n  }\n\n  /**\n   * Attempts to consume prefixes of a Feed\n   * multiple times until a prefix fails to match.\n   *\n   * If the amount of matched prefixes lies within\n   * the quantifier range, an array of matched\n   * prefixes is returned.\n   *\n   * @param {!Feed} feed\n   * @returns {Array}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      const { matcher, min, max } = this;\n      const isNumber = typeof max === 'number';\n      if (matcher instanceof Matcher) {\n        const result = [];\n        let parsed = matcher.parse(feed);\n        let count = 0;\n        while (typeof parsed !== 'undefined') {\n          result.push(parsed);\n          count += 1;\n          if (isNumber && count > max) {\n            break;\n          }\n          parsed = matcher.parse(feed);\n        }\n        if (count >= min) {\n          return result;\n        }\n        revert(feed, result);\n      }\n    }\n    return undefined;\n  }\n}\n",
     "static": true,
@@ -1103,7 +1208,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 76,
+    "__docId__": 83,
     "kind": "class",
     "name": "Quantifier",
     "memberof": "src/quantifier.js",
@@ -1121,7 +1226,7 @@
     ]
   },
   {
-    "__docId__": 77,
+    "__docId__": 84,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/quantifier.js~Quantifier",
@@ -1156,7 +1261,7 @@
     ]
   },
   {
-    "__docId__": 78,
+    "__docId__": 85,
     "kind": "member",
     "name": "matcher",
     "memberof": "src/quantifier.js~Quantifier",
@@ -1173,7 +1278,7 @@
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 86,
     "kind": "member",
     "name": "min",
     "memberof": "src/quantifier.js~Quantifier",
@@ -1190,7 +1295,7 @@
     }
   },
   {
-    "__docId__": 80,
+    "__docId__": 87,
     "kind": "member",
     "name": "max",
     "memberof": "src/quantifier.js~Quantifier",
@@ -1207,7 +1312,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 88,
     "kind": "method",
     "name": "parse",
     "memberof": "src/quantifier.js~Quantifier",
@@ -1246,7 +1351,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 89,
     "kind": "file",
     "name": "src/range.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\n/**\n * @desc\n * Represents a range of characters\n */\nexport default class Range extends Matcher {\n  /**\n   *\n   * @param {?String} min\n   * @param {?String} max\n   */\n  constructor(min, max) {\n    super();\n    /**\n     * @ignore\n     */\n    this.min = typeof min === 'string' ? min : '\\x00';\n    /**\n     * @ignore\n     */\n    this.max = typeof max === 'string' ? max : '\\xFF';\n  }\n\n  /**\n   * Attempts to consume a prefix character\n   * of the feed given that the prefix lies\n   * within the range.\n   *\n   * @param {!Feed} feed\n   * @returns {String}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      const c = feed.peek(1);\n      if (this.min <= c && c <= this.max) {\n        feed.eat(c);\n        return c;\n      }\n    }\n    return undefined;\n  }\n}\n",
@@ -1257,7 +1362,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 83,
+    "__docId__": 90,
     "kind": "class",
     "name": "Range",
     "memberof": "src/range.js",
@@ -1275,7 +1380,7 @@
     ]
   },
   {
-    "__docId__": 84,
+    "__docId__": 91,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/range.js~Range",
@@ -1310,7 +1415,7 @@
     ]
   },
   {
-    "__docId__": 85,
+    "__docId__": 92,
     "kind": "member",
     "name": "min",
     "memberof": "src/range.js~Range",
@@ -1327,7 +1432,7 @@
     }
   },
   {
-    "__docId__": 86,
+    "__docId__": 93,
     "kind": "member",
     "name": "max",
     "memberof": "src/range.js~Range",
@@ -1344,7 +1449,7 @@
     }
   },
   {
-    "__docId__": 87,
+    "__docId__": 94,
     "kind": "method",
     "name": "parse",
     "memberof": "src/range.js~Range",
@@ -1383,7 +1488,7 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 95,
     "kind": "file",
     "name": "src/sequence.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\nimport Feed from './feed';\nimport Matcher from './matcher';\nimport revert from './utils';\n\n\n/**\n * Represents a succession of matches\n *\n * if one of the matches fail, the sequence\n * returns an empty result.\n */\nexport default class Sequence extends Matcher {\n  /**\n   * Creates a Sequence from an array of Matchers\n   * @param {Array} matchers\n   */\n  constructor(matchers) {\n    super();\n    this.matchers = matchers;\n  }\n\n  /**\n   * Attemps to consume a feed with the array of\n   * Matchers.\n   *\n   * Returns an empty result if one of the matchers\n   * fails to match.\n   * @param {Feed} feed\n   * @return {Array}\n   */\n  parse(feed) {\n    if (feed instanceof Feed) {\n      if (this.matchers.length > 0) {\n        const result = [];\n        // eslint-disable-next-line no-restricted-syntax\n        for (const matcher of this.matchers) {\n          const r = matcher.parse(feed);\n\n          const flag = typeof r === 'undefined';\n          if (flag) {\n            revert(feed, result);\n            return undefined;\n          }\n\n          if (!flag) {\n            result.push(r);\n          }\n        }\n        return result;\n      }\n    }\n    return undefined;\n  }\n}\n",
@@ -1394,7 +1499,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 89,
+    "__docId__": 96,
     "kind": "class",
     "name": "Sequence",
     "memberof": "src/sequence.js",
@@ -1412,7 +1517,7 @@
     ]
   },
   {
-    "__docId__": 90,
+    "__docId__": 97,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/sequence.js~Sequence",
@@ -1437,7 +1542,7 @@
     ]
   },
   {
-    "__docId__": 91,
+    "__docId__": 98,
     "kind": "member",
     "name": "matchers",
     "memberof": "src/sequence.js~Sequence",
@@ -1454,7 +1559,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 99,
     "kind": "method",
     "name": "parse",
     "memberof": "src/sequence.js~Sequence",
@@ -1487,7 +1592,7 @@
     }
   },
   {
-    "__docId__": 93,
+    "__docId__": 100,
     "kind": "file",
     "name": "src/utils.js",
     "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n\n/**\n * @ignore\n * @param {*} feed\n * @param {*} result\n */\nconst revert = (feed, result) => {\n  const size = result.length - 1;\n  for (let i = size; i >= 0; i -= 1) {\n    const r = result[i];\n    if (r instanceof Array) {\n      revert(feed, r);\n    }\n    if (typeof r === 'string') {\n      feed.revert(r.length);\n    }\n  }\n};\n\nexport default revert;\n",
@@ -1498,7 +1603,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 94,
+    "__docId__": 101,
     "kind": "function",
     "name": "revert",
     "memberof": "src/utils.js",
@@ -1539,7 +1644,7 @@
   },
   {
     "kind": "index",
-    "content": "# parexgram.js\n\n🔠 Parsing Expression Grammars for JS\n\n[![NPM](https://nodei.co/npm/parexgram-js.png)](https://nodei.co/npm/parexgram-js/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/parexgram-js/badge)](https://www.jsdelivr.com/package/npm/parexgram-js)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/parexgram.js.svg)](http://hits.dwyl.io/lxsmnsyc/parexgram.js)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/parexgram.js.svg?branch=master)](https://travis-ci.org/LXSMNSYC/parexgram.js) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/yrqmaodw7215oj6a?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/parexgram-js) |\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/parexgram.js/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/parexgram.js)\n\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/parexgram.js/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/parexgram.js?targetFile=package.json)\n[![devDependencies Status](https://david-dm.org/lxsmnsyc/parexgram.js/dev-status.svg)](https://david-dm.org/lxsmnsyc/parexgram.js?type=dev)\n\n## Install\n\nNPM\n\n```bash\nnpm i parexgram-js\n```\n\nCDN\n\n```html\n<script style=\"https://cdn.jsdelivr.net/npm/parexgram-js/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Parexgram = require('parexgram-js');\n```\n\n#### Browser\n\nThe Browser version provides an object named 'Parexgram' which you can use to access the provided classes.\n\n### Using the classes\n\n#### Feed\n\nFeed serves as the consumable string for the Parexgram. Matchers relies on a Feed for extracting/consuming strings. If a Matcher successfully consumes the Feed prefix, the Feed value changes.\n\n```js\nconst feed = new Feed('some expression');\n```\n\n#### CharSet\n\nCharSet is a Matcher class which extracts an exact sequence of a string from the Feed prefix.\n\nIf a CharSet attempts to consume the Feed, it will return the exact match if the match was successful, otherwise, the CharSet will return an undefined result.\n\n```js\nconst feed = new Feed('some expression');\nconsole.log(new CharSet('some').parse(feed)); // some\n```\n\n#### Range\n\nRange is a Matcher class which extracts a single character from the Feed prefix if the character lies within the Character range.\n\nIf a Range attempts to consume the Feed, it will return the character that matches, otherwise, undefined is returned.\n\n```js\nconst feed = new Feed('some expression');\nconsole.log(new Range('a', 'z').parse(feed)); // s\n```\n\n#### Sequence\n\nSequence is a Matcher class which extracts an exact sequence of matches given a sequence of matchers from a Feed prefix.\n\nIf a CharSet attempts to consume the Feed, it will return the exact matches inside of an array if the match was successful, otherwise, the CharSet will return an undefined result.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Sequence([alpha, alpha]).parse(feed)); // ['s', 'o'];\n```\n\n#### Alternation\n\nAlternation is a Matcher class which extracts an exact match given a sequence of matchers from a Feed prefix. Unlike Sequence, Alternation will only return one of the matchers result.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Alternation([alpha, alpha]).parse(feed)); // 's';\n```\n\n#### Quantifier\n\nQuantifier is a Matcher class which extracts a series of matches by a given matcher from a Feed prefix. Given a range, if a Quantifier collects an amount of matches between the given range, the Quantifier returns an array of those matches, whereas if the Quantifier collects an amount less than the minimum boundary of the range, the Quantifier returns undefined.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Quantifier(alpha, 0).parse(feed)); // ['s', 'o', 'm', 'e']\n```\n\n#### Matcher\n\nMatcher is an interface used for the above classes. This signifies that the object can consume a Feed prefix. You can extend the Matcher to create your own custom Matcher.\n\n## Documentation\n\nOnline Documentation can be found  at the [official Doc Site](https://lxsmnsyc.github.io/parexgram.js/).\n\n## Examples\n\n* [Arithmetic Parser](https://github.com/LXSMNSYC/arithmetic-parser-demo)\n\n## Build\n\nClone the repo then run:\n\n```bash\nnpm install\n```\n\nTo build the docs, coverages, commonjs and browser module:\n\n```bash\nnpm run build\n```\n",
+    "content": "# parexgram.js\n\n🔠 Parsing Expression Grammars for JS\n\n[![NPM](https://nodei.co/npm/parexgram-js.png)](https://nodei.co/npm/parexgram-js/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/parexgram-js/badge)](https://www.jsdelivr.com/package/npm/parexgram-js)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/parexgram.js.svg)](http://hits.dwyl.io/lxsmnsyc/parexgram.js)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/parexgram.js.svg?branch=master)](https://travis-ci.org/LXSMNSYC/parexgram.js) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/yrqmaodw7215oj6a?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/parexgram-js) |\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/parexgram.js/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/parexgram.js)\n\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/parexgram.js/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/parexgram.js?targetFile=package.json)\n[![devDependencies Status](https://david-dm.org/lxsmnsyc/parexgram.js/dev-status.svg)](https://david-dm.org/lxsmnsyc/parexgram.js?type=dev)\n\n## Install\n\nNPM\n\n```bash\nnpm i parexgram-js\n```\n\nCDN\n\n```html\n<script style=\"https://cdn.jsdelivr.net/npm/parexgram-js/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Parexgram = require('parexgram-js');\n```\n\n#### Browser\n\nThe Browser version provides an object named 'Parexgram' which you can use to access the provided classes.\n\n### Using the classes\n\n#### Feed\n\nFeed serves as the consumable string for the Parexgram. Matchers relies on a Feed for extracting/consuming strings. If a Matcher successfully consumes the Feed prefix, the Feed value changes.\n\n```js\nconst feed = new Feed('some expression');\n```\n\n#### CharSet\n\nCharSet is a Matcher class which extracts an exact sequence of a string from the Feed prefix.\n\nIf a CharSet attempts to consume the Feed, it will return the exact match if the match was successful, otherwise, the CharSet will return an undefined result.\n\n```js\nconst feed = new Feed('some expression');\nconsole.log(new CharSet('some').parse(feed)); // some\n```\n\n#### Range\n\nRange is a Matcher class which extracts a single character from the Feed prefix if the character lies within the Character range.\n\nIf a Range attempts to consume the Feed, it will return the character that matches, otherwise, undefined is returned.\n\n```js\nconst feed = new Feed('some expression');\nconsole.log(new Range('a', 'z').parse(feed)); // s\n```\n\n#### Sequence\n\nSequence is a Matcher class which extracts an exact sequence of matches given a sequence of matchers from a Feed prefix.\n\nIf a CharSet attempts to consume the Feed, it will return the exact matches inside of an array if the match was successful, otherwise, the CharSet will return an undefined result.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Sequence([alpha, alpha]).parse(feed)); // ['s', 'o'];\n```\n\n#### Alternation\n\nAlternation is a Matcher class which extracts an exact match given a sequence of matchers from a Feed prefix. Unlike Sequence, Alternation will only return one of the matchers result.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Alternation([alpha, alpha]).parse(feed)); // 's';\n```\n\n#### Quantifier\n\nQuantifier is a Matcher class which extracts a series of matches by a given matcher from a Feed prefix. Given a range, if a Quantifier collects an amount of matches between the given range, the Quantifier returns an array of those matches, whereas if the Quantifier collects an amount less than the minimum boundary of the range, the Quantifier returns undefined.\n\n```js\nconst feed = new Feed('some expression');\nconst alpha = new Range('a', 'z');\nconsole.log(new Quantifier(alpha, 0).parse(feed)); // ['s', 'o', 'm', 'e']\n```\n\n#### Pattern\n\nPattern is a Matcher class which extracts the Feed prefix if it matches the RegExp provided.\n\n```js\nconst feed = new Feed('some expression');\nconsole.log(new Pattern('[a-z]+').parse(feed)); // ['s', 'o', 'm', 'e']\n```\n\n\n#### Matcher\n\nMatcher is an interface used for the above classes. This signifies that the object can consume a Feed prefix. You can extend the Matcher to create your own custom Matcher.\n\n## Documentation\n\nOnline Documentation can be found  at the [official Doc Site](https://lxsmnsyc.github.io/parexgram.js/).\n\n## Examples\n\n* [Arithmetic Parser](https://github.com/LXSMNSYC/arithmetic-parser-demo)\n\n## Build\n\nClone the repo then run:\n\n```bash\nnpm install\n```\n\nTo build the docs, coverages, commonjs and browser module:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n\n0.2.0\n\n* Feed.peek(undefined) returns the rest of the Feed string.\n* Pattern class which allows the use of RegExp for matching Feeds.\n",
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/README.md",
     "name": "./README.md",
     "static": true,
@@ -1547,14 +1652,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"parexgram-js\",\n  \"version\": \"0.1.3\",\n  \"description\": \"Parsing Expression Grammar for JS\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/parexgram.js.git\"\n  },\n  \"keywords\": [\n    \"parser\",\n    \"lexer\",\n    \"peg\",\n    \"grammar\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/parexgram.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/parexgram.js#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"parexgram-js\",\n  \"version\": \"0.1.4\",\n  \"description\": \"Parsing Expression Grammar for JS\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Parexgram\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Parexgram\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/parexgram.js.git\"\n  },\n  \"keywords\": [\n    \"parser\",\n    \"lexer\",\n    \"peg\",\n    \"grammar\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/parexgram.js/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/parexgram.js#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.3.4\",\n    \"@babel/preset-env\": \"^7.3.4\",\n    \"@babel/register\": \"^7.0.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.1\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 95,
+    "__docId__": 102,
     "kind": "testFile",
     "name": "test/alternation.js",
     "content": "\n/* eslint-disable no-undef */\nimport assert from 'assert';\nimport {\n  Sequence, CharSet, Feed, Alternation,\n} from '../src';\n\ndescribe('Alternation', () => {\n  /**\n   *\n   */\n  describe('#parse', () => {\n    /**\n     *\n     */\n    it('should return an Array if a matcher returns an Array', () => {\n      /**\n       *\n       */\n      const m1 = new Sequence([\n        new CharSet('t'), new CharSet('e'),\n      ]);\n\n      const alt = new Alternation([m1]);\n\n      assert(alt.parse(new Feed('test')) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should return an String if a matcher returns a String', () => {\n      /**\n       *\n       */\n      const alt = new Alternation([new CharSet('t')]);\n\n      assert(typeof alt.parse(new Feed('test')) === 'string');\n    });\n    /**\n     *\n     */\n    it('should return undefined if there are no matchers', () => {\n      /**\n       *\n       */\n      const alt = new Alternation([]);\n\n      assert(typeof alt.parse(new Feed('test')) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return undefined if there are no matchers', () => {\n      /**\n       *\n       */\n      assert(typeof new Alternation([]).parse() === 'undefined');\n      assert(typeof new Alternation([]).parse(1) === 'undefined');\n      assert(typeof new Alternation([]).parse(true) === 'undefined');\n      assert(typeof new Alternation([]).parse('') === 'undefined');\n      assert(typeof new Alternation([]).parse([]) === 'undefined');\n      assert(typeof new Alternation([]).parse({}) === 'undefined');\n      assert(typeof new Alternation([]).parse(() => {}) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return the other matches if the previous matches fails', () => {\n      /**\n       *\n       */\n      const alt = new Alternation([\n        new CharSet('e'), new CharSet('t'),\n      ]);\n      assert(typeof alt.parse(new Feed('test')) === 'string');\n    });\n  });\n});\n",
@@ -1565,7 +1670,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 96,
+    "__docId__": 103,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -1578,7 +1683,7 @@
     "lineNumber": 8
   },
   {
-    "__docId__": 97,
+    "__docId__": 104,
     "kind": "test",
     "name": "describe1",
     "testId": 1,
@@ -1591,7 +1696,7 @@
     "lineNumber": 12
   },
   {
-    "__docId__": 98,
+    "__docId__": 105,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -1604,7 +1709,7 @@
     "lineNumber": 16
   },
   {
-    "__docId__": 99,
+    "__docId__": 106,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -1617,7 +1722,7 @@
     "lineNumber": 31
   },
   {
-    "__docId__": 100,
+    "__docId__": 107,
     "kind": "test",
     "name": "it4",
     "testId": 4,
@@ -1630,7 +1735,7 @@
     "lineNumber": 42
   },
   {
-    "__docId__": 101,
+    "__docId__": 108,
     "kind": "test",
     "name": "it5",
     "testId": 5,
@@ -1643,7 +1748,7 @@
     "lineNumber": 53
   },
   {
-    "__docId__": 102,
+    "__docId__": 109,
     "kind": "test",
     "name": "it6",
     "testId": 6,
@@ -1656,7 +1761,7 @@
     "lineNumber": 68
   },
   {
-    "__docId__": 103,
+    "__docId__": 110,
     "kind": "testFile",
     "name": "test/charset.js",
     "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { CharSet, Feed } from '../src';\n\ndescribe('CharSet', () => {\n  /**\n   *\n   */\n  describe('#parse', () => {\n    /**\n     *\n     */\n    it('should return a String', () => {\n      /**\n       *\n       */\n      assert(typeof new CharSet('test').parse(new Feed('test')) === 'string');\n    });\n    /**\n     *\n     */\n    it('should return a String equal to the CharSet if successful', () => {\n      /**\n       *\n       */\n      assert(new CharSet('test').parse(new Feed('test')) === 'test');\n    });\n    /**\n     *\n     */\n    it('should return a undefined if unsuccessful', () => {\n      /**\n       *\n       */\n      assert(typeof new CharSet('test').parse(new Feed('tset')) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return a undefined if a non-Feed is received', () => {\n      /**\n       *\n       */\n      assert(typeof new CharSet('test').parse() === 'undefined');\n      assert(typeof new CharSet('test').parse(1) === 'undefined');\n      assert(typeof new CharSet('test').parse(true) === 'undefined');\n      assert(typeof new CharSet('test').parse('') === 'undefined');\n      assert(typeof new CharSet('test').parse([]) === 'undefined');\n      assert(typeof new CharSet('test').parse({}) === 'undefined');\n      assert(typeof new CharSet('test').parse(() => {}) === 'undefined');\n    });\n  });\n});\n",
@@ -1667,7 +1772,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 104,
+    "__docId__": 111,
     "kind": "test",
     "name": "describe7",
     "testId": 7,
@@ -1680,7 +1785,7 @@
     "lineNumber": 5
   },
   {
-    "__docId__": 105,
+    "__docId__": 112,
     "kind": "test",
     "name": "describe8",
     "testId": 8,
@@ -1693,7 +1798,7 @@
     "lineNumber": 9
   },
   {
-    "__docId__": 106,
+    "__docId__": 113,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -1706,7 +1811,7 @@
     "lineNumber": 13
   },
   {
-    "__docId__": 107,
+    "__docId__": 114,
     "kind": "test",
     "name": "it10",
     "testId": 10,
@@ -1719,7 +1824,7 @@
     "lineNumber": 22
   },
   {
-    "__docId__": 108,
+    "__docId__": 115,
     "kind": "test",
     "name": "it11",
     "testId": 11,
@@ -1732,7 +1837,7 @@
     "lineNumber": 31
   },
   {
-    "__docId__": 109,
+    "__docId__": 116,
     "kind": "test",
     "name": "it12",
     "testId": 12,
@@ -1745,7 +1850,7 @@
     "lineNumber": 40
   },
   {
-    "__docId__": 110,
+    "__docId__": 117,
     "kind": "testFile",
     "name": "test/feed.js",
     "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Feed from '../src/feed';\n\n/**\n *\n */\ndescribe('Feed', () => {\n  /**\n   *\n   */\n  describe('#peek', () => {\n    /**\n     *\n     */\n    it('should return a String', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(typeof f.peek(5) === 'string');\n    });\n    /**\n     *\n     */\n    it('should return the correct string', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(f.peek(5) === 'Hello');\n    });\n  });\n  /**\n   *\n   */\n  describe('#eat', () => {\n    /**\n     *\n     */\n    it('should return a Boolean', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(typeof f.eat('Hello') === 'boolean');\n    });\n    /**\n     *\n     */\n    it('should return true if the given string is a prefix of the Feed.', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(f.eat('Hello') === true);\n    });\n    /**\n     *\n     */\n    it('should return false if the given string is not a prefix of the Feed.', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(f.eat('olleH') === false);\n    });\n  });\n  /**\n   *\n   */\n  describe('#revert', () => {\n    /**\n     *\n     */\n    it('should revert successfully.', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n      f.eat('Hello');\n      f.revert(5);\n      assert(f.eat('Hello'));\n    });\n  });\n  /**\n   *\n   */\n  describe('#size', () => {\n    /**\n     *\n     */\n    it('should return a Number', () => {\n      /**\n       *\n       */\n      const f = new Feed('Hello World');\n\n      assert(typeof f.size === 'number');\n    });\n    /**\n     *\n     */\n    it('should return the size equal to the received string of the Feed, if #eat is not called.', () => {\n      /**\n       *\n       */\n      const s = 'Hello World';\n      const l = s.length;\n      const f = new Feed(s);\n\n      assert(f.size === l);\n    });\n    /**\n     *\n     */\n    it('should return the correct size if #eat is not called.', () => {\n      /**\n       *\n       */\n      const s = 'Hello World';\n      const l = s.length;\n      const f = new Feed(s);\n\n      f.eat('Hello');\n      assert(f.size === l - 5);\n    });\n  });\n});\n",
@@ -1756,7 +1861,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 111,
+    "__docId__": 118,
     "kind": "test",
     "name": "describe13",
     "testId": 13,
@@ -1769,7 +1874,7 @@
     "lineNumber": 8
   },
   {
-    "__docId__": 112,
+    "__docId__": 119,
     "kind": "test",
     "name": "describe14",
     "testId": 14,
@@ -1782,7 +1887,7 @@
     "lineNumber": 12
   },
   {
-    "__docId__": 113,
+    "__docId__": 120,
     "kind": "test",
     "name": "it15",
     "testId": 15,
@@ -1795,7 +1900,7 @@
     "lineNumber": 16
   },
   {
-    "__docId__": 114,
+    "__docId__": 121,
     "kind": "test",
     "name": "it16",
     "testId": 16,
@@ -1808,7 +1913,7 @@
     "lineNumber": 27
   },
   {
-    "__docId__": 115,
+    "__docId__": 122,
     "kind": "test",
     "name": "describe17",
     "testId": 17,
@@ -1821,7 +1926,7 @@
     "lineNumber": 39
   },
   {
-    "__docId__": 116,
+    "__docId__": 123,
     "kind": "test",
     "name": "it18",
     "testId": 18,
@@ -1834,7 +1939,7 @@
     "lineNumber": 43
   },
   {
-    "__docId__": 117,
+    "__docId__": 124,
     "kind": "test",
     "name": "it19",
     "testId": 19,
@@ -1847,7 +1952,7 @@
     "lineNumber": 54
   },
   {
-    "__docId__": 118,
+    "__docId__": 125,
     "kind": "test",
     "name": "it20",
     "testId": 20,
@@ -1860,7 +1965,7 @@
     "lineNumber": 65
   },
   {
-    "__docId__": 119,
+    "__docId__": 126,
     "kind": "test",
     "name": "describe21",
     "testId": 21,
@@ -1873,7 +1978,7 @@
     "lineNumber": 77
   },
   {
-    "__docId__": 120,
+    "__docId__": 127,
     "kind": "test",
     "name": "it22",
     "testId": 22,
@@ -1886,7 +1991,7 @@
     "lineNumber": 81
   },
   {
-    "__docId__": 121,
+    "__docId__": 128,
     "kind": "test",
     "name": "describe23",
     "testId": 23,
@@ -1899,7 +2004,7 @@
     "lineNumber": 94
   },
   {
-    "__docId__": 122,
+    "__docId__": 129,
     "kind": "test",
     "name": "it24",
     "testId": 24,
@@ -1912,7 +2017,7 @@
     "lineNumber": 98
   },
   {
-    "__docId__": 123,
+    "__docId__": 130,
     "kind": "test",
     "name": "it25",
     "testId": 25,
@@ -1925,7 +2030,7 @@
     "lineNumber": 109
   },
   {
-    "__docId__": 124,
+    "__docId__": 131,
     "kind": "test",
     "name": "it26",
     "testId": 26,
@@ -1938,7 +2043,109 @@
     "lineNumber": 122
   },
   {
-    "__docId__": 125,
+    "__docId__": 132,
+    "kind": "testFile",
+    "name": "test/pattern.js",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Pattern, Feed } from '../src';\n\nconst feed = new Feed('some expression');\nconsole.log(new Pattern('[a-z]+').parse(feed)); // 'some'\n\ndescribe('Pattern', () => {\n  it('it should match correctly given a RegExp', () => {\n    assert(new Pattern(/[a-zA-Z]/).parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should match correctly given a String', () => {\n    assert(new Pattern('[a-zA-Z]').parse(new Feed('Hello World')) === 'H');\n  });\n  it('it should return undefined if there is a non-Feed', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse() === 'undefined');\n    assert(typeof new Pattern().parse(1) === 'undefined');\n    assert(typeof new Pattern().parse(true) === 'undefined');\n    assert(typeof new Pattern().parse('') === 'undefined');\n    assert(typeof new Pattern().parse([]) === 'undefined');\n    assert(typeof new Pattern().parse({}) === 'undefined');\n    assert(typeof new Pattern().parse(() => {}) === 'undefined');\n  });\n  it('it should return undefined if there is a no valid RegExp', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern().parse(new Feed('Hello World')) === 'undefined');\n    assert(typeof new Pattern('[a').parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp match fails', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[0-9]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n  it('it should return undefined if RegExp matches but is not a prefix', () => {\n    /**\n     *\n     */\n    assert(typeof new Pattern(/[a-z]/).parse(new Feed('Hello World')) === 'undefined');\n  });\n});\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/parexgram.js/test/pattern.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 133,
+    "kind": "test",
+    "name": "describe27",
+    "testId": 27,
+    "memberof": "test/pattern.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "test/pattern.js~describe27",
+    "access": "public",
+    "description": "Pattern",
+    "lineNumber": 8
+  },
+  {
+    "__docId__": 134,
+    "kind": "test",
+    "name": "it28",
+    "testId": 28,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it28",
+    "access": "public",
+    "description": "it should match correctly given a RegExp",
+    "lineNumber": 9
+  },
+  {
+    "__docId__": 135,
+    "kind": "test",
+    "name": "it29",
+    "testId": 29,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it29",
+    "access": "public",
+    "description": "it should match correctly given a String",
+    "lineNumber": 12
+  },
+  {
+    "__docId__": 136,
+    "kind": "test",
+    "name": "it30",
+    "testId": 30,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it30",
+    "access": "public",
+    "description": "it should return undefined if there is a non-Feed",
+    "lineNumber": 15
+  },
+  {
+    "__docId__": 137,
+    "kind": "test",
+    "name": "it31",
+    "testId": 31,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it31",
+    "access": "public",
+    "description": "it should return undefined if there is a no valid RegExp",
+    "lineNumber": 27
+  },
+  {
+    "__docId__": 138,
+    "kind": "test",
+    "name": "it32",
+    "testId": 32,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it32",
+    "access": "public",
+    "description": "it should return undefined if RegExp match fails",
+    "lineNumber": 34
+  },
+  {
+    "__docId__": 139,
+    "kind": "test",
+    "name": "it33",
+    "testId": 33,
+    "memberof": "test/pattern.js~describe27",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/pattern.js~describe27.it33",
+    "access": "public",
+    "description": "it should return undefined if RegExp matches but is not a prefix",
+    "lineNumber": 40
+  },
+  {
+    "__docId__": 140,
     "kind": "testFile",
     "name": "test/quantifier.js",
     "content": "\n/* eslint-disable no-undef */\nimport assert from 'assert';\nimport {\n  CharSet, Quantifier, Feed, Range,\n} from '../src';\n\ndescribe('Quantifier', () => {\n  /**\n   *\n   */\n  describe('#parse', () => {\n    /**\n     *\n     */\n    it('should return a undefined if a non-Feed is received', () => {\n      /**\n       *\n       */\n      assert(typeof new Quantifier(new CharSet('t'), 0).parse() === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), 0, 1).parse(1) === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), undefined).parse(true) === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), 0).parse('') === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), 0, 1).parse([]) === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), undefined).parse({}) === 'undefined');\n      assert(typeof new Quantifier(new CharSet('t'), 0).parse(() => {}) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return a undefined if there is no matcher', () => {\n      assert(typeof new Quantifier().parse(new Feed('test')) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return the correct sequence', () => {\n      const peg = new Quantifier(new Range('a', 'z'), 0, 2).parse(new Feed('test'));\n      assert(peg[0] === 't');\n      assert(peg[1] === 'e');\n    });\n    /**\n     *\n     */\n    it('should return an empty array if Quantifier(match, 0) matches no result', () => {\n      const peg = new Quantifier(new Range('0', '9'), 0).parse(new Feed('test'));\n      assert(peg.length === 0);\n    });\n    /**\n     *\n     */\n    it('should return undefiend if the required matches is not met', () => {\n      const peg = new Quantifier(new Range('0', '9'), 1).parse(new Feed('test'));\n      assert(typeof peg === 'undefined');\n    });\n  });\n});\n",
@@ -1949,98 +2156,98 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 126,
+    "__docId__": 141,
     "kind": "test",
-    "name": "describe27",
-    "testId": 27,
+    "name": "describe34",
+    "testId": 34,
     "memberof": "test/quantifier.js",
     "testDepth": 0,
     "static": true,
-    "longname": "test/quantifier.js~describe27",
+    "longname": "test/quantifier.js~describe34",
     "access": "public",
     "description": "Quantifier",
     "lineNumber": 8
   },
   {
-    "__docId__": 127,
+    "__docId__": 142,
     "kind": "test",
-    "name": "describe28",
-    "testId": 28,
-    "memberof": "test/quantifier.js~describe27",
+    "name": "describe35",
+    "testId": 35,
+    "memberof": "test/quantifier.js~describe34",
     "testDepth": 1,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28",
+    "longname": "test/quantifier.js~describe34.describe35",
     "access": "public",
     "description": "#parse",
     "lineNumber": 12
   },
   {
-    "__docId__": 128,
+    "__docId__": 143,
     "kind": "test",
-    "name": "it29",
-    "testId": 29,
-    "memberof": "test/quantifier.js~describe27.describe28",
+    "name": "it36",
+    "testId": 36,
+    "memberof": "test/quantifier.js~describe34.describe35",
     "testDepth": 2,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28.it29",
+    "longname": "test/quantifier.js~describe34.describe35.it36",
     "access": "public",
     "description": "should return a undefined if a non-Feed is received",
     "lineNumber": 16
   },
   {
-    "__docId__": 129,
+    "__docId__": 144,
     "kind": "test",
-    "name": "it30",
-    "testId": 30,
-    "memberof": "test/quantifier.js~describe27.describe28",
+    "name": "it37",
+    "testId": 37,
+    "memberof": "test/quantifier.js~describe34.describe35",
     "testDepth": 2,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28.it30",
+    "longname": "test/quantifier.js~describe34.describe35.it37",
     "access": "public",
     "description": "should return a undefined if there is no matcher",
     "lineNumber": 31
   },
   {
-    "__docId__": 130,
+    "__docId__": 145,
     "kind": "test",
-    "name": "it31",
-    "testId": 31,
-    "memberof": "test/quantifier.js~describe27.describe28",
+    "name": "it38",
+    "testId": 38,
+    "memberof": "test/quantifier.js~describe34.describe35",
     "testDepth": 2,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28.it31",
+    "longname": "test/quantifier.js~describe34.describe35.it38",
     "access": "public",
     "description": "should return the correct sequence",
     "lineNumber": 37
   },
   {
-    "__docId__": 131,
+    "__docId__": 146,
     "kind": "test",
-    "name": "it32",
-    "testId": 32,
-    "memberof": "test/quantifier.js~describe27.describe28",
+    "name": "it39",
+    "testId": 39,
+    "memberof": "test/quantifier.js~describe34.describe35",
     "testDepth": 2,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28.it32",
+    "longname": "test/quantifier.js~describe34.describe35.it39",
     "access": "public",
     "description": "should return an empty array if Quantifier(match, 0) matches no result",
     "lineNumber": 45
   },
   {
-    "__docId__": 132,
+    "__docId__": 147,
     "kind": "test",
-    "name": "it33",
-    "testId": 33,
-    "memberof": "test/quantifier.js~describe27.describe28",
+    "name": "it40",
+    "testId": 40,
+    "memberof": "test/quantifier.js~describe34.describe35",
     "testDepth": 2,
     "static": true,
-    "longname": "test/quantifier.js~describe27.describe28.it33",
+    "longname": "test/quantifier.js~describe34.describe35.it40",
     "access": "public",
     "description": "should return undefiend if the required matches is not met",
     "lineNumber": 52
   },
   {
-    "__docId__": 133,
+    "__docId__": 148,
     "kind": "testFile",
     "name": "test/range.js",
     "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Range, Feed } from '../src';\n\ndescribe('Range', () => {\n  describe('#parse', () => {\n    it('should return a String', () => {\n      /**\n       *\n       */\n      assert(typeof new Range().parse(new Feed('test')) === 'string');\n    });\n    /**\n     *\n     */\n    it('should return a String equal to the CharSet if successful', () => {\n      /**\n       *\n       */\n      assert(new Range().parse(new Feed('test')) === 't');\n    });\n    /**\n     *\n     */\n    it('should return a undefined if unsuccessful', () => {\n      /**\n       *\n       */\n      assert(typeof new Range('0', '9').parse(new Feed('tset')) === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return a undefined if a non-Feed is received', () => {\n      /**\n       *\n       */\n      assert(typeof new Range('0', '9').parse() === 'undefined');\n      assert(typeof new Range('0', '9').parse(1) === 'undefined');\n      assert(typeof new Range('0', '9').parse(true) === 'undefined');\n      assert(typeof new Range('0', '9').parse('') === 'undefined');\n      assert(typeof new Range('0', '9').parse([]) === 'undefined');\n      assert(typeof new Range('0', '9').parse({}) === 'undefined');\n      assert(typeof new Range('0', '9').parse(() => {}) === 'undefined');\n    });\n  });\n});\n",
@@ -2051,85 +2258,85 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 134,
+    "__docId__": 149,
     "kind": "test",
-    "name": "describe34",
-    "testId": 34,
+    "name": "describe41",
+    "testId": 41,
     "memberof": "test/range.js",
     "testDepth": 0,
     "static": true,
-    "longname": "test/range.js~describe34",
+    "longname": "test/range.js~describe41",
     "access": "public",
     "description": "Range",
     "lineNumber": 5
   },
   {
-    "__docId__": 135,
+    "__docId__": 150,
     "kind": "test",
-    "name": "describe35",
-    "testId": 35,
-    "memberof": "test/range.js~describe34",
+    "name": "describe42",
+    "testId": 42,
+    "memberof": "test/range.js~describe41",
     "testDepth": 1,
     "static": true,
-    "longname": "test/range.js~describe34.describe35",
+    "longname": "test/range.js~describe41.describe42",
     "access": "public",
     "description": "#parse",
     "lineNumber": 6
   },
   {
-    "__docId__": 136,
+    "__docId__": 151,
     "kind": "test",
-    "name": "it36",
-    "testId": 36,
-    "memberof": "test/range.js~describe34.describe35",
+    "name": "it43",
+    "testId": 43,
+    "memberof": "test/range.js~describe41.describe42",
     "testDepth": 2,
     "static": true,
-    "longname": "test/range.js~describe34.describe35.it36",
+    "longname": "test/range.js~describe41.describe42.it43",
     "access": "public",
     "description": "should return a String",
     "lineNumber": 7
   },
   {
-    "__docId__": 137,
+    "__docId__": 152,
     "kind": "test",
-    "name": "it37",
-    "testId": 37,
-    "memberof": "test/range.js~describe34.describe35",
+    "name": "it44",
+    "testId": 44,
+    "memberof": "test/range.js~describe41.describe42",
     "testDepth": 2,
     "static": true,
-    "longname": "test/range.js~describe34.describe35.it37",
+    "longname": "test/range.js~describe41.describe42.it44",
     "access": "public",
     "description": "should return a String equal to the CharSet if successful",
     "lineNumber": 16
   },
   {
-    "__docId__": 138,
+    "__docId__": 153,
     "kind": "test",
-    "name": "it38",
-    "testId": 38,
-    "memberof": "test/range.js~describe34.describe35",
+    "name": "it45",
+    "testId": 45,
+    "memberof": "test/range.js~describe41.describe42",
     "testDepth": 2,
     "static": true,
-    "longname": "test/range.js~describe34.describe35.it38",
+    "longname": "test/range.js~describe41.describe42.it45",
     "access": "public",
     "description": "should return a undefined if unsuccessful",
     "lineNumber": 25
   },
   {
-    "__docId__": 139,
+    "__docId__": 154,
     "kind": "test",
-    "name": "it39",
-    "testId": 39,
-    "memberof": "test/range.js~describe34.describe35",
+    "name": "it46",
+    "testId": 46,
+    "memberof": "test/range.js~describe41.describe42",
     "testDepth": 2,
     "static": true,
-    "longname": "test/range.js~describe34.describe35.it39",
+    "longname": "test/range.js~describe41.describe42.it46",
     "access": "public",
     "description": "should return a undefined if a non-Feed is received",
     "lineNumber": 34
   },
   {
-    "__docId__": 140,
+    "__docId__": 155,
     "kind": "testFile",
     "name": "test/sequence.js",
     "content": "\n/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Sequence, CharSet, Feed } from '../src';\n\ndescribe('Sequence', () => {\n  /**\n   *\n   */\n  describe('#parse', () => {\n    /**\n     *\n     */\n    it('should return an Array', () => {\n      /**\n       *\n       */\n      assert(new Sequence([new CharSet('t')]).parse(new Feed('test')) instanceof Array);\n    });\n    /**\n     *\n     */\n    it('should return an Array equal to the Matchers if successful', () => {\n      /**\n       *\n       */\n      const m1 = new CharSet('t');\n      const m2 = new CharSet('e');\n      const s = new Sequence([m1, m2]).parse(new Feed('test'));\n      assert(s[0] === 't');\n      assert(s[1] === 'e');\n    });\n    /**\n     *\n     */\n    it('should return undefined if no matchers were passed', () => {\n      /**\n       *\n       */\n      const s = new Sequence([]).parse(new Feed('test'));\n      assert(typeof s === 'undefined');\n    });\n    /**\n     *\n     */\n    it('should return undefined if one of the matchers fails', () => {\n      /**\n       *\n       */\n      const m1 = new CharSet('t');\n      const m2 = new CharSet('e');\n      const m3 = new CharSet('t');\n      const s = new Sequence([new Sequence([m1, m2]), m3]).parse(new Feed('test'));\n      assert(typeof s === 'undefined');\n    });\n  });\n});\n",
@@ -2140,79 +2347,79 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 141,
+    "__docId__": 156,
     "kind": "test",
-    "name": "describe40",
-    "testId": 40,
+    "name": "describe47",
+    "testId": 47,
     "memberof": "test/sequence.js",
     "testDepth": 0,
     "static": true,
-    "longname": "test/sequence.js~describe40",
+    "longname": "test/sequence.js~describe47",
     "access": "public",
     "description": "Sequence",
     "lineNumber": 6
   },
   {
-    "__docId__": 142,
+    "__docId__": 157,
     "kind": "test",
-    "name": "describe41",
-    "testId": 41,
-    "memberof": "test/sequence.js~describe40",
+    "name": "describe48",
+    "testId": 48,
+    "memberof": "test/sequence.js~describe47",
     "testDepth": 1,
     "static": true,
-    "longname": "test/sequence.js~describe40.describe41",
+    "longname": "test/sequence.js~describe47.describe48",
     "access": "public",
     "description": "#parse",
     "lineNumber": 10
   },
   {
-    "__docId__": 143,
+    "__docId__": 158,
     "kind": "test",
-    "name": "it42",
-    "testId": 42,
-    "memberof": "test/sequence.js~describe40.describe41",
+    "name": "it49",
+    "testId": 49,
+    "memberof": "test/sequence.js~describe47.describe48",
     "testDepth": 2,
     "static": true,
-    "longname": "test/sequence.js~describe40.describe41.it42",
+    "longname": "test/sequence.js~describe47.describe48.it49",
     "access": "public",
     "description": "should return an Array",
     "lineNumber": 14
   },
   {
-    "__docId__": 144,
+    "__docId__": 159,
     "kind": "test",
-    "name": "it43",
-    "testId": 43,
-    "memberof": "test/sequence.js~describe40.describe41",
+    "name": "it50",
+    "testId": 50,
+    "memberof": "test/sequence.js~describe47.describe48",
     "testDepth": 2,
     "static": true,
-    "longname": "test/sequence.js~describe40.describe41.it43",
+    "longname": "test/sequence.js~describe47.describe48.it50",
     "access": "public",
     "description": "should return an Array equal to the Matchers if successful",
     "lineNumber": 23
   },
   {
-    "__docId__": 145,
+    "__docId__": 160,
     "kind": "test",
-    "name": "it44",
-    "testId": 44,
-    "memberof": "test/sequence.js~describe40.describe41",
+    "name": "it51",
+    "testId": 51,
+    "memberof": "test/sequence.js~describe47.describe48",
     "testDepth": 2,
     "static": true,
-    "longname": "test/sequence.js~describe40.describe41.it44",
+    "longname": "test/sequence.js~describe47.describe48.it51",
     "access": "public",
     "description": "should return undefined if no matchers were passed",
     "lineNumber": 36
   },
   {
-    "__docId__": 146,
+    "__docId__": 161,
     "kind": "test",
-    "name": "it45",
-    "testId": 45,
-    "memberof": "test/sequence.js~describe40.describe41",
+    "name": "it52",
+    "testId": 52,
+    "memberof": "test/sequence.js~describe47.describe48",
     "testDepth": 2,
     "static": true,
-    "longname": "test/sequence.js~describe40.describe41.it45",
+    "longname": "test/sequence.js~describe47.describe48.it52",
     "access": "public",
     "description": "should return undefined if one of the matchers fails",
     "lineNumber": 46

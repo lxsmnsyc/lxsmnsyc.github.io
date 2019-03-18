@@ -24,6 +24,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "parexgram-js/src/pattern.js~pattern",
+    "class/src/pattern.js~Pattern.html",
+    "<span>Pattern</span> <span class=\"search-result-import-path\">parexgram-js/src/pattern.js</span>",
+    "class"
+  ],
+  [
     "parexgram-js/src/quantifier.js~quantifier",
     "class/src/quantifier.js~Quantifier.html",
     "<span>Quantifier</span> <span class=\"search-result-import-path\">parexgram-js/src/quantifier.js</span>",
@@ -201,6 +207,48 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/feed.js.html#lineNumber109",
     "Feed #size should return the size equal to the received string of the Feed, if #eat is not called.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber8",
+    "Pattern",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber9",
+    "Pattern it should match correctly given a RegExp",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber12",
+    "Pattern it should match correctly given a String",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber34",
+    "Pattern it should return undefined if RegExp match fails",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber40",
+    "Pattern it should return undefined if RegExp matches but is not a prefix",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber27",
+    "Pattern it should return undefined if there is a no valid RegExp",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/pattern.js.html#lineNumber15",
+    "Pattern it should return undefined if there is a non-Feed",
     "test"
   ],
   [
@@ -696,6 +744,24 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/pattern.js",
+    "file/src/pattern.js.html",
+    "src/pattern.js",
+    "file"
+  ],
+  [
+    "src/pattern.js~pattern#constructor",
+    "class/src/pattern.js~Pattern.html#instance-constructor-constructor",
+    "src/pattern.js~Pattern#constructor",
+    "method"
+  ],
+  [
+    "src/pattern.js~pattern#parse",
+    "class/src/pattern.js~Pattern.html#instance-method-parse",
+    "src/pattern.js~Pattern#parse",
+    "method"
+  ],
+  [
     "src/quantifier.js",
     "file/src/quantifier.js.html",
     "src/quantifier.js",
@@ -777,6 +843,12 @@ window.esdocSearchIndex = [
     "test/feed.js",
     "test-file/test/feed.js.html",
     "test/feed.js",
+    "testFile"
+  ],
+  [
+    "test/pattern.js",
+    "test-file/test/pattern.js.html",
+    "test/pattern.js",
     "testFile"
   ],
   [
