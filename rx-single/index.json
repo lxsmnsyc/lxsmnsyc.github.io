@@ -1008,7 +1008,7 @@
     "__docId__": 69,
     "kind": "file",
     "name": "src/internal/operators/compose.js",
-    "content": "import Single from '../../single';\nimport { error } from '../operators';\n\nconst compose = (source, transformer) => {\n  if (typeof transformer !== 'function') {\n    return source;\n  }\n\n  let result;\n\n  try {\n    result = transformer(source);\n\n    if (!(result instanceof Single)) {\n      throw new Error('Single.compose: transformer returned a non-Single.');\n    }\n  } catch (e) {\n    result = error(e);\n  }\n\n  return result;\n};\n\nexport default compose;\n",
+    "content": "import Single from '../../single';\nimport { error } from '../operators';\n\n/**\n * @ignore\n */\nconst compose = (source, transformer) => {\n  if (typeof transformer !== 'function') {\n    return source;\n  }\n\n  let result;\n\n  try {\n    result = transformer(source);\n\n    if (!(result instanceof Single)) {\n      throw new Error('Single.compose: transformer returned a non-Single.');\n    }\n  } catch (e) {\n    result = error(e);\n  }\n\n  return result;\n};\n\nexport default compose;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/compose.js",
     "access": "public",
@@ -1028,9 +1028,9 @@
     "export": true,
     "importPath": "rx-single/src/internal/operators/compose.js",
     "importStyle": "compose",
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 7,
+    "ignore": true,
     "params": [
       {
         "name": "source",
@@ -2591,7 +2591,7 @@
     "__docId__": 135,
     "kind": "file",
     "name": "src/internal/operators/lift.js",
-    "content": "import Single from '../../single';\nimport { isObserver, immediateError } from '../utils';\n\nfunction subscribeActual(observer) {\n  let result;\n\n  try {\n    result = this.operator(observer);\n\n    if (!isObserver(result)) {\n      throw new Error('Single.lift: operator returned a non-Observer.');\n    }\n  } catch (e) {\n    immediateError(observer, e);\n    return;\n  }\n\n  this.source.subscribeWith(result);\n}\n\nconst lift = (source, operator) => {\n  if (typeof operator !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.operator = operator;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n\nexport default lift;\n",
+    "content": "import Single from '../../single';\nimport { isObserver, immediateError } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  let result;\n\n  try {\n    result = this.operator(observer);\n\n    if (!isObserver(result)) {\n      throw new Error('Single.lift: operator returned a non-Observer.');\n    }\n  } catch (e) {\n    immediateError(observer, e);\n    return;\n  }\n\n  this.source.subscribeWith(result);\n}\n\n/**\n * @ignore\n */\nconst lift = (source, operator) => {\n  if (typeof operator !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.operator = operator;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n\nexport default lift;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/lift.js",
     "access": "public",
@@ -2611,9 +2611,9 @@
     "export": false,
     "importPath": "rx-single/src/internal/operators/lift.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 7,
+    "ignore": true,
     "params": [
       {
         "name": "observer",
@@ -2622,8 +2622,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 137,
@@ -2638,9 +2637,9 @@
     "export": true,
     "importPath": "rx-single/src/internal/operators/lift.js",
     "importStyle": "lift",
-    "description": null,
-    "lineNumber": 21,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 27,
+    "ignore": true,
     "params": [
       {
         "name": "source",
@@ -3186,7 +3185,7 @@
     "__docId__": 160,
     "kind": "file",
     "name": "src/internal/operators/takeUntil.js",
-    "content": "import Single from '../../single';\nimport { CompositeDisposable } from '../utils';\n\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const disposable = new CompositeDisposable();\n\n  onSubscribe(disposable);\n\n  const { source, other } = this;\n\n  if (!disposable.isDisposed()) {\n    other.subscribeWith({\n      onSubscribe(d) {\n        disposable.add(d);\n      },\n      onSuccess() {\n        onError('Single.takeUntil: Source cancelled by other Single.');\n        disposable.dispose();\n      },\n      onError(x) {\n        onError(['Single.takeUntil: Source cancelled by other Single.', x]);\n        disposable.dispose();\n      },\n    });\n\n    source.subscribeWith({\n      onSubscribe(d) {\n        disposable.add(d);\n      },\n      onSuccess(x) {\n        onSuccess(x);\n        disposable.dispose();\n      },\n      onError(x) {\n        onError(x);\n        disposable.dispose();\n      },\n    });\n  }\n}\n\nconst takeUntil = (source, other) => {\n  if (!(other instanceof Single)) {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.other = other;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n\nexport default takeUntil;\n",
+    "content": "import Single from '../../single';\nimport { CompositeDisposable } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const disposable = new CompositeDisposable();\n\n  onSubscribe(disposable);\n\n  const { source, other } = this;\n\n  if (!disposable.isDisposed()) {\n    other.subscribeWith({\n      onSubscribe(d) {\n        disposable.add(d);\n      },\n      onSuccess() {\n        onError('Single.takeUntil: Source cancelled by other Single.');\n        disposable.dispose();\n      },\n      onError(x) {\n        onError(['Single.takeUntil: Source cancelled by other Single.', x]);\n        disposable.dispose();\n      },\n    });\n\n    source.subscribeWith({\n      onSubscribe(d) {\n        disposable.add(d);\n      },\n      onSuccess(x) {\n        onSuccess(x);\n        disposable.dispose();\n      },\n      onError(x) {\n        onError(x);\n        disposable.dispose();\n      },\n    });\n  }\n}\n\n/**\n * @ignore\n */\nconst takeUntil = (source, other) => {\n  if (!(other instanceof Single)) {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.other = other;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n\nexport default takeUntil;\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/takeUntil.js",
     "access": "public",
@@ -3206,9 +3205,9 @@
     "export": false,
     "importPath": "rx-single/src/internal/operators/takeUntil.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 7,
+    "ignore": true,
     "params": [
       {
         "name": "observer",
@@ -3217,8 +3216,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 162,
@@ -3233,9 +3231,9 @@
     "export": true,
     "importPath": "rx-single/src/internal/operators/takeUntil.js",
     "importStyle": "takeUntil",
-    "description": null,
-    "lineNumber": 44,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 50,
+    "ignore": true,
     "params": [
       {
         "name": "source",

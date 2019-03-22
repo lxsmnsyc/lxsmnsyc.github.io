@@ -24,24 +24,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "rx-single/src/internal/operators/compose.js~compose",
-    "function/index.html#static-function-compose",
-    "<span>compose</span> <span class=\"search-result-import-path\">rx-single/src/internal/operators/compose.js</span>",
-    "function"
-  ],
-  [
-    "rx-single/src/internal/operators/lift.js~lift",
-    "function/index.html#static-function-lift",
-    "<span>lift</span> <span class=\"search-result-import-path\">rx-single/src/internal/operators/lift.js</span>",
-    "function"
-  ],
-  [
-    "rx-single/src/internal/operators/takeuntil.js~takeuntil",
-    "function/index.html#static-function-takeUntil",
-    "<span>takeUntil</span> <span class=\"search-result-import-path\">rx-single/src/internal/operators/takeUntil.js</span>",
-    "function"
-  ],
-  [
     "",
     "test-file/test/amb.js.html#lineNumber8",
     "Single",

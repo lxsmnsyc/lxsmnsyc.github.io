@@ -36,9 +36,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#internal-operators">internal/operators</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-compose">compose</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lift">lift</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-takeUntil">takeUntil</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -47,6 +44,9 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
 import { CompositeDisposable } from &apos;../utils&apos;;
 
+/**
+ * @ignore
+ */
 function subscribeActual(observer) {
   const { onSubscribe, onSuccess, onError } = observer;
 
@@ -87,6 +87,9 @@ function subscribeActual(observer) {
   }
 }
 
+/**
+ * @ignore
+ */
 const takeUntil = (source, other) =&gt; {
   if (!(other instanceof Single)) {
     return source;
