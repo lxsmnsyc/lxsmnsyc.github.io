@@ -77,7 +77,7 @@ describe(&apos;Single&apos;, () =&gt; {
       const single = Single.just(&apos;Hello&apos;).compose(source =&gt; source.map(x =&gt; `${x} World`));
 
       single.subscribe(
-        x =&gt; (x === &apos;Hello World&apos; ? done() : done(false)),
+        x =&gt; (x === &apos;Hello World&apos; ? done() : done(x)),
         done,
       );
     });

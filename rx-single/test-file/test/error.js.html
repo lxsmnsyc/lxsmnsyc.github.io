@@ -57,7 +57,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.error(&apos;Hello World&apos;);
+      const single = Single.error(new Error(&apos;Hello World&apos;));
 
       assert(single instanceof Single);
     });
@@ -65,7 +65,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should error with the given value.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello World&apos;);
+      const single = Single.error(new Error(&apos;Hello World&apos;));
 
       single.subscribe(
         () =&gt; done(false),

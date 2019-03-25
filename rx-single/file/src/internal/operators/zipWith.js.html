@@ -42,7 +42,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zipWith.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { CompositeDisposable } from &apos;../utils&apos;;
+import { CompositeDisposable, cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -52,7 +52,7 @@ const defaultZipper = (x, y) =&gt; [x, y];
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   let SA;
   let SB;

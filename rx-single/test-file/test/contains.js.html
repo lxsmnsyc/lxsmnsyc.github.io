@@ -98,7 +98,7 @@ describe(&apos;Single&apos;, () =&gt; {
 
       single.subscribe(
         () =&gt; done(false),
-        e =&gt; (e instanceof Error ? done() : done(false)),
+        e =&gt; (e instanceof Error ? done() : done(e)),
       );
     });
   });

@@ -42,7 +42,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { isIterable, CompositeDisposable } from &apos;../utils&apos;;
+import { isIterable, CompositeDisposable, cleanObserver } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 
 const defaultZipper = x =&gt; x;
@@ -50,7 +50,7 @@ const defaultZipper = x =&gt; x;
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   const result = [];
 
@@ -63,7 +63,7 @@ function subscribeActual(observer) {
   const size = sources.length;
 
   if (size === 0) {
-    onError(&apos;Single.zip: empty iterable&apos;);
+    onError(new Error(&apos;Single.zip: empty iterable&apos;));
     disposable.dispose();
     return;
   }
@@ -113,7 +113,7 @@ function subscribeActual(observer) {
       result[i] = single;
       pending -= 1;
     } else {
-      onError(&apos;Single.zip: One of the sources is undefined.&apos;);
+      onError(new Error(&apos;Single.zip: One of the sources is undefined.&apos;));
       disposable.dispose();
       break;
     }
@@ -124,7 +124,7 @@ function subscribeActual(observer) {
  */
 const zip = (sources, zipper) =&gt; {
   if (!isIterable(sources)) {
-    return error(&apos;Single.zip: sources is not Iterable.&apos;);
+    return error(new Error(&apos;Single.zip: sources is not Iterable.&apos;));
   }
   let fn = zipper;
   if (typeof zipper !== &apos;function&apos;) {

@@ -85,7 +85,7 @@ describe(&apos;Single&apos;, () =&gt; {
      */
     it(&apos;should call the given function after error.&apos;, (done) =&gt; {
       let called;
-      const source = Single.error(&apos;Hello&apos;);
+      const source = Single.error(new Error(&apos;Hello&apos;));
       const single = source.doAfterTerminate(() =&gt; called &amp;&amp; done());
       single.subscribe(
         () =&gt; done(false),

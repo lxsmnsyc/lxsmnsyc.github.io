@@ -42,13 +42,13 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/defer.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { immediateError } from &apos;../utils&apos;;
+import { immediateError, cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   let result;
 
@@ -56,7 +56,7 @@ function subscribeActual(observer) {
   try {
     result = this.supplier();
     if (!(result instanceof Single)) {
-      err = &apos;Single.defer: supplier returned a non-Single.&apos;;
+      throw new Error(&apos;Single.defer: supplier returned a non-Single.&apos;);
     }
   } catch (e) {
     err = e;

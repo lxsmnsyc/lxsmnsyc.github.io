@@ -57,14 +57,14 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorReturn(() =&gt; &apos;World&apos;);
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorReturn(() =&gt; &apos;World&apos;);
       assert(single instanceof Single);
     });
     /**
      *
      */
     it(&apos;should return the same instance if parameter passed is not a Single or a function&apos;, () =&gt; {
-      const source = Single.error(&apos;Hello&apos;);
+      const source = Single.error(new Error(&apos;Hello&apos;));
       const single = source.onErrorReturn();
       assert(single === source);
     });
@@ -72,10 +72,10 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should emit the supplied item by the given function in case of error&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorReturn(() =&gt; &apos;World&apos;);
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorReturn(() =&gt; &apos;World&apos;);
 
       single.subscribe(
-        x =&gt; (x === &apos;World&apos; ? done() : done(false)),
+        () =&gt; done(),
         done,
       );
     });
@@ -83,7 +83,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should emit error if provide function throws error.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorReturn(() =&gt; { throw new Error(&apos;Ooops&apos;); });
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorReturn(() =&gt; { throw new Error(&apos;Ooops&apos;); });
       single.subscribe(
         done,
         () =&gt; done(),
@@ -93,7 +93,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should emit error if provide function returns undefined.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorReturn(() =&gt; {});
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorReturn(() =&gt; {});
       single.subscribe(
         done,
         () =&gt; done(),

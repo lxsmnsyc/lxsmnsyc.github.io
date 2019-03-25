@@ -42,7 +42,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/create.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-  onErrorHandler, onSuccessHandler, SimpleDisposable,
+  onErrorHandler, onSuccessHandler, SimpleDisposable, cleanObserver,
 } from &apos;../utils&apos;;
 import Single from &apos;../../single&apos;;
 import { error } from &apos;../operators&apos;;
@@ -51,7 +51,7 @@ import { error } from &apos;../operators&apos;;
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   const emitter = new SimpleDisposable();
   emitter.onSuccess = onSuccessHandler.bind(this);
@@ -73,7 +73,7 @@ function subscribeActual(observer) {
  */
 const create = (subscriber) =&gt; {
   if (typeof subscriber !== &apos;function&apos;) {
-    return error(&apos;Single.create: There are no subscribers.&apos;);
+    return error(new Error(&apos;Single.create: There are no subscribers.&apos;));
   }
   const single = new Single();
   single.subscriber = subscriber;

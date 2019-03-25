@@ -1279,25 +1279,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber13",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber12",
     "Single #onErrorReturnItem",
     "test"
   ],
   [
     "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber17",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber16",
     "Single #onErrorReturnItem should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber32",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber31",
     "Single #onErrorReturnItem should emit the given item in case of error",
     "test"
   ],
   [
     "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber24",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber23",
     "Single #onErrorReturnItem should return the same instance if parameter passed is not a Single or a function",
     "test"
   ],
@@ -1549,61 +1549,61 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber13",
+    "test-file/test/zipWith.js.html#lineNumber12",
     "Single #zipWith",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber17",
+    "test-file/test/zipWith.js.html#lineNumber16",
     "Single #zipWith should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber94",
+    "test-file/test/zipWith.js.html#lineNumber93",
     "Single #zipWith should not signal success if disposed.",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber24",
+    "test-file/test/zipWith.js.html#lineNumber23",
     "Single #zipWith should return the same instance if the other parameter is non-Single",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber32",
+    "test-file/test/zipWith.js.html#lineNumber31",
     "Single #zipWith should signal an error if the zipper returns undefined",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber43",
+    "test-file/test/zipWith.js.html#lineNumber42",
     "Single #zipWith should signal an error if the zipper returns undefined",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber84",
+    "test-file/test/zipWith.js.html#lineNumber83",
     "Single #zipWith should signal error if other Single throws error.",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber74",
+    "test-file/test/zipWith.js.html#lineNumber73",
     "Single #zipWith should signal error if source throws error.",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber54",
+    "test-file/test/zipWith.js.html#lineNumber53",
     "Single #zipWith should signal success with an array (no zipper function).",
     "test"
   ],
   [
     "",
-    "test-file/test/zipWith.js.html#lineNumber64",
+    "test-file/test/zipWith.js.html#lineNumber63",
     "Single #zipWith should signal success with an array with the correct values (no zipper function).",
     "test"
   ],

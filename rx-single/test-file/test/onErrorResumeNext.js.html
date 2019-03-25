@@ -57,14 +57,14 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorResumeNext(Single.just(&apos;World&apos;));
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorResumeNext(Single.just(&apos;World&apos;));
       assert(single instanceof Single);
     });
     /**
      *
      */
     it(&apos;should return the same instance if parameter passed is not a Single or a function&apos;, () =&gt; {
-      const source = Single.error(&apos;Hello&apos;);
+      const source = Single.error(new Error(&apos;Hello&apos;));
       const single = source.onErrorResumeNext();
       assert(single === source);
     });
@@ -72,7 +72,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should subscribe to the given Single&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorResumeNext(Single.just(&apos;World&apos;));
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorResumeNext(Single.just(&apos;World&apos;));
       single.subscribe(
         () =&gt; done(),
         done,
@@ -82,7 +82,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should subscribe to the given Single-producing Function&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorResumeNext(() =&gt; Single.just(&apos;World&apos;));
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorResumeNext(() =&gt; Single.just(&apos;World&apos;));
       single.subscribe(
         () =&gt; done(),
         done,
@@ -92,7 +92,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should emit error if provide function throws error.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorResumeNext(() =&gt; { throw new Error(&apos;Ooops&apos;); });
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorResumeNext(() =&gt; { throw new Error(&apos;Ooops&apos;); });
       single.subscribe(
         done,
         () =&gt; done(),
@@ -102,7 +102,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should emit error if provide function returns non-Single.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).onErrorResumeNext(() =&gt; {});
+      const single = Single.error(new Error(&apos;Hello&apos;)).onErrorResumeNext(() =&gt; {});
       single.subscribe(
         done,
         () =&gt; done(),

@@ -42,13 +42,13 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timeout.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { SimpleDisposable } from &apos;../utils&apos;;
+import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   const { amount } = this;
 
@@ -66,7 +66,7 @@ function subscribeActual(observer) {
   timeout = setTimeout(
     err,
     amount,
-    &apos;Single.timeout: TimeoutException (no success signals within the specified timeout).&apos;,
+    new Error(&apos;Single.timeout: TimeoutException (no success signals within the specified timeout).&apos;),
   );
 
   onSubscribe(disposable);

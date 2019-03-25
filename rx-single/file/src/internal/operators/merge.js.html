@@ -43,13 +43,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/merge.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
 import error from &apos;./error&apos;;
-import { SimpleDisposable } from &apos;../utils&apos;;
+import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSubscribe, onError, onSuccess } = observer;
+  const { onSubscribe, onError, onSuccess } = cleanObserver(observer);
 
   const disposable = new SimpleDisposable();
 
@@ -62,7 +62,7 @@ function subscribeActual(observer) {
     onSuccess(x) {
       let result = x;
       if (!(x instanceof Single)) {
-        result = error(&apos;Single.merge: source emitted a non-Single value.&apos;);
+        result = error(new Error(&apos;Single.merge: source emitted a non-Single value.&apos;));
       }
       result.subscribeWith({
         onSubscribe(d) {
@@ -81,7 +81,7 @@ function subscribeActual(observer) {
  */
 const merge = (source) =&gt; {
   if (!(source instanceof Single)) {
-    return error(&apos;Single.merge: source is not a Single.&apos;);
+    return error(new Error(&apos;Single.merge: source is not a Single.&apos;));
   }
 
   const single = new Single();

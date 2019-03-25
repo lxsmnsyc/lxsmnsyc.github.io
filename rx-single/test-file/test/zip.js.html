@@ -135,7 +135,7 @@ describe(&apos;Single&apos;, () =&gt; {
     *
     */
     it(&apos;should signal error if a source throws error.&apos;, (done) =&gt; {
-      const source = Single.zip([Single.error(&apos;Hello&apos;), Single.just(&apos;World&apos;)]);
+      const source = Single.zip([Single.error(new Error(&apos;Hello&apos;)), Single.just(&apos;World&apos;)]);
       source.subscribe(
         () =&gt; done(false),
         () =&gt; done(),

@@ -85,7 +85,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal success if other Single has not emitted an error signal&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).takeUntil(Single.error(&apos;World&apos;).delay(100));
+      const single = Single.just(&apos;Hello&apos;).takeUntil(Single.error(new Error(&apos;World&apos;)).delay(100));
 
       single.subscribe(
         x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
@@ -107,7 +107,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error if other Single has emitted an error signal&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).delay(100).takeUntil(Single.error(&apos;World&apos;));
+      const single = Single.just(&apos;Hello&apos;).delay(100).takeUntil(Single.error(new Error(&apos;World&apos;)));
 
       single.subscribe(
         done,
@@ -118,7 +118,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error if source signals error, nonetheless&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).takeUntil(Single.timer(100));
+      const single = Single.error(new Error(&apos;Hello&apos;)).takeUntil(Single.timer(100));
 
       single.subscribe(
         done,

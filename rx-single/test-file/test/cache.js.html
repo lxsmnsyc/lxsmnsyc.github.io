@@ -69,12 +69,12 @@ describe(&apos;Single&apos;, () =&gt; {
 
       setTimeout(() =&gt; {
         single.subscribe(
-          (x) =&gt; { flag = x === &apos;Hello World&apos;; },
+          () =&gt; { flag = true; },
           done,
         );
         setTimeout(() =&gt; {
           single.subscribe(
-            x =&gt; (flag &amp;&amp; x === &apos;Hello World&apos; ? done() : done(x)),
+            x =&gt; (flag ? done() : done(x)),
             done,
           );
         }, 100);
@@ -85,18 +85,18 @@ describe(&apos;Single&apos;, () =&gt; {
      */
     it(&apos;should signal cached error value&apos;, (done) =&gt; {
       let flag;
-      const single = Single.error(&apos;Hello World&apos;).delay(100).cache();
+      const single = Single.error(new Error(&apos;Hello&apos;)).delay(100).cache();
 
       setTimeout(() =&gt; {
         single.subscribe(
           done,
-          (x) =&gt; { flag = x === &apos;Hello World&apos;; },
+          () =&gt; { flag = true; },
         );
 
         setTimeout(() =&gt; {
           single.subscribe(
             done,
-            x =&gt; (flag &amp;&amp; x === &apos;Hello World&apos; ? done() : done(x)),
+            e =&gt; (flag &amp;&amp; e instanceof Error ? done() : done(e)),
           );
         }, 100);
       }, 200);

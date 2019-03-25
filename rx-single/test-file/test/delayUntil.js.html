@@ -82,20 +82,20 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error with the given value.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).delayUntil(Single.timer(100));
+      const single = Single.error(new Error(&apos;Hello&apos;)).delayUntil(Single.timer(100));
       single.subscribe(
         x =&gt; done(x),
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
+        e =&gt; (e instanceof Error ? done() : done(false)),
       );
     });
     /**
      *
      */
     it(&apos;should signal error if other Single signals error.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;World&apos;).delayUntil(Single.error(&apos;Hello&apos;));
+      const single = Single.error(new Error(&apos;World&apos;)).delayUntil(Single.error(new Error(&apos;Hello&apos;)));
       single.subscribe(
         x =&gt; done(x),
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
+        e =&gt; (e instanceof Error ? done() : done(false)),
       );
     });
     /**
@@ -117,7 +117,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should not signal error if disposed.&apos;, (done) =&gt; {
-      const source = Single.error(&apos;Hello&apos;).delayUntil(Single.timer(100));
+      const source = Single.error(new Error(&apos;Hello&apos;)).delayUntil(Single.timer(100));
       const disposable = source.subscribe(
         () =&gt; done(false),
         () =&gt; done(false),

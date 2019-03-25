@@ -49,7 +49,6 @@ import Single from &apos;../src/single&apos;;
  *
  */
 describe(&apos;Single&apos;, () =&gt; {
-
   /**
    *
    */
@@ -115,7 +114,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error if source throws error.&apos;, (done) =&gt; {
-      const source = Single.error(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;));
+      const source = Single.error(new Error(&apos;Hello&apos;)).zipWith(Single.just(&apos;World&apos;));
       source.subscribe(
         () =&gt; done(false),
         () =&gt; done(),

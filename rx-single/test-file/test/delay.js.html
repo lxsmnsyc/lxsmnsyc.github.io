@@ -82,7 +82,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error with the given value.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).delay(100);
+      const single = Single.error(new Error(&apos;Hello&apos;)).delay(100);
       single.subscribe(
         x =&gt; done(x),
         x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
@@ -107,7 +107,7 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should not signal error if disposed.&apos;, (done) =&gt; {
-      const source = Single.error(&apos;Hello&apos;).delay(100);
+      const source = Single.error(new Error(&apos;Hello&apos;)).delay(100);
       const disposable = source.subscribe(
         () =&gt; done(false),
         () =&gt; done(false),

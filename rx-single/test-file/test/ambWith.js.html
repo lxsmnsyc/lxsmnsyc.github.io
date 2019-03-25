@@ -74,7 +74,7 @@ describe(&apos;Single&apos;, () =&gt; {
     it(&apos;should signal success from the source (if earlier)&apos;, (done) =&gt; {
       const single = Single.just(&apos;Hello&apos;).ambWith(Single.timer(100));
       single.subscribe(
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(x)),
+        () =&gt; done(),
         done,
       );
     });
@@ -84,7 +84,7 @@ describe(&apos;Single&apos;, () =&gt; {
     it(&apos;should signal success from the other (if earlier).&apos;, (done) =&gt; {
       const single = Single.timer(100).ambWith(Single.just(&apos;Hello&apos;));
       single.subscribe(
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(x)),
+        () =&gt; done(),
         done,
       );
     });
@@ -92,20 +92,20 @@ describe(&apos;Single&apos;, () =&gt; {
      *
      */
     it(&apos;should signal error from the source (if earlier).&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).ambWith(Single.timer(100));
+      const single = Single.error(new Error(&apos;Hello&apos;)).ambWith(Single.timer(100));
       single.subscribe(
         done,
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(x)),
+        e =&gt; (e instanceof Error ? done() : done(false)),
       );
     });
     /**
      *
      */
     it(&apos;should signal error from the other (if earlier).&apos;, (done) =&gt; {
-      const single = Single.timer(100).ambWith(Single.error(&apos;Hello&apos;));
+      const single = Single.timer(100).ambWith(Single.error(new Error(&apos;Hello&apos;)));
       single.subscribe(
         done,
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(x)),
+        e =&gt; (e instanceof Error ? done() : done(false)),
       );
     });
   });

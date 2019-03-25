@@ -83,7 +83,7 @@ function subscribeActual(observer) {
  */
 const fromCallable = (callable) =&gt; {
   if (typeof callable !== &apos;function&apos;) {
-    return error(&apos;Single.fromCallable: callable received is not a function.&apos;);
+    return error(new Error(&apos;Single.fromCallable: callable received is not a function.&apos;));
   }
   const single = new Single();
   single.callable = callable;

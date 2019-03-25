@@ -42,14 +42,14 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { SimpleDisposable } from &apos;../utils&apos;;
+import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
 import { error } from &apos;../operators&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onSubscribe } = observer;
+  const { onSuccess, onSubscribe } = cleanObserver(observer);
 
   let timeout;
 
@@ -73,7 +73,7 @@ function subscribeActual(observer) {
  */
 const timer = (amount) =&gt; {
   if (typeof amount !== &apos;number&apos;) {
-    return error(&apos;Single.timer: &quot;amount&quot; is not a number.&apos;);
+    return error(new Error(&apos;Single.timer: &quot;amount&quot; is not a number.&apos;));
   }
   const single = new Single();
   single.amount = amount;
