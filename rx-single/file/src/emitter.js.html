@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -49,7 +48,7 @@
  * Emitter is an abstraction layer of the Observer
  */
 // eslint-disable-next-line no-unused-vars
-export default class Emitter {
+export default class Emitter extends AbortController {
   /**
    * Emits a success value.
    * @param {!any} value
@@ -65,29 +64,6 @@ export default class Emitter {
    */
   // eslint-disable-next-line class-methods-use-this, no-unused-vars
   onError(err) {}
-
-  /**
-   * Sets the Disposable for this instance
-   * @param {!Disposable} d
-   * @abstract
-   */
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  setDisposable(d) {}
-
-  /**
-   * Disposes the instance
-   * @abstract
-   */
-  // eslint-disable-next-line class-methods-use-this
-  dispose() {}
-
-  /**
-   * Checks if the instance is disposed
-   * @returns {Boolean}
-   * @abstract
-   */
-  // eslint-disable-next-line class-methods-use-this
-  isDisposed() {}
 }
 </code></pre>
 

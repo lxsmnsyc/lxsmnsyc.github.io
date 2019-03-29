@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,8 +40,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/amb.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { isIterable, CompositeDisposable, cleanObserver } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
+import { isIterable, cleanObserver } from &apos;../utils&apos;;
 import { error } from &apos;../operators&apos;;
 
 /**
@@ -51,47 +51,52 @@ import { error } from &apos;../operators&apos;;
 function subscribeActual(observer) {
   const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
-  const disposable = new CompositeDisposable();
+  const controller = new AbortController();
 
-  onSubscribe(disposable);
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
 
   const { sources } = this;
 
   const size = sources.length;
 
   for (let i = 0; i &lt; size; i += 1) {
-    if (disposable.isDisposed()) {
+    if (signal.aborted) {
       return;
     }
     const single = sources[i];
 
     if (single instanceof Single) {
       single.subscribeWith({
-        onSubscribe(d) {
-          disposable.add(d);
+        onSubscribe(ac) {
+          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
         },
         // eslint-disable-next-line no-loop-func
         onSuccess(x) {
           onSuccess(x);
-          disposable.dispose();
+          controller.abort();
         },
         onError(x) {
           onError(x);
-          disposable.dispose();
+          controller.abort();
         },
       });
     } else {
       onError(new Error(&apos;Single.amb: One of the sources is a non-Single.&apos;));
-      disposable.dispose();
+      controller.abort();
       break;
     }
   }
-  onSubscribe(disposable);
 }
 /**
  * @ignore
  */
-const amb = (sources) =&gt; {
+export default (sources) =&gt; {
   if (!isIterable(sources)) {
     return error(new Error(&apos;Single.amb: sources is not Iterable.&apos;));
   }
@@ -100,8 +105,6 @@ const amb = (sources) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default amb;
 </code></pre>
 
 </div>

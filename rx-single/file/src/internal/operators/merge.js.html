@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,9 +40,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/merge.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
 import error from &apos;./error&apos;;
-import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -51,13 +51,19 @@ import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
 function subscribeActual(observer) {
   const { onSubscribe, onError, onSuccess } = cleanObserver(observer);
 
-  const disposable = new SimpleDisposable();
+  const controller = new AbortController();
 
-  onSubscribe(disposable);
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
 
   this.source.subscribeWith({
-    onSubscribe(d) {
-      disposable.setDisposable(d);
+    onSubscribe(ac) {
+      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
     },
     onSuccess(x) {
       let result = x;
@@ -65,21 +71,30 @@ function subscribeActual(observer) {
         result = error(new Error(&apos;Single.merge: source emitted a non-Single value.&apos;));
       }
       result.subscribeWith({
-        onSubscribe(d) {
-          disposable.setDisposable(d);
+        onSubscribe(ac) {
+          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
         },
-        onSuccess,
-        onError,
+        onSuccess(v) {
+          onSuccess(v);
+          controller.abort();
+        },
+        onError(v) {
+          onError(v);
+          controller.abort();
+        },
       });
     },
-    onError,
+    onError(v) {
+      onError(v);
+      controller.abort();
+    },
   });
 }
 
 /**
  * @ignore
  */
-const merge = (source) =&gt; {
+export default (source) =&gt; {
   if (!(source instanceof Single)) {
     return error(new Error(&apos;Single.merge: source is not a Single.&apos;));
   }
@@ -89,8 +104,6 @@ const merge = (source) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default merge;
 </code></pre>
 
 </div>

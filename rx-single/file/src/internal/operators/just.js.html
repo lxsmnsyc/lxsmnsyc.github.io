@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -54,7 +53,7 @@ function subscribeActual(observer) {
 /**
  * @ignore
  */
-const just = (value) =&gt; {
+export default (value) =&gt; {
   if (typeof value === &apos;undefined&apos;) {
     return error(new Error(&apos;Single.just: received an undefined value.&apos;));
   }
@@ -63,8 +62,6 @@ const just = (value) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default just;
 </code></pre>
 
 </div>

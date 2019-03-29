@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,13 +40,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Single from &apos;<span><a href="file/src/single.js.html#lineNumber82">rx-single/src/single.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Single from &apos;<span><a href="file/src/single.js.html#lineNumber83">rx-single/src/single.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/single.js.html#lineNumber82">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/single.js.html#lineNumber83">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -82,8 +81,8 @@ or the subscribe(onSuccess, onError) method.</p>
 events; unlike Observable, onSuccess is never followed
 by onError.</p>
 <p>Like Observable, a running Single can be stopped through
-the Disposable instance provided to consumers through
-Observer.onSubscribe(Disposable).</p>
+the AbortController instance provided to consumers through
+Observer.onSubscribe(AbortController).</p>
 <p>Singles are cold by default, but using a toPromise method,
 you can achieve a hot-like Single.</p>
 <p>The documentation for this class makes use of marble diagrams.
@@ -821,15 +820,15 @@ onSuccess or onError or gets disposed by the downstream.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-doOnDispose">doOnDispose</a></span></span><span class="code" data-ice="signature">(callable: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-doOnAbort">doOnAbort</a></span></span><span class="code" data-ice="signature">(callable: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
         
         
         <div data-ice="description"><p>Calls the shared function if a Observer
-subscribed to the current Single disposes
-the common Disposable it received via
+subscribed to the current Single aborts
+the common AbortController it received via
 onSubscribe.</p>
 </div>
       </div>
@@ -916,13 +915,13 @@ to the current Single.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-doOnSubscribe">doOnSubscribe</a></span></span><span class="code" data-ice="signature">(callable: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span>)</span></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-doOnSubscribe">doOnSubscribe</a></span></span><span class="code" data-ice="signature">(callable: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>AbortController</span>)</span></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Calls the shared function with the Disposable
+        <div data-ice="description"><p>Calls the shared function with the AbortController
 sent through the onSubscribe for each Observer
 that subscribes to the current Single.</p>
 </div>
@@ -1231,7 +1230,7 @@ returns true when the Single fails with an onError.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span>AbortController</span></span>
         </p>
       </div>
       <div>
@@ -1449,7 +1448,7 @@ by the source Single and another specified Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber114">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber115">source</a></span></span>
     </span>
   </h3>
 
@@ -1526,7 +1525,7 @@ this Iterable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber98">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber99">source</a></span></span>
     </span>
   </h3>
 
@@ -1610,7 +1609,7 @@ an object that implements the Emitter interface.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber198">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber199">source</a></span></span>
     </span>
   </h3>
 
@@ -1686,7 +1685,7 @@ Observer and returns a Single instance to subscribe to.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber411">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber412">source</a></span></span>
     </span>
   </h3>
 
@@ -1771,7 +1770,7 @@ when the subscriber subscribes to it</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber457">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber458">source</a></span></span>
     </span>
   </h3>
 
@@ -1859,7 +1858,7 @@ an invocation of the given function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber468">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber469">source</a></span></span>
     </span>
   </h3>
 
@@ -1932,7 +1931,7 @@ an invocation of the given function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber480">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber481">source</a></span></span>
     </span>
   </h3>
 
@@ -2006,7 +2005,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber494">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber495">source</a></span></span>
     </span>
   </h3>
 
@@ -2081,7 +2080,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber565">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber566">source</a></span></span>
     </span>
   </h3>
 
@@ -2159,7 +2158,7 @@ the Single emitted by source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber577">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber578">source</a></span></span>
     </span>
   </h3>
 
@@ -2217,7 +2216,7 @@ Single (only calls onSubscribe).</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber756">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber773">source</a></span></span>
     </span>
   </h3>
 
@@ -2292,7 +2291,7 @@ delay for each Observer.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber793">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber810">source</a></span></span>
     </span>
   </h3>
 
@@ -2387,7 +2386,7 @@ emitted to downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber131">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber132">source</a></span></span>
     </span>
   </h3>
 
@@ -2465,7 +2464,7 @@ after subscribing to the current source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber144">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber145">source</a></span></span>
     </span>
   </h3>
 
@@ -2524,7 +2523,7 @@ when the first SingleObserver subscribes.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber849">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber866">source</a></span></span>
     </span>
   </h3>
 
@@ -2597,7 +2596,7 @@ and attaches an onRejection callback to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber166">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber167">source</a></span></span>
     </span>
   </h3>
 
@@ -2678,7 +2677,7 @@ existing operators to it) use compose.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber183">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber184">source</a></span></span>
     </span>
   </h3>
 
@@ -2762,7 +2761,7 @@ true if they are considered equal.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber216">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber217">source</a></span></span>
     </span>
   </h3>
 
@@ -2846,7 +2845,7 @@ if false, only success signals are delayed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber229">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber230">source</a></span></span>
     </span>
   </h3>
 
@@ -2921,7 +2920,7 @@ Single until the given time delay elapsed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber246">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber247">source</a></span></span>
     </span>
   </h3>
 
@@ -2999,7 +2998,7 @@ to the current Single happens.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber262">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber263">source</a></span></span>
     </span>
   </h3>
 
@@ -3076,7 +3075,7 @@ an item from upstream to the downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber278">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber279">source</a></span></span>
     </span>
   </h3>
 
@@ -3153,7 +3152,7 @@ Single, then invokes the function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber296">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber297">source</a></span></span>
     </span>
   </h3>
 
@@ -3220,18 +3219,18 @@ subscription.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-doOnDispose">
+  <h3 data-ice="anchor" id="instance-method-doOnAbort">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">doOnDispose</span><span class="code" data-ice="signature">(callable: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">doOnAbort</span><span class="code" data-ice="signature">(callable: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber312">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber313">source</a></span></span>
     </span>
   </h3>
 
@@ -3239,8 +3238,8 @@ subscription.</p>
   
   
   <div data-ice="description"><p>Calls the shared function if a Observer
-subscribed to the current Single disposes
-the common Disposable it received via
+subscribed to the current Single aborts
+the common AbortController it received via
 onSubscribe.</p>
 <p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnDispose.png" class="diagram"></p>
 </div>
@@ -3308,7 +3307,7 @@ onSubscribe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber327">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber328">source</a></span></span>
     </span>
   </h3>
 
@@ -3384,7 +3383,7 @@ subscribes to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber341">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber342">source</a></span></span>
     </span>
   </h3>
 
@@ -3456,18 +3455,18 @@ to the current Single.</p>
     
     
     
-    <span class="code" data-ice="name">doOnSubscribe</span><span class="code" data-ice="signature">(callable: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span>)</span></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">doOnSubscribe</span><span class="code" data-ice="signature">(callable: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>AbortController</span>)</span></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber356">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber357">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Calls the shared function with the Disposable
+  <div data-ice="description"><p>Calls the shared function with the AbortController
 sent through the onSubscribe for each Observer
 that subscribes to the current Single.</p>
 <p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnSubscribe.png" class="diagram"></p>
@@ -3485,9 +3484,9 @@ that subscribes to the current Single.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">callable</td>
-      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span>)</span></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>AbortController</span>)</span></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
-      <td data-ice="description"><p>the function called with the Disposable sent via onSubscribe</p>
+      <td data-ice="description"><p>the function called with the AbortController sent via onSubscribe</p>
 </td>
     </tr>
 </tbody>
@@ -3536,7 +3535,7 @@ that subscribes to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber371">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber372">source</a></span></span>
     </span>
   </h3>
 
@@ -3612,7 +3611,7 @@ to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber388">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber389">source</a></span></span>
     </span>
   </h3>
 
@@ -3690,7 +3689,7 @@ onComplete or onError</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber427">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber428">source</a></span></span>
     </span>
   </h3>
 
@@ -3768,7 +3767,7 @@ emitted by the source Single</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber531">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber532">source</a></span></span>
     </span>
   </h3>
 
@@ -3865,7 +3864,7 @@ to be used as the consumer for the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber548">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber549">source</a></span></span>
     </span>
   </h3>
 
@@ -3943,7 +3942,7 @@ transformed by the specified function</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber610">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber611">source</a></span></span>
     </span>
   </h3>
 
@@ -4035,7 +4034,7 @@ Observer may never know that an error happened.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber641">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber642">source</a></span></span>
     </span>
   </h3>
 
@@ -4125,7 +4124,7 @@ will emit if the source Single encounters an error</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber654">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber655">source</a></span></span>
     </span>
   </h3>
 
@@ -4199,7 +4198,7 @@ the current Single signals an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber670">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber671">source</a></span></span>
     </span>
   </h3>
 
@@ -4272,11 +4271,11 @@ value and should return true if a resubscription should happen.</p>
     
     
     
-    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span>
+    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span>AbortController</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber714">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber715">source</a></span></span>
     </span>
   </h3>
 
@@ -4326,8 +4325,8 @@ notification from the Single</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>a Disposable reference can request the Single stop work.</p>
+          <td class="return-type code" data-ice="returnType"><span>AbortController</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>an AbortController reference can request the Single to abort.</p>
 </td>
         </tr>
       </tbody>
@@ -4363,7 +4362,7 @@ notification from the Single</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber690">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber691">source</a></span></span>
     </span>
   </h3>
 
@@ -4379,7 +4378,7 @@ notification from the Single</p>
 </ul>
 <p>The onSubscribe method is called when subscribeWith
 or subscribe is executed. This method receives an
-object that implements the Disposable interface.</p>
+AbortController instance.</p>
 </div>
 
   
@@ -4444,7 +4443,7 @@ object that implements the Disposable interface.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber742">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber759">source</a></span></span>
     </span>
   </h3>
 
@@ -4525,7 +4524,7 @@ Single until such time as other emits its item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber838">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber855">source</a></span></span>
     </span>
   </h3>
 
@@ -4604,7 +4603,7 @@ and attaches callbacks to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber768">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber785">source</a></span></span>
     </span>
   </h3>
 
@@ -4679,7 +4678,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber824">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber841">source</a></span></span>
     </span>
   </h3>
 
@@ -4735,7 +4734,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber815">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber832">source</a></span></span>
     </span>
   </h3>
 

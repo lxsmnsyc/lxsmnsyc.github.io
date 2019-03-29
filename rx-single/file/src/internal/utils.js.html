@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,14 +40,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/utils.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * @ignore
- */
-export const DISPOSED = Symbol(&apos;DISPOSED&apos;);
-/**
- * @ignore
- */
-export const isDisposable = obj =&gt; typeof obj === &apos;object&apos; &amp;&amp; (typeof obj.dispose === &apos;function&apos; &amp;&amp; typeof obj.isDisposed === &apos;function&apos;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 /**
  * @ignore
  */
@@ -57,13 +49,6 @@ export const isIterable = obj =&gt; typeof obj === &apos;object&apos; &amp;&amp;
  * @ignore
  */
 export const isObserver = obj =&gt; typeof obj === &apos;object&apos; &amp;&amp; typeof obj.onSubscribe === &apos;function&apos;;
-/**
- * @ignore
- */
-export const neverDisposed = {
-  dispose: () =&gt; {},
-  isDisposed: () =&gt; false,
-};
 /**
  * @ignore
  */
@@ -76,129 +61,37 @@ export const isPromise = obj =&gt; (obj instanceof Promise) || (!!obj &amp;&amp;
  * @ignore
  */
 export function onSuccessHandler(value) {
-  if (this.disposable.isDisposed()) {
+  const { onSuccess, onError, controller } = this;
+  if (controller.signal.aborted) {
     return;
   }
   try {
     if (typeof value === &apos;undefined&apos;) {
-      this.onError(&apos;onSuccess called with undefined.&apos;);
+      onError(&apos;onSuccess called with undefined.&apos;);
     } else {
-      this.onSuccess(value);
+      onSuccess(value);
     }
   } finally {
-    this.disposable.dispose();
+    controller.abort();
   }
 }
 /**
  * @ignore
  */
 export function onErrorHandler(err) {
+  const { onError, controller } = this;
   let report = err;
   if (!(err instanceof Error)) {
     report = new Error(&apos;onError called with a non-Error value.&apos;);
   }
-  if (this.disposable.isDisposed()) {
+  if (controller.signal.aborted) {
     return;
   }
 
   try {
-    this.onError(report);
+    onError(report);
   } finally {
-    this.disposable.dispose();
-  }
-}
-/**
- * @ignore
- */
-export class SimpleDisposable {
-  constructor(onDispose) {
-    this.state = false;
-    this.onDispose = onDispose;
-  }
-
-  setDisposable(disposable) {
-    if (isDisposable(disposable)) {
-      if (this.state === DISPOSED) {
-        disposable.dispose();
-      } else {
-        this.state = disposable;
-      }
-    }
-  }
-
-  fire() {
-    const { onDispose } = this;
-    this.state = DISPOSED;
-    if (typeof onDispose === &apos;function&apos;) {
-      onDispose();
-    }
-    this.onDispose = undefined;
-  }
-
-  dispose() {
-    const { state } = this;
-
-    if (state === DISPOSED) {
-      return;
-    }
-
-    if (isDisposable(state)) {
-      if (!state.isDisposed()) {
-        this.state.dispose();
-      }
-      if (state.isDisposed()) {
-        this.fire();
-      }
-    } else {
-      this.fire();
-    }
-  }
-
-  isDisposed() {
-    const { state } = this;
-    if (isDisposable(state)) {
-      if (state.isDisposed()) {
-        this.fire();
-        return true;
-      }
-      return false;
-    }
-    return state === DISPOSED;
-  }
-}
-
-/**
- * @ignore
- */
-export class CompositeDisposable {
-  constructor() {
-    this.set = [];
-    this.disposed = false;
-  }
-
-  add(d) {
-    if (isDisposable(d)) {
-      if (this.disposed) {
-        d.dispose();
-      } else {
-        this.set.push(d);
-      }
-    }
-  }
-
-  dispose() {
-    if (!this.disposed) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const d of this.set) {
-        d.dispose();
-      }
-      this.set = undefined;
-      this.disposed = DISPOSED;
-    }
-  }
-
-  isDisposed() {
-    return this.disposed === DISPOSED;
+    controller.abort();
   }
 }
 /**
@@ -221,12 +114,14 @@ export const cleanObserver = x =&gt; ({
  * @ignore
  */
 export const immediateSuccess = (o, x) =&gt; {
-  const disposable = new SimpleDisposable();
-  o.onSubscribe(disposable);
+  // const disposable = new SimpleDisposable();
+  const { onSubscribe, onSuccess } = cleanObserver(o);
+  const controller = new AbortController();
+  onSubscribe(controller);
 
-  if (!disposable.isDisposed()) {
-    o.onSuccess(x);
-    disposable.dispose();
+  if (!controller.signal.aborted) {
+    onSuccess(x);
+    controller.abort();
   }
 };
 /**
@@ -234,12 +129,12 @@ export const immediateSuccess = (o, x) =&gt; {
  */
 export const immediateError = (o, x) =&gt; {
   const { onSubscribe, onError } = cleanObserver(o);
-  const disposable = new SimpleDisposable();
-  onSubscribe(disposable);
+  const controller = new AbortController();
+  onSubscribe(controller);
 
-  if (!disposable.isDisposed()) {
+  if (!controller.signal.aborted) {
     onError(x);
-    disposable.dispose();
+    controller.abort();
   }
 };
 </code></pre>

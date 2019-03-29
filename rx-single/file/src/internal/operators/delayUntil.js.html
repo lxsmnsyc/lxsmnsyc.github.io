@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,8 +40,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/delayUntil.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { SimpleDisposable } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
 
 /**
  * @ignore
@@ -52,41 +51,47 @@ function subscribeActual(observer) {
 
   const { source, other } = this;
 
-  const disposable = new SimpleDisposable();
+  const controller = new AbortController();
 
-  onSubscribe(disposable);
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
 
   other.subscribeWith({
-    onSubscribe(d) {
-      disposable.setDisposable(d);
+    onSubscribe(ac) {
+      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
     },
     onSuccess() {
-      if (!disposable.isDisposed()) {
+      if (!signal.aborted) {
         source.subscribeWith({
-          onSubscribe(d) {
-            disposable.setDisposable(d);
+          onSubscribe(ac) {
+            signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
           },
           onSuccess(x) {
             onSuccess(x);
-            disposable.dispose();
+            controller.abort();
           },
           onError(x) {
             onError(x);
-            disposable.dispose();
+            controller.abort();
           },
         });
       }
     },
     onError(x) {
       onError(x);
-      disposable.dispose();
+      controller.abort();
     },
   });
 }
 /**
  * @ignore
  */
-const delayUntil = (source, other) =&gt; {
+export default (source, other) =&gt; {
   if (!(other instanceof Single)) {
     return source;
   }
@@ -96,8 +101,6 @@ const delayUntil = (source, other) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default delayUntil;
 </code></pre>
 
 </div>

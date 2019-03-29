@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -90,6 +89,11 @@
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
 <h2 id="changelogs">Changelogs</h2><ul>
+<li>0.3.0<ul>
+<li>Disposable deprecated. Single now uses AbortController for representing state of disposition.</li>
+<li>Renamed doOnDispose to doOnAbort</li>
+</ul>
+</li>
 <li>0.2.0<ul>
 <li>onError (both Observer and Emitter) now only accepts Error instances.</li>
 <li>if no onError function is provided for the subscription, the error to be received is thrown instead.</li>

@@ -1,11 +1,5 @@
 window.esdocSearchIndex = [
   [
-    "rx-single/src/disposable.js~disposable",
-    "class/src/disposable.js~Disposable.html",
-    "<span>Disposable</span> <span class=\"search-result-import-path\">rx-single/src/disposable.js</span>",
-    "class"
-  ],
-  [
     "rx-single/src/emitter.js~emitter",
     "class/src/emitter.js~Emitter.html",
     "<span>Emitter</span> <span class=\"search-result-import-path\">rx-single/src/emitter.js</span>",
@@ -139,13 +133,13 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/catch.js.html#lineNumber8",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber8",
     "Single",
     "test"
   ],
   [
     "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber8",
+    "test-file/test/catch.js.html#lineNumber8",
     "Single",
     "test"
   ],
@@ -211,7 +205,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber9",
+    "test-file/test/create.js.html#lineNumber8",
     "Single",
     "test"
   ],
@@ -265,7 +259,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber8",
+    "test-file/test/doOnAbort.js.html#lineNumber8",
     "Single",
     "test"
   ],
@@ -451,43 +445,43 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber13",
+    "test-file/test/create.js.html#lineNumber12",
     "Single #create",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber58",
-    "Single #create should be disposed successfully if emitter is disposed before any signal.",
+    "test-file/test/create.js.html#lineNumber57",
+    "Single #create should be aborted successfully if emitter is aborted before any signal.",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber17",
+    "test-file/test/create.js.html#lineNumber16",
     "Single #create should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber76",
+    "test-file/test/create.js.html#lineNumber74",
     "Single #create should signal error if subscriber throws an error.",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber25",
+    "test-file/test/create.js.html#lineNumber24",
     "Single #create should signal error if the create received a non-function",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber47",
+    "test-file/test/create.js.html#lineNumber46",
     "Single #create should signal error if the emitter signals error with undefined value.",
     "test"
   ],
   [
     "",
-    "test-file/test/create.js.html#lineNumber36",
+    "test-file/test/create.js.html#lineNumber35",
     "Single #create should signal error if the emitter signals success with undefined value.",
     "test"
   ],
@@ -536,13 +530,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delay.js.html#lineNumber66",
-    "Single #delay should not signal error if disposed.",
+    "Single #delay should not signal error if aborted.",
     "test"
   ],
   [
     "",
     "test-file/test/delay.js.html#lineNumber51",
-    "Single #delay should not signal success if disposed.",
+    "Single #delay should not signal success if aborted.",
     "test"
   ],
   [
@@ -578,13 +572,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber66",
-    "Single #delaySubscription should not signal error if disposed.",
+    "Single #delaySubscription should not signal error if aborted.",
     "test"
   ],
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber51",
-    "Single #delaySubscription should not signal success if disposed.",
+    "Single #delaySubscription should not signal success if aborted.",
     "test"
   ],
   [
@@ -620,13 +614,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delayUntil.js.html#lineNumber76",
-    "Single #delayUntil should not signal error if disposed.",
+    "Single #delayUntil should not signal error if aborted.",
     "test"
   ],
   [
     "",
     "test-file/test/delayUntil.js.html#lineNumber61",
-    "Single #delayUntil should not signal success if disposed.",
+    "Single #delayUntil should not signal success if aborted.",
     "test"
   ],
   [
@@ -745,38 +739,38 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber12",
-    "Single #doOnDispose",
+    "test-file/test/doOnAbort.js.html#lineNumber12",
+    "Single #doOnAbort",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber59",
-    "Single #doOnDispose should call the given function on dispose.",
+    "test-file/test/doOnAbort.js.html#lineNumber59",
+    "Single #doOnAbort should call the given function on abort.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber16",
-    "Single #doOnDispose should create a Single",
+    "test-file/test/doOnAbort.js.html#lineNumber16",
+    "Single #doOnAbort should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber23",
-    "Single #doOnDispose should return the same instance if the method received a non-function parameter.",
+    "test-file/test/doOnAbort.js.html#lineNumber23",
+    "Single #doOnAbort should return the same instance if the method received a non-function parameter.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber45",
-    "Single #doOnDispose should signal the error value then fire dispose callback.",
+    "test-file/test/doOnAbort.js.html#lineNumber45",
+    "Single #doOnAbort should signal the error value then fire abort callback.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnDispose.js.html#lineNumber31",
-    "Single #doOnDispose should signal the success value then fire dispose callback.",
+    "test-file/test/doOnAbort.js.html#lineNumber31",
+    "Single #doOnAbort should signal the success value then fire abort callback.",
     "test"
   ],
   [
@@ -1189,12 +1183,6 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/never.js.html#lineNumber33",
-    "Single #never should never be disposable.",
-    "test"
-  ],
-  [
-    "",
     "test-file/test/never.js.html#lineNumber23",
     "Single #never should not signal.",
     "test"
@@ -1406,13 +1394,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timeout.js.html#lineNumber76",
-    "Single #timeout should not signal error if disposed.",
+    "Single #timeout should not signal error if aborted.",
     "test"
   ],
   [
     "",
     "test-file/test/timeout.js.html#lineNumber61",
-    "Single #timeout should not signal success if disposed.",
+    "Single #timeout should not signal success if aborted.",
     "test"
   ],
   [
@@ -1454,7 +1442,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timer.js.html#lineNumber44",
-    "Single #timer should not signal success if disposed.",
+    "Single #timer should not signal success if aborted.",
     "test"
   ],
   [
@@ -1496,7 +1484,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/zip.js.html#lineNumber104",
-    "Single #zip should not signal success if disposed.",
+    "Single #zip should not signal success if aborted.",
     "test"
   ],
   [
@@ -1562,7 +1550,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/zipWith.js.html#lineNumber93",
-    "Single #zipWith should not signal success if disposed.",
+    "Single #zipWith should not signal success if aborted.",
     "test"
   ],
   [
@@ -1890,40 +1878,10 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "src/disposable.js",
-    "file/src/disposable.js.html",
-    "src/disposable.js",
-    "file"
-  ],
-  [
-    "src/disposable.js~disposable#dispose",
-    "class/src/disposable.js~Disposable.html#instance-method-dispose",
-    "src/disposable.js~Disposable#dispose",
-    "method"
-  ],
-  [
-    "src/disposable.js~disposable#isdisposed",
-    "class/src/disposable.js~Disposable.html#instance-method-isDisposed",
-    "src/disposable.js~Disposable#isDisposed",
-    "method"
-  ],
-  [
     "src/emitter.js",
     "file/src/emitter.js.html",
     "src/emitter.js",
     "file"
-  ],
-  [
-    "src/emitter.js~emitter#dispose",
-    "class/src/emitter.js~Emitter.html#instance-method-dispose",
-    "src/emitter.js~Emitter#dispose",
-    "method"
-  ],
-  [
-    "src/emitter.js~emitter#isdisposed",
-    "class/src/emitter.js~Emitter.html#instance-method-isDisposed",
-    "src/emitter.js~Emitter#isDisposed",
-    "method"
   ],
   [
     "src/emitter.js~emitter#onerror",
@@ -1935,12 +1893,6 @@ window.esdocSearchIndex = [
     "src/emitter.js~emitter#onsuccess",
     "class/src/emitter.js~Emitter.html#instance-method-onSuccess",
     "src/emitter.js~Emitter#onSuccess",
-    "method"
-  ],
-  [
-    "src/emitter.js~emitter#setdisposable",
-    "class/src/emitter.js~Emitter.html#instance-method-setDisposable",
-    "src/emitter.js~Emitter#setDisposable",
     "method"
   ],
   [
@@ -2034,9 +1986,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/internal/operators/doondispose.js",
-    "file/src/internal/operators/doOnDispose.js.html",
-    "src/internal/operators/doOnDispose.js",
+    "src/internal/operators/doonabort.js",
+    "file/src/internal/operators/doOnAbort.js.html",
+    "src/internal/operators/doOnAbort.js",
     "file"
   ],
   [
@@ -2298,9 +2250,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/single.js~single#doondispose",
-    "class/src/single.js~Single.html#instance-method-doOnDispose",
-    "src/single.js~Single#doOnDispose",
+    "src/single.js~single#doonabort",
+    "class/src/single.js~Single.html#instance-method-doOnAbort",
+    "src/single.js~Single#doOnAbort",
     "method"
   ],
   [
@@ -2580,9 +2532,9 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
-    "test/doondispose.js",
-    "test-file/test/doOnDispose.js.html",
-    "test/doOnDispose.js",
+    "test/doonabort.js",
+    "test-file/test/doOnAbort.js.html",
+    "test/doOnAbort.js",
     "testFile"
   ],
   [

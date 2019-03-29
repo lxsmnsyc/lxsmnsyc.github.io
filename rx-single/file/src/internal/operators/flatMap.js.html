@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,8 +40,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/flatMap.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { SimpleDisposable } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
 
 /**
  * @ignore
@@ -50,15 +49,21 @@ import { SimpleDisposable } from &apos;../utils&apos;;
 function subscribeActual(observer) {
   const { onSubscribe, onError, onSuccess } = observer;
 
-  const disposable = new SimpleDisposable();
+  const controller = new AbortController();
 
-  onSubscribe(disposable);
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
 
   const { mapper, source } = this;
 
   source.subscribeWith({
-    onSubscribe(d) {
-      disposable.setDisposable(d);
+    onSubscribe(ac) {
+      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
     },
     onSuccess(x) {
       let result;
@@ -73,21 +78,30 @@ function subscribeActual(observer) {
         return;
       }
       result.subscribeWith({
-        onSubscribe(d) {
-          disposable.setDisposable(d);
+        onSubscribe(ac) {
+          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
         },
-        onSuccess,
-        onError,
+        onSuccess(v) {
+          onSuccess(v);
+          controller.abort();
+        },
+        onError(v) {
+          onError(v);
+          controller.abort();
+        },
       });
     },
-    onError,
+    onError(v) {
+      onError(v);
+      controller.abort();
+    },
   });
 }
 
 /**
  * @ignore
  */
-const flatMap = (source, mapper) =&gt; {
+export default (source, mapper) =&gt; {
   if (typeof mapper !== &apos;function&apos;) {
     return source;
   }
@@ -98,8 +112,6 @@ const flatMap = (source, mapper) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default flatMap;
 </code></pre>
 
 </div>

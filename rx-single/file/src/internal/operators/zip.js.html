@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,8 +40,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { isIterable, CompositeDisposable, cleanObserver } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
+import { isIterable, cleanObserver } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 
 const defaultZipper = x =&gt; x;
@@ -54,9 +54,15 @@ function subscribeActual(observer) {
 
   const result = [];
 
-  const disposable = new CompositeDisposable();
+  const controller = new AbortController();
 
-  onSubscribe(disposable);
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
 
   const { sources, zipper } = this;
 
@@ -64,49 +70,48 @@ function subscribeActual(observer) {
 
   if (size === 0) {
     onError(new Error(&apos;Single.zip: empty iterable&apos;));
-    disposable.dispose();
+    controller.abort();
     return;
   }
   let pending = size;
 
   for (let i = 0; i &lt; size; i += 1) {
-    if (disposable.isDisposed()) {
+    if (signal.aborted) {
       return;
     }
     const single = sources[i];
 
     if (single instanceof Single) {
       single.subscribeWith({
-        onSubscribe(d) {
-          disposable.add(d);
+        onSubscribe(ac) {
+          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
         },
         // eslint-disable-next-line no-loop-func
         onSuccess(x) {
-          if (!disposable.isDisposed()) {
-            result[i] = x;
-            pending -= 1;
-            if (pending === 0) {
-              let r;
-              try {
-                r = zipper(result);
-                if (typeof r === &apos;undefined&apos;) {
-                  throw new Error(&apos;Single.zip: zipper function returned an undefined value.&apos;);
-                }
-              } catch (e) {
-                onError(e);
-                disposable.dispose();
-                return;
+          if (signal.aborted) {
+            return;
+          }
+          result[i] = x;
+          pending -= 1;
+          if (pending === 0) {
+            let r;
+            try {
+              r = zipper(result);
+              if (typeof r === &apos;undefined&apos;) {
+                throw new Error(&apos;Single.zip: zipper function returned an undefined value.&apos;);
               }
-              onSuccess(r);
-              disposable.dispose();
+            } catch (e) {
+              onError(e);
+              controller.abort();
+              return;
             }
+            onSuccess(r);
+            controller.abort();
           }
         },
         onError(x) {
-          if (!disposable.isDisposed()) {
-            onError(x);
-            disposable.dispose();
-          }
+          onError(x);
+          controller.abort();
         },
       });
     } else if (typeof single !== &apos;undefined&apos;) {
@@ -114,7 +119,7 @@ function subscribeActual(observer) {
       pending -= 1;
     } else {
       onError(new Error(&apos;Single.zip: One of the sources is undefined.&apos;));
-      disposable.dispose();
+      controller.abort();
       break;
     }
   }
@@ -122,7 +127,7 @@ function subscribeActual(observer) {
 /**
  * @ignore
  */
-const zip = (sources, zipper) =&gt; {
+export default (sources, zipper) =&gt; {
   if (!isIterable(sources)) {
     return error(new Error(&apos;Single.zip: sources is not Iterable.&apos;));
   }
@@ -136,8 +141,6 @@ const zip = (sources, zipper) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default zip;
 </code></pre>
 
 </div>

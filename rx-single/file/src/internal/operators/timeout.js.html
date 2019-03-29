@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,8 +40,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timeout.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
-import { SimpleDisposable, cleanObserver } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+import AbortController from &apos;abort-controller&apos;;
+import Single from &apos;../../single&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -52,40 +53,46 @@ function subscribeActual(observer) {
 
   const { amount } = this;
 
-  let timeout;
+  const controller = new AbortController();
 
-  const disposable = new SimpleDisposable(() =&gt; {
+  const { signal } = controller;
+
+  onSubscribe(controller);
+
+  if (signal.aborted) {
+    return;
+  }
+
+  const timeout = setTimeout(
+    () =&gt; {
+      onError(new Error(&apos;Single.timeout: TimeoutException (no success signals within the specified timeout).&apos;));
+      controller.abort();
+    },
+    amount,
+  );
+
+  signal.addEventListener(&apos;abort&apos;, () =&gt; {
     clearTimeout(timeout);
   });
 
-  const err = (x) =&gt; {
-    onError(x);
-    disposable.dispose();
-  };
-
-  timeout = setTimeout(
-    err,
-    amount,
-    new Error(&apos;Single.timeout: TimeoutException (no success signals within the specified timeout).&apos;),
-  );
-
-  onSubscribe(disposable);
-
   this.source.subscribeWith({
-    onSubscribe(d) {
-      disposable.setDisposable(d);
+    onSubscribe(ac) {
+      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
     },
     onSuccess(x) {
       onSuccess(x);
-      disposable.dispose();
+      controller.abort();
     },
-    onError: err,
+    onError(x) {
+      onError(x);
+      controller.abort();
+    },
   });
 }
 /**
  * @ignore
  */
-const timeout = (source, amount) =&gt; {
+export default (source, amount) =&gt; {
   if (typeof amount !== &apos;number&apos;) {
     return source;
   }
@@ -95,8 +102,6 @@ const timeout = (source, amount) =&gt; {
   single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
-
-export default timeout;
 </code></pre>
 
 </div>

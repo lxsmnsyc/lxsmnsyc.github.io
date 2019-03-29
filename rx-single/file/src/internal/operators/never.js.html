@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/disposable.js~Disposable.html">Disposable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
@@ -41,14 +40,27 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/never.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { neverDisposed } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable class-methods-use-this */
 import Single from &apos;../../single&apos;;
+
+const SIGNAL = {
+  aborted: false,
+  addEventListener: () =&gt; {},
+  removeEventListener: () =&gt; {},
+  onabort: () =&gt; {},
+};
+
+
+const CONTROLLER = {
+  signal: SIGNAL,
+  abort: () =&gt; {},
+};
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  observer.onSubscribe(neverDisposed);
+  observer.onSubscribe(CONTROLLER);
 }
 /**
  * @ignore
@@ -57,15 +69,13 @@ let INSTANCE;
 /**
  * @ignore
  */
-const never = () =&gt; {
+export default () =&gt; {
   if (typeof INSTANCE === &apos;undefined&apos;) {
     INSTANCE = new Single();
     INSTANCE.subscribeActual = subscribeActual.bind(INSTANCE);
   }
   return INSTANCE;
 };
-
-export default never;
 </code></pre>
 
 </div>
