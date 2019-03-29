@@ -2172,6 +2172,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/single.js~abortcontroller",
+    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+    "src/single.js~AbortController",
+    "external"
+  ],
+  [
     "src/single.js~iterable",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols",
     "src/single.js~Iterable",
