@@ -99,7 +99,7 @@ function subscribeActual(observer) {
     onSubscribe(controller);
 
     const { error } = this;
-    if (typeof error !== &apos;undefined&apos;) {
+    if (error != null) {
       onError(error);
     } else {
       onComplete();

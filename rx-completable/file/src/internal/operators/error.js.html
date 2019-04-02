@@ -53,8 +53,8 @@ function subscribeActual(observer) {
   try {
     err = this.supplier();
 
-    if (typeof err === &apos;undefined&apos;) {
-      throw new Error(&apos;Completable.error: Error supplier returned an undefined value.&apos;);
+    if (err == null) {
+      throw new Error(&apos;Completable.error: Error supplier returned a null value.&apos;);
     }
   } catch (e) {
     err = e;

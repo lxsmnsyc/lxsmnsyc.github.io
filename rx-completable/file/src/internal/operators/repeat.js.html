@@ -100,7 +100,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, times) =&gt; {
-  if (typeof times !== &apos;undefined&apos;) {
+  if (times != null) {
     if (typeof times !== &apos;number&apos;) {
       return source;
     }

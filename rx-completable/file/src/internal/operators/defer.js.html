@@ -62,7 +62,7 @@ function subscribeActual(observer) {
     err = e;
   }
 
-  if (typeof err !== &apos;undefined&apos;) {
+  if (err != null) {
     immediateError(observer, err);
   } else {
     result.subscribeWith({
