@@ -110,7 +110,7 @@ describe(&apos;#onErrorResumeNext&apos;, () =&gt; {
   it(&apos;should not resume if source does not throw error&apos;, (done) =&gt; {
     let resumed;
     const completable = Completable.complete().onErrorResumeNext(
-      Completable.complete().doOnComplete(() =&gt; { resumed = true; })
+      Completable.complete().doOnComplete(() =&gt; { resumed = true; }),
     );
     completable.subscribe(
       () =&gt; (!resumed ? done() : done(false)),

@@ -85,7 +85,11 @@ function subscribeActual(observer) {
   });
   other.subscribeWith({
     onSubscribe(ac) {
-      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      if (signal.aborted) {
+        ac.abort();
+      } else {
+        signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      }
     },
     onComplete: sharedComplete,
     onError: sharedError,
