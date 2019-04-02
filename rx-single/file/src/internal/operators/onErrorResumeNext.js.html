@@ -74,7 +74,7 @@ function subscribeActual(observer) {
       if (typeof resumeIfError === &apos;function&apos;) {
         try {
           result = resumeIfError(x);
-          if (typeof result === &apos;undefined&apos;) {
+          if (!(result instanceof Single)) {
             throw new Error(&apos;Single.onErrorResumeNext: returned an non-Single.&apos;);
           }
         } catch (e) {

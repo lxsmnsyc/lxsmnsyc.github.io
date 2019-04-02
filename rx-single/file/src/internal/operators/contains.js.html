@@ -76,7 +76,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, value, comparer) =&gt; {
-  if (typeof value === &apos;undefined&apos;) {
+  if (value == null) {
     return source;
   }
 

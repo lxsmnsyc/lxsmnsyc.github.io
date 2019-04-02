@@ -55,8 +55,8 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (value) =&gt; {
-  if (typeof value === &apos;undefined&apos;) {
-    return error(new Error(&apos;Single.just: received an undefined value.&apos;));
+  if (value == null) {
+    return error(new Error(&apos;Single.just: received a null value.&apos;));
   }
   const single = new Single();
   single.value = value;

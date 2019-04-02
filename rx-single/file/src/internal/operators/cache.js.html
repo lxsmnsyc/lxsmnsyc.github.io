@@ -100,10 +100,10 @@ function subscribeActual(observer) {
     onSubscribe(controller);
 
     const { value, error } = this;
-    if (typeof value !== &apos;undefined&apos;) {
+    if (value != null) {
       onSuccess(value);
     }
-    if (typeof error !== &apos;undefined&apos;) {
+    if (error != null) {
       onError(error);
     }
     controller.abort();
