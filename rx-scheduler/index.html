@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | rx-scheduler</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="an object that specifies an API for scheduling units of work"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-scheduler"><meta property="twitter:description" content="an object that specifies an API for scheduling units of work"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-scheduler"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/async.js~AsyncScheduler.html">AsyncScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html">CurrentScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.browser.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rx-scheduler">rx-scheduler</h1><p>Reactive Extensions - an object that specifies an API for scheduling units of work</p>
+<h2 id="install">Install</h2><p>NPM</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm i rx-single</code>
+</code></pre>
+<p>CDN</p>
+<ul>
+<li><p>jsDelivr</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+</li>
+<li><p>unpkg</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+</li>
+</ul>
+<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Single = require(&apos;rx-single&apos;);</code>
+</code></pre>
+<p>Loading the CommonJS module provides the Single class.</p>
+<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-single provides the Single class</p>
+<h2 id="example">Example</h2><pre><code class="lang-js"><code class="source-code prettyprint">import Scheduler from &apos;rx-scheduler&apos;;
+
+Scheduler.immediate.delay(() =&gt; console.log(&apos;Hello World, Immediate 100&apos;), 100);
+Scheduler.timeout.delay(() =&gt; console.log(&apos;Hello World, Timeout 100&apos;), 100);
+Scheduler.async.delay(() =&gt; console.log(&apos;Hello World, Async 100&apos;), 100);
+Scheduler.tick.delay(() =&gt; console.log(&apos;Hello World, Tick 100&apos;), 100);
+Scheduler.current.delay(() =&gt; console.log(&apos;Hello World, Current 100&apos;), 100);
+
+Scheduler.immediate.schedule(() =&gt; console.log(&apos;Hello World, Immediate&apos;));
+Scheduler.timeout.schedule(() =&gt; console.log(&apos;Hello World, Timeout&apos;));
+Scheduler.async.schedule(() =&gt; console.log(&apos;Hello World, Async&apos;));
+Scheduler.tick.schedule(() =&gt; console.log(&apos;Hello World, Tick&apos;));
+Scheduler.current.schedule(() =&gt; console.log(&apos;Hello World, Current&apos;));</code>
+</code></pre>
+<p>Output:</p>
+<pre><code><code class="source-code prettyprint">Hello World, Current
+Hello World, Tick
+Hello World, Async
+Hello World, Timeout
+Hello World, Immediate
+Hello World, Current 100
+Hello World, Tick 100
+Hello World, Async 100
+Hello World, Timeout 100
+Hello World, Immediate 100</code>
+</code></pre><h2 id="scheduler-types">Scheduler Types</h2><p>There are three scheduler types</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current</td>
+<td>Schedules the task as the next task for the current thread.</td>
+</tr>
+<tr>
+<td>Immediate</td>
+<td>Schedules the task immediately for the next frame, using setImmediate (NodeJS) or requestAnimationFrame (Browser).</td>
+</tr>
+<tr>
+<td>Async</td>
+<td>Schedules the task in async fashion.</td>
+</tr>
+<tr>
+<td>Timeout</td>
+<td>Schedules the task using <code>setTimeout</code></td>
+</tr>
+<tr>
+<td>Tick</td>
+<td>NodeJS only. Schedules the task immediately after the current thread.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-your-own-scheduler">Creating your own Scheduler</h2><p>You can create your own Scheduler that is recognizable by the implementations by extending <code>Scheduler.interface</code></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

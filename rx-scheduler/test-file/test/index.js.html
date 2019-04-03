@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/index.js | rx-scheduler</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="an object that specifies an API for scheduling units of work"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-scheduler"><meta property="twitter:description" content="an object that specifies an API for scheduling units of work"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-scheduler"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/async.js~AsyncScheduler.html">AsyncScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html">CurrentScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.browser.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+import assert from &apos;assert&apos;;
+import AbortController from &apos;abort-controller&apos;;
+import Scheduler from &apos;../src/index.node&apos;;
+import SchedulerInterface from &apos;../src/scheduler-interface&apos;;
+import CurrentScheduler from &apos;../src/current&apos;;
+import ImmediateScheduler from &apos;../src/immediate.node&apos;;
+import AsyncScheduler from &apos;../src/async&apos;;
+import TimeoutScheduler from &apos;../src/timeout&apos;;
+import TickScheduler from &apos;../src/tick&apos;;
+
+/**
+ *
+ */
+describe(&apos;Scheduler&apos;, () =&gt; {
+  /**
+   *
+   */
+  describe(&apos;#current&apos;, () =&gt; {
+    /**
+     *
+     */
+    it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
+      assert(Scheduler.current instanceof SchedulerInterface);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a CurrentScheduler&apos;, () =&gt; {
+      assert(Scheduler.current instanceof CurrentScheduler);
+    });
+    /**
+     *
+     */
+    describe(&apos;#schedule&apos;, () =&gt; {
+
+    });
+    /**
+     *
+     */
+    describe(&apos;#delay&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should return an AbortController&apos;, () =&gt; {
+        const controller = Scheduler.current.delay(() =&gt; {}, 100);
+
+        assert(controller instanceof AbortController);
+      });
+      /**
+       *
+       */
+      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.current.delay(null, 100);
+
+        assert(controller.signal.aborted);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+      });
+    });
+  });
+  /**
+   *
+   */
+  describe(&apos;#immediate&apos;, () =&gt; {
+    /**
+     *
+     */
+    it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
+      assert(Scheduler.immediate instanceof SchedulerInterface);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a ImmediateScheduler&apos;, () =&gt; {
+      assert(Scheduler.immediate instanceof ImmediateScheduler);
+    });
+    /**
+     *
+     */
+    describe(&apos;#schedule&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.schedule(() =&gt; { executed = true; });
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.schedule(() =&gt; { executed = true; });
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.schedule(() =&gt; { executed = true; });
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+    });
+    /**
+     *
+     */
+    describe(&apos;#delay&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should return an AbortController&apos;, () =&gt; {
+        const controller = Scheduler.immediate.delay(() =&gt; {}, 100);
+
+        assert(controller instanceof AbortController);
+      });
+      /**
+       *
+       */
+      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.immediate.delay(null, 100);
+
+        assert(controller.signal.aborted);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+    });
+  });
+  /**
+   *
+   */
+  describe(&apos;#async&apos;, () =&gt; {
+    /**
+     *
+     */
+    it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
+      assert(Scheduler.async instanceof SchedulerInterface);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a AsyncScheduler&apos;, () =&gt; {
+      assert(Scheduler.async instanceof AsyncScheduler);
+    });
+    /**
+     *
+     */
+    describe(&apos;#schedule&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.schedule(() =&gt; { executed = true; });
+        Scheduler.async.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+        Scheduler.async.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.async.schedule(() =&gt; { executed = true; });
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.async.schedule(() =&gt; { executed = true; });
+      });
+    });
+    /**
+     *
+     */
+    describe(&apos;#delay&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should return an AbortController&apos;, () =&gt; {
+        const controller = Scheduler.async.delay(() =&gt; {}, 100);
+
+        assert(controller instanceof AbortController);
+      });
+      /**
+       *
+       */
+      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.async.delay(null, 100);
+
+        assert(controller.signal.aborted);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.async.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.async.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.async.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.async.delay(() =&gt; { executed = true; }, 100);
+      });
+    });
+  });
+  /**
+   *
+   */
+  describe(&apos;#timeout&apos;, () =&gt; {
+    /**
+     *
+     */
+    it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
+      assert(Scheduler.timeout instanceof SchedulerInterface);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a TimeoutScheduler&apos;, () =&gt; {
+      assert(Scheduler.timeout instanceof TimeoutScheduler);
+    });
+    /**
+     *
+     */
+    describe(&apos;#schedule&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.schedule(() =&gt; { executed = true; });
+        Scheduler.timeout.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+        Scheduler.timeout.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.schedule(() =&gt; { executed = true; });
+        Scheduler.timeout.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.timeout.schedule(() =&gt; { executed = true; });
+      });
+    });
+    /**
+     *
+     */
+    describe(&apos;#delay&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should return an AbortController&apos;, () =&gt; {
+        const controller = Scheduler.timeout.delay(() =&gt; {}, 100);
+
+        assert(controller instanceof AbortController);
+      });
+      /**
+       *
+       */
+      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.timeout.delay(null, 100);
+
+        assert(controller.signal.aborted);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after tick&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.timeout.delay(() =&gt; { executed = true; }, 100);
+      });
+    });
+  });
+  /**
+   *
+   */
+  describe(&apos;#tick&apos;, () =&gt; {
+    /**
+     *
+     */
+    it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
+      assert(Scheduler.tick instanceof SchedulerInterface);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a TickScheduler&apos;, () =&gt; {
+      assert(Scheduler.tick instanceof TickScheduler);
+    });
+    /**
+     *
+     */
+    describe(&apos;#schedule&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.schedule(() =&gt; { executed = true; });
+        Scheduler.tick.schedule(() =&gt; (executed ? done() : done(false)));
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.schedule(() =&gt; (executed ? done() : done(false)));
+        Scheduler.tick.schedule(() =&gt; { executed = true; });
+      });
+    });
+    /**
+     *
+     */
+    describe(&apos;#delay&apos;, () =&gt; {
+      /**
+       *
+       */
+      it(&apos;should return an AbortController&apos;, () =&gt; {
+        const controller = Scheduler.tick.delay(() =&gt; {}, 100);
+
+        assert(controller instanceof AbortController);
+      });
+      /**
+       *
+       */
+      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.tick.delay(null, 100);
+
+        assert(controller.signal.aborted);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute after current thread&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.current.delay(() =&gt; { executed = true; }, 100);
+        Scheduler.tick.delay(() =&gt; (executed ? done() : done(false)), 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before async&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.async.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before timeout&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.timeout.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+      });
+      /**
+       *
+       */
+      it(&apos;should execute before immediate&apos;, (done) =&gt; {
+        let executed;
+        Scheduler.immediate.delay(() =&gt; (executed ? done() : done(false)), 100);
+        Scheduler.tick.delay(() =&gt; { executed = true; }, 100);
+      });
+    });
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
