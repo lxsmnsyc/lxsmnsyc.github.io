@@ -46,23 +46,23 @@
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rx-scheduler">rx-scheduler</h1><p>Reactive Extensions - an object that specifies an API for scheduling units of work</p>
 <h2 id="install">Install</h2><p>NPM</p>
-<pre><code class="lang-bash"><code class="source-code prettyprint">npm i rx-single</code>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm i rx-scheduler</code>
 </code></pre>
 <p>CDN</p>
 <ul>
 <li><p>jsDelivr</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 <li><p>unpkg</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 </ul>
-<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Single = require(&apos;rx-single&apos;);</code>
+<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Scheduler = require(&apos;rx-scheduler&apos;);</code>
 </code></pre>
-<p>Loading the CommonJS module provides the Single class.</p>
-<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-single provides the Single class</p>
+<p>Loading the CommonJS module provides the Scheduler class.</p>
+<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-scheduler provides the Scheduler class</p>
 <h2 id="example">Example</h2><pre><code class="lang-js"><code class="source-code prettyprint">import Scheduler from &apos;rx-scheduler&apos;;
 
 Scheduler.immediate.delay(() =&gt; console.log(&apos;Hello World, Immediate 100&apos;), 100);
@@ -120,6 +120,23 @@ Hello World, Immediate 100</code>
 </tbody>
 </table>
 <h2 id="creating-your-own-scheduler">Creating your own Scheduler</h2><p>You can create your own Scheduler that is recognizable by the implementations by extending <code>Scheduler.interface</code></p>
+<pre><code class="lang-js"><code class="source-code prettyprint">class MyScheduler extends Scheduler.interface {
+  schedule(fn) {
+    // scheduling logic
+  }
+
+  delay(fn, amount) {
+    // delayed scheduling logic
+  }
+}</code>
+</code></pre>
+<h2 id="documentation">Documentation</h2><p>You can read the documentation at the <a href="https://lxsmnsyc.github.io/rx-scheduler/">official doc site</a></p>
+<h2 id="build">Build</h2><p>Clone the repo first, then run the following to install the dependencies</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
+</code></pre>
+<p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
+</code></pre>
 </div>
 </div>
 
