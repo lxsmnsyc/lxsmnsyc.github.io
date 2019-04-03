@@ -43,12 +43,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/delay.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Completable from &apos;../../completable&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onComplete, onError, onSubscribe } = observer;
+  const { onComplete, onError, onSubscribe } = cleanObserver(observer);
 
   const { amount, doDelayError } = this;
 

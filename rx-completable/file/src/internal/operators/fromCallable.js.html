@@ -43,7 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/fromCallable.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import {
-  onErrorHandler, onCompleteHandler, isPromise,
+  onErrorHandler, onCompleteHandler, isPromise, cleanObserver,
 } from &apos;../utils&apos;;
 import Completable from &apos;../../completable&apos;;
 import error from &apos;./error&apos;;
@@ -53,7 +53,7 @@ import fromPromise from &apos;./fromPromise&apos;;
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onComplete, onError, onSubscribe } = observer;
+  const { onComplete, onError, onSubscribe } = cleanObserver(observer);
 
   const controller = new AbortController();
 
