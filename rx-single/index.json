@@ -1312,7 +1312,7 @@
     "__docId__": 80,
     "kind": "file",
     "name": "src/internal/operators/delayUntil.js",
-    "content": "import AbortController from 'abort-controller';\nimport Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = observer;\n\n  const { source, other } = this;\n\n  const controller = new AbortController();\n\n  const { signal } = controller;\n\n  onSubscribe(controller);\n\n  if (signal.aborted) {\n    return;\n  }\n\n  other.subscribeWith({\n    onSubscribe(ac) {\n      signal.addEventListener('abort', () => ac.abort());\n    },\n    onSuccess() {\n      if (!signal.aborted) {\n        source.subscribeWith({\n          onSubscribe(ac) {\n            signal.addEventListener('abort', () => ac.abort());\n          },\n          onSuccess(x) {\n            onSuccess(x);\n            controller.abort();\n          },\n          onError(x) {\n            onError(x);\n            controller.abort();\n          },\n        });\n      }\n    },\n    onError(x) {\n      onError(x);\n      controller.abort();\n    },\n  });\n}\n/**\n * @ignore\n */\nexport default (source, other) => {\n  if (!(other instanceof Single)) {\n    return source;\n  }\n  const single = new Single();\n  single.source = source;\n  single.other = other;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import AbortController from 'abort-controller';\nimport Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, other } = this;\n\n  const controller = new AbortController();\n\n  const { signal } = controller;\n\n  onSubscribe(controller);\n\n  if (signal.aborted) {\n    return;\n  }\n\n  other.subscribeWith({\n    onSubscribe(ac) {\n      signal.addEventListener('abort', () => ac.abort());\n    },\n    onSuccess() {\n      if (!signal.aborted) {\n        source.subscribeWith({\n          onSubscribe(ac) {\n            signal.addEventListener('abort', () => ac.abort());\n          },\n          onSuccess(x) {\n            onSuccess(x);\n            controller.abort();\n          },\n          onError(x) {\n            onError(x);\n            controller.abort();\n          },\n        });\n      }\n    },\n    onError(x) {\n      onError(x);\n      controller.abort();\n    },\n  });\n}\n/**\n * @ignore\n */\nexport default (source, other) => {\n  if (!(other instanceof Single)) {\n    return source;\n  }\n  const single = new Single();\n  single.source = source;\n  single.other = other;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/delayUntil.js",
     "access": "public",
@@ -1333,7 +1333,7 @@
     "importPath": "rx-single/src/internal/operators/delayUntil.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 7,
+    "lineNumber": 8,
     "ignore": true,
     "params": [
       {
@@ -1359,7 +1359,7 @@
     "importPath": "rx-single/src/internal/operators/delayUntil.js",
     "importStyle": "delayUntil",
     "description": "",
-    "lineNumber": 52,
+    "lineNumber": 53,
     "ignore": true,
     "params": [
       {
@@ -1385,7 +1385,7 @@
     "__docId__": 83,
     "kind": "file",
     "name": "src/internal/operators/doAfterSuccess.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      onSuccess(x);\n      callable(x);\n    },\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      onSuccess(x);\n      callable(x);\n    },\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doAfterSuccess.js",
     "access": "public",
@@ -1406,7 +1406,7 @@
     "importPath": "rx-single/src/internal/operators/doAfterSuccess.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1432,7 +1432,7 @@
     "importPath": "rx-single/src/internal/operators/doAfterSuccess.js",
     "importStyle": "doAfterSuccess",
     "description": "",
-    "lineNumber": 24,
+    "lineNumber": 25,
     "ignore": true,
     "params": [
       {
@@ -1458,7 +1458,7 @@
     "__docId__": 86,
     "kind": "file",
     "name": "src/internal/operators/doAfterTerminate.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      onSuccess(x);\n      callable();\n    },\n    onError(x) {\n      onError(x);\n      callable();\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      onSuccess(x);\n      callable();\n    },\n    onError(x) {\n      onError(x);\n      callable();\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doAfterTerminate.js",
     "access": "public",
@@ -1479,7 +1479,7 @@
     "importPath": "rx-single/src/internal/operators/doAfterTerminate.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1505,7 +1505,7 @@
     "importPath": "rx-single/src/internal/operators/doAfterTerminate.js",
     "importStyle": "doAfterTerminate",
     "description": "",
-    "lineNumber": 27,
+    "lineNumber": 28,
     "ignore": true,
     "params": [
       {
@@ -1531,7 +1531,7 @@
     "__docId__": 89,
     "kind": "file",
     "name": "src/internal/operators/doFinally.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  let called = false;\n  source.subscribeWith({\n    onSubscribe(ac) {\n      ac.signal.addEventListener('abort', () => {\n        if (!called) {\n          callable();\n          called = true;\n        }\n      });\n      onSubscribe(ac);\n    },\n    onSuccess(x) {\n      onSuccess(x);\n      if (!called) {\n        callable();\n        called = true;\n      }\n    },\n    onError(x) {\n      onError(x);\n      if (!called) {\n        callable();\n        called = true;\n      }\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  let called = false;\n  source.subscribeWith({\n    onSubscribe(ac) {\n      ac.signal.addEventListener('abort', () => {\n        if (!called) {\n          callable();\n          called = true;\n        }\n      });\n      onSubscribe(ac);\n    },\n    onSuccess(x) {\n      onSuccess(x);\n      if (!called) {\n        callable();\n        called = true;\n      }\n    },\n    onError(x) {\n      onError(x);\n      if (!called) {\n        callable();\n        called = true;\n      }\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doFinally.js",
     "access": "public",
@@ -1552,7 +1552,7 @@
     "importPath": "rx-single/src/internal/operators/doFinally.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1578,7 +1578,7 @@
     "importPath": "rx-single/src/internal/operators/doFinally.js",
     "importStyle": "doFinally",
     "description": "",
-    "lineNumber": 42,
+    "lineNumber": 43,
     "ignore": true,
     "params": [
       {
@@ -1604,7 +1604,7 @@
     "__docId__": 92,
     "kind": "file",
     "name": "src/internal/operators/doOnAbort.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe(ac) {\n      ac.signal.addEventListener('abort', callable);\n      onSubscribe(ac);\n    },\n    onSuccess,\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe(ac) {\n      ac.signal.addEventListener('abort', callable);\n      onSubscribe(ac);\n    },\n    onSuccess,\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnAbort.js",
     "access": "public",
@@ -1625,7 +1625,7 @@
     "importPath": "rx-single/src/internal/operators/doOnAbort.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1651,7 +1651,7 @@
     "importPath": "rx-single/src/internal/operators/doOnAbort.js",
     "importStyle": "doOnAbort",
     "description": "",
-    "lineNumber": 24,
+    "lineNumber": 25,
     "ignore": true,
     "params": [
       {
@@ -1677,7 +1677,7 @@
     "__docId__": 95,
     "kind": "file",
     "name": "src/internal/operators/doOnError.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess,\n    onError(x) {\n      callable(x);\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess,\n    onError(x) {\n      callable(x);\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnError.js",
     "access": "public",
@@ -1698,7 +1698,7 @@
     "importPath": "rx-single/src/internal/operators/doOnError.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1724,7 +1724,7 @@
     "importPath": "rx-single/src/internal/operators/doOnError.js",
     "importStyle": "doOnError",
     "description": "",
-    "lineNumber": 24,
+    "lineNumber": 25,
     "ignore": true,
     "params": [
       {
@@ -1750,7 +1750,7 @@
     "__docId__": 98,
     "kind": "file",
     "name": "src/internal/operators/doOnEvent.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable(x);\n      onSuccess(x);\n    },\n    onError(x) {\n      callable(undefined, x);\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable(x);\n      onSuccess(x);\n    },\n    onError(x) {\n      callable(undefined, x);\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnEvent.js",
     "access": "public",
@@ -1771,7 +1771,7 @@
     "importPath": "rx-single/src/internal/operators/doOnEvent.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1797,7 +1797,7 @@
     "importPath": "rx-single/src/internal/operators/doOnEvent.js",
     "importStyle": "doOnEvent",
     "description": "",
-    "lineNumber": 27,
+    "lineNumber": 28,
     "ignore": true,
     "params": [
       {
@@ -1823,7 +1823,7 @@
     "__docId__": 101,
     "kind": "file",
     "name": "src/internal/operators/doOnSubscribe.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe(d) {\n      callable(d);\n      onSubscribe(d);\n    },\n    onSuccess,\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe(d) {\n      callable(d);\n      onSubscribe(d);\n    },\n    onSuccess,\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnSubscribe.js",
     "access": "public",
@@ -1844,7 +1844,7 @@
     "importPath": "rx-single/src/internal/operators/doOnSubscribe.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1870,7 +1870,7 @@
     "importPath": "rx-single/src/internal/operators/doOnSubscribe.js",
     "importStyle": "doOnSubscribe",
     "description": "",
-    "lineNumber": 24,
+    "lineNumber": 25,
     "ignore": true,
     "params": [
       {
@@ -1896,7 +1896,7 @@
     "__docId__": 104,
     "kind": "file",
     "name": "src/internal/operators/doOnSuccess.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable(x);\n      onSuccess(x);\n    },\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable(x);\n      onSuccess(x);\n    },\n    onError,\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnSuccess.js",
     "access": "public",
@@ -1917,7 +1917,7 @@
     "importPath": "rx-single/src/internal/operators/doOnSuccess.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -1943,7 +1943,7 @@
     "importPath": "rx-single/src/internal/operators/doOnSuccess.js",
     "importStyle": "doOnSuccess",
     "description": "",
-    "lineNumber": 24,
+    "lineNumber": 25,
     "ignore": true,
     "params": [
       {
@@ -1969,7 +1969,7 @@
     "__docId__": 107,
     "kind": "file",
     "name": "src/internal/operators/doOnTerminate.js",
-    "content": "import Single from '../../single';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSubscribe, onSuccess, onError } = observer;\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable();\n      onSuccess(x);\n    },\n    onError(x) {\n      callable();\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import Single from '../../single';\nimport { cleanObserver } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const { source, callable } = this;\n\n  source.subscribeWith({\n    onSubscribe,\n    onSuccess(x) {\n      callable();\n      onSuccess(x);\n    },\n    onError(x) {\n      callable();\n      onError(x);\n    },\n  });\n}\n\n/**\n * @ignore\n */\nexport default (source, callable) => {\n  if (typeof callable !== 'function') {\n    return source;\n  }\n\n  const single = new Single();\n  single.source = source;\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/doOnTerminate.js",
     "access": "public",
@@ -1990,7 +1990,7 @@
     "importPath": "rx-single/src/internal/operators/doOnTerminate.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 6,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -2016,7 +2016,7 @@
     "importPath": "rx-single/src/internal/operators/doOnTerminate.js",
     "importStyle": "doOnTerminate",
     "description": "",
-    "lineNumber": 27,
+    "lineNumber": 28,
     "ignore": true,
     "params": [
       {
@@ -2182,7 +2182,7 @@
     "__docId__": 116,
     "kind": "file",
     "name": "src/internal/operators/fromCallable.js",
-    "content": "import AbortController from 'abort-controller';\nimport {\n  onErrorHandler, onSuccessHandler, isPromise,\n} from '../utils';\nimport Single from '../../single';\nimport { error, fromPromise } from '../operators';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = observer;\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  const resolve = onSuccessHandler.bind(this);\n  const reject = onErrorHandler.bind(this);\n\n  let result;\n  try {\n    result = this.callable();\n  } catch (e) {\n    reject(e);\n    return;\n  }\n\n  if (isPromise(result)) {\n    fromPromise(result).subscribe(onSuccess, onError);\n  } else {\n    resolve(result);\n  }\n}\n/**\n * @ignore\n */\nexport default (callable) => {\n  if (typeof callable !== 'function') {\n    return error(new Error('Single.fromCallable: callable received is not a function.'));\n  }\n  const single = new Single();\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import AbortController from 'abort-controller';\nimport {\n  onErrorHandler, onSuccessHandler, isPromise, cleanObserver,\n} from '../utils';\nimport Single from '../../single';\nimport { error, fromPromise } from '../operators';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  const resolve = onSuccessHandler.bind(this);\n  const reject = onErrorHandler.bind(this);\n\n  let result;\n  try {\n    result = this.callable();\n  } catch (e) {\n    reject(e);\n    return;\n  }\n\n  if (isPromise(result)) {\n    fromPromise(result).subscribe(onSuccess, onError);\n  } else {\n    resolve(result);\n  }\n}\n/**\n * @ignore\n */\nexport default (callable) => {\n  if (typeof callable !== 'function') {\n    return error(new Error('Single.fromCallable: callable received is not a function.'));\n  }\n  const single = new Single();\n  single.callable = callable;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/fromCallable.js",
     "access": "public",
@@ -2249,7 +2249,7 @@
     "__docId__": 119,
     "kind": "file",
     "name": "src/internal/operators/fromPromise.js",
-    "content": "import AbortController from 'abort-controller';\nimport Single from '../../single';\nimport {\n  isPromise, onSuccessHandler, onErrorHandler,\n} from '../utils';\nimport error from './error';\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = observer;\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  this.promise.then(\n    onSuccessHandler.bind(this),\n    onErrorHandler.bind(this),\n  );\n}\n/**\n * @ignore\n */\nexport default (promise) => {\n  if (!isPromise(promise)) {\n    return error(new Error('Single.fromPromise: expects a Promise-like value.'));\n  }\n  const single = new Single();\n  single.promise = promise;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import AbortController from 'abort-controller';\nimport Single from '../../single';\nimport {\n  isPromise, onSuccessHandler, onErrorHandler, cleanObserver,\n} from '../utils';\nimport error from './error';\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  this.promise.then(\n    onSuccessHandler.bind(this),\n    onErrorHandler.bind(this),\n  );\n}\n/**\n * @ignore\n */\nexport default (promise) => {\n  if (!isPromise(promise)) {\n    return error(new Error('Single.fromPromise: expects a Promise-like value.'));\n  }\n  const single = new Single();\n  single.promise = promise;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/fromPromise.js",
     "access": "public",
@@ -2316,7 +2316,7 @@
     "__docId__": 122,
     "kind": "file",
     "name": "src/internal/operators/fromResolvable.js",
-    "content": "import AbortController from 'abort-controller';\nimport { onErrorHandler, onSuccessHandler } from '../utils';\nimport Single from '../../single';\nimport error from './error';\n\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = observer;\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  const resolve = onSuccessHandler.bind(this);\n  const reject = onErrorHandler.bind(this);\n\n  this.subscriber(resolve, reject);\n}\n/**\n * @ignore\n */\nexport default (subscriber) => {\n  if (typeof subscriber !== 'function') {\n    return error(new Error('Single.fromResolvable: expects a function.'));\n  }\n  const single = new Single();\n  single.subscriber = subscriber;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
+    "content": "import AbortController from 'abort-controller';\nimport { onErrorHandler, onSuccessHandler, cleanObserver } from '../utils';\nimport Single from '../../single';\nimport error from './error';\n\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const controller = new AbortController();\n\n  onSubscribe(controller);\n\n  if (controller.signal.aborted) {\n    return;\n  }\n\n  this.controller = controller;\n  this.onSuccess = onSuccess;\n  this.onError = onError;\n\n  const resolve = onSuccessHandler.bind(this);\n  const reject = onErrorHandler.bind(this);\n\n  this.subscriber(resolve, reject);\n}\n/**\n * @ignore\n */\nexport default (subscriber) => {\n  if (typeof subscriber !== 'function') {\n    return error(new Error('Single.fromResolvable: expects a function.'));\n  }\n  const single = new Single();\n  single.subscriber = subscriber;\n  single.subscribeActual = subscribeActual.bind(single);\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/fromResolvable.js",
     "access": "public",
@@ -5718,7 +5718,7 @@
   },
   {
     "kind": "index",
-    "content": "# rx-single\n\nJS Implementation of the Reactive Extensions (RxJava) [Single](http://reactivex.io/documentation/single.html)\n\n[![NPM](https://nodei.co/npm/rx-single.png)](https://nodei.co/npm/rx-single/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-single/badge)](https://www.jsdelivr.com/package/npm/rx-single)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-single.svg)](http://hits.dwyl.io/lxsmnsyc/rx-single)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-single.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-single) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-single) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-single/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-single)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-single/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-single?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-single\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-single/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Single = require('rx-single');\n```\n\nLoading the CommonJS module provides the Single class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-single provides the Single class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-single/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.4.0\n  - Null values are now guarded. Previously, only undefined values are guarded.\n* 0.3.0\n  - Disposable deprecated. Single now uses AbortController for representing state of disposition.\n  - Renamed doOnDispose to doOnAbort\n* 0.2.0\n  - onError (both Observer and Emitter) now only accepts Error instances.\n  - if no onError function is provided for the subscription, the error to be received is thrown instead.\n  - Single.error now only accepts Error instances.\n  - fixed error message for Single.amb\n* 0.1.0\n  - Release",
+    "content": "# rx-single\n\nJS Implementation of the Reactive Extensions (RxJava) [Single](http://reactivex.io/documentation/single.html)\n\n[![NPM](https://nodei.co/npm/rx-single.png)](https://nodei.co/npm/rx-single/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-single/badge)](https://www.jsdelivr.com/package/npm/rx-single)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-single.svg)](http://hits.dwyl.io/lxsmnsyc/rx-single)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-single.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-single) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-single) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-single/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-single)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-single/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-single?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-single\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-single/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Single = require('rx-single');\n```\n\nLoading the CommonJS module provides the Single class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-single provides the Single class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-single/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.6.0\n  - Fixed some operators not guarding observers.\n* 0.4.0\n  - Null values are now guarded. Previously, only undefined values are guarded.\n* 0.3.0\n  - Disposable deprecated. Single now uses AbortController for representing state of disposition.\n  - Renamed doOnDispose to doOnAbort\n* 0.2.0\n  - onError (both Observer and Emitter) now only accepts Error instances.\n  - if no onError function is provided for the subscription, the error to be received is thrown instead.\n  - Single.error now only accepts Error instances.\n  - fixed error message for Single.amb\n* 0.1.0\n  - Release",
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/README.md",
     "name": "./README.md",
     "static": true,
@@ -5726,7 +5726,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-single\",\n  \"version\": \"0.5.2\",\n  \"description\": \"Reactive Extensions - Represents an asynchronous value or error\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-single.git\"\n  },\n  \"keywords\": [\n    \"rxjs\",\n    \"reactivex\",\n    \"reactive\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-single/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-single#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.0\",\n    \"@babel/preset-env\": \"^7.4.1\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-custom-theme\": \"^1.4.2\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-publish-html-plugin\": \"^1.1.2\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.3\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"abort-controller\": \"^2.0.3\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-single\",\n  \"version\": \"0.5.3\",\n  \"description\": \"Reactive Extensions - Represents an asynchronous value or error\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-single.git\"\n  },\n  \"keywords\": [\n    \"rxjs\",\n    \"reactivex\",\n    \"reactive\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-single/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-single#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.0\",\n    \"@babel/preset-env\": \"^7.4.1\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-custom-theme\": \"^1.4.2\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-publish-html-plugin\": \"^1.1.2\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.15.3\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.6.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"abort-controller\": \"^2.0.3\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/package.json",
     "name": "package.json",
     "static": true,

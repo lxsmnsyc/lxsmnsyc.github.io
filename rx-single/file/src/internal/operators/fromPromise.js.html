@@ -44,14 +44,14 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Single from &apos;../../single&apos;;
 import {
-  isPromise, onSuccessHandler, onErrorHandler,
+  isPromise, onSuccessHandler, onErrorHandler, cleanObserver,
 } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   const controller = new AbortController();
 

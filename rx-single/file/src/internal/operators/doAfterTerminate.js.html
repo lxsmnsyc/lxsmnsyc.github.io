@@ -42,12 +42,13 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/doAfterTerminate.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 function subscribeActual(observer) {
-  const { onSubscribe, onSuccess, onError } = observer;
+  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
 
   const { source, callable } = this;
 
