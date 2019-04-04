@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | rx-maybe</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="represents a deferred computation and emission of a single value, no value at all or an exception."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-maybe"><meta property="twitter:description" content="represents a deferred computation and emission of a single value, no value at all or an exception."></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-maybe"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#internal-operators">internal/operators</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-defaultIfEmpty">defaultIfEmpty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-switchIfEmpty">switchIfEmpty</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rx-maybe">rx-maybe</h1><p>Reactive Extenstions - represents a deferred computation and emission of a single value, no value at all or an exception. </p>
+<p><a href="https://nodei.co/npm/rx-maybe/"><img src="https://nodei.co/npm/rx-maybe.png" alt="NPM"></a></p>
+<p><a href="https://www.jsdelivr.com/package/npm/rx-maybe"><img src="https://data.jsdelivr.com/v1/package/npm/rx-maybe/badge" alt></a>
+<a href="http://hits.dwyl.io/lxsmnsyc/rx-maybe"><img src="http://hits.dwyl.io/lxsmnsyc/rx-maybe.svg" alt="HitCount"></a></p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Build Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><a href="https://travis-ci.org/LXSMNSYC/rx-maybe"><img src="https://travis-ci.org/LXSMNSYC/rx-maybe.svg?branch=master" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><a href="https://ci.appveyor.com/project/LXSMNSYC/rx-maybe"><img src="https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true" alt="Build status"></a></td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://codecov.io/gh/LXSMNSYC/rx-maybe"><img src="https://codecov.io/gh/LXSMNSYC/rx-maybe/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://snyk.io/test/github/LXSMNSYC/rx-maybe?targetFile=package.json"><img src="https://snyk.io/test/github/LXSMNSYC/rx-maybe/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a></p>
+<h2 id="install">Install</h2><p>NPM</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm i rx-maybe</code>
+</code></pre>
+<p>CDN</p>
+<ul>
+<li><p>jsDelivr</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+</li>
+<li><p>unpkg</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+</code></pre>
+</li>
+</ul>
+<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Maybe = require(&apos;rx-maybe&apos;);</code>
+</code></pre>
+<p>Loading the CommonJS module provides the Maybe class.</p>
+<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-maybe provides the Maybe class</p>
+<h2 id="documentation">Documentation</h2><p>You can read the documentation at the <a href="https://lxsmnsyc.github.io/rx-maybe/">official doc site</a></p>
+<h2 id="build">Build</h2><p>Clone the repo first, then run the following to install the dependencies</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
+</code></pre>
+<p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
+</code></pre>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
