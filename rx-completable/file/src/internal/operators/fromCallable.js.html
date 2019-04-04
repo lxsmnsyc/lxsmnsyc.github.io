@@ -43,7 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/fromCallable.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import {
-  onErrorHandler, onCompleteHandler, isPromise, cleanObserver,
+  isPromise, cleanObserver, onErrorHandler, onCompleteHandler,
 } from &apos;../utils&apos;;
 import Completable from &apos;../../completable&apos;;
 import error from &apos;./error&apos;;
@@ -70,6 +70,7 @@ function subscribeActual(observer) {
   const resolve = onCompleteHandler.bind(this);
   const reject = onErrorHandler.bind(this);
 
+
   let result;
   try {
     result = this.callable();
@@ -79,9 +80,15 @@ function subscribeActual(observer) {
   }
 
   if (isPromise(result)) {
-    fromPromise(result).subscribe(onComplete, onError);
+    fromPromise(result).subscribeWith({
+      onSubscribe(ac) {
+        controller.signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      },
+      onComplete: resolve,
+      onError: reject,
+    });
   } else {
-    resolve(result);
+    resolve();
   }
 }
 /**
@@ -91,9 +98,8 @@ export default (callable) =&gt; {
   if (typeof callable !== &apos;function&apos;) {
     return error(new Error(&apos;Completable.fromCallable: callable received is not a function.&apos;));
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.callable = callable;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

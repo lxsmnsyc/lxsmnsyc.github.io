@@ -69,10 +69,9 @@ export default (source, callable) =&gt; {
   if (typeof callable !== &apos;function&apos;) {
     return source;
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.source = source;
   completable.callable = callable;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

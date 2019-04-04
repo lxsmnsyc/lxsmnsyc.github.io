@@ -72,10 +72,9 @@ export default (source, operator) =&gt; {
     return source;
   }
 
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.source = source;
   completable.operator = operator;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

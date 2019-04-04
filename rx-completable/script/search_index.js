@@ -1698,6 +1698,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/completable.js~completable#subscribeactual",
+    "class/src/completable.js~Completable.html#instance-member-subscribeActual",
+    "src/completable.js~Completable#subscribeActual",
+    "member"
+  ],
+  [
     "src/completable.js~completable#subscribewith",
     "class/src/completable.js~Completable.html#instance-method-subscribeWith",
     "src/completable.js~Completable#subscribeWith",

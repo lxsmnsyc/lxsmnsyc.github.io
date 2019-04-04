@@ -94,10 +94,9 @@ export default (source, amount) =&gt; {
   if (typeof amount !== &apos;number&apos;) {
     return source;
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.source = source;
   completable.amount = amount;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

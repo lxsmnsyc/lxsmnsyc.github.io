@@ -99,9 +99,8 @@ export default (sources) =&gt; {
   if (!isIterable(sources)) {
     return error(new Error(&apos;Completable.amb: sources is not Iterable.&apos;));
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.sources = sources;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

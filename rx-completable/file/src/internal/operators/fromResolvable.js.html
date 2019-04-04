@@ -73,9 +73,8 @@ export default (subscriber) =&gt; {
   if (typeof subscriber !== &apos;function&apos;) {
     return error(new Error(&apos;Completable.fromResolvable: expects a function.&apos;));
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.subscriber = subscriber;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

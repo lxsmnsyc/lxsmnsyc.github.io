@@ -76,9 +76,8 @@ export default (promise) =&gt; {
   if (!isPromise(promise)) {
     return error(new Error(&apos;Completable.fromPromise: expects a Promise-like value.&apos;));
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.promise = promise;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

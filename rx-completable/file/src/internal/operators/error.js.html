@@ -73,9 +73,8 @@ export default (value) =&gt; {
   if (typeof value !== &apos;function&apos;) {
     report = toCallable(report);
   }
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.supplier = report;
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>

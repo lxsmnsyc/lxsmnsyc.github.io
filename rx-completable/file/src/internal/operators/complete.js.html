@@ -57,7 +57,7 @@ let INSTANCE;
  */
 export default () =&gt; {
   if (typeof INSTANCE === &apos;undefined&apos;) {
-    INSTANCE = new Completable();
+    INSTANCE = new Completable(subscribeActual);
     INSTANCE.subscribeActual = subscribeActual.bind(INSTANCE);
   }
   return INSTANCE;

@@ -112,12 +112,11 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source) =&gt; {
-  const completable = new Completable();
+  const completable = new Completable(subscribeActual);
   completable.source = source;
   completable.cached = false;
   completable.subscribed = false;
   completable.observers = [];
-  completable.subscribeActual = subscribeActual.bind(completable);
   return completable;
 };
 </code></pre>
