@@ -72,7 +72,7 @@ let INSTANCE;
  */
 export default () =&gt; {
   if (typeof INSTANCE === &apos;undefined&apos;) {
-    INSTANCE = new Single();
+    INSTANCE = new Single(subscribeActual);
     INSTANCE.subscribeActual = subscribeActual.bind(INSTANCE);
   }
   return INSTANCE;

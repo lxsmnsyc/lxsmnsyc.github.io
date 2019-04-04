@@ -2340,6 +2340,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/single.js~single#subscribeactual",
+    "class/src/single.js~Single.html#instance-member-subscribeActual",
+    "src/single.js~Single#subscribeActual",
+    "member"
+  ],
+  [
     "src/single.js~single#subscribewith",
     "class/src/single.js~Single.html#instance-method-subscribeWith",
     "src/single.js~Single#subscribeWith",

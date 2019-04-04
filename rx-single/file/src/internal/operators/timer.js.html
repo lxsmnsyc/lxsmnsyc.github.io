@@ -76,9 +76,8 @@ export default (amount) =&gt; {
   if (typeof amount !== &apos;number&apos;) {
     return error(new Error(&apos;Single.timer: &quot;amount&quot; is not a number.&apos;));
   }
-  const single = new Single();
+  const single = new Single(subscribeActual);
   single.amount = amount;
-  single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
 </code></pre>

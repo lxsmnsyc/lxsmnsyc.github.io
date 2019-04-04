@@ -128,6 +128,13 @@ import { isObserver } from &apos;./internal/utils&apos;;
  */
 export default class Single {
   /**
+   * @ignore
+   */
+  constructor(subscribeActual) {
+    this.subscribeActual = subscribeActual;
+  }
+
+  /**
    * Provides an API (via a cold Single) that bridges
    * the reactive world with the callback-style world.
    *
@@ -736,7 +743,7 @@ export default class Single {
    */
   subscribeWith(observer) {
     if (isObserver(observer)) {
-      this.subscribeActual(observer);
+      this.subscribeActual.call(this, observer);
     }
   }
 
@@ -761,7 +768,7 @@ export default class Single {
   subscribe(onSuccess, onError) {
     const controller = new AbortController();
     let once = false;
-    this.subscribeActual({
+    this.subscribeWith({
       onSubscribe(ac) {
         ac.signal.addEventListener(&apos;abort&apos;, () =&gt; {
           if (!once) {

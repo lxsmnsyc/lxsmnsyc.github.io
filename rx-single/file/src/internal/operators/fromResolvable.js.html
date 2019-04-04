@@ -73,9 +73,8 @@ export default (subscriber) =&gt; {
   if (typeof subscriber !== &apos;function&apos;) {
     return error(new Error(&apos;Single.fromResolvable: expects a function.&apos;));
   }
-  const single = new Single();
+  const single = new Single(subscribeActual);
   single.subscriber = subscriber;
-  single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
 </code></pre>

@@ -99,9 +99,8 @@ export default (sources) =&gt; {
   if (!isIterable(sources)) {
     return error(new Error(&apos;Single.amb: sources is not Iterable.&apos;));
   }
-  const single = new Single();
+  const single = new Single(subscribeActual);
   single.sources = sources;
-  single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
 </code></pre>

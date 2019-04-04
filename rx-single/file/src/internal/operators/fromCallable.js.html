@@ -78,7 +78,13 @@ function subscribeActual(observer) {
   }
 
   if (isPromise(result)) {
-    fromPromise(result).subscribe(onSuccess, onError);
+    fromPromise(result).subscribeWith({
+      onSubscribe(ac) {
+        controller.signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      },
+      onSuccess: resolve,
+      onError: reject,
+    });
   } else {
     resolve(result);
   }
@@ -90,9 +96,8 @@ export default (callable) =&gt; {
   if (typeof callable !== &apos;function&apos;) {
     return error(new Error(&apos;Single.fromCallable: callable received is not a function.&apos;));
   }
-  const single = new Single();
+  const single = new Single(subscribeActual);
   single.callable = callable;
-  single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
 </code></pre>

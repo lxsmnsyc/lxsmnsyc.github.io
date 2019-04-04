@@ -114,12 +114,11 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source) =&gt; {
-  const single = new Single();
+  const single = new Single(subscribeActual);
   single.source = source;
   single.cached = false;
   single.subscribed = false;
   single.observers = [];
-  single.subscribeActual = subscribeActual.bind(single);
   return single;
 };
 </code></pre>
