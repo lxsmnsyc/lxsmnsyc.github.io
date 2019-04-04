@@ -43,7 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zipWith.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Single from &apos;../../single&apos;;
-import { cleanObserver } from &apos;../utils&apos;;
+import { cleanObserver, isFunction } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -150,7 +150,7 @@ export default (source, other, zipper) =&gt; {
     return source;
   }
   let fn = zipper;
-  if (typeof zipper !== &apos;function&apos;) {
+  if (!isFunction(zipper)) {
     fn = defaultZipper;
   }
   const single = new Single(subscribeActual);
