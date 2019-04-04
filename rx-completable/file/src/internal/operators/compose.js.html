@@ -43,12 +43,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/compose.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Completable from &apos;../../completable&apos;;
 import error from &apos;./error&apos;;
+import { isFunction } from &apos;../utils&apos;;
 
 /**
  * @ignore
  */
 export default (source, transformer) =&gt; {
-  if (typeof transformer !== &apos;function&apos;) {
+  if (!isFunction(transformer)) {
     return source;
   }
 

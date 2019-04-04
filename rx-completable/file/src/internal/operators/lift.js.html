@@ -42,7 +42,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/lift.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Completable from &apos;../../completable&apos;;
-import { isObserver, immediateError } from &apos;../utils&apos;;
+import { isObserver, immediateError, isFunction } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -68,10 +68,9 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, operator) =&gt; {
-  if (typeof operator !== &apos;function&apos;) {
+  if (!isFunction(operator)) {
     return source;
   }
-
   const completable = new Completable(subscribeActual);
   completable.source = source;
   completable.operator = operator;

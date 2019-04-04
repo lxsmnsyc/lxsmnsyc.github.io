@@ -66,7 +66,7 @@ function subscribeActual(observer) {
  */
 export default (value) =&gt; {
   let report = value;
-  if (!(value instanceof Error)) {
+  if (!(value instanceof Error || typeof value === &apos;function&apos;)) {
     report = new Error(&apos;Completable.error received a non-Error value.&apos;);
   }
 

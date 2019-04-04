@@ -43,7 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/retry.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Completable from &apos;../../completable&apos;;
-import { cleanObserver } from &apos;../utils&apos;;
+import { cleanObserver, isFunction } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -80,7 +80,7 @@ function subscribeActual(observer) {
         controller.abort();
       },
       onError(x) {
-        if (typeof bipredicate === &apos;function&apos;) {
+        if (isFunction(bipredicate)) {
           const result = bipredicate(retries, x);
 
           if (result) {

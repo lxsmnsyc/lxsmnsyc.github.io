@@ -45,11 +45,28 @@
 /**
  * @ignore
  */
-export const isIterable = obj =&gt; typeof obj === &apos;object&apos; &amp;&amp; typeof obj[Symbol.iterator] === &apos;function&apos;;
+// eslint-disable-next-line valid-typeof
+const isType = (x, y) =&gt; typeof x === y;
 /**
  * @ignore
  */
-export const isObserver = obj =&gt; typeof obj === &apos;object&apos; &amp;&amp; typeof obj.onSubscribe === &apos;function&apos;;
+export const isFunction = x =&gt; isType(x, &apos;function&apos;);
+/**
+ * @ignore
+ */
+export const isNumber = x =&gt; isType(x, &apos;number&apos;);
+/**
+ * @ignore
+ */
+export const isObject = x =&gt; isType(x, &apos;object&apos;);
+/**
+ * @ignore
+ */
+export const isIterable = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj[Symbol.iterator]);
+/**
+ * @ignore
+ */
+export const isObserver = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj.onSubscribe);
 /**
  * @ignore
  */
@@ -57,7 +74,11 @@ export const toCallable = x =&gt; () =&gt; x;
 /**
  * @ignore
  */
-export const isPromise = obj =&gt; (obj instanceof Promise) || (!!obj &amp;&amp; (typeof obj === &apos;object&apos; || typeof obj === &apos;function&apos;) &amp;&amp; typeof obj.then === &apos;function&apos;);
+export const isPromise = (obj) =&gt; {
+  if (obj == null) return false;
+  if (obj instanceof Promise) return true;
+  return (isObject(obj) || isFunction(obj)) &amp;&amp; isFunction(obj.then);
+};
 /**
  * @ignore
  */
@@ -104,8 +125,8 @@ const throwError = (x) =&gt; { throw x; };
  */
 export const cleanObserver = x =&gt; ({
   onSubscribe: x.onSubscribe,
-  onComplete: typeof x.onComplete === &apos;function&apos; ? x.onComplete : identity,
-  onError: typeof x.onError === &apos;function&apos; ? x.onError : throwError,
+  onComplete: isFunction(x.onComplete) ? x.onComplete : identity,
+  onError: isFunction(x.onError) ? x.onError : throwError,
 });
 /**
  * @ignore

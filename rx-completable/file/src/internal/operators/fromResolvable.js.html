@@ -42,7 +42,9 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/fromResolvable.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
-import { onErrorHandler, onCompleteHandler, cleanObserver } from &apos;../utils&apos;;
+import {
+  onErrorHandler, onCompleteHandler, cleanObserver, isFunction,
+} from &apos;../utils&apos;;
 import Completable from &apos;../../completable&apos;;
 import error from &apos;./error&apos;;
 
@@ -70,7 +72,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (subscriber) =&gt; {
-  if (typeof subscriber !== &apos;function&apos;) {
+  if (!isFunction(subscriber)) {
     return error(new Error(&apos;Completable.fromResolvable: expects a function.&apos;));
   }
   const completable = new Completable(subscribeActual);
