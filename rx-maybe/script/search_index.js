@@ -1662,18 +1662,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "rx-maybe/src/internal/operators/defaultifempty.js~defaultifempty",
-    "function/index.html#static-function-defaultIfEmpty",
-    "<span>defaultIfEmpty</span> <span class=\"search-result-import-path\">rx-maybe/src/internal/operators/defaultIfEmpty.js</span>",
-    "function"
-  ],
-  [
-    "rx-maybe/src/internal/operators/switchifempty.js~switchifempty",
-    "function/index.html#static-function-switchIfEmpty",
-    "<span>switchIfEmpty</span> <span class=\"search-result-import-path\">rx-maybe/src/internal/operators/switchIfEmpty.js</span>",
-    "function"
-  ],
-  [
     "",
     "test-file/test/lift.js.html#lineNumber7",
     "Maybe",
@@ -2530,12 +2518,6 @@ window.esdocSearchIndex = [
     "class/src/maybe.js~Maybe.html#instance-method-subscribe",
     "src/maybe.js~Maybe#subscribe",
     "method"
-  ],
-  [
-    "src/maybe.js~maybe#subscribeactual",
-    "class/src/maybe.js~Maybe.html#instance-member-subscribeActual",
-    "src/maybe.js~Maybe#subscribeActual",
-    "member"
   ],
   [
     "src/maybe.js~maybe#subscribewith",
