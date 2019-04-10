@@ -35,6 +35,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -70,11 +71,13 @@
 <p>CDN</p>
 <ul>
 <li><p>jsDelivr</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-completable/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-completable/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 <li><p>unpkg</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-completable/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/rx-completable/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 </ul>
@@ -90,6 +93,12 @@
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
 <h2 id="changelogs">Changelogs</h2><ul>
+<li>0.6.0<ul>
+<li>now uses <a href="https://github.com/LXSMNSYC/rx-scheduler">Schedulers</a></li>
+<li><code>delay</code>, <code>delaySubscription</code>, <code>timeout</code> and <code>timer</code> now accepts <code>Schedulers</code> (defaults to <code>Scheduler.current</code>).</li>
+<li>added two new operators: <code>observeOn</code> (observes the emissions on a given Scheduler) and <code>subscribeOn</code> (subscribes to a given Single on a given Scheduler).</li>
+</ul>
+</li>
 <li>0.5.0<ul>
 <li>Fixed fromCallable and fromPromise from subscription overhead.</li>
 </ul>

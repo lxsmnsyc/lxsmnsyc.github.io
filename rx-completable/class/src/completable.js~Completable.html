@@ -35,19 +35,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Completable from &apos;<span><a href="file/src/completable.js.html#lineNumber87">rx-completable/src/completable.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Completable from &apos;<span><a href="file/src/completable.js.html#lineNumber90">rx-completable/src/completable.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/completable.js.html#lineNumber87">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/completable.js.html#lineNumber90">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -449,7 +450,7 @@ emits an error.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#static-method-timer">timer</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#static-method-timer">timer</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -703,7 +704,7 @@ returns the function&apos;s resulting Completable.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, doDelayOnError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>, doDelayOnError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -733,7 +734,7 @@ completion event by the given time.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-delaySubscription">delaySubscription</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-delaySubscription">delaySubscription</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -1070,6 +1071,36 @@ and completes when both of them complete or one emits an error.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-observeOn">observeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns a Completable which emits the terminal events from the
+thread of the specified scheduler.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-onErrorComplete">onErrorComplete</a></span></span><span class="code" data-ice="signature">(completion: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
@@ -1282,6 +1313,36 @@ and an onError method.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-subscribeOn">subscribeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns a Completable which subscribes the child subscriber on the specified scheduler,
+making sure the subscription side-effects happen on that specific thread of the scheduler.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-subscribeWith">subscribeWith</a></span></span><span class="code" data-ice="signature">(observer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></span>
         </p>
       </div>
@@ -1372,7 +1433,7 @@ and attaches callbacks to it.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-timeout">timeout</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-timeout">timeout</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -1440,7 +1501,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber112">source</a></span></span>
     </span>
   </h3>
 
@@ -1519,7 +1580,7 @@ same order as in this Iterable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber165">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
@@ -1577,7 +1638,7 @@ when subscribed to.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber193">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber196">source</a></span></span>
     </span>
   </h3>
 
@@ -1652,7 +1713,7 @@ complete, one after another.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber222">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber225">source</a></span></span>
     </span>
   </h3>
 
@@ -1728,7 +1789,7 @@ to the returned Completable</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber236">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber239">source</a></span></span>
     </span>
   </h3>
 
@@ -1803,7 +1864,7 @@ by a supplier.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber409">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber418">source</a></span></span>
     </span>
   </h3>
 
@@ -1885,7 +1946,7 @@ Observer and returns or throws a value to be emitted.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber431">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber440">source</a></span></span>
     </span>
   </h3>
 
@@ -1967,7 +2028,7 @@ except when the downstream has aborted this Completable source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber442">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber451">source</a></span></span>
     </span>
   </h3>
 
@@ -2040,7 +2101,7 @@ except when the downstream has aborted this Completable source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber454">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber463">source</a></span></span>
     </span>
   </h3>
 
@@ -2114,7 +2175,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber504">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber513">source</a></span></span>
     </span>
   </h3>
 
@@ -2190,7 +2251,7 @@ emits an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber530">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber539">source</a></span></span>
     </span>
   </h3>
 
@@ -2212,7 +2273,7 @@ emits an error.</p>
       <tbody>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>the singleton instance that never calls onError or onComplete</p>
+          <td class="return-desc" data-ice="returnDescription"><p>the Completableton instance that never calls onError or onComplete</p>
 </td>
         </tr>
       </tbody>
@@ -2244,11 +2305,11 @@ emits an error.</p>
     
     
     
-    <span class="code" data-ice="name">timer</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">timer</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber675">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber726">source</a></span></span>
     </span>
   </h3>
 
@@ -2274,6 +2335,14 @@ emits an error.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the amount of time in milliseconds.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -2326,7 +2395,7 @@ emits an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber95">source</a></span></span>
     </span>
   </h3>
 
@@ -2372,7 +2441,7 @@ emits an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber129">source</a></span></span>
     </span>
   </h3>
 
@@ -2450,7 +2519,7 @@ to the current source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber140">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber143">source</a></span></span>
     </span>
   </h3>
 
@@ -2525,7 +2594,7 @@ and then the other completable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber153">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber156">source</a></span></span>
     </span>
   </h3>
 
@@ -2584,7 +2653,7 @@ terminal event and relays/replays it to observers.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber776">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber827">source</a></span></span>
     </span>
   </h3>
 
@@ -2657,7 +2726,7 @@ and attaches an onRejection callback to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber179">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber182">source</a></span></span>
     </span>
   </h3>
 
@@ -2732,7 +2801,7 @@ returns the function&apos;s resulting Completable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber207">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber210">source</a></span></span>
     </span>
   </h3>
 
@@ -2803,11 +2872,11 @@ returns the function&apos;s resulting Completable.</p>
     
     
     
-    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, doDelayOnError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>, doDelayOnError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber254">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber260">source</a></span></span>
     </span>
   </h3>
 
@@ -2835,6 +2904,14 @@ completion event by the given time.</p>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the amount of time the success signal should be
 delayed for (in milliseconds).</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
@@ -2887,11 +2964,11 @@ if false, only success signals are delayed.</p>
     
     
     
-    <span class="code" data-ice="name">delaySubscription</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">delaySubscription</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber267">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber276">source</a></span></span>
     </span>
   </h3>
 
@@ -2918,6 +2995,14 @@ Completable until the given time delay elapsed.</p>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the time amount to wait with the subscription
 (in milliseconds).</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -2966,7 +3051,7 @@ Completable until the given time delay elapsed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber282">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber291">source</a></span></span>
     </span>
   </h3>
 
@@ -3042,7 +3127,7 @@ normally or with an exception.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber300">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber309">source</a></span></span>
     </span>
   </h3>
 
@@ -3121,7 +3206,7 @@ is executed once per subscription.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber315">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber324">source</a></span></span>
     </span>
   </h3>
 
@@ -3197,7 +3282,7 @@ Disposable it received via onSubscribe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber329">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber338">source</a></span></span>
     </span>
   </h3>
 
@@ -3272,7 +3357,7 @@ callback if this Completable completes.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber343">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber352">source</a></span></span>
     </span>
   </h3>
 
@@ -3347,7 +3432,7 @@ callback if this Completable emits an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber359">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber368">source</a></span></span>
     </span>
   </h3>
 
@@ -3424,7 +3509,7 @@ to the downstream.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber374">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber383">source</a></span></span>
     </span>
   </h3>
 
@@ -3500,7 +3585,7 @@ on subscription.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber389">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber398">source</a></span></span>
     </span>
   </h3>
 
@@ -3576,7 +3661,7 @@ an exception.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber489">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber498">source</a></span></span>
     </span>
   </h3>
 
@@ -3669,7 +3754,7 @@ with it is recommended.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber518">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber527">source</a></span></span>
     </span>
   </h3>
 
@@ -3733,6 +3818,84 @@ and completes when both of them complete or one emits an error.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-observeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">observeOn</span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber557">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns a Completable which emits the terminal events from the
+thread of the specified scheduler.</p>
+<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-completable/master/assets/images/Completable.subscribeOn.png" class="diagram"></p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Completable modified so that its subscribers are
+notified on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-onErrorComplete">
     <span class="access" data-ice="access">public</span>
     
@@ -3744,7 +3907,7 @@ and completes when both of them complete or one emits an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber551">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber578">source</a></span></span>
     </span>
   </h3>
 
@@ -3825,7 +3988,7 @@ true if the Error should be swallowed and replaced with an onComplete.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber567">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber594">source</a></span></span>
     </span>
   </h3>
 
@@ -3902,7 +4065,7 @@ Completable as continuation.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber583">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber610">source</a></span></span>
     </span>
   </h3>
 
@@ -3979,7 +4142,7 @@ subscribes repeatedly until aborted.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber613">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber640">source</a></span></span>
     </span>
   </h3>
 
@@ -4054,7 +4217,7 @@ so long as the given stop supplier returns false.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber599">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber626">source</a></span></span>
     </span>
   </h3>
 
@@ -4131,7 +4294,7 @@ value and should return true if a resubscription should happen.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber627">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber654">source</a></span></span>
     </span>
   </h3>
 
@@ -4206,7 +4369,7 @@ then this completable if the other completed normally.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber718">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber769">source</a></span></span>
     </span>
   </h3>
 
@@ -4281,6 +4444,84 @@ notification from the Completable</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-subscribeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">subscribeOn</span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber672">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns a Completable which subscribes the child subscriber on the specified scheduler,
+making sure the subscription side-effects happen on that specific thread of the scheduler.</p>
+<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-completable/master/assets/images/Completable.subscribeOn.png" class="diagram"></p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Completable modified so that its subscriptions happen
+on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-subscribeWith">
     <span class="access" data-ice="access">public</span>
     
@@ -4292,7 +4533,7 @@ notification from the Completable</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber695">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber746">source</a></span></span>
     </span>
   </h3>
 
@@ -4373,7 +4614,7 @@ AbortController instance.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber647">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber692">source</a></span></span>
     </span>
   </h3>
 
@@ -4454,7 +4695,7 @@ Completable until such time as other emits its item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber765">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber816">source</a></span></span>
     </span>
   </h3>
 
@@ -4529,11 +4770,11 @@ and attaches callbacks to it.</p>
     
     
     
-    <span class="code" data-ice="name">timeout</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">timeout</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber662">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber710">source</a></span></span>
     </span>
   </h3>
 
@@ -4561,6 +4802,14 @@ timeout window.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>amount of time in milliseconds.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -4609,7 +4858,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber751">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber802">source</a></span></span>
     </span>
   </h3>
 

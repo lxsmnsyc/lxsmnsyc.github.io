@@ -877,6 +877,54 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/observeOn.js.html#lineNumber6",
+    "#observeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber64",
+    "#observeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber86",
+    "#observeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber42",
+    "#observeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber108",
+    "#observeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber26",
+    "#observeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber10",
+    "#observeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber7",
+    "#observeOn should return a Completable",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/onErrorComplete.js.html#lineNumber8",
     "#onErrorComplete",
     "test"
@@ -1083,6 +1131,54 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/startWith.js.html#lineNumber28",
     "#startWith should start with the other Completable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber6",
+    "#subscribeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber64",
+    "#subscribeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber86",
+    "#subscribeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber42",
+    "#subscribeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber108",
+    "#subscribeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber26",
+    "#subscribeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber10",
+    "#subscribeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber7",
+    "#subscribeOn should return a Completable",
     "test"
   ],
   [
@@ -1656,6 +1752,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/completable.js~completable#observeon",
+    "class/src/completable.js~Completable.html#instance-method-observeOn",
+    "src/completable.js~Completable#observeOn",
+    "method"
+  ],
+  [
     "src/completable.js~completable#onerrorcomplete",
     "class/src/completable.js~Completable.html#instance-method-onErrorComplete",
     "src/completable.js~Completable#onErrorComplete",
@@ -1702,6 +1804,12 @@ window.esdocSearchIndex = [
     "class/src/completable.js~Completable.html#instance-member-subscribeActual",
     "src/completable.js~Completable#subscribeActual",
     "member"
+  ],
+  [
+    "src/completable.js~completable#subscribeon",
+    "class/src/completable.js~Completable.html#instance-method-subscribeOn",
+    "src/completable.js~Completable#subscribeOn",
+    "method"
   ],
   [
     "src/completable.js~completable#subscribewith",
@@ -1815,6 +1923,12 @@ window.esdocSearchIndex = [
     "src/completable.js~promiselike",
     "https://promisesaplus.com/",
     "src/completable.js~PromiseLike",
+    "external"
+  ],
+  [
+    "src/completable.js~scheduler",
+    "https://lxsmnsyc.github.io/rx-scheduler/",
+    "src/completable.js~Scheduler",
     "external"
   ],
   [
@@ -2016,6 +2130,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/operators/observeon.js",
+    "file/src/internal/operators/observeOn.js.html",
+    "src/internal/operators/observeOn.js",
+    "file"
+  ],
+  [
     "src/internal/operators/onerrorcomplete.js",
     "file/src/internal/operators/onErrorComplete.js.html",
     "src/internal/operators/onErrorComplete.js",
@@ -2049,6 +2169,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/startwith.js",
     "file/src/internal/operators/startWith.js.html",
     "src/internal/operators/startWith.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/subscribeon.js",
+    "file/src/internal/operators/subscribeOn.js.html",
+    "src/internal/operators/subscribeOn.js",
     "file"
   ],
   [
@@ -2268,6 +2394,12 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
+    "test/observeon.js",
+    "test-file/test/observeOn.js.html",
+    "test/observeOn.js",
+    "testFile"
+  ],
+  [
     "test/onerrorcomplete.js",
     "test-file/test/onErrorComplete.js.html",
     "test/onErrorComplete.js",
@@ -2301,6 +2433,12 @@ window.esdocSearchIndex = [
     "test/startwith.js",
     "test-file/test/startWith.js.html",
     "test/startWith.js",
+    "testFile"
+  ],
+  [
+    "test/subscribeon.js",
+    "test-file/test/subscribeOn.js.html",
+    "test/subscribeOn.js",
     "testFile"
   ],
   [

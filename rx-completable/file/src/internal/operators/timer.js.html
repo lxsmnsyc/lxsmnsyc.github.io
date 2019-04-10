@@ -35,6 +35,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -42,6 +43,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Completable from &apos;../../completable&apos;;
 import { cleanObserver, isNumber } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
@@ -51,7 +53,6 @@ import error from &apos;./error&apos;;
  */
 function subscribeActual(observer) {
   const { onComplete, onSubscribe } = cleanObserver(observer);
-
 
   const controller = new AbortController();
 
@@ -63,21 +64,25 @@ function subscribeActual(observer) {
     return;
   }
 
-  const timeout = setTimeout(onComplete, this.amount);
+  const timeout = this.scheduler.delay(() =&gt; onComplete(), this.amount);
 
-  signal.addEventListener(&apos;abort&apos;, () =&gt; {
-    clearTimeout(timeout);
-  });
+  signal.addEventListener(&apos;abort&apos;, () =&gt; timeout.abort());
 }
 /**
  * @ignore
  */
-export default (amount) =&gt; {
+export default (amount, scheduler) =&gt; {
   if (!isNumber(amount)) {
     return error(new Error(&apos;Completable.timer: &quot;amount&quot; is not a number.&apos;));
   }
+
+  let sched = scheduler;
+  if (!(sched instanceof Scheduler.interface)) {
+    sched = Scheduler.current;
+  }
   const completable = new Completable(subscribeActual);
   completable.amount = amount;
+  completable.scheduler = sched;
   return completable;
 };
 </code></pre>
