@@ -70,11 +70,13 @@
 <p>CDN</p>
 <ul>
 <li><p>jsDelivr</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 <li><p>unpkg</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/rx-maybe/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 </ul>
@@ -89,6 +91,20 @@
 <p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
+<h2 id="changelogs">Changelogs</h2><ul>
+<li><p>0.2.0</p>
+<ul>
+<li>now uses <a href="https://github.com/LXSMNSYC/rx-scheduler">Schedulers</a></li>
+<li><code>delay</code>, <code>delaySubscription</code>, <code>timeout</code> and <code>timer</code> now accepts <code>Schedulers</code> (defaults to <code>Scheduler.current</code>).</li>
+<li>added two new operators: <code>observeOn</code> (observes the emissions on a given Scheduler) and <code>subscribeOn</code> (subscribes to a given Single on a given Scheduler).</li>
+</ul>
+</li>
+<li><p>0.1.0</p>
+<ul>
+<li>Release</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 

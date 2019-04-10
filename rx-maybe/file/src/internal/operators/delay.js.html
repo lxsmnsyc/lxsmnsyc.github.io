@@ -42,6 +42,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/delay.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import { cleanObserver, isNumber } from &apos;../utils&apos;;
 
@@ -53,9 +54,7 @@ function subscribeActual(observer) {
     onSuccess, onComplete, onError, onSubscribe,
   } = cleanObserver(observer);
 
-  const { amount, doDelayError } = this;
-
-  let timeout;
+  const { amount, scheduler, doDelayError } = this;
 
   const controller = new AbortController();
 
@@ -67,46 +66,59 @@ function subscribeActual(observer) {
     return;
   }
 
-  signal.addEventListener(&apos;abort&apos;, () =&gt; {
-    if (typeof timeout !== &apos;undefined&apos;) {
-      clearTimeout(timeout);
-    }
-  });
-
   this.source.subscribeWith({
     onSubscribe(ac) {
-      signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      signal.addEventListener(&apos;abort&apos;, () =&gt; {
+        ac.abort();
+      });
     },
     onSuccess(x) {
-      timeout = setTimeout(() =&gt; {
+      const ac = scheduler.delay(() =&gt; {
         onSuccess(x);
         controller.abort();
       }, amount);
+
+      signal.addEventListener(&apos;abort&apos;, () =&gt; {
+        ac.abort();
+      });
     },
     onComplete() {
-      timeout = setTimeout(() =&gt; {
+      const ac = scheduler.delay(() =&gt; {
         onComplete();
         controller.abort();
       }, amount);
+
+      signal.addEventListener(&apos;abort&apos;, () =&gt; {
+        ac.abort();
+      });
     },
     onError(x) {
-      timeout = setTimeout(() =&gt; {
+      const ac = scheduler.delay(() =&gt; {
         onError(x);
         controller.abort();
       }, doDelayError ? amount : 0);
+
+      signal.addEventListener(&apos;abort&apos;, () =&gt; {
+        ac.abort();
+      });
     },
   });
 }
 /**
  * @ignore
  */
-export default (source, amount, doDelayError) =&gt; {
+export default (source, amount, scheduler, doDelayError) =&gt; {
   if (!isNumber(amount)) {
     return source;
+  }
+  let sched = scheduler;
+  if (!(sched instanceof Scheduler.interface)) {
+    sched = Scheduler.current;
   }
   const maybe = new Maybe(subscribeActual);
   maybe.source = source;
   maybe.amount = amount;
+  maybe.scheduler = sched;
   maybe.doDelayError = doDelayError;
   return maybe;
 };

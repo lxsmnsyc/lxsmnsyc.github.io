@@ -89,7 +89,7 @@ export function onSuccessHandler(value) {
   }
   try {
     if (value == null) {
-      onError(&apos;onSuccess called with null value.&apos;);
+      onError(new Error(&apos;onSuccess called with null value.&apos;));
     } else {
       onSuccess(value);
     }

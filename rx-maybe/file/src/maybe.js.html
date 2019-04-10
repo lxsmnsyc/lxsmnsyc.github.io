@@ -95,7 +95,7 @@ import {
   lift, map, merge, never, onErrorComplete,
   onErrorResumeNext, onErrorReturn,
   onErrorReturnItem, retry, switchIfEmpty,
-  takeUntil, timeout, timer, zip, zipWith,
+  takeUntil, timeout, timer, zip, zipWith, subscribeOn, observeOn,
 } from &apos;./internal/operators&apos;;
 /**
  * The Maybe class represents a deferred computation and emission of a single value,
@@ -602,6 +602,22 @@ export default class Maybe {
   }
 
   /**
+   * Returns a Maybe which emits the terminal events from the
+   * thread of the specified scheduler.
+   *
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
+   *
+   * @returns {Maybe}
+   * the source Maybe modified so that its subscribers are
+   * notified on the specified Scheduler
+   */
+  observeOn(scheduler) {
+    return observeOn(this, scheduler);
+  }
+
+  /**
    * Returns a Maybe instance that if this Maybe emits an
    * error and the predicate returns true, it will emit an onComplete
    * and swallow the throwable.
@@ -665,6 +681,22 @@ export default class Maybe {
    */
   retry(bipredicate) {
     return retry(this, bipredicate);
+  }
+
+  /**
+   * Returns a Maybe which subscribes the child subscriber on the specified scheduler,
+   * making sure the subscription side-effects happen on that specific thread of the scheduler.
+   *
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
+   *
+   * @returns {Maybe}
+   * the source Maybe modified so that its subscriptions happen
+   * on the specified Scheduler
+   */
+  subscribeOn(scheduler) {
+    return subscribeOn(this, scheduler);
   }
 
   /**

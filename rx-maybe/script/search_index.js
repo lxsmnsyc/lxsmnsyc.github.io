@@ -1069,6 +1069,54 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/observeOn.js.html#lineNumber6",
+    "#observeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber67",
+    "#observeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber90",
+    "#observeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber44",
+    "#observeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber113",
+    "#observeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber27",
+    "#observeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber10",
+    "#observeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber7",
+    "#observeOn should return a Maybe",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/onErrorComplete.js.html#lineNumber8",
     "#onErrorComplete",
     "test"
@@ -1275,6 +1323,54 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/retry.js.html#lineNumber32",
     "#retry should signal complete if no error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber6",
+    "#subscribeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber67",
+    "#subscribeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber90",
+    "#subscribeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber44",
+    "#subscribeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber113",
+    "#subscribeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber27",
+    "#subscribeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber10",
+    "#subscribeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber7",
+    "#subscribeOn should return a Maybe",
     "test"
   ],
   [
@@ -2262,6 +2358,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/operators/observeon.js",
+    "file/src/internal/operators/observeOn.js.html",
+    "src/internal/operators/observeOn.js",
+    "file"
+  ],
+  [
     "src/internal/operators/onerrorcomplete.js",
     "file/src/internal/operators/onErrorComplete.js.html",
     "src/internal/operators/onErrorComplete.js",
@@ -2289,6 +2391,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/retry.js",
     "file/src/internal/operators/retry.js.html",
     "src/internal/operators/retry.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/subscribeon.js",
+    "file/src/internal/operators/subscribeOn.js.html",
+    "src/internal/operators/subscribeOn.js",
     "file"
   ],
   [
@@ -2484,6 +2592,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/maybe.js~maybe#observeon",
+    "class/src/maybe.js~Maybe.html#instance-method-observeOn",
+    "src/maybe.js~Maybe#observeOn",
+    "method"
+  ],
+  [
     "src/maybe.js~maybe#onerrorcomplete",
     "class/src/maybe.js~Maybe.html#instance-method-onErrorComplete",
     "src/maybe.js~Maybe#onErrorComplete",
@@ -2517,6 +2631,12 @@ window.esdocSearchIndex = [
     "src/maybe.js~maybe#subscribe",
     "class/src/maybe.js~Maybe.html#instance-method-subscribe",
     "src/maybe.js~Maybe#subscribe",
+    "method"
+  ],
+  [
+    "src/maybe.js~maybe#subscribeon",
+    "class/src/maybe.js~Maybe.html#instance-method-subscribeOn",
+    "src/maybe.js~Maybe#subscribeOn",
     "method"
   ],
   [
@@ -2874,6 +2994,12 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
+    "test/observeon.js",
+    "test-file/test/observeOn.js.html",
+    "test/observeOn.js",
+    "testFile"
+  ],
+  [
     "test/onerrorcomplete.js",
     "test-file/test/onErrorComplete.js.html",
     "test/onErrorComplete.js",
@@ -2901,6 +3027,12 @@ window.esdocSearchIndex = [
     "test/retry.js",
     "test-file/test/retry.js.html",
     "test/retry.js",
+    "testFile"
+  ],
+  [
+    "test/subscribeon.js",
+    "test-file/test/subscribeOn.js.html",
+    "test/subscribeOn.js",
     "testFile"
   ],
   [

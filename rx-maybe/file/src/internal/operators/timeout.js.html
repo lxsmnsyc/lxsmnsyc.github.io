@@ -43,6 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timeout.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
 import AbortController from &apos;abort-controller&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import { cleanObserver, isNumber } from &apos;../utils&apos;;
 
@@ -54,7 +55,7 @@ function subscribeActual(observer) {
     onSuccess, onComplete, onError, onSubscribe,
   } = cleanObserver(observer);
 
-  const { amount } = this;
+  const { amount, scheduler } = this;
 
   const controller = new AbortController();
 
@@ -66,28 +67,26 @@ function subscribeActual(observer) {
     return;
   }
 
-  const timeout = setTimeout(
+  const timeout = scheduler.delay(
     () =&gt; {
-      onError(new Error(&apos;Maybe.timeout: TimeoutException (no success/completion signals within the specified timeout).&apos;));
+      onError(new Error(&apos;Maybe.timeout: TimeoutException (no success signals within the specified timeout).&apos;));
       controller.abort();
     },
     amount,
   );
 
-  signal.addEventListener(&apos;abort&apos;, () =&gt; {
-    clearTimeout(timeout);
-  });
+  signal.addEventListener(&apos;abort&apos;, () =&gt; timeout.abort());
 
   this.source.subscribeWith({
     onSubscribe(ac) {
       signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
     },
-    onComplete() {
-      onComplete();
-      controller.abort();
-    },
     onSuccess(x) {
       onSuccess(x);
+      controller.abort();
+    },
+    onComplete() {
+      onComplete();
       controller.abort();
     },
     onError(x) {
@@ -99,13 +98,18 @@ function subscribeActual(observer) {
 /**
  * @ignore
  */
-export default (source, amount) =&gt; {
+export default (source, amount, scheduler) =&gt; {
   if (!isNumber(amount)) {
     return source;
+  }
+  let sched = scheduler;
+  if (!(sched instanceof Scheduler.interface)) {
+    sched = Scheduler.current;
   }
   const maybe = new Maybe(subscribeActual);
   maybe.source = source;
   maybe.amount = amount;
+  maybe.scheduler = sched;
   return maybe;
 };
 </code></pre>

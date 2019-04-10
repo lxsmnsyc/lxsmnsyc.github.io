@@ -1174,6 +1174,36 @@ application.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/maybe.js~Maybe.html#instance-method-observeOn">observeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span>Scheduler</span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns a Maybe which emits the terminal events from the
+thread of the specified scheduler.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/maybe.js~Maybe.html#instance-method-onErrorComplete">onErrorComplete</a></span></span><span class="code" data-ice="signature">(predicate: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
         </p>
       </div>
@@ -1333,6 +1363,36 @@ onError and the predicate returns true for that specific exception and retry cou
         
         <div data-ice="description"><p>Subscribes to a Maybe instance with an onSuccess
 and an onError method.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/maybe.js~Maybe.html#instance-method-subscribeOn">subscribeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span>Scheduler</span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns a Maybe which subscribes the child subscriber on the specified scheduler,
+making sure the subscription side-effects happen on that specific thread of the scheduler.</p>
 </div>
       </div>
     </td>
@@ -2373,7 +2433,7 @@ Observer</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber675">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber707">source</a></span></span>
     </span>
   </h3>
 
@@ -2446,7 +2506,7 @@ Observer</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber690">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber722">source</a></span></span>
     </span>
   </h3>
 
@@ -2676,7 +2736,7 @@ subscribers.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber816">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber848">source</a></span></span>
     </span>
   </h3>
 
@@ -4210,6 +4270,83 @@ the specified function</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-observeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">observeOn</span><span class="code" data-ice="signature">(scheduler: <span>Scheduler</span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber573">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns a Maybe which emits the terminal events from the
+thread of the specified scheduler.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span>Scheduler</span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Maybe modified so that its subscribers are
+notified on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-onErrorComplete">
     <span class="access" data-ice="access">public</span>
     
@@ -4221,7 +4358,7 @@ the specified function</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber575">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber591">source</a></span></span>
     </span>
   </h3>
 
@@ -4300,7 +4437,7 @@ if the Error should be swallowed and replaced with an onComplete.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber588">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber604">source</a></span></span>
     </span>
   </h3>
 
@@ -4377,7 +4514,7 @@ invoking onError if it encounters an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber600">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber616">source</a></span></span>
     </span>
   </h3>
 
@@ -4452,7 +4589,7 @@ the current Maybe signals an onError event</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber611">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber627">source</a></span></span>
     </span>
   </h3>
 
@@ -4526,7 +4663,7 @@ rather than invoking onError if it encounters an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber623">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber639">source</a></span></span>
     </span>
   </h3>
 
@@ -4601,7 +4738,7 @@ specific exception and retry count.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber756">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber788">source</a></span></span>
     </span>
   </h3>
 
@@ -4685,6 +4822,83 @@ notification from the Maybe</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-subscribeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">subscribeOn</span><span class="code" data-ice="signature">(scheduler: <span>Scheduler</span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber655">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns a Maybe which subscribes the child subscriber on the specified scheduler,
+making sure the subscription side-effects happen on that specific thread of the scheduler.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span>Scheduler</span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Maybe modified so that its subscriptions happen
+on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-subscribeWith">
     <span class="access" data-ice="access">public</span>
     
@@ -4696,7 +4910,7 @@ notification from the Maybe</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber729">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber761">source</a></span></span>
     </span>
   </h3>
 
@@ -4778,7 +4992,7 @@ AbortController instance.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber636">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber668">source</a></span></span>
     </span>
   </h3>
 
@@ -4854,7 +5068,7 @@ or the items of an alternate Maybe if the source Maybe is empty.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber650">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber682">source</a></span></span>
     </span>
   </h3>
 
@@ -4931,7 +5145,7 @@ such time as other emits its first item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber805">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber837">source</a></span></span>
     </span>
   </h3>
 
@@ -5010,7 +5224,7 @@ and attaches callbacks to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber665">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber697">source</a></span></span>
     </span>
   </h3>
 
@@ -5087,7 +5301,7 @@ of an Error with TimeoutException.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber791">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber823">source</a></span></span>
     </span>
   </h3>
 
@@ -5143,7 +5357,7 @@ of an Error with TimeoutException.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber708">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber740">source</a></span></span>
     </span>
   </h3>
 

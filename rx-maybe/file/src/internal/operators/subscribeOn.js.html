@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../../">
-  <title data-ice="title">src/internal/operators/timer.js | rx-maybe</title>
+  <title data-ice="title">src/internal/operators/subscribeOn.js | rx-maybe</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -40,47 +40,61 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/subscribeOn.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Scheduler from &apos;rx-scheduler&apos;;
 import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver, isNumber } from &apos;../utils&apos;;
-import error from &apos;./error&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
-/**
- * @ignore
- */
 function subscribeActual(observer) {
-  const { onSuccess, onSubscribe } = cleanObserver(observer);
+  const {
+    onSubscribe, onSuccess, onComplete, onError,
+  } = cleanObserver(observer);
+
+  const { source, scheduler } = this;
 
   const controller = new AbortController();
+  onSubscribe(controller);
 
   const { signal } = controller;
-
-  onSubscribe(controller);
 
   if (signal.aborted) {
     return;
   }
 
-  const timeout = this.scheduler.delay(() =&gt; onSuccess(0), this.amount);
-
-  signal.addEventListener(&apos;abort&apos;, () =&gt; timeout.abort());
+  scheduler.schedule(() =&gt; {
+    if (signal.aborted) {
+      return;
+    }
+    source.subscribeWith({
+      onSubscribe(ac) {
+        signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+      },
+      onSuccess(x) {
+        onSuccess(x);
+        controller.abort();
+      },
+      onComplete() {
+        onComplete();
+        controller.abort();
+      },
+      onError(x) {
+        onError(x);
+        controller.abort();
+      },
+    });
+  });
 }
 /**
  * @ignore
  */
-export default (amount, scheduler) =&gt; {
-  if (!isNumber(amount)) {
-    return error(new Error(&apos;Maybe.timer: &quot;amount&quot; is not a number.&apos;));
-  }
-
+export default (source, scheduler) =&gt; {
   let sched = scheduler;
   if (!(sched instanceof Scheduler.interface)) {
     sched = Scheduler.current;
   }
   const maybe = new Maybe(subscribeActual);
-  maybe.amount = amount;
+  maybe.source = source;
   maybe.scheduler = sched;
   return maybe;
 };
