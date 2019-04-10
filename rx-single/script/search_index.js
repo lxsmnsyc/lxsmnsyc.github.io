@@ -1,5 +1,101 @@
 window.esdocSearchIndex = [
   [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber6",
+    "#observeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber64",
+    "#observeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber86",
+    "#observeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber42",
+    "#observeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber108",
+    "#observeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber26",
+    "#observeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber10",
+    "#observeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/observeOn.js.html#lineNumber7",
+    "#observeOn should return a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber6",
+    "#subscribeOn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber64",
+    "#subscribeOn should be asynchronous with Scheduler.async",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber86",
+    "#subscribeOn should be asynchronous with Scheduler.immediate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber42",
+    "#subscribeOn should be asynchronous with Scheduler.tick",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber108",
+    "#subscribeOn should be asynchronous with Scheduler.timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber26",
+    "#subscribeOn should be synchronous with Scheduler.current",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber10",
+    "#subscribeOn should be synchronous with non-Scheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/subscribeOn.js.html#lineNumber7",
+    "#subscribeOn should return a Single",
+    "test"
+  ],
+  [
     "rx-single/src/emitter.js~emitter",
     "class/src/emitter.js~Emitter.html",
     "<span>Emitter</span> <span class=\"search-result-import-path\">rx-single/src/emitter.js</span>",
@@ -127,6 +223,12 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/catch.js.html#lineNumber8",
+    "Single",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/onErrorReturn.js.html#lineNumber8",
     "Single",
     "test"
@@ -134,12 +236,6 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/onErrorReturnItem.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/catch.js.html#lineNumber8",
     "Single",
     "test"
   ],
@@ -157,6 +253,12 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/compose.js.html#lineNumber8",
+    "Single",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/then.js.html#lineNumber8",
     "Single",
     "test"
@@ -164,12 +266,6 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timeout.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber8",
     "Single",
     "test"
   ],
@@ -2082,6 +2178,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/operators/observeon.js",
+    "file/src/internal/operators/observeOn.js.html",
+    "src/internal/operators/observeOn.js",
+    "file"
+  ],
+  [
     "src/internal/operators/onerrorresumenext.js",
     "file/src/internal/operators/onErrorResumeNext.js.html",
     "src/internal/operators/onErrorResumeNext.js",
@@ -2103,6 +2205,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/retry.js",
     "file/src/internal/operators/retry.js.html",
     "src/internal/operators/retry.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/subscribeon.js",
+    "file/src/internal/operators/subscribeOn.js.html",
+    "src/internal/operators/subscribeOn.js",
     "file"
   ],
   [
@@ -2187,6 +2295,12 @@ window.esdocSearchIndex = [
     "src/single.js~promiselike",
     "https://promisesaplus.com/",
     "src/single.js~PromiseLike",
+    "external"
+  ],
+  [
+    "src/single.js~scheduler",
+    "https://lxsmnsyc.github.io/rx-scheduler/",
+    "src/single.js~Scheduler",
     "external"
   ],
   [
@@ -2310,6 +2424,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/single.js~single#observeon",
+    "class/src/single.js~Single.html#instance-method-observeOn",
+    "src/single.js~Single#observeOn",
+    "method"
+  ],
+  [
     "src/single.js~single#onerrorresumenext",
     "class/src/single.js~Single.html#instance-method-onErrorResumeNext",
     "src/single.js~Single#onErrorResumeNext",
@@ -2344,6 +2464,12 @@ window.esdocSearchIndex = [
     "class/src/single.js~Single.html#instance-member-subscribeActual",
     "src/single.js~Single#subscribeActual",
     "member"
+  ],
+  [
+    "src/single.js~single#subscribeon",
+    "class/src/single.js~Single.html#instance-method-subscribeOn",
+    "src/single.js~Single#subscribeOn",
+    "method"
   ],
   [
     "src/single.js~single#subscribewith",
@@ -2640,6 +2766,12 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
+    "test/observeon.js",
+    "test-file/test/observeOn.js.html",
+    "test/observeOn.js",
+    "testFile"
+  ],
+  [
     "test/onerrorresumenext.js",
     "test-file/test/onErrorResumeNext.js.html",
     "test/onErrorResumeNext.js",
@@ -2661,6 +2793,12 @@ window.esdocSearchIndex = [
     "test/retry.js",
     "test-file/test/retry.js.html",
     "test/retry.js",
+    "testFile"
+  ],
+  [
+    "test/subscribeon.js",
+    "test-file/test/subscribeOn.js.html",
+    "test/subscribeOn.js",
     "testFile"
   ],
   [

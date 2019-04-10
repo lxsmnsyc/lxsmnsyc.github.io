@@ -35,19 +35,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Single from &apos;<span><a href="file/src/single.js.html#lineNumber86">rx-single/src/single.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Single from &apos;<span><a href="file/src/single.js.html#lineNumber88">rx-single/src/single.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/single.js.html#lineNumber86">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/single.js.html#lineNumber88">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -418,7 +419,7 @@ Single (only calls onSubscribe).</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#static-method-timer">timer</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#static-method-timer">timer</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
@@ -674,7 +675,7 @@ with the value provided.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, doDelayError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>, doDelayError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
@@ -704,7 +705,7 @@ the current Single by the specified amount.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-delaySubscription">delaySubscription</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-delaySubscription">delaySubscription</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
@@ -1143,6 +1144,36 @@ the result of this function application.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-observeOn">observeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Modifies a Single to emit its item (or notify of its error)
+on a specified Scheduler, asynchronously.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-onErrorResumeNext">onErrorResumeNext</a></span></span><span class="code" data-ice="signature">(resumeIfError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span>: <span><a href="class/src/single.js~Single.html">Single</a></span></span> | <span><a href="class/src/single.js~Single.html">Single</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
@@ -1295,6 +1326,36 @@ and an onError method.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribeOn">subscribeOn</a></span></span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Asynchronously subscribes subscribers to this Single
+on the specified Scheduler.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribeWith">subscribeWith</a></span></span><span class="code" data-ice="signature">(observer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></span>
         </p>
       </div>
@@ -1385,7 +1446,7 @@ and attaches callbacks to it.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-timeout">timeout</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-timeout">timeout</a></span></span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
       <div>
@@ -1483,7 +1544,7 @@ by the source Single and another specified Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber125">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber127">source</a></span></span>
     </span>
   </h3>
 
@@ -1560,7 +1621,7 @@ this Iterable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber111">source</a></span></span>
     </span>
   </h3>
 
@@ -1644,7 +1705,7 @@ an object that implements the Emitter interface.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber209">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber211">source</a></span></span>
     </span>
   </h3>
 
@@ -1720,7 +1781,7 @@ Observer and returns a Single instance to subscribe to.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber422">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber430">source</a></span></span>
     </span>
   </h3>
 
@@ -1805,7 +1866,7 @@ when the subscriber subscribes to it</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber468">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber476">source</a></span></span>
     </span>
   </h3>
 
@@ -1893,7 +1954,7 @@ an invocation of the given function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber479">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber487">source</a></span></span>
     </span>
   </h3>
 
@@ -1966,7 +2027,7 @@ an invocation of the given function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber491">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber499">source</a></span></span>
     </span>
   </h3>
 
@@ -2040,7 +2101,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber505">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber513">source</a></span></span>
     </span>
   </h3>
 
@@ -2115,7 +2176,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber576">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber584">source</a></span></span>
     </span>
   </h3>
 
@@ -2193,7 +2254,7 @@ the Single emitted by source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber588">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber596">source</a></span></span>
     </span>
   </h3>
 
@@ -2247,11 +2308,11 @@ Single (only calls onSubscribe).</p>
     
     
     
-    <span class="code" data-ice="name">timer</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">timer</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber783">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber828">source</a></span></span>
     </span>
   </h3>
 
@@ -2278,6 +2339,14 @@ delay for each Observer.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the amount of time in milliseconds.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -2326,7 +2395,7 @@ delay for each Observer.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber820">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber868">source</a></span></span>
     </span>
   </h3>
 
@@ -2420,7 +2489,7 @@ emitted to downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber91">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
@@ -2466,7 +2535,7 @@ emitted to downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber142">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber144">source</a></span></span>
     </span>
   </h3>
 
@@ -2544,7 +2613,7 @@ after subscribing to the current source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber155">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber157">source</a></span></span>
     </span>
   </h3>
 
@@ -2603,7 +2672,7 @@ when the first SingleObserver subscribes.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber876">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber924">source</a></span></span>
     </span>
   </h3>
 
@@ -2676,7 +2745,7 @@ and attaches an onRejection callback to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber177">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber179">source</a></span></span>
     </span>
   </h3>
 
@@ -2757,7 +2826,7 @@ existing operators to it) use compose.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber196">source</a></span></span>
     </span>
   </h3>
 
@@ -2837,11 +2906,11 @@ true if they are considered equal.</p>
     
     
     
-    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, doDelayError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>, doDelayError: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber227">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber232">source</a></span></span>
     </span>
   </h3>
 
@@ -2869,6 +2938,14 @@ the current Single by the specified amount.</p>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the amount of time the success signal should be
 delayed for (in milliseconds).</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
@@ -2921,11 +2998,11 @@ if false, only success signals are delayed.</p>
     
     
     
-    <span class="code" data-ice="name">delaySubscription</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">delaySubscription</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber240">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber248">source</a></span></span>
     </span>
   </h3>
 
@@ -2952,6 +3029,14 @@ Single until the given time delay elapsed.</p>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the time amount to wait with the subscription
 (in milliseconds).</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -3000,7 +3085,7 @@ Single until the given time delay elapsed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber257">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber265">source</a></span></span>
     </span>
   </h3>
 
@@ -3078,7 +3163,7 @@ to the current Single happens.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber273">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber281">source</a></span></span>
     </span>
   </h3>
 
@@ -3155,7 +3240,7 @@ an item from upstream to the downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber289">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber297">source</a></span></span>
     </span>
   </h3>
 
@@ -3232,7 +3317,7 @@ Single, then invokes the function.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber307">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber315">source</a></span></span>
     </span>
   </h3>
 
@@ -3310,7 +3395,7 @@ subscription.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber323">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber331">source</a></span></span>
     </span>
   </h3>
 
@@ -3387,7 +3472,7 @@ onSubscribe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber338">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber346">source</a></span></span>
     </span>
   </h3>
 
@@ -3463,7 +3548,7 @@ subscribes to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber352">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber360">source</a></span></span>
     </span>
   </h3>
 
@@ -3539,7 +3624,7 @@ to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber367">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber375">source</a></span></span>
     </span>
   </h3>
 
@@ -3615,7 +3700,7 @@ that subscribes to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber382">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber390">source</a></span></span>
     </span>
   </h3>
 
@@ -3691,7 +3776,7 @@ to the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber399">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber407">source</a></span></span>
     </span>
   </h3>
 
@@ -3769,7 +3854,7 @@ onComplete or onError</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber438">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber446">source</a></span></span>
     </span>
   </h3>
 
@@ -3847,7 +3932,7 @@ emitted by the source Single</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber542">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber550">source</a></span></span>
     </span>
   </h3>
 
@@ -3944,7 +4029,7 @@ to be used as the consumer for the current Single.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber559">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber567">source</a></span></span>
     </span>
   </h3>
 
@@ -4011,6 +4096,84 @@ transformed by the specified function</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-observeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">observeOn</span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber613">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Modifies a Single to emit its item (or notify of its error)
+on a specified Scheduler, asynchronously.</p>
+<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png" class="diagram"></p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/single.js~Single.html">Single</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Single modified so that its subscribers are
+notified on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-onErrorResumeNext">
     <span class="access" data-ice="access">public</span>
     
@@ -4022,7 +4185,7 @@ transformed by the specified function</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber621">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber646">source</a></span></span>
     </span>
   </h3>
 
@@ -4114,7 +4277,7 @@ Observer may never know that an error happened.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber652">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber677">source</a></span></span>
     </span>
   </h3>
 
@@ -4204,7 +4367,7 @@ will emit if the source Single encounters an error</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber665">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber690">source</a></span></span>
     </span>
   </h3>
 
@@ -4278,7 +4441,7 @@ the current Single signals an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber681">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber706">source</a></span></span>
     </span>
   </h3>
 
@@ -4355,7 +4518,7 @@ value and should return true if a resubscription should happen.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber725">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber767">source</a></span></span>
     </span>
   </h3>
 
@@ -4431,6 +4594,84 @@ notification from the Single</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-subscribeOn">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">subscribeOn</span><span class="code" data-ice="signature">(scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber723">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Asynchronously subscribes subscribers to this Single
+on the specified Scheduler.</p>
+<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png" class="diagram"></p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/single.js~Single.html">Single</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the source Single modified so that its subscriptions happen
+on the specified Scheduler</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-subscribeWith">
     <span class="access" data-ice="access">public</span>
     
@@ -4442,7 +4683,7 @@ notification from the Single</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber701">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber743">source</a></span></span>
     </span>
   </h3>
 
@@ -4523,7 +4764,7 @@ AbortController instance.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber769">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber811">source</a></span></span>
     </span>
   </h3>
 
@@ -4604,7 +4845,7 @@ Single until such time as other emits its item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber865">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber913">source</a></span></span>
     </span>
   </h3>
 
@@ -4679,11 +4920,11 @@ and attaches callbacks to it.</p>
     
     
     
-    <span class="code" data-ice="name">timeout</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="code" data-ice="name">timeout</span><span class="code" data-ice="signature">(amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, scheduler: <span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber795">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber843">source</a></span></span>
     </span>
   </h3>
 
@@ -4710,6 +4951,14 @@ timeout window.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>amount of time in milliseconds.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">scheduler</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the target scheduler to use for the non-blocking wait and emission.
+By default, schedules on the current thread.</p>
 </td>
     </tr>
 </tbody>
@@ -4758,7 +5007,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber851">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber899">source</a></span></span>
     </span>
   </h3>
 
@@ -4814,7 +5063,7 @@ timeout window.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber842">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber890">source</a></span></span>
     </span>
   </h3>
 

@@ -35,6 +35,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -88,7 +89,7 @@ export function onSuccessHandler(value) {
   }
   try {
     if (typeof value === &apos;undefined&apos;) {
-      onError(&apos;onSuccess called with a null value.&apos;);
+      onError(new Error(&apos;onSuccess called with a null value.&apos;));
     } else {
       onSuccess(value);
     }

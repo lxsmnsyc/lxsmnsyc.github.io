@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../../">
-  <title data-ice="title">src/internal/operators/delaySubscription.js | rx-single</title>
+  <title data-ice="title">src/internal/operators/subscribeOn.js | rx-single</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,31 +41,31 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/delaySubscription.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/subscribeOn.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
 import Scheduler from &apos;rx-scheduler&apos;;
 import Single from &apos;../../single&apos;;
-import { cleanObserver, isNumber } from &apos;../utils&apos;;
+import { cleanObserver } from &apos;../utils&apos;;
 
-/**
- * @ignore
- */
 function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
+  const { onSubscribe, onSuccess, onError } = cleanObserver(observer);
 
-  const { amount, scheduler } = this;
+  const { source, scheduler } = this;
+
   const controller = new AbortController();
+  onSubscribe(controller);
 
   const { signal } = controller;
-
-  onSubscribe(controller);
 
   if (signal.aborted) {
     return;
   }
 
-  const abortable = scheduler.delay(() =&gt; {
-    this.source.subscribeWith({
+  scheduler.schedule(() =&gt; {
+    if (signal.aborted) {
+      return;
+    }
+    source.subscribeWith({
       onSubscribe(ac) {
         signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
       },
@@ -78,24 +78,18 @@ function subscribeActual(observer) {
         controller.abort();
       },
     });
-  }, amount);
-
-  signal.addEventListener(&apos;abort&apos;, () =&gt; abortable.abort());
+  });
 }
 /**
  * @ignore
  */
-export default (source, amount, scheduler) =&gt; {
-  if (!isNumber(amount)) {
-    return source;
-  }
+export default (source, scheduler) =&gt; {
   let sched = scheduler;
   if (!(sched instanceof Scheduler.interface)) {
     sched = Scheduler.current;
   }
   const single = new Single(subscribeActual);
   single.source = source;
-  single.amount = amount;
   single.scheduler = sched;
   return single;
 };
