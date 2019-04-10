@@ -42,7 +42,6 @@
 </nav>
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rx-single">rx-single</h1><p>Reactive Extensions - represents a deferred computation with an indication for a single value or exception.</p>
-<p>JS Implementation of the Reactive Extensions (RxJava) <a href="http://reactivex.io/documentation/single.html">Single</a></p>
 <p><a href="https://nodei.co/npm/rx-single/"><img src="https://nodei.co/npm/rx-single.png" alt="NPM"></a></p>
 <p><a href="https://www.jsdelivr.com/package/npm/rx-single"><img src="https://data.jsdelivr.com/v1/package/npm/rx-single/badge" alt></a>
 <a href="http://hits.dwyl.io/lxsmnsyc/rx-single"><img src="http://hits.dwyl.io/lxsmnsyc/rx-single.svg" alt="HitCount"></a></p>
@@ -97,7 +96,7 @@
 <li>0.9.0<ul>
 <li>now uses <a href="https://github.com/LXSMNSYC/rx-scheduler">Schedulers</a></li>
 <li><code>delay</code>, <code>delaySubscription</code>, <code>timeout</code> and <code>timer</code> now accepts <code>Schedulers</code> (defaults to <code>Scheduler.current</code>).</li>
-<li>added two new operators: <code>observeOn</code> (observes the emissions on a given Scheduler) and <code>subscribeOn</code> (subscribes to a given Observable on a given Scheduler).</li>
+<li>added two new operators: <code>observeOn</code> (observes the emissions on a given Scheduler) and <code>subscribeOn</code> (subscribes to a given Single on a given Scheduler).</li>
 </ul>
 </li>
 <li>0.8.0<ul>

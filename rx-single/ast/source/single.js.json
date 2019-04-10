@@ -8114,9 +8114,9 @@
                 "trailingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
+                    "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.observeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
                     "start": 20103,
-                    "end": 20645,
+                    "end": 20643,
                     "loc": {
                       "start": {
                         "line": 600,
@@ -8132,8 +8132,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 20648,
-                "end": 20713,
+                "start": 20646,
+                "end": 20711,
                 "loc": {
                   "start": {
                     "line": 613,
@@ -8148,8 +8148,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 20648,
-                  "end": 20657,
+                  "start": 20646,
+                  "end": 20655,
                   "loc": {
                     "start": {
                       "line": 613,
@@ -8172,8 +8172,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 20658,
-                    "end": 20667,
+                    "start": 20656,
+                    "end": 20665,
                     "loc": {
                       "start": {
                         "line": 613,
@@ -8190,8 +8190,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 20669,
-                  "end": 20713,
+                  "start": 20667,
+                  "end": 20711,
                   "loc": {
                     "start": {
                       "line": 613,
@@ -8205,8 +8205,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 20675,
-                      "end": 20709,
+                      "start": 20673,
+                      "end": 20707,
                       "loc": {
                         "start": {
                           "line": 614,
@@ -8219,8 +8219,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 20682,
-                        "end": 20708,
+                        "start": 20680,
+                        "end": 20706,
                         "loc": {
                           "start": {
                             "line": 614,
@@ -8233,8 +8233,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 20682,
-                          "end": 20691,
+                          "start": 20680,
+                          "end": 20689,
                           "loc": {
                             "start": {
                               "line": 614,
@@ -8251,8 +8251,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 20692,
-                            "end": 20696,
+                            "start": 20690,
+                            "end": 20694,
                             "loc": {
                               "start": {
                                 "line": 614,
@@ -8266,8 +8266,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 20698,
-                            "end": 20707,
+                            "start": 20696,
+                            "end": 20705,
                             "loc": {
                               "start": {
                                 "line": 614,
@@ -8291,9 +8291,9 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
+                    "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.observeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
                     "start": 20103,
-                    "end": 20645,
+                    "end": 20643,
                     "loc": {
                       "start": {
                         "line": 600,
@@ -8310,8 +8310,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Instructs a Single to pass control to another\n   * Single rather than invoking Observer.onError\n   * if it encounters an error.\n   *\n   * By default, when a Single encounters an error\n   * that prevents it from emitting the expected item\n   * to its Observer, the Single invokes its Observer's\n   * onError method, and then quits without invoking any\n   * more of its SingleObserver's methods.\n   *\n   * The onErrorResumeNext method changes this behavior.\n   * If you pass another Single (resumeIfError) or if you\n   * pass a function that will return another Single\n   * (resumeIfError) to a Single's onErrorResumeNext\n   * method, if the original Single encounters an error,\n   * instead of invoking its Observer's onError method,\n   * it will instead relinquish control to resumeIfError\n   * which will invoke the Observer's onSuccess method\n   * if it is able to do so. In such a case,\n   * because no Single necessarily invokes onError, the\n   * Observer may never know that an error happened.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.f.png\" class=\"diagram\">\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.png\" class=\"diagram\">\n   *\n   * @param {!(function(x: any):Single|Single)} resumeIfError\n   * @returns {Single}\n   ",
-                    "start": 20717,
-                    "end": 22099,
+                    "start": 20715,
+                    "end": 22097,
                     "loc": {
                       "start": {
                         "line": 617,
@@ -8327,8 +8327,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 22102,
-                "end": 22191,
+                "start": 22100,
+                "end": 22189,
                 "loc": {
                   "start": {
                     "line": 646,
@@ -8343,8 +8343,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 22102,
-                  "end": 22119,
+                  "start": 22100,
+                  "end": 22117,
                   "loc": {
                     "start": {
                       "line": 646,
@@ -8367,8 +8367,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 22120,
-                    "end": 22133,
+                    "start": 22118,
+                    "end": 22131,
                     "loc": {
                       "start": {
                         "line": 646,
@@ -8385,8 +8385,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 22135,
-                  "end": 22191,
+                  "start": 22133,
+                  "end": 22189,
                   "loc": {
                     "start": {
                       "line": 646,
@@ -8400,8 +8400,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 22141,
-                      "end": 22187,
+                      "start": 22139,
+                      "end": 22185,
                       "loc": {
                         "start": {
                           "line": 647,
@@ -8414,8 +8414,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 22148,
-                        "end": 22186,
+                        "start": 22146,
+                        "end": 22184,
                         "loc": {
                           "start": {
                             "line": 647,
@@ -8428,8 +8428,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 22148,
-                          "end": 22165,
+                          "start": 22146,
+                          "end": 22163,
                           "loc": {
                             "start": {
                               "line": 647,
@@ -8446,8 +8446,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 22166,
-                            "end": 22170,
+                            "start": 22164,
+                            "end": 22168,
                             "loc": {
                               "start": {
                                 "line": 647,
@@ -8461,8 +8461,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 22172,
-                            "end": 22185,
+                            "start": 22170,
+                            "end": 22183,
                             "loc": {
                               "start": {
                                 "line": 647,
@@ -8487,8 +8487,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Instructs a Single to pass control to another\n   * Single rather than invoking Observer.onError\n   * if it encounters an error.\n   *\n   * By default, when a Single encounters an error\n   * that prevents it from emitting the expected item\n   * to its Observer, the Single invokes its Observer's\n   * onError method, and then quits without invoking any\n   * more of its SingleObserver's methods.\n   *\n   * The onErrorResumeNext method changes this behavior.\n   * If you pass another Single (resumeIfError) or if you\n   * pass a function that will return another Single\n   * (resumeIfError) to a Single's onErrorResumeNext\n   * method, if the original Single encounters an error,\n   * instead of invoking its Observer's onError method,\n   * it will instead relinquish control to resumeIfError\n   * which will invoke the Observer's onSuccess method\n   * if it is able to do so. In such a case,\n   * because no Single necessarily invokes onError, the\n   * Observer may never know that an error happened.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.f.png\" class=\"diagram\">\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.png\" class=\"diagram\">\n   *\n   * @param {!(function(x: any):Single|Single)} resumeIfError\n   * @returns {Single}\n   ",
-                    "start": 20717,
-                    "end": 22099,
+                    "start": 20715,
+                    "end": 22097,
                     "loc": {
                       "start": {
                         "line": 617,
@@ -8505,8 +8505,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Instructs a Single to emit an item (returned by\n   * a specified function) rather than invoking\n   * onError if it encounters an error.\n   *\n   * By default, when a Single encounters an error that\n   * prevents it from emitting the expected item to its\n   * subscriber, the Single invokes its subscriber's\n   * Observer.onError method, and then quits without\n   * invoking any more of its subscriber's methods.\n   * The onErrorReturn method changes this behavior.\n   * If you pass a function (resumeFunction) to a Single's\n   * onErrorReturn method, if the original Single encounters\n   * an error, instead of invoking its subscriber's\n   * Observer.onError method, it will instead emit the\n   * return value of resumeIfError.\n   *\n   * You can use this to prevent errors from propagating\n   * or to supply fallback data should errors be encountered.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorReturn.png\" class=\"diagram\">\n   *\n   * @param {!function(e: any):any} resumeFunction\n   * a function that returns an item that the new Single\n   * will emit if the source Single encounters an error\n   * @returns {Single}\n   ",
-                    "start": 22195,
-                    "end": 23389,
+                    "start": 22193,
+                    "end": 23387,
                     "loc": {
                       "start": {
                         "line": 650,
@@ -8522,8 +8522,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 23392,
-                "end": 23475,
+                "start": 23390,
+                "end": 23473,
                 "loc": {
                   "start": {
                     "line": 677,
@@ -8538,8 +8538,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 23392,
-                  "end": 23405,
+                  "start": 23390,
+                  "end": 23403,
                   "loc": {
                     "start": {
                       "line": 677,
@@ -8562,8 +8562,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 23406,
-                    "end": 23420,
+                    "start": 23404,
+                    "end": 23418,
                     "loc": {
                       "start": {
                         "line": 677,
@@ -8580,8 +8580,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 23422,
-                  "end": 23475,
+                  "start": 23420,
+                  "end": 23473,
                   "loc": {
                     "start": {
                       "line": 677,
@@ -8595,8 +8595,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 23428,
-                      "end": 23471,
+                      "start": 23426,
+                      "end": 23469,
                       "loc": {
                         "start": {
                           "line": 678,
@@ -8609,8 +8609,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 23435,
-                        "end": 23470,
+                        "start": 23433,
+                        "end": 23468,
                         "loc": {
                           "start": {
                             "line": 678,
@@ -8623,8 +8623,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 23435,
-                          "end": 23448,
+                          "start": 23433,
+                          "end": 23446,
                           "loc": {
                             "start": {
                               "line": 678,
@@ -8641,8 +8641,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 23449,
-                            "end": 23453,
+                            "start": 23447,
+                            "end": 23451,
                             "loc": {
                               "start": {
                                 "line": 678,
@@ -8656,8 +8656,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 23455,
-                            "end": 23469,
+                            "start": 23453,
+                            "end": 23467,
                             "loc": {
                               "start": {
                                 "line": 678,
@@ -8682,8 +8682,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Instructs a Single to emit an item (returned by\n   * a specified function) rather than invoking\n   * onError if it encounters an error.\n   *\n   * By default, when a Single encounters an error that\n   * prevents it from emitting the expected item to its\n   * subscriber, the Single invokes its subscriber's\n   * Observer.onError method, and then quits without\n   * invoking any more of its subscriber's methods.\n   * The onErrorReturn method changes this behavior.\n   * If you pass a function (resumeFunction) to a Single's\n   * onErrorReturn method, if the original Single encounters\n   * an error, instead of invoking its subscriber's\n   * Observer.onError method, it will instead emit the\n   * return value of resumeIfError.\n   *\n   * You can use this to prevent errors from propagating\n   * or to supply fallback data should errors be encountered.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorReturn.png\" class=\"diagram\">\n   *\n   * @param {!function(e: any):any} resumeFunction\n   * a function that returns an item that the new Single\n   * will emit if the source Single encounters an error\n   * @returns {Single}\n   ",
-                    "start": 22195,
-                    "end": 23389,
+                    "start": 22193,
+                    "end": 23387,
                     "loc": {
                       "start": {
                         "line": 650,
@@ -8700,8 +8700,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Signals the specified value as success in case\n   * the current Single signals an error.\n   *\n   * @param {!any} item\n   * the value to signal if the current Single fails\n   * @returns {Single}\n   ",
-                    "start": 23480,
-                    "end": 23688,
+                    "start": 23478,
+                    "end": 23686,
                     "loc": {
                       "start": {
                         "line": 682,
@@ -8717,8 +8717,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 23691,
-                "end": 23762,
+                "start": 23689,
+                "end": 23760,
                 "loc": {
                   "start": {
                     "line": 690,
@@ -8733,8 +8733,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 23691,
-                  "end": 23708,
+                  "start": 23689,
+                  "end": 23706,
                   "loc": {
                     "start": {
                       "line": 690,
@@ -8757,8 +8757,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 23709,
-                    "end": 23713,
+                    "start": 23707,
+                    "end": 23711,
                     "loc": {
                       "start": {
                         "line": 690,
@@ -8775,8 +8775,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 23715,
-                  "end": 23762,
+                  "start": 23713,
+                  "end": 23760,
                   "loc": {
                     "start": {
                       "line": 690,
@@ -8790,8 +8790,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 23721,
-                      "end": 23758,
+                      "start": 23719,
+                      "end": 23756,
                       "loc": {
                         "start": {
                           "line": 691,
@@ -8804,8 +8804,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 23728,
-                        "end": 23757,
+                        "start": 23726,
+                        "end": 23755,
                         "loc": {
                           "start": {
                             "line": 691,
@@ -8818,8 +8818,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 23728,
-                          "end": 23745,
+                          "start": 23726,
+                          "end": 23743,
                           "loc": {
                             "start": {
                               "line": 691,
@@ -8836,8 +8836,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 23746,
-                            "end": 23750,
+                            "start": 23744,
+                            "end": 23748,
                             "loc": {
                               "start": {
                                 "line": 691,
@@ -8851,8 +8851,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 23752,
-                            "end": 23756,
+                            "start": 23750,
+                            "end": 23754,
                             "loc": {
                               "start": {
                                 "line": 691,
@@ -8877,8 +8877,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Signals the specified value as success in case\n   * the current Single signals an error.\n   *\n   * @param {!any} item\n   * the value to signal if the current Single fails\n   * @returns {Single}\n   ",
-                    "start": 23480,
-                    "end": 23688,
+                    "start": 23478,
+                    "end": 23686,
                     "loc": {
                       "start": {
                         "line": 682,
@@ -8895,8 +8895,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Re-subscribe to the current Single if the given predicate\n   * returns true when the Single fails with an onError.\n   *\n   * If no predicate is provided, repeatedly re-subscribes to\n   * the current Single indefinitely if it fails with an onError.\n   *\n   * @param {?function(retries: number, err: Error):boolean} predicate\n   * the predicate called with the resubscription count and the failure\n   * value and should return true if a resubscription should happen.\n   * @returns {Single}\n   ",
-                    "start": 23766,
-                    "end": 24268,
+                    "start": 23764,
+                    "end": 24266,
                     "loc": {
                       "start": {
                         "line": 694,
@@ -8912,8 +8912,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 24271,
-                "end": 24328,
+                "start": 24269,
+                "end": 24326,
                 "loc": {
                   "start": {
                     "line": 706,
@@ -8928,8 +8928,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 24271,
-                  "end": 24276,
+                  "start": 24269,
+                  "end": 24274,
                   "loc": {
                     "start": {
                       "line": 706,
@@ -8952,8 +8952,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 24277,
-                    "end": 24286,
+                    "start": 24275,
+                    "end": 24284,
                     "loc": {
                       "start": {
                         "line": 706,
@@ -8970,8 +8970,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 24288,
-                  "end": 24328,
+                  "start": 24286,
+                  "end": 24326,
                   "loc": {
                     "start": {
                       "line": 706,
@@ -8985,8 +8985,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 24294,
-                      "end": 24324,
+                      "start": 24292,
+                      "end": 24322,
                       "loc": {
                         "start": {
                           "line": 707,
@@ -8999,8 +8999,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 24301,
-                        "end": 24323,
+                        "start": 24299,
+                        "end": 24321,
                         "loc": {
                           "start": {
                             "line": 707,
@@ -9013,8 +9013,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 24301,
-                          "end": 24306,
+                          "start": 24299,
+                          "end": 24304,
                           "loc": {
                             "start": {
                               "line": 707,
@@ -9031,8 +9031,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 24307,
-                            "end": 24311,
+                            "start": 24305,
+                            "end": 24309,
                             "loc": {
                               "start": {
                                 "line": 707,
@@ -9046,8 +9046,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 24313,
-                            "end": 24322,
+                            "start": 24311,
+                            "end": 24320,
                             "loc": {
                               "start": {
                                 "line": 707,
@@ -9072,8 +9072,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Re-subscribe to the current Single if the given predicate\n   * returns true when the Single fails with an onError.\n   *\n   * If no predicate is provided, repeatedly re-subscribes to\n   * the current Single indefinitely if it fails with an onError.\n   *\n   * @param {?function(retries: number, err: Error):boolean} predicate\n   * the predicate called with the resubscription count and the failure\n   * value and should return true if a resubscription should happen.\n   * @returns {Single}\n   ",
-                    "start": 23766,
-                    "end": 24268,
+                    "start": 23764,
+                    "end": 24266,
                     "loc": {
                       "start": {
                         "line": 694,
@@ -9090,8 +9090,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Asynchronously subscribes subscribers to this Single\n   * on the specified Scheduler.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Single}\n   * the source Single modified so that its subscriptions happen\n   * on the specified Scheduler\n   ",
-                    "start": 24332,
-                    "end": 24850,
+                    "start": 24330,
+                    "end": 24848,
                     "loc": {
                       "start": {
                         "line": 710,
@@ -9107,8 +9107,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 24853,
-                "end": 24922,
+                "start": 24851,
+                "end": 24920,
                 "loc": {
                   "start": {
                     "line": 723,
@@ -9123,8 +9123,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 24853,
-                  "end": 24864,
+                  "start": 24851,
+                  "end": 24862,
                   "loc": {
                     "start": {
                       "line": 723,
@@ -9147,8 +9147,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 24865,
-                    "end": 24874,
+                    "start": 24863,
+                    "end": 24872,
                     "loc": {
                       "start": {
                         "line": 723,
@@ -9165,8 +9165,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 24876,
-                  "end": 24922,
+                  "start": 24874,
+                  "end": 24920,
                   "loc": {
                     "start": {
                       "line": 723,
@@ -9180,8 +9180,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 24882,
-                      "end": 24918,
+                      "start": 24880,
+                      "end": 24916,
                       "loc": {
                         "start": {
                           "line": 724,
@@ -9194,8 +9194,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 24889,
-                        "end": 24917,
+                        "start": 24887,
+                        "end": 24915,
                         "loc": {
                           "start": {
                             "line": 724,
@@ -9208,8 +9208,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 24889,
-                          "end": 24900,
+                          "start": 24887,
+                          "end": 24898,
                           "loc": {
                             "start": {
                               "line": 724,
@@ -9226,8 +9226,8 @@
                         "arguments": [
                           {
                             "type": "ThisExpression",
-                            "start": 24901,
-                            "end": 24905,
+                            "start": 24899,
+                            "end": 24903,
                             "loc": {
                               "start": {
                                 "line": 724,
@@ -9241,8 +9241,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 24907,
-                            "end": 24916,
+                            "start": 24905,
+                            "end": 24914,
                             "loc": {
                               "start": {
                                 "line": 724,
@@ -9267,8 +9267,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Asynchronously subscribes subscribers to this Single\n   * on the specified Scheduler.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Single}\n   * the source Single modified so that its subscriptions happen\n   * on the specified Scheduler\n   ",
-                    "start": 24332,
-                    "end": 24850,
+                    "start": 24330,
+                    "end": 24848,
                     "loc": {
                       "start": {
                         "line": 710,
@@ -9285,8 +9285,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * @desc\n   * Subscribes with an Object that is an Observer.\n   *\n   * An Object is considered as an Observer if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * AbortController instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   ",
-                    "start": 24926,
-                    "end": 25400,
+                    "start": 24924,
+                    "end": 25398,
                     "loc": {
                       "start": {
                         "line": 727,
@@ -9302,8 +9302,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 25403,
-                "end": 25519,
+                "start": 25401,
+                "end": 25517,
                 "loc": {
                   "start": {
                     "line": 743,
@@ -9318,8 +9318,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 25403,
-                  "end": 25416,
+                  "start": 25401,
+                  "end": 25414,
                   "loc": {
                     "start": {
                       "line": 743,
@@ -9342,8 +9342,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 25417,
-                    "end": 25425,
+                    "start": 25415,
+                    "end": 25423,
                     "loc": {
                       "start": {
                         "line": 743,
@@ -9360,8 +9360,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 25427,
-                  "end": 25519,
+                  "start": 25425,
+                  "end": 25517,
                   "loc": {
                     "start": {
                       "line": 743,
@@ -9375,8 +9375,8 @@
                   "body": [
                     {
                       "type": "IfStatement",
-                      "start": 25433,
-                      "end": 25515,
+                      "start": 25431,
+                      "end": 25513,
                       "loc": {
                         "start": {
                           "line": 744,
@@ -9389,8 +9389,8 @@
                       },
                       "test": {
                         "type": "CallExpression",
-                        "start": 25437,
-                        "end": 25457,
+                        "start": 25435,
+                        "end": 25455,
                         "loc": {
                           "start": {
                             "line": 744,
@@ -9403,8 +9403,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 25437,
-                          "end": 25447,
+                          "start": 25435,
+                          "end": 25445,
                           "loc": {
                             "start": {
                               "line": 744,
@@ -9421,8 +9421,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 25448,
-                            "end": 25456,
+                            "start": 25446,
+                            "end": 25454,
                             "loc": {
                               "start": {
                                 "line": 744,
@@ -9440,8 +9440,8 @@
                       },
                       "consequent": {
                         "type": "BlockStatement",
-                        "start": 25459,
-                        "end": 25515,
+                        "start": 25457,
+                        "end": 25513,
                         "loc": {
                           "start": {
                             "line": 744,
@@ -9455,8 +9455,8 @@
                         "body": [
                           {
                             "type": "ExpressionStatement",
-                            "start": 25467,
-                            "end": 25509,
+                            "start": 25465,
+                            "end": 25507,
                             "loc": {
                               "start": {
                                 "line": 745,
@@ -9469,8 +9469,8 @@
                             },
                             "expression": {
                               "type": "CallExpression",
-                              "start": 25467,
-                              "end": 25508,
+                              "start": 25465,
+                              "end": 25506,
                               "loc": {
                                 "start": {
                                   "line": 745,
@@ -9483,8 +9483,8 @@
                               },
                               "callee": {
                                 "type": "MemberExpression",
-                                "start": 25467,
-                                "end": 25492,
+                                "start": 25465,
+                                "end": 25490,
                                 "loc": {
                                   "start": {
                                     "line": 745,
@@ -9497,8 +9497,8 @@
                                 },
                                 "object": {
                                   "type": "MemberExpression",
-                                  "start": 25467,
-                                  "end": 25487,
+                                  "start": 25465,
+                                  "end": 25485,
                                   "loc": {
                                     "start": {
                                       "line": 745,
@@ -9511,8 +9511,8 @@
                                   },
                                   "object": {
                                     "type": "ThisExpression",
-                                    "start": 25467,
-                                    "end": 25471,
+                                    "start": 25465,
+                                    "end": 25469,
                                     "loc": {
                                       "start": {
                                         "line": 745,
@@ -9526,8 +9526,8 @@
                                   },
                                   "property": {
                                     "type": "Identifier",
-                                    "start": 25472,
-                                    "end": 25487,
+                                    "start": 25470,
+                                    "end": 25485,
                                     "loc": {
                                       "start": {
                                         "line": 745,
@@ -9545,8 +9545,8 @@
                                 },
                                 "property": {
                                   "type": "Identifier",
-                                  "start": 25488,
-                                  "end": 25492,
+                                  "start": 25486,
+                                  "end": 25490,
                                   "loc": {
                                     "start": {
                                       "line": 745,
@@ -9565,8 +9565,8 @@
                               "arguments": [
                                 {
                                   "type": "ThisExpression",
-                                  "start": 25493,
-                                  "end": 25497,
+                                  "start": 25491,
+                                  "end": 25495,
                                   "loc": {
                                     "start": {
                                       "line": 745,
@@ -9580,8 +9580,8 @@
                                 },
                                 {
                                   "type": "Identifier",
-                                  "start": 25499,
-                                  "end": 25507,
+                                  "start": 25497,
+                                  "end": 25505,
                                   "loc": {
                                     "start": {
                                       "line": 745,
@@ -9611,8 +9611,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * @desc\n   * Subscribes with an Object that is an Observer.\n   *\n   * An Object is considered as an Observer if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * AbortController instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   ",
-                    "start": 24926,
-                    "end": 25400,
+                    "start": 24924,
+                    "end": 25398,
                     "loc": {
                       "start": {
                         "line": 727,
@@ -9628,8 +9628,8 @@
                 "trailingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
-                    "start": 25523,
+                    "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: Error)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
+                    "start": 25521,
                     "end": 26113,
                     "loc": {
                       "start": {
@@ -11258,8 +11258,8 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
-                    "start": 25523,
+                    "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: Error)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
+                    "start": 25521,
                     "end": 26113,
                     "loc": {
                       "start": {
@@ -13877,9 +13877,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
+      "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.observeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
       "start": 20103,
-      "end": 20645,
+      "end": 20643,
       "loc": {
         "start": {
           "line": 600,
@@ -13894,8 +13894,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Instructs a Single to pass control to another\n   * Single rather than invoking Observer.onError\n   * if it encounters an error.\n   *\n   * By default, when a Single encounters an error\n   * that prevents it from emitting the expected item\n   * to its Observer, the Single invokes its Observer's\n   * onError method, and then quits without invoking any\n   * more of its SingleObserver's methods.\n   *\n   * The onErrorResumeNext method changes this behavior.\n   * If you pass another Single (resumeIfError) or if you\n   * pass a function that will return another Single\n   * (resumeIfError) to a Single's onErrorResumeNext\n   * method, if the original Single encounters an error,\n   * instead of invoking its Observer's onError method,\n   * it will instead relinquish control to resumeIfError\n   * which will invoke the Observer's onSuccess method\n   * if it is able to do so. In such a case,\n   * because no Single necessarily invokes onError, the\n   * Observer may never know that an error happened.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.f.png\" class=\"diagram\">\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.png\" class=\"diagram\">\n   *\n   * @param {!(function(x: any):Single|Single)} resumeIfError\n   * @returns {Single}\n   ",
-      "start": 20717,
-      "end": 22099,
+      "start": 20715,
+      "end": 22097,
       "loc": {
         "start": {
           "line": 617,
@@ -13910,8 +13910,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Instructs a Single to emit an item (returned by\n   * a specified function) rather than invoking\n   * onError if it encounters an error.\n   *\n   * By default, when a Single encounters an error that\n   * prevents it from emitting the expected item to its\n   * subscriber, the Single invokes its subscriber's\n   * Observer.onError method, and then quits without\n   * invoking any more of its subscriber's methods.\n   * The onErrorReturn method changes this behavior.\n   * If you pass a function (resumeFunction) to a Single's\n   * onErrorReturn method, if the original Single encounters\n   * an error, instead of invoking its subscriber's\n   * Observer.onError method, it will instead emit the\n   * return value of resumeIfError.\n   *\n   * You can use this to prevent errors from propagating\n   * or to supply fallback data should errors be encountered.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorReturn.png\" class=\"diagram\">\n   *\n   * @param {!function(e: any):any} resumeFunction\n   * a function that returns an item that the new Single\n   * will emit if the source Single encounters an error\n   * @returns {Single}\n   ",
-      "start": 22195,
-      "end": 23389,
+      "start": 22193,
+      "end": 23387,
       "loc": {
         "start": {
           "line": 650,
@@ -13926,8 +13926,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Signals the specified value as success in case\n   * the current Single signals an error.\n   *\n   * @param {!any} item\n   * the value to signal if the current Single fails\n   * @returns {Single}\n   ",
-      "start": 23480,
-      "end": 23688,
+      "start": 23478,
+      "end": 23686,
       "loc": {
         "start": {
           "line": 682,
@@ -13942,8 +13942,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Re-subscribe to the current Single if the given predicate\n   * returns true when the Single fails with an onError.\n   *\n   * If no predicate is provided, repeatedly re-subscribes to\n   * the current Single indefinitely if it fails with an onError.\n   *\n   * @param {?function(retries: number, err: Error):boolean} predicate\n   * the predicate called with the resubscription count and the failure\n   * value and should return true if a resubscription should happen.\n   * @returns {Single}\n   ",
-      "start": 23766,
-      "end": 24268,
+      "start": 23764,
+      "end": 24266,
       "loc": {
         "start": {
           "line": 694,
@@ -13958,8 +13958,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Asynchronously subscribes subscribers to this Single\n   * on the specified Scheduler.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Single}\n   * the source Single modified so that its subscriptions happen\n   * on the specified Scheduler\n   ",
-      "start": 24332,
-      "end": 24850,
+      "start": 24330,
+      "end": 24848,
       "loc": {
         "start": {
           "line": 710,
@@ -13974,8 +13974,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * @desc\n   * Subscribes with an Object that is an Observer.\n   *\n   * An Object is considered as an Observer if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * AbortController instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   ",
-      "start": 24926,
-      "end": 25400,
+      "start": 24924,
+      "end": 25398,
       "loc": {
         "start": {
           "line": 727,
@@ -13989,8 +13989,8 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
-      "start": 25523,
+      "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: Error)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
+      "start": 25521,
       "end": 26113,
       "loc": {
         "start": {
@@ -28230,9 +28230,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
+      "value": "*\n   * Modifies a Single to emit its item (or notify of its error)\n   * on a specified Scheduler, asynchronously.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.observeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @return {Single}\n   * the source Single modified so that its subscribers are\n   * notified on the specified Scheduler\n   ",
       "start": 20103,
-      "end": 20645,
+      "end": 20643,
       "loc": {
         "start": {
           "line": 600,
@@ -28257,8 +28257,8 @@
         "binop": null
       },
       "value": "observeOn",
-      "start": 20648,
-      "end": 20657,
+      "start": 20646,
+      "end": 20655,
       "loc": {
         "start": {
           "line": 613,
@@ -28282,8 +28282,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20657,
-      "end": 20658,
+      "start": 20655,
+      "end": 20656,
       "loc": {
         "start": {
           "line": 613,
@@ -28308,8 +28308,8 @@
         "binop": null
       },
       "value": "scheduler",
-      "start": 20658,
-      "end": 20667,
+      "start": 20656,
+      "end": 20665,
       "loc": {
         "start": {
           "line": 613,
@@ -28333,8 +28333,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20667,
-      "end": 20668,
+      "start": 20665,
+      "end": 20666,
       "loc": {
         "start": {
           "line": 613,
@@ -28358,8 +28358,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20669,
-      "end": 20670,
+      "start": 20667,
+      "end": 20668,
       "loc": {
         "start": {
           "line": 613,
@@ -28386,8 +28386,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 20675,
-      "end": 20681,
+      "start": 20673,
+      "end": 20679,
       "loc": {
         "start": {
           "line": 614,
@@ -28412,8 +28412,8 @@
         "binop": null
       },
       "value": "observeOn",
-      "start": 20682,
-      "end": 20691,
+      "start": 20680,
+      "end": 20689,
       "loc": {
         "start": {
           "line": 614,
@@ -28437,8 +28437,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20691,
-      "end": 20692,
+      "start": 20689,
+      "end": 20690,
       "loc": {
         "start": {
           "line": 614,
@@ -28465,8 +28465,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 20692,
-      "end": 20696,
+      "start": 20690,
+      "end": 20694,
       "loc": {
         "start": {
           "line": 614,
@@ -28491,8 +28491,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 20696,
-      "end": 20697,
+      "start": 20694,
+      "end": 20695,
       "loc": {
         "start": {
           "line": 614,
@@ -28517,8 +28517,8 @@
         "binop": null
       },
       "value": "scheduler",
-      "start": 20698,
-      "end": 20707,
+      "start": 20696,
+      "end": 20705,
       "loc": {
         "start": {
           "line": 614,
@@ -28542,8 +28542,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20707,
-      "end": 20708,
+      "start": 20705,
+      "end": 20706,
       "loc": {
         "start": {
           "line": 614,
@@ -28568,8 +28568,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 20708,
-      "end": 20709,
+      "start": 20706,
+      "end": 20707,
       "loc": {
         "start": {
           "line": 614,
@@ -28593,8 +28593,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 20712,
-      "end": 20713,
+      "start": 20710,
+      "end": 20711,
       "loc": {
         "start": {
           "line": 615,
@@ -28609,8 +28609,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Instructs a Single to pass control to another\n   * Single rather than invoking Observer.onError\n   * if it encounters an error.\n   *\n   * By default, when a Single encounters an error\n   * that prevents it from emitting the expected item\n   * to its Observer, the Single invokes its Observer's\n   * onError method, and then quits without invoking any\n   * more of its SingleObserver's methods.\n   *\n   * The onErrorResumeNext method changes this behavior.\n   * If you pass another Single (resumeIfError) or if you\n   * pass a function that will return another Single\n   * (resumeIfError) to a Single's onErrorResumeNext\n   * method, if the original Single encounters an error,\n   * instead of invoking its Observer's onError method,\n   * it will instead relinquish control to resumeIfError\n   * which will invoke the Observer's onSuccess method\n   * if it is able to do so. In such a case,\n   * because no Single necessarily invokes onError, the\n   * Observer may never know that an error happened.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.f.png\" class=\"diagram\">\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.png\" class=\"diagram\">\n   *\n   * @param {!(function(x: any):Single|Single)} resumeIfError\n   * @returns {Single}\n   ",
-      "start": 20717,
-      "end": 22099,
+      "start": 20715,
+      "end": 22097,
       "loc": {
         "start": {
           "line": 617,
@@ -28635,8 +28635,8 @@
         "binop": null
       },
       "value": "onErrorResumeNext",
-      "start": 22102,
-      "end": 22119,
+      "start": 22100,
+      "end": 22117,
       "loc": {
         "start": {
           "line": 646,
@@ -28660,8 +28660,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22119,
-      "end": 22120,
+      "start": 22117,
+      "end": 22118,
       "loc": {
         "start": {
           "line": 646,
@@ -28686,8 +28686,8 @@
         "binop": null
       },
       "value": "resumeIfError",
-      "start": 22120,
-      "end": 22133,
+      "start": 22118,
+      "end": 22131,
       "loc": {
         "start": {
           "line": 646,
@@ -28711,8 +28711,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22133,
-      "end": 22134,
+      "start": 22131,
+      "end": 22132,
       "loc": {
         "start": {
           "line": 646,
@@ -28736,8 +28736,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22135,
-      "end": 22136,
+      "start": 22133,
+      "end": 22134,
       "loc": {
         "start": {
           "line": 646,
@@ -28764,8 +28764,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 22141,
-      "end": 22147,
+      "start": 22139,
+      "end": 22145,
       "loc": {
         "start": {
           "line": 647,
@@ -28790,8 +28790,8 @@
         "binop": null
       },
       "value": "onErrorResumeNext",
-      "start": 22148,
-      "end": 22165,
+      "start": 22146,
+      "end": 22163,
       "loc": {
         "start": {
           "line": 647,
@@ -28815,8 +28815,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22165,
-      "end": 22166,
+      "start": 22163,
+      "end": 22164,
       "loc": {
         "start": {
           "line": 647,
@@ -28843,8 +28843,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 22166,
-      "end": 22170,
+      "start": 22164,
+      "end": 22168,
       "loc": {
         "start": {
           "line": 647,
@@ -28869,8 +28869,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 22170,
-      "end": 22171,
+      "start": 22168,
+      "end": 22169,
       "loc": {
         "start": {
           "line": 647,
@@ -28895,8 +28895,8 @@
         "binop": null
       },
       "value": "resumeIfError",
-      "start": 22172,
-      "end": 22185,
+      "start": 22170,
+      "end": 22183,
       "loc": {
         "start": {
           "line": 647,
@@ -28920,8 +28920,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22185,
-      "end": 22186,
+      "start": 22183,
+      "end": 22184,
       "loc": {
         "start": {
           "line": 647,
@@ -28946,8 +28946,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 22186,
-      "end": 22187,
+      "start": 22184,
+      "end": 22185,
       "loc": {
         "start": {
           "line": 647,
@@ -28971,8 +28971,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 22190,
-      "end": 22191,
+      "start": 22188,
+      "end": 22189,
       "loc": {
         "start": {
           "line": 648,
@@ -28987,8 +28987,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Instructs a Single to emit an item (returned by\n   * a specified function) rather than invoking\n   * onError if it encounters an error.\n   *\n   * By default, when a Single encounters an error that\n   * prevents it from emitting the expected item to its\n   * subscriber, the Single invokes its subscriber's\n   * Observer.onError method, and then quits without\n   * invoking any more of its subscriber's methods.\n   * The onErrorReturn method changes this behavior.\n   * If you pass a function (resumeFunction) to a Single's\n   * onErrorReturn method, if the original Single encounters\n   * an error, instead of invoking its subscriber's\n   * Observer.onError method, it will instead emit the\n   * return value of resumeIfError.\n   *\n   * You can use this to prevent errors from propagating\n   * or to supply fallback data should errors be encountered.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorReturn.png\" class=\"diagram\">\n   *\n   * @param {!function(e: any):any} resumeFunction\n   * a function that returns an item that the new Single\n   * will emit if the source Single encounters an error\n   * @returns {Single}\n   ",
-      "start": 22195,
-      "end": 23389,
+      "start": 22193,
+      "end": 23387,
       "loc": {
         "start": {
           "line": 650,
@@ -29013,8 +29013,8 @@
         "binop": null
       },
       "value": "onErrorReturn",
-      "start": 23392,
-      "end": 23405,
+      "start": 23390,
+      "end": 23403,
       "loc": {
         "start": {
           "line": 677,
@@ -29038,8 +29038,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23405,
-      "end": 23406,
+      "start": 23403,
+      "end": 23404,
       "loc": {
         "start": {
           "line": 677,
@@ -29064,8 +29064,8 @@
         "binop": null
       },
       "value": "resumeFunction",
-      "start": 23406,
-      "end": 23420,
+      "start": 23404,
+      "end": 23418,
       "loc": {
         "start": {
           "line": 677,
@@ -29089,8 +29089,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23420,
-      "end": 23421,
+      "start": 23418,
+      "end": 23419,
       "loc": {
         "start": {
           "line": 677,
@@ -29114,8 +29114,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23422,
-      "end": 23423,
+      "start": 23420,
+      "end": 23421,
       "loc": {
         "start": {
           "line": 677,
@@ -29142,8 +29142,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 23428,
-      "end": 23434,
+      "start": 23426,
+      "end": 23432,
       "loc": {
         "start": {
           "line": 678,
@@ -29168,8 +29168,8 @@
         "binop": null
       },
       "value": "onErrorReturn",
-      "start": 23435,
-      "end": 23448,
+      "start": 23433,
+      "end": 23446,
       "loc": {
         "start": {
           "line": 678,
@@ -29193,8 +29193,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23448,
-      "end": 23449,
+      "start": 23446,
+      "end": 23447,
       "loc": {
         "start": {
           "line": 678,
@@ -29221,8 +29221,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 23449,
-      "end": 23453,
+      "start": 23447,
+      "end": 23451,
       "loc": {
         "start": {
           "line": 678,
@@ -29247,8 +29247,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 23453,
-      "end": 23454,
+      "start": 23451,
+      "end": 23452,
       "loc": {
         "start": {
           "line": 678,
@@ -29273,8 +29273,8 @@
         "binop": null
       },
       "value": "resumeFunction",
-      "start": 23455,
-      "end": 23469,
+      "start": 23453,
+      "end": 23467,
       "loc": {
         "start": {
           "line": 678,
@@ -29298,8 +29298,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23469,
-      "end": 23470,
+      "start": 23467,
+      "end": 23468,
       "loc": {
         "start": {
           "line": 678,
@@ -29324,8 +29324,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 23470,
-      "end": 23471,
+      "start": 23468,
+      "end": 23469,
       "loc": {
         "start": {
           "line": 678,
@@ -29349,8 +29349,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23474,
-      "end": 23475,
+      "start": 23472,
+      "end": 23473,
       "loc": {
         "start": {
           "line": 679,
@@ -29365,8 +29365,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Signals the specified value as success in case\n   * the current Single signals an error.\n   *\n   * @param {!any} item\n   * the value to signal if the current Single fails\n   * @returns {Single}\n   ",
-      "start": 23480,
-      "end": 23688,
+      "start": 23478,
+      "end": 23686,
       "loc": {
         "start": {
           "line": 682,
@@ -29391,8 +29391,8 @@
         "binop": null
       },
       "value": "onErrorReturnItem",
-      "start": 23691,
-      "end": 23708,
+      "start": 23689,
+      "end": 23706,
       "loc": {
         "start": {
           "line": 690,
@@ -29416,8 +29416,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23708,
-      "end": 23709,
+      "start": 23706,
+      "end": 23707,
       "loc": {
         "start": {
           "line": 690,
@@ -29442,8 +29442,8 @@
         "binop": null
       },
       "value": "item",
-      "start": 23709,
-      "end": 23713,
+      "start": 23707,
+      "end": 23711,
       "loc": {
         "start": {
           "line": 690,
@@ -29467,8 +29467,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23713,
-      "end": 23714,
+      "start": 23711,
+      "end": 23712,
       "loc": {
         "start": {
           "line": 690,
@@ -29492,8 +29492,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23715,
-      "end": 23716,
+      "start": 23713,
+      "end": 23714,
       "loc": {
         "start": {
           "line": 690,
@@ -29520,8 +29520,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 23721,
-      "end": 23727,
+      "start": 23719,
+      "end": 23725,
       "loc": {
         "start": {
           "line": 691,
@@ -29546,8 +29546,8 @@
         "binop": null
       },
       "value": "onErrorReturnItem",
-      "start": 23728,
-      "end": 23745,
+      "start": 23726,
+      "end": 23743,
       "loc": {
         "start": {
           "line": 691,
@@ -29571,8 +29571,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23745,
-      "end": 23746,
+      "start": 23743,
+      "end": 23744,
       "loc": {
         "start": {
           "line": 691,
@@ -29599,8 +29599,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 23746,
-      "end": 23750,
+      "start": 23744,
+      "end": 23748,
       "loc": {
         "start": {
           "line": 691,
@@ -29625,8 +29625,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 23750,
-      "end": 23751,
+      "start": 23748,
+      "end": 23749,
       "loc": {
         "start": {
           "line": 691,
@@ -29651,8 +29651,8 @@
         "binop": null
       },
       "value": "item",
-      "start": 23752,
-      "end": 23756,
+      "start": 23750,
+      "end": 23754,
       "loc": {
         "start": {
           "line": 691,
@@ -29676,8 +29676,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23756,
-      "end": 23757,
+      "start": 23754,
+      "end": 23755,
       "loc": {
         "start": {
           "line": 691,
@@ -29702,8 +29702,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 23757,
-      "end": 23758,
+      "start": 23755,
+      "end": 23756,
       "loc": {
         "start": {
           "line": 691,
@@ -29727,8 +29727,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 23761,
-      "end": 23762,
+      "start": 23759,
+      "end": 23760,
       "loc": {
         "start": {
           "line": 692,
@@ -29743,8 +29743,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Re-subscribe to the current Single if the given predicate\n   * returns true when the Single fails with an onError.\n   *\n   * If no predicate is provided, repeatedly re-subscribes to\n   * the current Single indefinitely if it fails with an onError.\n   *\n   * @param {?function(retries: number, err: Error):boolean} predicate\n   * the predicate called with the resubscription count and the failure\n   * value and should return true if a resubscription should happen.\n   * @returns {Single}\n   ",
-      "start": 23766,
-      "end": 24268,
+      "start": 23764,
+      "end": 24266,
       "loc": {
         "start": {
           "line": 694,
@@ -29769,8 +29769,8 @@
         "binop": null
       },
       "value": "retry",
-      "start": 24271,
-      "end": 24276,
+      "start": 24269,
+      "end": 24274,
       "loc": {
         "start": {
           "line": 706,
@@ -29794,8 +29794,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24276,
-      "end": 24277,
+      "start": 24274,
+      "end": 24275,
       "loc": {
         "start": {
           "line": 706,
@@ -29820,8 +29820,8 @@
         "binop": null
       },
       "value": "predicate",
-      "start": 24277,
-      "end": 24286,
+      "start": 24275,
+      "end": 24284,
       "loc": {
         "start": {
           "line": 706,
@@ -29845,8 +29845,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24286,
-      "end": 24287,
+      "start": 24284,
+      "end": 24285,
       "loc": {
         "start": {
           "line": 706,
@@ -29870,8 +29870,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24288,
-      "end": 24289,
+      "start": 24286,
+      "end": 24287,
       "loc": {
         "start": {
           "line": 706,
@@ -29898,8 +29898,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 24294,
-      "end": 24300,
+      "start": 24292,
+      "end": 24298,
       "loc": {
         "start": {
           "line": 707,
@@ -29924,8 +29924,8 @@
         "binop": null
       },
       "value": "retry",
-      "start": 24301,
-      "end": 24306,
+      "start": 24299,
+      "end": 24304,
       "loc": {
         "start": {
           "line": 707,
@@ -29949,8 +29949,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24306,
-      "end": 24307,
+      "start": 24304,
+      "end": 24305,
       "loc": {
         "start": {
           "line": 707,
@@ -29977,8 +29977,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 24307,
-      "end": 24311,
+      "start": 24305,
+      "end": 24309,
       "loc": {
         "start": {
           "line": 707,
@@ -30003,8 +30003,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 24311,
-      "end": 24312,
+      "start": 24309,
+      "end": 24310,
       "loc": {
         "start": {
           "line": 707,
@@ -30029,8 +30029,8 @@
         "binop": null
       },
       "value": "predicate",
-      "start": 24313,
-      "end": 24322,
+      "start": 24311,
+      "end": 24320,
       "loc": {
         "start": {
           "line": 707,
@@ -30054,8 +30054,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24322,
-      "end": 24323,
+      "start": 24320,
+      "end": 24321,
       "loc": {
         "start": {
           "line": 707,
@@ -30080,8 +30080,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 24323,
-      "end": 24324,
+      "start": 24321,
+      "end": 24322,
       "loc": {
         "start": {
           "line": 707,
@@ -30105,8 +30105,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24327,
-      "end": 24328,
+      "start": 24325,
+      "end": 24326,
       "loc": {
         "start": {
           "line": 708,
@@ -30121,8 +30121,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Asynchronously subscribes subscribers to this Single\n   * on the specified Scheduler.\n   *\n   * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png\" class=\"diagram\">\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Single}\n   * the source Single modified so that its subscriptions happen\n   * on the specified Scheduler\n   ",
-      "start": 24332,
-      "end": 24850,
+      "start": 24330,
+      "end": 24848,
       "loc": {
         "start": {
           "line": 710,
@@ -30147,8 +30147,8 @@
         "binop": null
       },
       "value": "subscribeOn",
-      "start": 24853,
-      "end": 24864,
+      "start": 24851,
+      "end": 24862,
       "loc": {
         "start": {
           "line": 723,
@@ -30172,8 +30172,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24864,
-      "end": 24865,
+      "start": 24862,
+      "end": 24863,
       "loc": {
         "start": {
           "line": 723,
@@ -30198,8 +30198,8 @@
         "binop": null
       },
       "value": "scheduler",
-      "start": 24865,
-      "end": 24874,
+      "start": 24863,
+      "end": 24872,
       "loc": {
         "start": {
           "line": 723,
@@ -30223,8 +30223,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24874,
-      "end": 24875,
+      "start": 24872,
+      "end": 24873,
       "loc": {
         "start": {
           "line": 723,
@@ -30248,8 +30248,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24876,
-      "end": 24877,
+      "start": 24874,
+      "end": 24875,
       "loc": {
         "start": {
           "line": 723,
@@ -30276,8 +30276,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 24882,
-      "end": 24888,
+      "start": 24880,
+      "end": 24886,
       "loc": {
         "start": {
           "line": 724,
@@ -30302,8 +30302,8 @@
         "binop": null
       },
       "value": "subscribeOn",
-      "start": 24889,
-      "end": 24900,
+      "start": 24887,
+      "end": 24898,
       "loc": {
         "start": {
           "line": 724,
@@ -30327,8 +30327,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24900,
-      "end": 24901,
+      "start": 24898,
+      "end": 24899,
       "loc": {
         "start": {
           "line": 724,
@@ -30355,8 +30355,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 24901,
-      "end": 24905,
+      "start": 24899,
+      "end": 24903,
       "loc": {
         "start": {
           "line": 724,
@@ -30381,8 +30381,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 24905,
-      "end": 24906,
+      "start": 24903,
+      "end": 24904,
       "loc": {
         "start": {
           "line": 724,
@@ -30407,8 +30407,8 @@
         "binop": null
       },
       "value": "scheduler",
-      "start": 24907,
-      "end": 24916,
+      "start": 24905,
+      "end": 24914,
       "loc": {
         "start": {
           "line": 724,
@@ -30432,8 +30432,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24916,
-      "end": 24917,
+      "start": 24914,
+      "end": 24915,
       "loc": {
         "start": {
           "line": 724,
@@ -30458,8 +30458,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 24917,
-      "end": 24918,
+      "start": 24915,
+      "end": 24916,
       "loc": {
         "start": {
           "line": 724,
@@ -30483,8 +30483,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 24921,
-      "end": 24922,
+      "start": 24919,
+      "end": 24920,
       "loc": {
         "start": {
           "line": 725,
@@ -30499,8 +30499,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * @desc\n   * Subscribes with an Object that is an Observer.\n   *\n   * An Object is considered as an Observer if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * AbortController instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   ",
-      "start": 24926,
-      "end": 25400,
+      "start": 24924,
+      "end": 25398,
       "loc": {
         "start": {
           "line": 727,
@@ -30525,8 +30525,8 @@
         "binop": null
       },
       "value": "subscribeWith",
-      "start": 25403,
-      "end": 25416,
+      "start": 25401,
+      "end": 25414,
       "loc": {
         "start": {
           "line": 743,
@@ -30550,8 +30550,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25416,
-      "end": 25417,
+      "start": 25414,
+      "end": 25415,
       "loc": {
         "start": {
           "line": 743,
@@ -30576,8 +30576,8 @@
         "binop": null
       },
       "value": "observer",
-      "start": 25417,
-      "end": 25425,
+      "start": 25415,
+      "end": 25423,
       "loc": {
         "start": {
           "line": 743,
@@ -30601,8 +30601,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25425,
-      "end": 25426,
+      "start": 25423,
+      "end": 25424,
       "loc": {
         "start": {
           "line": 743,
@@ -30626,8 +30626,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25427,
-      "end": 25428,
+      "start": 25425,
+      "end": 25426,
       "loc": {
         "start": {
           "line": 743,
@@ -30654,8 +30654,8 @@
         "updateContext": null
       },
       "value": "if",
-      "start": 25433,
-      "end": 25435,
+      "start": 25431,
+      "end": 25433,
       "loc": {
         "start": {
           "line": 744,
@@ -30679,8 +30679,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25436,
-      "end": 25437,
+      "start": 25434,
+      "end": 25435,
       "loc": {
         "start": {
           "line": 744,
@@ -30705,8 +30705,8 @@
         "binop": null
       },
       "value": "isObserver",
-      "start": 25437,
-      "end": 25447,
+      "start": 25435,
+      "end": 25445,
       "loc": {
         "start": {
           "line": 744,
@@ -30730,8 +30730,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25447,
-      "end": 25448,
+      "start": 25445,
+      "end": 25446,
       "loc": {
         "start": {
           "line": 744,
@@ -30756,8 +30756,8 @@
         "binop": null
       },
       "value": "observer",
-      "start": 25448,
-      "end": 25456,
+      "start": 25446,
+      "end": 25454,
       "loc": {
         "start": {
           "line": 744,
@@ -30781,8 +30781,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25456,
-      "end": 25457,
+      "start": 25454,
+      "end": 25455,
       "loc": {
         "start": {
           "line": 744,
@@ -30806,8 +30806,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25457,
-      "end": 25458,
+      "start": 25455,
+      "end": 25456,
       "loc": {
         "start": {
           "line": 744,
@@ -30831,8 +30831,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25459,
-      "end": 25460,
+      "start": 25457,
+      "end": 25458,
       "loc": {
         "start": {
           "line": 744,
@@ -30859,8 +30859,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 25467,
-      "end": 25471,
+      "start": 25465,
+      "end": 25469,
       "loc": {
         "start": {
           "line": 745,
@@ -30885,8 +30885,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 25471,
-      "end": 25472,
+      "start": 25469,
+      "end": 25470,
       "loc": {
         "start": {
           "line": 745,
@@ -30911,8 +30911,8 @@
         "binop": null
       },
       "value": "subscribeActual",
-      "start": 25472,
-      "end": 25487,
+      "start": 25470,
+      "end": 25485,
       "loc": {
         "start": {
           "line": 745,
@@ -30937,8 +30937,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 25487,
-      "end": 25488,
+      "start": 25485,
+      "end": 25486,
       "loc": {
         "start": {
           "line": 745,
@@ -30963,8 +30963,8 @@
         "binop": null
       },
       "value": "call",
-      "start": 25488,
-      "end": 25492,
+      "start": 25486,
+      "end": 25490,
       "loc": {
         "start": {
           "line": 745,
@@ -30988,8 +30988,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25492,
-      "end": 25493,
+      "start": 25490,
+      "end": 25491,
       "loc": {
         "start": {
           "line": 745,
@@ -31016,8 +31016,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 25493,
-      "end": 25497,
+      "start": 25491,
+      "end": 25495,
       "loc": {
         "start": {
           "line": 745,
@@ -31042,8 +31042,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 25497,
-      "end": 25498,
+      "start": 25495,
+      "end": 25496,
       "loc": {
         "start": {
           "line": 745,
@@ -31068,8 +31068,8 @@
         "binop": null
       },
       "value": "observer",
-      "start": 25499,
-      "end": 25507,
+      "start": 25497,
+      "end": 25505,
       "loc": {
         "start": {
           "line": 745,
@@ -31093,8 +31093,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25507,
-      "end": 25508,
+      "start": 25505,
+      "end": 25506,
       "loc": {
         "start": {
           "line": 745,
@@ -31119,8 +31119,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 25508,
-      "end": 25509,
+      "start": 25506,
+      "end": 25507,
       "loc": {
         "start": {
           "line": 745,
@@ -31144,8 +31144,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25514,
-      "end": 25515,
+      "start": 25512,
+      "end": 25513,
       "loc": {
         "start": {
           "line": 746,
@@ -31169,8 +31169,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 25518,
-      "end": 25519,
+      "start": 25516,
+      "end": 25517,
       "loc": {
         "start": {
           "line": 747,
@@ -31184,8 +31184,8 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
-      "start": 25523,
+      "value": "*\n   * @desc\n   * Subscribes to a Single instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Single\n   * @param {?function(x: Error)} onError\n   * the function you have designed to accept any error\n   * notification from the Single\n   * @returns {AbortController}\n   * an AbortController reference can request the Single to abort.\n   ",
+      "start": 25521,
       "end": 26113,
       "loc": {
         "start": {

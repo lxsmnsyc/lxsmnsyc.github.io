@@ -1296,7 +1296,7 @@ returns true when the Single fails with an onError.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
         </p>
       </div>
       <div>
@@ -4116,7 +4116,7 @@ transformed by the specified function</p>
   
   <div data-ice="description"><p>Modifies a Single to emit its item (or notify of its error)
 on a specified Scheduler, asynchronously.</p>
-<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.subscribeOn.png" class="diagram"></p>
+<p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.observeOn.png" class="diagram"></p>
 </div>
 
   
@@ -4514,7 +4514,7 @@ value and should return true if a resubscription should happen.</p>
     
     
     
-    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onSuccess: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
     <span class="right-info">
       
       
@@ -4552,7 +4552,7 @@ from the Single</p>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">onError</td>
-      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span></span></td>
       <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
       <td data-ice="description"><p>the function you have designed to accept any error
 notification from the Single</p>
