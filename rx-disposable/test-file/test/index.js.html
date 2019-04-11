@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/index.js | rx-disposable</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Reactive Extensions - represents the state of disposition"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-disposable"><meta property="twitter:description" content="Reactive Extensions - represents the state of disposition"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-disposable"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Disposable.html">Disposable</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+import assert from &apos;assert&apos;;
+import Disposable from &apos;../src&apos;;
+
+
+describe(&apos;Disposable&apos;, () =&gt; {
+  describe(&apos;#create&apos;, () =&gt; {
+    it(&apos;should create a Disposable&apos;, () =&gt; {
+      assert(Disposable.create() instanceof Disposable);
+    });
+  });
+  describe(&apos;#active&apos;, () =&gt; {
+    it(&apos;should return true if Disposable is enabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      assert(d.active === true);
+    });
+    it(&apos;should return false if Disposable is disabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.disable();
+      assert(d.active === false);
+    });
+    it(&apos;should return true if Disposable is disabled then enabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.disable();
+      d.enable();
+      assert(d.active === true);
+    });
+    it(&apos;should return true if Disposable is enabled, disposed, and disabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.dispose();
+      d.disable();
+      assert(d.active === true);
+    });
+    it(&apos;should return true if Disposable is disabled, disposed, and enabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.disable();
+      d.dispose();
+      d.enable();
+      assert(d.active === false);
+    });
+  });
+  describe(&apos;#disposed&apos;, () =&gt; {
+    it(&apos;should return true if Disposable is disposed.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.dispose();
+      assert(d.disposed === true);
+    });
+    it(&apos;should return true if Disposable is not disposed.&apos;, () =&gt; {
+      const d = Disposable.create();
+      assert(d.disposed === false);
+    });
+  });
+  describe(&apos;#dispose&apos;, () =&gt; {
+    it(&apos;should return true if Disposable is disposed for the first time.&apos;, () =&gt; {
+      assert(Disposable.create().dispose());
+    });
+    it(&apos;should return false if Disposable has been disposed before.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.dispose();
+      assert(d.dispose() === false);
+    });
+  });
+  describe(&apos;#enable&apos;, () =&gt; {
+    it(&apos;should return true if Disposable is enabled after being disabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.disable();
+      assert(d.enable());
+    });
+    it(&apos;should return false if Disposable is enabled already.&apos;, () =&gt; {
+      const d = Disposable.create();
+      assert(d.enable() === false);
+    });
+  });
+  describe(&apos;#disable&apos;, () =&gt; {
+    it(&apos;should return true if Disposable is disabled after being enabled.&apos;, () =&gt; {
+      const d = Disposable.create();
+      assert(d.disable());
+    });
+    it(&apos;should return false if Disposable is disabled already.&apos;, () =&gt; {
+      const d = Disposable.create();
+      d.disable();
+      assert(d.disable() === false);
+    });
+  });
+  describe(&apos;#setParent&apos;, () =&gt; {
+    it(&apos;should return false if the Disposable parent given is the same as the child&apos;, () =&gt; {
+      const d = Disposable.create();
+      assert(d.setParent(d) === false);
+    });
+    it(&apos;should return false if the Disposable parent given is not a Disposable&apos;, () =&gt; {
+      assert(Disposable.create().setParent() === false);
+    });
+    it(&apos;should return false if the Disposable parent given is a child of the source Disposable&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      a.setParent(b);
+      assert(b.setParent(a) === false);
+    });
+    it(&apos;should return false if the Disposable parent is already disposed.&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      a.dispose();
+      assert(b.setParent(a) === false);
+      assert(a.disposed);
+    });
+    it(&apos;should the children be disposed if the parent is disposed&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      b.setParent(a);
+      a.dispose();
+      assert(b.disposed);
+    });
+    it(&apos;should the children be disabled if the parent is disabled&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      b.setParent(a);
+      a.disable();
+      assert(b.active);
+    });
+  });
+  describe(&apos;#remove&apos;, () =&gt; {
+    it(&apos;should return false if the Disposable given is not the child.&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      assert(a.remove(b) === false);
+    });
+    it(&apos;should return false if the source is already disposed.&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      a.dispose();
+      assert(b.remove(a) === false);
+    });
+    it(&apos;should return true if the removal is successful&apos;, () =&gt; {
+      const a = Disposable.create();
+      const b = Disposable.create();
+      a.add(b);
+      assert(a.remove(b) === true);
+      a.dispose();
+      assert(b.disposed === false);
+    });
+  });
+  describe(&apos;#addEventListener&apos;, () =&gt; {
+    it(&apos;should fire the enable listener if the Disposable is enabled&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      a.addEventListener(&apos;enable&apos;);
+      a.addEventListener(&apos;enable&apos;, () =&gt; done());
+      a.disable();
+      a.enable();
+    });
+    it(&apos;should fire the disable listener if the Disposable is disabled&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      a.addEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;disable&apos;, () =&gt; done());
+      a.disable();
+    });
+    it(&apos;should fire the dispose listener if the Disposable is disposed&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      a.addEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;dispose&apos;, () =&gt; done());
+      a.dispose();
+    });
+    it(&apos;should not fire the dispose listener if the Disposable is already disposed&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      a.dispose();
+      a.addEventListener(&apos;dispose&apos;, () =&gt; done(false));
+      done();
+    });
+  });
+  describe(&apos;#removeEventListener&apos;, () =&gt; {
+    it(&apos;should not fire the enable listener if the Disposable is enabled&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      const listener = () =&gt; done(false);
+      a.removeEventListener(&apos;enable&apos;);
+      a.addEventListener(&apos;enable&apos;, listener);
+      a.removeEventListener(&apos;enable&apos;, listener);
+      a.disable();
+      a.enable();
+      done();
+    });
+    it(&apos;should not fire the disable listener if the Disposable is disabled&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      const listener = () =&gt; done(false);
+      a.removeEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;disable&apos;, listener);
+      a.removeEventListener(&apos;disable&apos;, listener);
+      a.disable();
+      done();
+    });
+    it(&apos;should not fire the dispose listener if the Disposable is disposed&apos;, (done) =&gt; {
+      const a = Disposable.create();
+      const listener = () =&gt; done(false);
+      a.addEventListener(&apos;dispose&apos;, listener);
+      a.removeEventListener(&apos;dispose&apos;, listener);
+      a.dispose();
+      done();
+    });
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
