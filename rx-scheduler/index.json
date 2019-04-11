@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/async.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n/**\n * A Scheduler that allows async scheduling on the current thread.\n */\nexport default class AsyncScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new AsyncScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the async task.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      // eslint-disable-next-line no-new\n      Promise.resolve().then(() => fn());\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n\n      // eslint-disable-next-line no-new\n      Promise.resolve().then(() => {\n        if (signal.aborted) {\n          return;\n        }\n        const inner = setTimeout(fn, amount);\n\n        signal.addEventListener('abort', () => clearTimeout(inner));\n      });\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => Promise.resolve().then(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows async scheduling on the current thread.\n */\nexport default class AsyncScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new AsyncScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/async.js",
     "access": "public",
@@ -576,6 +576,75 @@
   },
   {
     "__docId__": 49,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/async.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/async.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/async.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/async.js",
+    "static": true,
+    "longname": "src/async.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/async.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/async.js",
+    "static": true,
+    "longname": "src/async.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/async.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 52,
     "kind": "class",
     "name": "AsyncScheduler",
     "memberof": "src/async.js",
@@ -586,14 +655,14 @@
     "importPath": "rx-scheduler/src/async.js",
     "importStyle": "AsyncScheduler",
     "description": "A Scheduler that allows async scheduling on the current thread.",
-    "lineNumber": 9,
+    "lineNumber": 14,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 50,
+    "__docId__": 53,
     "kind": "get",
     "name": "instance",
     "memberof": "src/async.js~AsyncScheduler",
@@ -603,7 +672,7 @@
     "longname": "src/async.js~AsyncScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -612,7 +681,7 @@
     }
   },
   {
-    "__docId__": 51,
+    "__docId__": 54,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/async.js~AsyncScheduler",
@@ -622,7 +691,13 @@
     "longname": "src/async.js~AsyncScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately on the async task.",
-    "lineNumber": 21,
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -632,13 +707,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 52,
+    "__docId__": 55,
     "kind": "method",
     "name": "delay",
     "memberof": "src/async.js~AsyncScheduler",
@@ -648,11 +730,11 @@
     "longname": "src/async.js~AsyncScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the async task.",
-    "lineNumber": 38,
+    "lineNumber": 44,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -680,17 +762,17 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
-    "__docId__": 53,
+    "__docId__": 56,
     "kind": "file",
     "name": "src/current.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n\n/**\n * A Scheduler that allows scheduling on the current thread.\n */\nexport default class CurrentScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new CurrentScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on the current task.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      fn();\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n\n      const inner = setTimeout(() => {\n        fn();\n        controller.abort();\n      }, amount);\n\n      signal.addEventListener('abort', () => clearTimeout(inner));\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => x();\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling on the current thread.\n */\nexport default class CurrentScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new CurrentScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/current.js",
     "access": "public",
@@ -698,7 +780,76 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 54,
+    "__docId__": 57,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/current.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/current.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/current.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/current.js",
+    "static": true,
+    "longname": "src/current.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/current.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/current.js",
+    "static": true,
+    "longname": "src/current.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/current.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 60,
     "kind": "class",
     "name": "CurrentScheduler",
     "memberof": "src/current.js",
@@ -709,14 +860,14 @@
     "importPath": "rx-scheduler/src/current.js",
     "importStyle": "CurrentScheduler",
     "description": "A Scheduler that allows scheduling on the current thread.",
-    "lineNumber": 10,
+    "lineNumber": 14,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 55,
+    "__docId__": 61,
     "kind": "get",
     "name": "instance",
     "memberof": "src/current.js~CurrentScheduler",
@@ -726,7 +877,7 @@
     "longname": "src/current.js~CurrentScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -735,7 +886,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 62,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/current.js~CurrentScheduler",
@@ -745,7 +896,13 @@
     "longname": "src/current.js~CurrentScheduler#schedule",
     "access": "public",
     "description": "Schedules the function on the current task.",
-    "lineNumber": 22,
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -755,13 +912,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 57,
+    "__docId__": 63,
     "kind": "method",
     "name": "delay",
     "memberof": "src/current.js~CurrentScheduler",
@@ -771,11 +935,11 @@
     "longname": "src/current.js~CurrentScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the current task.",
-    "lineNumber": 38,
+    "lineNumber": 44,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -803,17 +967,17 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 64,
     "kind": "file",
     "name": "src/immediate.browser.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n\n/**\n * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      requestAnimationFrame(fn);\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n      const handler = requestAnimationFrame(() => {\n        const inner = setTimeout(() => {\n          fn();\n          controller.abort();\n        }, amount);\n\n        signal.addEventListener('abort', () => clearTimeout(inner));\n      });\n      signal.addEventListener('abort', () => cancelAnimationFrame(handler));\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => requestAnimationFrame(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n/**\n * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/immediate.browser.js",
     "access": "public",
@@ -821,7 +985,76 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 59,
+    "__docId__": 65,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/immediate.browser.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/immediate.browser.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.browser.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/immediate.browser.js",
+    "static": true,
+    "longname": "src/immediate.browser.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.browser.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/immediate.browser.js",
+    "static": true,
+    "longname": "src/immediate.browser.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.browser.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 68,
     "kind": "class",
     "name": "ImmediateScheduler",
     "memberof": "src/immediate.browser.js",
@@ -832,14 +1065,14 @@
     "importPath": "rx-scheduler/src/immediate.browser.js",
     "importStyle": "ImmediateScheduler",
     "description": "A Scheduler that allows immediate scheduling, using requestAnimationFrame.",
-    "lineNumber": 10,
+    "lineNumber": 13,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 60,
+    "__docId__": 69,
     "kind": "get",
     "name": "instance",
     "memberof": "src/immediate.browser.js~ImmediateScheduler",
@@ -849,7 +1082,7 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -858,7 +1091,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 70,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/immediate.browser.js~ImmediateScheduler",
@@ -868,7 +1101,13 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 22,
+    "lineNumber": 29,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -878,13 +1117,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 62,
+    "__docId__": 71,
     "kind": "method",
     "name": "delay",
     "memberof": "src/immediate.browser.js~ImmediateScheduler",
@@ -894,11 +1140,11 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 38,
+    "lineNumber": 43,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -926,17 +1172,17 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 72,
     "kind": "file",
     "name": "src/immediate.node.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n\n/**\n * A Scheduler that allows immediate scheduling, using setImmediate.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      setImmediate(fn);\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n      const handler = setImmediate(() => {\n        const inner = setTimeout(() => {\n          fn();\n          controller.abort();\n        }, amount);\n\n        signal.addEventListener('abort', () => clearTimeout(inner));\n      });\n      signal.addEventListener('abort', () => clearImmediate(handler));\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => setImmediate(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows immediate scheduling, using setImmediate.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/immediate.node.js",
     "access": "public",
@@ -944,7 +1190,76 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 64,
+    "__docId__": 73,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/immediate.node.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/immediate.node.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.node.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/immediate.node.js",
+    "static": true,
+    "longname": "src/immediate.node.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.node.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/immediate.node.js",
+    "static": true,
+    "longname": "src/immediate.node.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/immediate.node.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 76,
     "kind": "class",
     "name": "ImmediateScheduler",
     "memberof": "src/immediate.node.js",
@@ -955,14 +1270,14 @@
     "importPath": "rx-scheduler/src/immediate.node.js",
     "importStyle": "ImmediateScheduler",
     "description": "A Scheduler that allows immediate scheduling, using setImmediate.",
-    "lineNumber": 10,
+    "lineNumber": 14,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 65,
+    "__docId__": 77,
     "kind": "get",
     "name": "instance",
     "memberof": "src/immediate.node.js~ImmediateScheduler",
@@ -972,7 +1287,7 @@
     "longname": "src/immediate.node.js~ImmediateScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -981,7 +1296,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 78,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/immediate.node.js~ImmediateScheduler",
@@ -991,7 +1306,13 @@
     "longname": "src/immediate.node.js~ImmediateScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 22,
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -1001,13 +1322,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 67,
+    "__docId__": 79,
     "kind": "method",
     "name": "delay",
     "memberof": "src/immediate.node.js~ImmediateScheduler",
@@ -1017,11 +1345,11 @@
     "longname": "src/immediate.node.js~ImmediateScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 38,
+    "lineNumber": 44,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -1049,17 +1377,17 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 80,
     "kind": "file",
     "name": "src/index.browser.js",
-    "content": "\n/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {AbortController} https://developer.mozilla.org/en-US/docs/Web/API/AbortController\n */\nimport ImmediateScheduler from './immediate.browser';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n}\n",
+    "content": "\n/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport ImmediateScheduler from './immediate.browser';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/index.browser.js",
     "access": "public",
@@ -1067,19 +1395,19 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 69,
+    "__docId__": 81,
     "kind": "external",
-    "name": "AbortController",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+    "name": "Cancellable",
+    "externalLink": "https://lxsmnsyc.github.io/rx-cancellable/",
     "memberof": "src/index.browser.js",
     "static": true,
-    "longname": "src/index.browser.js~AbortController",
+    "longname": "src/index.browser.js~Cancellable",
     "access": "public",
     "description": "",
     "lineNumber": 33
   },
   {
-    "__docId__": 70,
+    "__docId__": 82,
     "kind": "class",
     "name": "Scheduler",
     "memberof": "src/index.browser.js",
@@ -1094,7 +1422,7 @@
     "interface": false
   },
   {
-    "__docId__": 71,
+    "__docId__": 83,
     "kind": "get",
     "name": "interface",
     "memberof": "src/index.browser.js~Scheduler",
@@ -1112,7 +1440,7 @@
     }
   },
   {
-    "__docId__": 72,
+    "__docId__": 84,
     "kind": "get",
     "name": "current",
     "memberof": "src/index.browser.js~Scheduler",
@@ -1144,7 +1472,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 85,
     "kind": "get",
     "name": "immediate",
     "memberof": "src/index.browser.js~Scheduler",
@@ -1176,7 +1504,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 86,
     "kind": "get",
     "name": "async",
     "memberof": "src/index.browser.js~Scheduler",
@@ -1208,7 +1536,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 87,
     "kind": "get",
     "name": "timeout",
     "memberof": "src/index.browser.js~Scheduler",
@@ -1240,10 +1568,10 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 88,
     "kind": "file",
     "name": "src/index.node.js",
-    "content": "/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {AbortController} https://developer.mozilla.org/en-US/docs/Web/API/AbortController\n */\nimport ImmediateScheduler from './immediate.node';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport TickScheduler from './tick';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 5 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n * - Tick: schedules the task using process.nextTick.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n\n\n  /**\n   * A Scheduler that allows scheduling using process.nextTick.\n   * @returns {TickScheduler}\n   */\n  static get tick() {\n    return TickScheduler.instance;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport ImmediateScheduler from './immediate.node';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport TickScheduler from './tick';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 5 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n * - Tick: schedules the task using process.nextTick.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n\n\n  /**\n   * A Scheduler that allows scheduling using process.nextTick.\n   * @returns {TickScheduler}\n   */\n  static get tick() {\n    return TickScheduler.instance;\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/index.node.js",
     "access": "public",
@@ -1251,19 +1579,19 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 77,
+    "__docId__": 89,
     "kind": "external",
-    "name": "AbortController",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+    "name": "Cancellable",
+    "externalLink": "https://lxsmnsyc.github.io/rx-cancellable/",
     "memberof": "src/index.node.js",
     "static": true,
-    "longname": "src/index.node.js~AbortController",
+    "longname": "src/index.node.js~Cancellable",
     "access": "public",
     "description": "",
     "lineNumber": 32
   },
   {
-    "__docId__": 78,
+    "__docId__": 90,
     "kind": "class",
     "name": "Scheduler",
     "memberof": "src/index.node.js",
@@ -1278,7 +1606,7 @@
     "interface": false
   },
   {
-    "__docId__": 79,
+    "__docId__": 91,
     "kind": "get",
     "name": "interface",
     "memberof": "src/index.node.js~Scheduler",
@@ -1296,7 +1624,7 @@
     }
   },
   {
-    "__docId__": 80,
+    "__docId__": 92,
     "kind": "get",
     "name": "current",
     "memberof": "src/index.node.js~Scheduler",
@@ -1328,7 +1656,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 93,
     "kind": "get",
     "name": "immediate",
     "memberof": "src/index.node.js~Scheduler",
@@ -1360,7 +1688,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 94,
     "kind": "get",
     "name": "async",
     "memberof": "src/index.node.js~Scheduler",
@@ -1392,7 +1720,7 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 95,
     "kind": "get",
     "name": "timeout",
     "memberof": "src/index.node.js~Scheduler",
@@ -1424,7 +1752,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 96,
     "kind": "get",
     "name": "tick",
     "memberof": "src/index.node.js~Scheduler",
@@ -1456,10 +1784,10 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 97,
     "kind": "file",
     "name": "src/scheduler-interface.js",
-    "content": "/* eslint-disable no-unused-vars */\n/* eslint-disable class-methods-use-this */\n/**\n * @interface\n */\nexport default class SchedulerInterface {\n  /**\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   *\n   * @abstract\n   */\n  schedule(fn) {}\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   * @abstract\n   */\n  delay(fn, amount) {\n  }\n}\n",
+    "content": "/* eslint-disable no-unused-vars */\n/* eslint-disable class-methods-use-this */\n/**\n * @interface\n */\nexport default class SchedulerInterface {\n  /**\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   */\n  schedule(fn) {}\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   */\n  delay(fn, amount) {\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/scheduler-interface.js",
     "access": "public",
@@ -1467,7 +1795,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 86,
+    "__docId__": 98,
     "kind": "class",
     "name": "SchedulerInterface",
     "memberof": "src/scheduler-interface.js",
@@ -1482,7 +1810,7 @@
     "interface": true
   },
   {
-    "__docId__": 87,
+    "__docId__": 99,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/scheduler-interface.js~SchedulerInterface",
@@ -1492,7 +1820,13 @@
     "longname": "src/scheduler-interface.js~SchedulerInterface#schedule",
     "access": "public",
     "description": "Schedules the given function immediately.",
-    "lineNumber": 14,
+    "lineNumber": 16,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -1505,11 +1839,18 @@
         "description": "A function that is called after being scheduled."
       }
     ],
-    "abstract": true,
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    },
+    "abstract": true
   },
   {
-    "__docId__": 88,
+    "__docId__": 100,
     "kind": "method",
     "name": "delay",
     "memberof": "src/scheduler-interface.js~SchedulerInterface",
@@ -1519,11 +1860,11 @@
     "longname": "src/scheduler-interface.js~SchedulerInterface#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 27,
+    "lineNumber": 29,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -1551,18 +1892,18 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     },
     "abstract": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 101,
     "kind": "file",
     "name": "src/tick.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n\n/**\n * A Scheduler that allows scheduling using process.nextTick.\n */\nexport default class TickScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TickScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      process.nextTick(fn);\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n      process.nextTick(() => {\n        if (signal.aborted) {\n          return;\n        }\n        const inner = setTimeout(() => {\n          fn();\n          controller.abort();\n        }, amount);\n\n        signal.addEventListener('abort', () => clearTimeout(inner));\n      });\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => process.nextTick(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling using process.nextTick.\n */\nexport default class TickScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TickScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/tick.js",
     "access": "public",
@@ -1570,7 +1911,76 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 90,
+    "__docId__": 102,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/tick.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/tick.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/tick.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/tick.js",
+    "static": true,
+    "longname": "src/tick.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/tick.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 104,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/tick.js",
+    "static": true,
+    "longname": "src/tick.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/tick.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 105,
     "kind": "class",
     "name": "TickScheduler",
     "memberof": "src/tick.js",
@@ -1581,14 +1991,14 @@
     "importPath": "rx-scheduler/src/tick.js",
     "importStyle": "TickScheduler",
     "description": "A Scheduler that allows scheduling using process.nextTick.",
-    "lineNumber": 10,
+    "lineNumber": 14,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 91,
+    "__docId__": 106,
     "kind": "get",
     "name": "instance",
     "memberof": "src/tick.js~TickScheduler",
@@ -1598,7 +2008,7 @@
     "longname": "src/tick.js~TickScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -1607,7 +2017,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 107,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/tick.js~TickScheduler",
@@ -1617,7 +2027,13 @@
     "longname": "src/tick.js~TickScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 22,
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -1627,13 +2043,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 93,
+    "__docId__": 108,
     "kind": "method",
     "name": "delay",
     "memberof": "src/tick.js~TickScheduler",
@@ -1643,11 +2066,11 @@
     "longname": "src/tick.js~TickScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 38,
+    "lineNumber": 44,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -1675,17 +2098,17 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
-    "__docId__": 94,
+    "__docId__": 109,
     "kind": "file",
     "name": "src/timeout.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport AbortController from 'abort-controller';\nimport SchedulerInterface from './scheduler-interface';\n\nlet INSTANCE;\n/**\n * A Scheduler that allows timeout scheduling on the current thread.\n */\nexport default class TimeoutScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TimeoutScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the timeout task.\n   * @param {!function} fn\n   */\n  schedule(fn) {\n    if (typeof fn === 'function') {\n      // eslint-disable-next-line no-new\n      setTimeout(fn, 0);\n    }\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   */\n  delay(fn, amount) {\n    const controller = new AbortController();\n    if (typeof fn === 'function') {\n      const { signal } = controller;\n\n      const timeout = setTimeout(() => {\n        const inner = setTimeout(() => {\n          fn();\n          controller.abort();\n        }, amount);\n\n        signal.addEventListener('abort', () => clearTimeout(inner));\n      }, 0);\n      signal.addEventListener('abort', () => clearTimeout(timeout));\n    } else {\n      controller.abort();\n    }\n    return controller;\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => setTimeout(x, 0);\nconst sched = schedule(func);\nconst timed = delay(func);\n/**\n * A Scheduler that allows timeout scheduling on the current thread.\n */\nexport default class TimeoutScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TimeoutScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/timeout.js",
     "access": "public",
@@ -1693,7 +2116,76 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 95,
+    "__docId__": 110,
+    "kind": "function",
+    "name": "func",
+    "memberof": "src/timeout.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/timeout.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/timeout.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 111,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/timeout.js",
+    "static": true,
+    "longname": "src/timeout.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/timeout.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 112,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/timeout.js",
+    "static": true,
+    "longname": "src/timeout.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/timeout.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 113,
     "kind": "class",
     "name": "TimeoutScheduler",
     "memberof": "src/timeout.js",
@@ -1704,14 +2196,14 @@
     "importPath": "rx-scheduler/src/timeout.js",
     "importStyle": "TimeoutScheduler",
     "description": "A Scheduler that allows timeout scheduling on the current thread.",
-    "lineNumber": 9,
+    "lineNumber": 13,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 96,
+    "__docId__": 114,
     "kind": "get",
     "name": "instance",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -1721,7 +2213,7 @@
     "longname": "src/timeout.js~TimeoutScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -1730,7 +2222,7 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 115,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -1740,7 +2232,13 @@
     "longname": "src/timeout.js~TimeoutScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately on the timeout task.",
-    "lineNumber": 21,
+    "lineNumber": 29,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
     "params": [
       {
         "nullable": false,
@@ -1750,13 +2248,20 @@
         "spread": false,
         "optional": false,
         "name": "fn",
-        "description": ""
+        "description": "A function that is called after being scheduled."
       }
     ],
-    "return": null
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
   },
   {
-    "__docId__": 98,
+    "__docId__": 116,
     "kind": "method",
     "name": "delay",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -1766,11 +2271,11 @@
     "longname": "src/timeout.js~TimeoutScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the timeout task.",
-    "lineNumber": 38,
+    "lineNumber": 43,
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{AbortController}\nReturns an AbortController that allows\nto abort the schedule."
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
       }
     ],
     "params": [
@@ -1798,15 +2303,120 @@
     "return": {
       "nullable": null,
       "types": [
-        "AbortController"
+        "Cancellable"
       ],
       "spread": false,
-      "description": "Returns an AbortController that allows\nto abort the schedule."
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
     }
   },
   {
+    "__docId__": 117,
+    "kind": "file",
+    "name": "src/utils.js",
+    "content": "import Cancellable from 'rx-cancellable';\n/**\n * @ignore\n */\nconst createController = (scheduler, fn, body) => {\n  const controller = new Cancellable();\n  if (typeof fn === 'function') {\n    // eslint-disable-next-line no-new\n    scheduler(() => body(controller));\n  } else {\n    controller.cancel();\n  }\n  return controller;\n};\n/**\n * @ignore\n */\nexport const schedule = scheduler => fn => createController(\n  scheduler,\n  fn,\n  x => !x.cancelled && fn(),\n);\n/**\n * @ignore\n */\nexport const delay = scheduler => (fn, amount) => createController(\n  scheduler,\n  fn,\n  (x) => {\n    if (x.cancelled) {\n      return;\n    }\n    const inner = setTimeout(fn, amount);\n\n    x.addEventListener('cancel', () => clearTimeout(inner));\n  },\n);\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/utils.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 118,
+    "kind": "function",
+    "name": "createController",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~createController",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/utils.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 5,
+    "ignore": true,
+    "params": [
+      {
+        "name": "scheduler",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "fn",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "body",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 119,
+    "kind": "function",
+    "name": "schedule",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~schedule",
+    "access": "public",
+    "export": true,
+    "importPath": "rx-scheduler/src/utils.js",
+    "importStyle": "{schedule}",
+    "description": "",
+    "lineNumber": 18,
+    "ignore": true,
+    "params": [
+      {
+        "name": "scheduler",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 120,
+    "kind": "function",
+    "name": "delay",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~delay",
+    "access": "public",
+    "export": true,
+    "importPath": "rx-scheduler/src/utils.js",
+    "importStyle": "{delay}",
+    "description": "",
+    "lineNumber": 26,
+    "ignore": true,
+    "params": [
+      {
+        "name": "scheduler",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
     "kind": "index",
-    "content": "# rx-scheduler\n\nReactive Extensions - an object that specifies an API for scheduling units of work\n\n[![NPM](https://nodei.co/npm/rx-scheduler.png)](https://nodei.co/npm/rx-scheduler/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-scheduler/badge)](https://www.jsdelivr.com/package/npm/rx-scheduler)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-scheduler.svg)](http://hits.dwyl.io/lxsmnsyc/rx-scheduler)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-scheduler.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-scheduler) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-scheduler) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-scheduler/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-scheduler)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-scheduler\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Scheduler = require('rx-scheduler');\n```\n\nLoading the CommonJS module provides the Scheduler class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-scheduler provides the Scheduler class\n\n## Example\n\n```js\nimport Scheduler from 'rx-scheduler';\n\nScheduler.immediate.delay(() => console.log('Hello World, Immediate 100'), 100);\nScheduler.timeout.delay(() => console.log('Hello World, Timeout 100'), 100);\nScheduler.async.delay(() => console.log('Hello World, Async 100'), 100);\nScheduler.tick.delay(() => console.log('Hello World, Tick 100'), 100);\nScheduler.current.delay(() => console.log('Hello World, Current 100'), 100);\n\nScheduler.immediate.schedule(() => console.log('Hello World, Immediate'));\nScheduler.timeout.schedule(() => console.log('Hello World, Timeout'));\nScheduler.async.schedule(() => console.log('Hello World, Async'));\nScheduler.tick.schedule(() => console.log('Hello World, Tick'));\nScheduler.current.schedule(() => console.log('Hello World, Current'));\n```\n\nOutput:\n\n```\nHello World, Current\nHello World, Tick\nHello World, Async\nHello World, Timeout\nHello World, Immediate\nHello World, Current 100\nHello World, Tick 100\nHello World, Async 100\nHello World, Timeout 100\nHello World, Immediate 100\n```\n\n## Scheduler Types\n\nThere are three scheduler types\n\n| Type | Description |\n| --- | --- |\n| Current | Schedules the task as the next task for the current thread. |\n| Immediate | Schedules the task immediately for the next frame, using setImmediate (NodeJS) or requestAnimationFrame (Browser). |\n| Async | Schedules the task in async fashion. |\n| Timeout | Schedules the task using ```setTimeout``` |\n| Tick | NodeJS only. Schedules the task immediately after the current thread. |\n\n## Creating your own Scheduler\n\nYou can create your own Scheduler that is recognizable by the implementations by extending ```Scheduler.interface```\n\n```js\nclass MyScheduler extends Scheduler.interface {\n  schedule(fn) {\n    // scheduling logic\n  }\n\n  delay(fn, amount) {\n    // delayed scheduling logic\n  }\n}\n```\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-scheduler/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```",
+    "content": "# rx-scheduler\n\nReactive Extensions - an object that specifies an API for scheduling units of work\n\n[![NPM](https://nodei.co/npm/rx-scheduler.png)](https://nodei.co/npm/rx-scheduler/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-scheduler/badge)](https://www.jsdelivr.com/package/npm/rx-scheduler)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-scheduler.svg)](http://hits.dwyl.io/lxsmnsyc/rx-scheduler)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-scheduler.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-scheduler) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-scheduler) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-scheduler/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-scheduler)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-scheduler\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Scheduler = require('rx-scheduler');\n```\n\nLoading the CommonJS module provides the Scheduler class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-scheduler provides the Scheduler class\n\n## Example\n\n```js\nimport Scheduler from 'rx-scheduler';\n\nScheduler.immediate.delay(() => console.log('Hello World, Immediate 100'), 100);\nScheduler.timeout.delay(() => console.log('Hello World, Timeout 100'), 100);\nScheduler.async.delay(() => console.log('Hello World, Async 100'), 100);\nScheduler.tick.delay(() => console.log('Hello World, Tick 100'), 100);\nScheduler.current.delay(() => console.log('Hello World, Current 100'), 100);\n\nScheduler.immediate.schedule(() => console.log('Hello World, Immediate'));\nScheduler.timeout.schedule(() => console.log('Hello World, Timeout'));\nScheduler.async.schedule(() => console.log('Hello World, Async'));\nScheduler.tick.schedule(() => console.log('Hello World, Tick'));\nScheduler.current.schedule(() => console.log('Hello World, Current'));\n```\n\nOutput:\n\n```\nHello World, Current\nHello World, Tick\nHello World, Async\nHello World, Timeout\nHello World, Immediate\nHello World, Current 100\nHello World, Tick 100\nHello World, Async 100\nHello World, Timeout 100\nHello World, Immediate 100\n```\n\n## Scheduler Types\n\nThere are three scheduler types\n\n| Type | Description |\n| --- | --- |\n| Current | Schedules the task as the next task for the current thread. |\n| Immediate | Schedules the task immediately for the next frame, using setImmediate (NodeJS) or requestAnimationFrame (Browser). |\n| Async | Schedules the task in async fashion. |\n| Timeout | Schedules the task using ```setTimeout``` |\n| Tick | NodeJS only. Schedules the task immediately after the current thread. |\n\nEach scheduler types has two methods: `schedule`, which executes the schedule immediately on their own threads and `delay`, which schedules the function with a timer on their own threads. Both methods return a Cancellable instance, that allows you to cancel the scheduled functions if necessary.\n\n## Creating your own Scheduler\n\nYou can create your own Scheduler that is recognizable by the implementations by extending ```Scheduler.interface```\n\n```js\nclass MyScheduler extends Scheduler.interface {\n  schedule(fn) {\n    // scheduling logic\n  }\n\n  delay(fn, amount) {\n    // delayed scheduling logic\n  }\n}\n```\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-scheduler/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n\n* 0.2.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - `schedule` and `delay` now returns a `Cancellable` to cancel schedules.\n* 0.1.0\n  - Release",
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/README.md",
     "name": "./README.md",
     "static": true,
@@ -1814,17 +2424,17 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-scheduler\",\n  \"version\": \"0.1.0\",\n  \"description\": \"an object that specifies an API for scheduling units of work\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  \n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-scheduler.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"scheduler\",\n    \"async\",\n    \"worker\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-scheduler/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-scheduler#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.0\",\n    \"@babel/preset-env\": \"^7.4.2\",\n    \"@babel/register\": \"^7.4.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.8.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"abort-controller\": \"^3.0.0\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-scheduler\",\n  \"version\": \"0.1.1\",\n  \"description\": \"an object that specifies an API for scheduling units of work\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-scheduler.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"scheduler\",\n    \"async\",\n    \"worker\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-scheduler/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-scheduler#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.0\",\n    \"@babel/preset-env\": \"^7.4.2\",\n    \"@babel/register\": \"^7.4.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.0.2\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.8.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"abort-controller\": \"^3.0.0\",\n    \"rx-cancellable\": \"^0.1.1\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 99,
+    "__docId__": 121,
     "kind": "testFile",
     "name": "test/index.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport AbortController from 'abort-controller';\nimport Scheduler from '../src/index.node';\nimport SchedulerInterface from '../src/scheduler-interface';\nimport CurrentScheduler from '../src/current';\nimport ImmediateScheduler from '../src/immediate.node';\nimport AsyncScheduler from '../src/async';\nimport TimeoutScheduler from '../src/timeout';\nimport TickScheduler from '../src/tick';\n\n/**\n *\n */\ndescribe('Scheduler', () => {\n  /**\n   *\n   */\n  describe('#current', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.current instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a CurrentScheduler', () => {\n      assert(Scheduler.current instanceof CurrentScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return an AbortController', () => {\n        const controller = Scheduler.current.delay(() => {}, 100);\n\n        assert(controller instanceof AbortController);\n      });\n      /**\n       *\n       */\n      it('should return an aborted AbortControler if first arg is not a function.', () => {\n        const controller = Scheduler.current.delay(null, 100);\n\n        assert(controller.signal.aborted);\n      });\n      /**\n       *\n       */\n      it('should execute before tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#immediate', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.immediate instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a ImmediateScheduler', () => {\n      assert(Scheduler.immediate instanceof ImmediateScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return an AbortController', () => {\n        const controller = Scheduler.immediate.delay(() => {}, 100);\n\n        assert(controller instanceof AbortController);\n      });\n      /**\n       *\n       */\n      it('should return an aborted AbortControler if first arg is not a function.', () => {\n        const controller = Scheduler.immediate.delay(null, 100);\n\n        assert(controller.signal.aborted);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#async', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.async instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a AsyncScheduler', () => {\n      assert(Scheduler.async instanceof AsyncScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return an AbortController', () => {\n        const controller = Scheduler.async.delay(() => {}, 100);\n\n        assert(controller instanceof AbortController);\n      });\n      /**\n       *\n       */\n      it('should return an aborted AbortControler if first arg is not a function.', () => {\n        const controller = Scheduler.async.delay(null, 100);\n\n        assert(controller.signal.aborted);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#timeout', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.timeout instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TimeoutScheduler', () => {\n      assert(Scheduler.timeout instanceof TimeoutScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.timeout.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return an AbortController', () => {\n        const controller = Scheduler.timeout.delay(() => {}, 100);\n\n        assert(controller instanceof AbortController);\n      });\n      /**\n       *\n       */\n      it('should return an aborted AbortControler if first arg is not a function.', () => {\n        const controller = Scheduler.timeout.delay(null, 100);\n\n        assert(controller.signal.aborted);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#tick', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.tick instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TickScheduler', () => {\n      assert(Scheduler.tick instanceof TickScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.tick.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return an AbortController', () => {\n        const controller = Scheduler.tick.delay(() => {}, 100);\n\n        assert(controller instanceof AbortController);\n      });\n      /**\n       *\n       */\n      it('should return an aborted AbortControler if first arg is not a function.', () => {\n        const controller = Scheduler.tick.delay(null, 100);\n\n        assert(controller.signal.aborted);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Cancellable from 'rx-cancellable';\nimport Scheduler from '../src/index.node';\nimport SchedulerInterface from '../src/scheduler-interface';\nimport CurrentScheduler from '../src/current';\nimport ImmediateScheduler from '../src/immediate.node';\nimport AsyncScheduler from '../src/async';\nimport TimeoutScheduler from '../src/timeout';\nimport TickScheduler from '../src/tick';\n\n/**\n *\n */\ndescribe('Scheduler', () => {\n  /**\n   *\n   */\n  describe('#current', () => {\n    /**\n     *\n     */\n    it('should return a Cancellable', () => {\n      const controller = Scheduler.current.schedule(() => {});\n\n      assert(controller instanceof Cancellable);\n    });\n    /**\n     *\n     */\n    it('should return a cancelled Cancellable if first arg is not a function.', () => {\n      const controller = Scheduler.current.schedule(null);\n\n      assert(controller.cancelled);\n    });\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.current instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a CurrentScheduler', () => {\n      assert(Scheduler.current instanceof CurrentScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      it('should return a Cancellable.', () => {\n\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.current.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.current.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute before tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#immediate', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.immediate instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a ImmediateScheduler', () => {\n      assert(Scheduler.immediate instanceof ImmediateScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.immediate.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.immediate.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.immediate.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.immediate.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#async', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.async instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a AsyncScheduler', () => {\n      assert(Scheduler.async instanceof AsyncScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.async.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.async.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.async.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.async.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#timeout', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.timeout instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TimeoutScheduler', () => {\n      assert(Scheduler.timeout instanceof TimeoutScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.timeout.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.timeout.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.timeout.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.timeout.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.timeout.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#tick', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.tick instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TickScheduler', () => {\n      assert(Scheduler.tick instanceof TickScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.tick.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.tick.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.tick.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/test/index.js",
     "access": "public",
@@ -1832,7 +2442,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 100,
+    "__docId__": 122,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -1845,7 +2455,7 @@
     "lineNumber": 15
   },
   {
-    "__docId__": 101,
+    "__docId__": 123,
     "kind": "test",
     "name": "describe1",
     "testId": 1,
@@ -1858,7 +2468,7 @@
     "lineNumber": 19
   },
   {
-    "__docId__": 102,
+    "__docId__": 124,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -1867,11 +2477,11 @@
     "static": true,
     "longname": "test/index.js~describe0.describe1.it2",
     "access": "public",
-    "description": "should return a SchedulerInterface",
+    "description": "should return a Cancellable",
     "lineNumber": 23
   },
   {
-    "__docId__": 103,
+    "__docId__": 125,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -1880,891 +2490,1008 @@
     "static": true,
     "longname": "test/index.js~describe0.describe1.it3",
     "access": "public",
-    "description": "should return a CurrentScheduler",
-    "lineNumber": 29
-  },
-  {
-    "__docId__": 104,
-    "kind": "test",
-    "name": "describe4",
-    "testId": 4,
-    "memberof": "test/index.js~describe0.describe1",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe4",
-    "access": "public",
-    "description": "#schedule",
-    "lineNumber": 35
-  },
-  {
-    "__docId__": 105,
-    "kind": "test",
-    "name": "describe5",
-    "testId": 5,
-    "memberof": "test/index.js~describe0.describe1",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5",
-    "access": "public",
-    "description": "#delay",
-    "lineNumber": 41
-  },
-  {
-    "__docId__": 106,
-    "kind": "test",
-    "name": "it6",
-    "testId": 6,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it6",
-    "access": "public",
-    "description": "should return an AbortController",
-    "lineNumber": 45
-  },
-  {
-    "__docId__": 107,
-    "kind": "test",
-    "name": "it7",
-    "testId": 7,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it7",
-    "access": "public",
-    "description": "should return an aborted AbortControler if first arg is not a function.",
-    "lineNumber": 53
-  },
-  {
-    "__docId__": 108,
-    "kind": "test",
-    "name": "it8",
-    "testId": 8,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it8",
-    "access": "public",
-    "description": "should execute before tick",
-    "lineNumber": 61
-  },
-  {
-    "__docId__": 109,
-    "kind": "test",
-    "name": "it9",
-    "testId": 9,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it9",
-    "access": "public",
-    "description": "should execute before async",
-    "lineNumber": 69
-  },
-  {
-    "__docId__": 110,
-    "kind": "test",
-    "name": "it10",
-    "testId": 10,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it10",
-    "access": "public",
-    "description": "should execute before timeout",
-    "lineNumber": 77
-  },
-  {
-    "__docId__": 111,
-    "kind": "test",
-    "name": "it11",
-    "testId": 11,
-    "memberof": "test/index.js~describe0.describe1.describe5",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe1.describe5.it11",
-    "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 85
-  },
-  {
-    "__docId__": 112,
-    "kind": "test",
-    "name": "describe12",
-    "testId": 12,
-    "memberof": "test/index.js~describe0",
-    "testDepth": 1,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12",
-    "access": "public",
-    "description": "#immediate",
-    "lineNumber": 95
-  },
-  {
-    "__docId__": 113,
-    "kind": "test",
-    "name": "it13",
-    "testId": 13,
-    "memberof": "test/index.js~describe0.describe12",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.it13",
-    "access": "public",
-    "description": "should return a SchedulerInterface",
-    "lineNumber": 99
-  },
-  {
-    "__docId__": 114,
-    "kind": "test",
-    "name": "it14",
-    "testId": 14,
-    "memberof": "test/index.js~describe0.describe12",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.it14",
-    "access": "public",
-    "description": "should return a ImmediateScheduler",
-    "lineNumber": 105
-  },
-  {
-    "__docId__": 115,
-    "kind": "test",
-    "name": "describe15",
-    "testId": 15,
-    "memberof": "test/index.js~describe0.describe12",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe15",
-    "access": "public",
-    "description": "#schedule",
-    "lineNumber": 111
-  },
-  {
-    "__docId__": 116,
-    "kind": "test",
-    "name": "it16",
-    "testId": 16,
-    "memberof": "test/index.js~describe0.describe12.describe15",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe15.it16",
-    "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 115
-  },
-  {
-    "__docId__": 117,
-    "kind": "test",
-    "name": "it17",
-    "testId": 17,
-    "memberof": "test/index.js~describe0.describe12.describe15",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe15.it17",
-    "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 123
-  },
-  {
-    "__docId__": 118,
-    "kind": "test",
-    "name": "it18",
-    "testId": 18,
-    "memberof": "test/index.js~describe0.describe12.describe15",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe15.it18",
-    "access": "public",
-    "description": "should execute after async",
-    "lineNumber": 131
-  },
-  {
-    "__docId__": 119,
-    "kind": "test",
-    "name": "it19",
-    "testId": 19,
-    "memberof": "test/index.js~describe0.describe12.describe15",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe15.it19",
-    "access": "public",
-    "description": "should execute after timeout",
-    "lineNumber": 139
-  },
-  {
-    "__docId__": 120,
-    "kind": "test",
-    "name": "describe20",
-    "testId": 20,
-    "memberof": "test/index.js~describe0.describe12",
-    "testDepth": 2,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20",
-    "access": "public",
-    "description": "#delay",
-    "lineNumber": 148
-  },
-  {
-    "__docId__": 121,
-    "kind": "test",
-    "name": "it21",
-    "testId": 21,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it21",
-    "access": "public",
-    "description": "should return an AbortController",
-    "lineNumber": 152
-  },
-  {
-    "__docId__": 122,
-    "kind": "test",
-    "name": "it22",
-    "testId": 22,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it22",
-    "access": "public",
-    "description": "should return an aborted AbortControler if first arg is not a function.",
-    "lineNumber": 160
-  },
-  {
-    "__docId__": 123,
-    "kind": "test",
-    "name": "it23",
-    "testId": 23,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it23",
-    "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 168
-  },
-  {
-    "__docId__": 124,
-    "kind": "test",
-    "name": "it24",
-    "testId": 24,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it24",
-    "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 176
-  },
-  {
-    "__docId__": 125,
-    "kind": "test",
-    "name": "it25",
-    "testId": 25,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
-    "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it25",
-    "access": "public",
-    "description": "should execute after async",
-    "lineNumber": 184
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 31
   },
   {
     "__docId__": 126,
     "kind": "test",
-    "name": "it26",
-    "testId": 26,
-    "memberof": "test/index.js~describe0.describe12.describe20",
-    "testDepth": 3,
+    "name": "it4",
+    "testId": 4,
+    "memberof": "test/index.js~describe0.describe1",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe12.describe20.it26",
+    "longname": "test/index.js~describe0.describe1.it4",
     "access": "public",
-    "description": "should execute after timeout",
-    "lineNumber": 192
+    "description": "should return a SchedulerInterface",
+    "lineNumber": 39
   },
   {
     "__docId__": 127,
     "kind": "test",
-    "name": "describe27",
-    "testId": 27,
-    "memberof": "test/index.js~describe0",
-    "testDepth": 1,
+    "name": "it5",
+    "testId": 5,
+    "memberof": "test/index.js~describe0.describe1",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27",
+    "longname": "test/index.js~describe0.describe1.it5",
     "access": "public",
-    "description": "#async",
-    "lineNumber": 202
+    "description": "should return a CurrentScheduler",
+    "lineNumber": 45
   },
   {
     "__docId__": 128,
     "kind": "test",
-    "name": "it28",
-    "testId": 28,
-    "memberof": "test/index.js~describe0.describe27",
+    "name": "describe6",
+    "testId": 6,
+    "memberof": "test/index.js~describe0.describe1",
     "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.it28",
+    "longname": "test/index.js~describe0.describe1.describe6",
     "access": "public",
-    "description": "should return a SchedulerInterface",
-    "lineNumber": 206
+    "description": "#schedule",
+    "lineNumber": 51
   },
   {
     "__docId__": 129,
     "kind": "test",
-    "name": "it29",
-    "testId": 29,
-    "memberof": "test/index.js~describe0.describe27",
-    "testDepth": 2,
+    "name": "it7",
+    "testId": 7,
+    "memberof": "test/index.js~describe0.describe1.describe6",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.it29",
+    "longname": "test/index.js~describe0.describe1.describe6.it7",
     "access": "public",
-    "description": "should return a AsyncScheduler",
-    "lineNumber": 212
+    "description": "should return a Cancellable.",
+    "lineNumber": 52
   },
   {
     "__docId__": 130,
     "kind": "test",
-    "name": "describe30",
-    "testId": 30,
-    "memberof": "test/index.js~describe0.describe27",
+    "name": "describe8",
+    "testId": 8,
+    "memberof": "test/index.js~describe0.describe1",
     "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe30",
+    "longname": "test/index.js~describe0.describe1.describe8",
     "access": "public",
-    "description": "#schedule",
-    "lineNumber": 218
+    "description": "#delay",
+    "lineNumber": 59
   },
   {
     "__docId__": 131,
     "kind": "test",
-    "name": "it31",
-    "testId": 31,
-    "memberof": "test/index.js~describe0.describe27.describe30",
+    "name": "it9",
+    "testId": 9,
+    "memberof": "test/index.js~describe0.describe1.describe8",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe30.it31",
+    "longname": "test/index.js~describe0.describe1.describe8.it9",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 222
+    "description": "should return a Cancellable",
+    "lineNumber": 63
   },
   {
     "__docId__": 132,
     "kind": "test",
-    "name": "it32",
-    "testId": 32,
-    "memberof": "test/index.js~describe0.describe27.describe30",
+    "name": "it10",
+    "testId": 10,
+    "memberof": "test/index.js~describe0.describe1.describe8",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe30.it32",
+    "longname": "test/index.js~describe0.describe1.describe8.it10",
     "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 230
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 71
   },
   {
     "__docId__": 133,
     "kind": "test",
-    "name": "it33",
-    "testId": 33,
-    "memberof": "test/index.js~describe0.describe27.describe30",
+    "name": "it11",
+    "testId": 11,
+    "memberof": "test/index.js~describe0.describe1.describe8",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe30.it33",
+    "longname": "test/index.js~describe0.describe1.describe8.it11",
     "access": "public",
-    "description": "should execute before timeout",
-    "lineNumber": 238
+    "description": "should execute before tick",
+    "lineNumber": 79
   },
   {
     "__docId__": 134,
     "kind": "test",
-    "name": "it34",
-    "testId": 34,
-    "memberof": "test/index.js~describe0.describe27.describe30",
+    "name": "it12",
+    "testId": 12,
+    "memberof": "test/index.js~describe0.describe1.describe8",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe30.it34",
+    "longname": "test/index.js~describe0.describe1.describe8.it12",
     "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 246
+    "description": "should execute before async",
+    "lineNumber": 87
   },
   {
     "__docId__": 135,
     "kind": "test",
-    "name": "describe35",
-    "testId": 35,
-    "memberof": "test/index.js~describe0.describe27",
-    "testDepth": 2,
+    "name": "it13",
+    "testId": 13,
+    "memberof": "test/index.js~describe0.describe1.describe8",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35",
+    "longname": "test/index.js~describe0.describe1.describe8.it13",
     "access": "public",
-    "description": "#delay",
-    "lineNumber": 255
+    "description": "should execute before timeout",
+    "lineNumber": 95
   },
   {
     "__docId__": 136,
     "kind": "test",
-    "name": "it36",
-    "testId": 36,
-    "memberof": "test/index.js~describe0.describe27.describe35",
+    "name": "it14",
+    "testId": 14,
+    "memberof": "test/index.js~describe0.describe1.describe8",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it36",
+    "longname": "test/index.js~describe0.describe1.describe8.it14",
     "access": "public",
-    "description": "should return an AbortController",
-    "lineNumber": 259
+    "description": "should execute before immediate",
+    "lineNumber": 103
   },
   {
     "__docId__": 137,
     "kind": "test",
-    "name": "it37",
-    "testId": 37,
-    "memberof": "test/index.js~describe0.describe27.describe35",
-    "testDepth": 3,
+    "name": "describe15",
+    "testId": 15,
+    "memberof": "test/index.js~describe0",
+    "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it37",
+    "longname": "test/index.js~describe0.describe15",
     "access": "public",
-    "description": "should return an aborted AbortControler if first arg is not a function.",
-    "lineNumber": 267
+    "description": "#immediate",
+    "lineNumber": 113
   },
   {
     "__docId__": 138,
     "kind": "test",
-    "name": "it38",
-    "testId": 38,
-    "memberof": "test/index.js~describe0.describe27.describe35",
-    "testDepth": 3,
+    "name": "it16",
+    "testId": 16,
+    "memberof": "test/index.js~describe0.describe15",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it38",
+    "longname": "test/index.js~describe0.describe15.it16",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 275
+    "description": "should return a SchedulerInterface",
+    "lineNumber": 117
   },
   {
     "__docId__": 139,
     "kind": "test",
-    "name": "it39",
-    "testId": 39,
-    "memberof": "test/index.js~describe0.describe27.describe35",
-    "testDepth": 3,
+    "name": "it17",
+    "testId": 17,
+    "memberof": "test/index.js~describe0.describe15",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it39",
+    "longname": "test/index.js~describe0.describe15.it17",
     "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 283
+    "description": "should return a ImmediateScheduler",
+    "lineNumber": 123
   },
   {
     "__docId__": 140,
     "kind": "test",
-    "name": "it40",
-    "testId": 40,
-    "memberof": "test/index.js~describe0.describe27.describe35",
-    "testDepth": 3,
+    "name": "describe18",
+    "testId": 18,
+    "memberof": "test/index.js~describe0.describe15",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it40",
+    "longname": "test/index.js~describe0.describe15.describe18",
     "access": "public",
-    "description": "should execute before timeout",
-    "lineNumber": 291
+    "description": "#schedule",
+    "lineNumber": 129
   },
   {
     "__docId__": 141,
     "kind": "test",
-    "name": "it41",
-    "testId": 41,
-    "memberof": "test/index.js~describe0.describe27.describe35",
+    "name": "it19",
+    "testId": 19,
+    "memberof": "test/index.js~describe0.describe15.describe18",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe27.describe35.it41",
+    "longname": "test/index.js~describe0.describe15.describe18.it19",
     "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 299
+    "description": "should return a Cancellable",
+    "lineNumber": 133
   },
   {
     "__docId__": 142,
     "kind": "test",
-    "name": "describe42",
-    "testId": 42,
-    "memberof": "test/index.js~describe0",
-    "testDepth": 1,
+    "name": "it20",
+    "testId": 20,
+    "memberof": "test/index.js~describe0.describe15.describe18",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42",
+    "longname": "test/index.js~describe0.describe15.describe18.it20",
     "access": "public",
-    "description": "#timeout",
-    "lineNumber": 309
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 141
   },
   {
     "__docId__": 143,
     "kind": "test",
-    "name": "it43",
-    "testId": 43,
-    "memberof": "test/index.js~describe0.describe42",
-    "testDepth": 2,
+    "name": "it21",
+    "testId": 21,
+    "memberof": "test/index.js~describe0.describe15.describe18",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.it43",
+    "longname": "test/index.js~describe0.describe15.describe18.it21",
     "access": "public",
-    "description": "should return a SchedulerInterface",
-    "lineNumber": 313
+    "description": "should execute after current thread",
+    "lineNumber": 149
   },
   {
     "__docId__": 144,
     "kind": "test",
-    "name": "it44",
-    "testId": 44,
-    "memberof": "test/index.js~describe0.describe42",
-    "testDepth": 2,
+    "name": "it22",
+    "testId": 22,
+    "memberof": "test/index.js~describe0.describe15.describe18",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.it44",
+    "longname": "test/index.js~describe0.describe15.describe18.it22",
     "access": "public",
-    "description": "should return a TimeoutScheduler",
-    "lineNumber": 319
+    "description": "should execute after tick",
+    "lineNumber": 157
   },
   {
     "__docId__": 145,
     "kind": "test",
-    "name": "describe45",
-    "testId": 45,
-    "memberof": "test/index.js~describe0.describe42",
-    "testDepth": 2,
+    "name": "it23",
+    "testId": 23,
+    "memberof": "test/index.js~describe0.describe15.describe18",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe45",
+    "longname": "test/index.js~describe0.describe15.describe18.it23",
     "access": "public",
-    "description": "#schedule",
-    "lineNumber": 325
+    "description": "should execute after async",
+    "lineNumber": 165
   },
   {
     "__docId__": 146,
     "kind": "test",
-    "name": "it46",
-    "testId": 46,
-    "memberof": "test/index.js~describe0.describe42.describe45",
+    "name": "it24",
+    "testId": 24,
+    "memberof": "test/index.js~describe0.describe15.describe18",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe45.it46",
+    "longname": "test/index.js~describe0.describe15.describe18.it24",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 329
+    "description": "should execute after timeout",
+    "lineNumber": 173
   },
   {
     "__docId__": 147,
     "kind": "test",
-    "name": "it47",
-    "testId": 47,
-    "memberof": "test/index.js~describe0.describe42.describe45",
-    "testDepth": 3,
+    "name": "describe25",
+    "testId": 25,
+    "memberof": "test/index.js~describe0.describe15",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe45.it47",
+    "longname": "test/index.js~describe0.describe15.describe25",
     "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 337
+    "description": "#delay",
+    "lineNumber": 182
   },
   {
     "__docId__": 148,
     "kind": "test",
-    "name": "it48",
-    "testId": 48,
-    "memberof": "test/index.js~describe0.describe42.describe45",
+    "name": "it26",
+    "testId": 26,
+    "memberof": "test/index.js~describe0.describe15.describe25",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe45.it48",
+    "longname": "test/index.js~describe0.describe15.describe25.it26",
     "access": "public",
-    "description": "should execute after async",
-    "lineNumber": 345
+    "description": "should return a Cancellable",
+    "lineNumber": 186
   },
   {
     "__docId__": 149,
     "kind": "test",
-    "name": "it49",
-    "testId": 49,
-    "memberof": "test/index.js~describe0.describe42.describe45",
+    "name": "it27",
+    "testId": 27,
+    "memberof": "test/index.js~describe0.describe15.describe25",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe45.it49",
+    "longname": "test/index.js~describe0.describe15.describe25.it27",
     "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 353
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 194
   },
   {
     "__docId__": 150,
     "kind": "test",
-    "name": "describe50",
-    "testId": 50,
-    "memberof": "test/index.js~describe0.describe42",
-    "testDepth": 2,
+    "name": "it28",
+    "testId": 28,
+    "memberof": "test/index.js~describe0.describe15.describe25",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50",
+    "longname": "test/index.js~describe0.describe15.describe25.it28",
     "access": "public",
-    "description": "#delay",
-    "lineNumber": 362
+    "description": "should execute after current thread",
+    "lineNumber": 202
   },
   {
     "__docId__": 151,
     "kind": "test",
-    "name": "it51",
-    "testId": 51,
-    "memberof": "test/index.js~describe0.describe42.describe50",
+    "name": "it29",
+    "testId": 29,
+    "memberof": "test/index.js~describe0.describe15.describe25",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it51",
+    "longname": "test/index.js~describe0.describe15.describe25.it29",
     "access": "public",
-    "description": "should return an AbortController",
-    "lineNumber": 366
+    "description": "should execute after tick",
+    "lineNumber": 210
   },
   {
     "__docId__": 152,
     "kind": "test",
-    "name": "it52",
-    "testId": 52,
-    "memberof": "test/index.js~describe0.describe42.describe50",
+    "name": "it30",
+    "testId": 30,
+    "memberof": "test/index.js~describe0.describe15.describe25",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it52",
+    "longname": "test/index.js~describe0.describe15.describe25.it30",
     "access": "public",
-    "description": "should return an aborted AbortControler if first arg is not a function.",
-    "lineNumber": 374
+    "description": "should execute after async",
+    "lineNumber": 218
   },
   {
     "__docId__": 153,
     "kind": "test",
-    "name": "it53",
-    "testId": 53,
-    "memberof": "test/index.js~describe0.describe42.describe50",
+    "name": "it31",
+    "testId": 31,
+    "memberof": "test/index.js~describe0.describe15.describe25",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it53",
+    "longname": "test/index.js~describe0.describe15.describe25.it31",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 382
+    "description": "should execute after timeout",
+    "lineNumber": 226
   },
   {
     "__docId__": 154,
     "kind": "test",
-    "name": "it54",
-    "testId": 54,
-    "memberof": "test/index.js~describe0.describe42.describe50",
-    "testDepth": 3,
+    "name": "describe32",
+    "testId": 32,
+    "memberof": "test/index.js~describe0",
+    "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it54",
+    "longname": "test/index.js~describe0.describe32",
     "access": "public",
-    "description": "should execute after tick",
-    "lineNumber": 390
+    "description": "#async",
+    "lineNumber": 236
   },
   {
     "__docId__": 155,
     "kind": "test",
-    "name": "it55",
-    "testId": 55,
-    "memberof": "test/index.js~describe0.describe42.describe50",
-    "testDepth": 3,
+    "name": "it33",
+    "testId": 33,
+    "memberof": "test/index.js~describe0.describe32",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it55",
+    "longname": "test/index.js~describe0.describe32.it33",
     "access": "public",
-    "description": "should execute after async",
-    "lineNumber": 398
+    "description": "should return a SchedulerInterface",
+    "lineNumber": 240
   },
   {
     "__docId__": 156,
     "kind": "test",
-    "name": "it56",
-    "testId": 56,
-    "memberof": "test/index.js~describe0.describe42.describe50",
-    "testDepth": 3,
+    "name": "it34",
+    "testId": 34,
+    "memberof": "test/index.js~describe0.describe32",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe42.describe50.it56",
+    "longname": "test/index.js~describe0.describe32.it34",
     "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 406
+    "description": "should return a AsyncScheduler",
+    "lineNumber": 246
   },
   {
     "__docId__": 157,
     "kind": "test",
-    "name": "describe57",
-    "testId": 57,
-    "memberof": "test/index.js~describe0",
-    "testDepth": 1,
+    "name": "describe35",
+    "testId": 35,
+    "memberof": "test/index.js~describe0.describe32",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe57",
+    "longname": "test/index.js~describe0.describe32.describe35",
     "access": "public",
-    "description": "#tick",
-    "lineNumber": 416
+    "description": "#schedule",
+    "lineNumber": 252
   },
   {
     "__docId__": 158,
     "kind": "test",
-    "name": "it58",
-    "testId": 58,
-    "memberof": "test/index.js~describe0.describe57",
-    "testDepth": 2,
+    "name": "it36",
+    "testId": 36,
+    "memberof": "test/index.js~describe0.describe32.describe35",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.it58",
+    "longname": "test/index.js~describe0.describe32.describe35.it36",
     "access": "public",
-    "description": "should return a SchedulerInterface",
-    "lineNumber": 420
+    "description": "should return a Cancellable",
+    "lineNumber": 256
   },
   {
     "__docId__": 159,
     "kind": "test",
-    "name": "it59",
-    "testId": 59,
-    "memberof": "test/index.js~describe0.describe57",
-    "testDepth": 2,
+    "name": "it37",
+    "testId": 37,
+    "memberof": "test/index.js~describe0.describe32.describe35",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.it59",
+    "longname": "test/index.js~describe0.describe32.describe35.it37",
     "access": "public",
-    "description": "should return a TickScheduler",
-    "lineNumber": 426
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 264
   },
   {
     "__docId__": 160,
     "kind": "test",
-    "name": "describe60",
-    "testId": 60,
-    "memberof": "test/index.js~describe0.describe57",
-    "testDepth": 2,
+    "name": "it38",
+    "testId": 38,
+    "memberof": "test/index.js~describe0.describe32.describe35",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe60",
+    "longname": "test/index.js~describe0.describe32.describe35.it38",
     "access": "public",
-    "description": "#schedule",
-    "lineNumber": 432
+    "description": "should execute after current thread",
+    "lineNumber": 272
   },
   {
     "__docId__": 161,
     "kind": "test",
-    "name": "it61",
-    "testId": 61,
-    "memberof": "test/index.js~describe0.describe57.describe60",
+    "name": "it39",
+    "testId": 39,
+    "memberof": "test/index.js~describe0.describe32.describe35",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe60.it61",
+    "longname": "test/index.js~describe0.describe32.describe35.it39",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 436
+    "description": "should execute after tick",
+    "lineNumber": 280
   },
   {
     "__docId__": 162,
     "kind": "test",
-    "name": "it62",
-    "testId": 62,
-    "memberof": "test/index.js~describe0.describe57.describe60",
+    "name": "it40",
+    "testId": 40,
+    "memberof": "test/index.js~describe0.describe32.describe35",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe60.it62",
+    "longname": "test/index.js~describe0.describe32.describe35.it40",
     "access": "public",
-    "description": "should execute before async",
-    "lineNumber": 444
+    "description": "should execute before timeout",
+    "lineNumber": 288
   },
   {
     "__docId__": 163,
     "kind": "test",
-    "name": "it63",
-    "testId": 63,
-    "memberof": "test/index.js~describe0.describe57.describe60",
+    "name": "it41",
+    "testId": 41,
+    "memberof": "test/index.js~describe0.describe32.describe35",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe60.it63",
+    "longname": "test/index.js~describe0.describe32.describe35.it41",
     "access": "public",
-    "description": "should execute before timeout",
-    "lineNumber": 452
+    "description": "should execute before immediate",
+    "lineNumber": 296
   },
   {
     "__docId__": 164,
     "kind": "test",
-    "name": "it64",
-    "testId": 64,
-    "memberof": "test/index.js~describe0.describe57.describe60",
-    "testDepth": 3,
+    "name": "describe42",
+    "testId": 42,
+    "memberof": "test/index.js~describe0.describe32",
+    "testDepth": 2,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe60.it64",
+    "longname": "test/index.js~describe0.describe32.describe42",
     "access": "public",
-    "description": "should execute before immediate",
-    "lineNumber": 460
+    "description": "#delay",
+    "lineNumber": 305
   },
   {
     "__docId__": 165,
     "kind": "test",
-    "name": "describe65",
-    "testId": 65,
-    "memberof": "test/index.js~describe0.describe57",
-    "testDepth": 2,
+    "name": "it43",
+    "testId": 43,
+    "memberof": "test/index.js~describe0.describe32.describe42",
+    "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65",
+    "longname": "test/index.js~describe0.describe32.describe42.it43",
     "access": "public",
-    "description": "#delay",
-    "lineNumber": 469
+    "description": "should return a Cancellable",
+    "lineNumber": 309
   },
   {
     "__docId__": 166,
     "kind": "test",
-    "name": "it66",
-    "testId": 66,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "it44",
+    "testId": 44,
+    "memberof": "test/index.js~describe0.describe32.describe42",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it66",
+    "longname": "test/index.js~describe0.describe32.describe42.it44",
     "access": "public",
-    "description": "should return an AbortController",
-    "lineNumber": 473
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 317
   },
   {
     "__docId__": 167,
     "kind": "test",
-    "name": "it67",
-    "testId": 67,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "it45",
+    "testId": 45,
+    "memberof": "test/index.js~describe0.describe32.describe42",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it67",
+    "longname": "test/index.js~describe0.describe32.describe42.it45",
     "access": "public",
-    "description": "should return an aborted AbortControler if first arg is not a function.",
-    "lineNumber": 481
+    "description": "should execute after current thread",
+    "lineNumber": 325
   },
   {
     "__docId__": 168,
     "kind": "test",
-    "name": "it68",
-    "testId": 68,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "it46",
+    "testId": 46,
+    "memberof": "test/index.js~describe0.describe32.describe42",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it68",
+    "longname": "test/index.js~describe0.describe32.describe42.it46",
     "access": "public",
-    "description": "should execute after current thread",
-    "lineNumber": 489
+    "description": "should execute after tick",
+    "lineNumber": 333
   },
   {
     "__docId__": 169,
     "kind": "test",
-    "name": "it69",
-    "testId": 69,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "it47",
+    "testId": 47,
+    "memberof": "test/index.js~describe0.describe32.describe42",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it69",
+    "longname": "test/index.js~describe0.describe32.describe42.it47",
     "access": "public",
-    "description": "should execute before async",
-    "lineNumber": 497
+    "description": "should execute before timeout",
+    "lineNumber": 341
   },
   {
     "__docId__": 170,
     "kind": "test",
-    "name": "it70",
-    "testId": 70,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "it48",
+    "testId": 48,
+    "memberof": "test/index.js~describe0.describe32.describe42",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it70",
+    "longname": "test/index.js~describe0.describe32.describe42.it48",
     "access": "public",
-    "description": "should execute before timeout",
-    "lineNumber": 505
+    "description": "should execute before immediate",
+    "lineNumber": 349
   },
   {
     "__docId__": 171,
     "kind": "test",
-    "name": "it71",
-    "testId": 71,
-    "memberof": "test/index.js~describe0.describe57.describe65",
+    "name": "describe49",
+    "testId": 49,
+    "memberof": "test/index.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49",
+    "access": "public",
+    "description": "#timeout",
+    "lineNumber": 359
+  },
+  {
+    "__docId__": 172,
+    "kind": "test",
+    "name": "it50",
+    "testId": 50,
+    "memberof": "test/index.js~describe0.describe49",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.it50",
+    "access": "public",
+    "description": "should return a SchedulerInterface",
+    "lineNumber": 363
+  },
+  {
+    "__docId__": 173,
+    "kind": "test",
+    "name": "it51",
+    "testId": 51,
+    "memberof": "test/index.js~describe0.describe49",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.it51",
+    "access": "public",
+    "description": "should return a TimeoutScheduler",
+    "lineNumber": 369
+  },
+  {
+    "__docId__": 174,
+    "kind": "test",
+    "name": "describe52",
+    "testId": 52,
+    "memberof": "test/index.js~describe0.describe49",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52",
+    "access": "public",
+    "description": "#schedule",
+    "lineNumber": 375
+  },
+  {
+    "__docId__": 175,
+    "kind": "test",
+    "name": "it53",
+    "testId": 53,
+    "memberof": "test/index.js~describe0.describe49.describe52",
     "testDepth": 3,
     "static": true,
-    "longname": "test/index.js~describe0.describe57.describe65.it71",
+    "longname": "test/index.js~describe0.describe49.describe52.it53",
+    "access": "public",
+    "description": "should return a Cancellable",
+    "lineNumber": 379
+  },
+  {
+    "__docId__": 176,
+    "kind": "test",
+    "name": "it54",
+    "testId": 54,
+    "memberof": "test/index.js~describe0.describe49.describe52",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52.it54",
+    "access": "public",
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 387
+  },
+  {
+    "__docId__": 177,
+    "kind": "test",
+    "name": "it55",
+    "testId": 55,
+    "memberof": "test/index.js~describe0.describe49.describe52",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52.it55",
+    "access": "public",
+    "description": "should execute after current thread",
+    "lineNumber": 395
+  },
+  {
+    "__docId__": 178,
+    "kind": "test",
+    "name": "it56",
+    "testId": 56,
+    "memberof": "test/index.js~describe0.describe49.describe52",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52.it56",
+    "access": "public",
+    "description": "should execute after tick",
+    "lineNumber": 403
+  },
+  {
+    "__docId__": 179,
+    "kind": "test",
+    "name": "it57",
+    "testId": 57,
+    "memberof": "test/index.js~describe0.describe49.describe52",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52.it57",
+    "access": "public",
+    "description": "should execute after async",
+    "lineNumber": 411
+  },
+  {
+    "__docId__": 180,
+    "kind": "test",
+    "name": "it58",
+    "testId": 58,
+    "memberof": "test/index.js~describe0.describe49.describe52",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe52.it58",
     "access": "public",
     "description": "should execute before immediate",
-    "lineNumber": 513
+    "lineNumber": 419
+  },
+  {
+    "__docId__": 181,
+    "kind": "test",
+    "name": "describe59",
+    "testId": 59,
+    "memberof": "test/index.js~describe0.describe49",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59",
+    "access": "public",
+    "description": "#delay",
+    "lineNumber": 428
+  },
+  {
+    "__docId__": 182,
+    "kind": "test",
+    "name": "it60",
+    "testId": 60,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it60",
+    "access": "public",
+    "description": "should return a Cancellable",
+    "lineNumber": 432
+  },
+  {
+    "__docId__": 183,
+    "kind": "test",
+    "name": "it61",
+    "testId": 61,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it61",
+    "access": "public",
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 440
+  },
+  {
+    "__docId__": 184,
+    "kind": "test",
+    "name": "it62",
+    "testId": 62,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it62",
+    "access": "public",
+    "description": "should execute after current thread",
+    "lineNumber": 448
+  },
+  {
+    "__docId__": 185,
+    "kind": "test",
+    "name": "it63",
+    "testId": 63,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it63",
+    "access": "public",
+    "description": "should execute after tick",
+    "lineNumber": 456
+  },
+  {
+    "__docId__": 186,
+    "kind": "test",
+    "name": "it64",
+    "testId": 64,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it64",
+    "access": "public",
+    "description": "should execute after async",
+    "lineNumber": 464
+  },
+  {
+    "__docId__": 187,
+    "kind": "test",
+    "name": "it65",
+    "testId": 65,
+    "memberof": "test/index.js~describe0.describe49.describe59",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe49.describe59.it65",
+    "access": "public",
+    "description": "should execute before immediate",
+    "lineNumber": 472
+  },
+  {
+    "__docId__": 188,
+    "kind": "test",
+    "name": "describe66",
+    "testId": 66,
+    "memberof": "test/index.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66",
+    "access": "public",
+    "description": "#tick",
+    "lineNumber": 482
+  },
+  {
+    "__docId__": 189,
+    "kind": "test",
+    "name": "it67",
+    "testId": 67,
+    "memberof": "test/index.js~describe0.describe66",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.it67",
+    "access": "public",
+    "description": "should return a SchedulerInterface",
+    "lineNumber": 486
+  },
+  {
+    "__docId__": 190,
+    "kind": "test",
+    "name": "it68",
+    "testId": 68,
+    "memberof": "test/index.js~describe0.describe66",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.it68",
+    "access": "public",
+    "description": "should return a TickScheduler",
+    "lineNumber": 492
+  },
+  {
+    "__docId__": 191,
+    "kind": "test",
+    "name": "describe69",
+    "testId": 69,
+    "memberof": "test/index.js~describe0.describe66",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe69",
+    "access": "public",
+    "description": "#schedule",
+    "lineNumber": 498
+  },
+  {
+    "__docId__": 192,
+    "kind": "test",
+    "name": "it70",
+    "testId": 70,
+    "memberof": "test/index.js~describe0.describe66.describe69",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe69.it70",
+    "access": "public",
+    "description": "should execute after current thread",
+    "lineNumber": 502
+  },
+  {
+    "__docId__": 193,
+    "kind": "test",
+    "name": "it71",
+    "testId": 71,
+    "memberof": "test/index.js~describe0.describe66.describe69",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe69.it71",
+    "access": "public",
+    "description": "should execute before async",
+    "lineNumber": 510
+  },
+  {
+    "__docId__": 194,
+    "kind": "test",
+    "name": "it72",
+    "testId": 72,
+    "memberof": "test/index.js~describe0.describe66.describe69",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe69.it72",
+    "access": "public",
+    "description": "should execute before timeout",
+    "lineNumber": 518
+  },
+  {
+    "__docId__": 195,
+    "kind": "test",
+    "name": "it73",
+    "testId": 73,
+    "memberof": "test/index.js~describe0.describe66.describe69",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe69.it73",
+    "access": "public",
+    "description": "should execute before immediate",
+    "lineNumber": 526
+  },
+  {
+    "__docId__": 196,
+    "kind": "test",
+    "name": "describe74",
+    "testId": 74,
+    "memberof": "test/index.js~describe0.describe66",
+    "testDepth": 2,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74",
+    "access": "public",
+    "description": "#delay",
+    "lineNumber": 535
+  },
+  {
+    "__docId__": 197,
+    "kind": "test",
+    "name": "it75",
+    "testId": 75,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it75",
+    "access": "public",
+    "description": "should return a Cancellable",
+    "lineNumber": 539
+  },
+  {
+    "__docId__": 198,
+    "kind": "test",
+    "name": "it76",
+    "testId": 76,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it76",
+    "access": "public",
+    "description": "should return a cancelled Cancellable if first arg is not a function.",
+    "lineNumber": 547
+  },
+  {
+    "__docId__": 199,
+    "kind": "test",
+    "name": "it77",
+    "testId": 77,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it77",
+    "access": "public",
+    "description": "should execute after current thread",
+    "lineNumber": 555
+  },
+  {
+    "__docId__": 200,
+    "kind": "test",
+    "name": "it78",
+    "testId": 78,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it78",
+    "access": "public",
+    "description": "should execute before async",
+    "lineNumber": 563
+  },
+  {
+    "__docId__": 201,
+    "kind": "test",
+    "name": "it79",
+    "testId": 79,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it79",
+    "access": "public",
+    "description": "should execute before timeout",
+    "lineNumber": 571
+  },
+  {
+    "__docId__": 202,
+    "kind": "test",
+    "name": "it80",
+    "testId": 80,
+    "memberof": "test/index.js~describe0.describe66.describe74",
+    "testDepth": 3,
+    "static": true,
+    "longname": "test/index.js~describe0.describe66.describe74.it80",
+    "access": "public",
+    "description": "should execute before immediate",
+    "lineNumber": 579
   }
 ]

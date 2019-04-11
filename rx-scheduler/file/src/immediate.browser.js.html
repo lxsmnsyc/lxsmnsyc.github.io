@@ -38,19 +38,22 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/immediate.browser.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable class-methods-use-this */
-import AbortController from &apos;abort-controller&apos;;
 import SchedulerInterface from &apos;./scheduler-interface&apos;;
+import { schedule, delay } from &apos;./utils&apos;;
 
 let INSTANCE;
 
+const func = x =&gt; requestAnimationFrame(x);
+const sched = schedule(func);
+const timed = delay(func);
 /**
  * A Scheduler that allows immediate scheduling, using requestAnimationFrame.
  */
@@ -65,11 +68,13 @@ export default class ImmediateScheduler extends SchedulerInterface {
   /**
    * Schedules the function immediately.
    * @param {!function} fn
+   * A function that is called after being scheduled.
+   * @returns {Cancellable}
+   * Returns an Cancellable that allows
+   * to cancel the schedule.
    */
   schedule(fn) {
-    if (typeof fn === &apos;function&apos;) {
-      requestAnimationFrame(fn);
-    }
+    return sched(fn);
   }
 
   /**
@@ -78,27 +83,12 @@ export default class ImmediateScheduler extends SchedulerInterface {
    * A function that is called after being scheduled.
    * @param {!number} amount
    * The amount of delay in milliseconds.
-   * @returns {AbortController}
-   * Returns an AbortController that allows
-   * to abort the schedule.
+   * @returns {Cancellable}
+   * Returns an Cancellable that allows
+   * to cancel the schedule.
    */
   delay(fn, amount) {
-    const controller = new AbortController();
-    if (typeof fn === &apos;function&apos;) {
-      const { signal } = controller;
-      const handler = requestAnimationFrame(() =&gt; {
-        const inner = setTimeout(() =&gt; {
-          fn();
-          controller.abort();
-        }, amount);
-
-        signal.addEventListener(&apos;abort&apos;, () =&gt; clearTimeout(inner));
-      });
-      signal.addEventListener(&apos;abort&apos;, () =&gt; cancelAnimationFrame(handler));
-    } else {
-      controller.abort();
-    }
-    return controller;
+    return timed(fn, amount);
   }
 }
 </code></pre>

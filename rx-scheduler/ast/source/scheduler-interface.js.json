@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 687,
+  "end": 772,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 30,
+      "line": 32,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 687,
+    "end": 772,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 30,
+        "line": 32,
         "column": 0
       }
     },
@@ -31,28 +31,28 @@
       {
         "type": "ExportDefaultDeclaration",
         "start": 102,
-        "end": 686,
+        "end": 771,
         "loc": {
           "start": {
             "line": 6,
             "column": 0
           },
           "end": {
-            "line": 29,
+            "line": 31,
             "column": 1
           }
         },
         "declaration": {
           "type": "ClassDeclaration",
           "start": 117,
-          "end": 686,
+          "end": 771,
           "loc": {
             "start": {
               "line": 6,
               "column": 15
             },
             "end": {
-              "line": 29,
+              "line": 31,
               "column": 1
             }
           },
@@ -78,29 +78,29 @@
           "body": {
             "type": "ClassBody",
             "start": 142,
-            "end": 686,
+            "end": 771,
             "loc": {
               "start": {
                 "line": 6,
                 "column": 40
               },
               "end": {
-                "line": 29,
+                "line": 31,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ClassMethod",
-                "start": 306,
-                "end": 321,
+                "start": 398,
+                "end": 413,
                 "loc": {
                   "start": {
-                    "line": 14,
+                    "line": 16,
                     "column": 2
                   },
                   "end": {
-                    "line": 14,
+                    "line": 16,
                     "column": 17
                   }
                 },
@@ -108,15 +108,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 306,
-                  "end": 314,
+                  "start": 398,
+                  "end": 406,
                   "loc": {
                     "start": {
-                      "line": 14,
+                      "line": 16,
                       "column": 2
                     },
                     "end": {
-                      "line": 14,
+                      "line": 16,
                       "column": 10
                     },
                     "identifierName": "schedule"
@@ -132,15 +132,15 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 315,
-                    "end": 317,
+                    "start": 407,
+                    "end": 409,
                     "loc": {
                       "start": {
-                        "line": 14,
+                        "line": 16,
                         "column": 11
                       },
                       "end": {
-                        "line": 14,
+                        "line": 16,
                         "column": 13
                       },
                       "identifierName": "fn"
@@ -150,15 +150,15 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 319,
-                  "end": 321,
+                  "start": 411,
+                  "end": 413,
                   "loc": {
                     "start": {
-                      "line": 14,
+                      "line": 16,
                       "column": 15
                     },
                     "end": {
-                      "line": 14,
+                      "line": 16,
                       "column": 17
                     }
                   },
@@ -170,16 +170,16 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   *\n   * @abstract\n   ",
+                    "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
                     "start": 146,
-                    "end": 303,
+                    "end": 395,
                     "loc": {
                       "start": {
                         "line": 7,
                         "column": 2
                       },
                       "end": {
-                        "line": 13,
+                        "line": 15,
                         "column": 5
                       }
                     }
@@ -188,16 +188,16 @@
                 "trailingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   * @abstract\n   ",
-                    "start": 325,
-                    "end": 658,
+                    "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
+                    "start": 417,
+                    "end": 743,
                     "loc": {
                       "start": {
-                        "line": 16,
+                        "line": 18,
                         "column": 2
                       },
                       "end": {
-                        "line": 26,
+                        "line": 28,
                         "column": 5
                       }
                     }
@@ -206,15 +206,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 661,
-                "end": 684,
+                "start": 746,
+                "end": 769,
                 "loc": {
                   "start": {
-                    "line": 27,
+                    "line": 29,
                     "column": 2
                   },
                   "end": {
-                    "line": 28,
+                    "line": 30,
                     "column": 3
                   }
                 },
@@ -222,15 +222,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 661,
-                  "end": 666,
+                  "start": 746,
+                  "end": 751,
                   "loc": {
                     "start": {
-                      "line": 27,
+                      "line": 29,
                       "column": 2
                     },
                     "end": {
-                      "line": 27,
+                      "line": 29,
                       "column": 7
                     },
                     "identifierName": "delay"
@@ -246,15 +246,15 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 667,
-                    "end": 669,
+                    "start": 752,
+                    "end": 754,
                     "loc": {
                       "start": {
-                        "line": 27,
+                        "line": 29,
                         "column": 8
                       },
                       "end": {
-                        "line": 27,
+                        "line": 29,
                         "column": 10
                       },
                       "identifierName": "fn"
@@ -263,15 +263,15 @@
                   },
                   {
                     "type": "Identifier",
-                    "start": 671,
-                    "end": 677,
+                    "start": 756,
+                    "end": 762,
                     "loc": {
                       "start": {
-                        "line": 27,
+                        "line": 29,
                         "column": 12
                       },
                       "end": {
-                        "line": 27,
+                        "line": 29,
                         "column": 18
                       },
                       "identifierName": "amount"
@@ -281,15 +281,15 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 679,
-                  "end": 684,
+                  "start": 764,
+                  "end": 769,
                   "loc": {
                     "start": {
-                      "line": 27,
+                      "line": 29,
                       "column": 20
                     },
                     "end": {
-                      "line": 28,
+                      "line": 30,
                       "column": 3
                     }
                   },
@@ -299,16 +299,16 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   * @abstract\n   ",
-                    "start": 325,
-                    "end": 658,
+                    "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
+                    "start": 417,
+                    "end": 743,
                     "loc": {
                       "start": {
-                        "line": 16,
+                        "line": 18,
                         "column": 2
                       },
                       "end": {
-                        "line": 26,
+                        "line": 28,
                         "column": 5
                       }
                     }
@@ -474,32 +474,32 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   *\n   * @abstract\n   ",
+      "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
       "start": 146,
-      "end": 303,
+      "end": 395,
       "loc": {
         "start": {
           "line": 7,
           "column": 2
         },
         "end": {
-          "line": 13,
+          "line": 15,
           "column": 5
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   * @abstract\n   ",
-      "start": 325,
-      "end": 658,
+      "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
+      "start": 417,
+      "end": 743,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 18,
           "column": 2
         },
         "end": {
-          "line": 26,
+          "line": 28,
           "column": 5
         }
       }
@@ -691,16 +691,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   *\n   * @abstract\n   ",
+      "value": "*\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
       "start": 146,
-      "end": 303,
+      "end": 395,
       "loc": {
         "start": {
           "line": 7,
           "column": 2
         },
         "end": {
-          "line": 13,
+          "line": 15,
           "column": 5
         }
       }
@@ -718,15 +718,15 @@
         "binop": null
       },
       "value": "schedule",
-      "start": 306,
-      "end": 314,
+      "start": 398,
+      "end": 406,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 2
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 10
         }
       }
@@ -743,15 +743,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 314,
-      "end": 315,
+      "start": 406,
+      "end": 407,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 10
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 11
         }
       }
@@ -769,15 +769,15 @@
         "binop": null
       },
       "value": "fn",
-      "start": 315,
-      "end": 317,
+      "start": 407,
+      "end": 409,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 11
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 13
         }
       }
@@ -794,15 +794,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 317,
-      "end": 318,
+      "start": 409,
+      "end": 410,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 13
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 14
         }
       }
@@ -819,15 +819,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 319,
-      "end": 320,
+      "start": 411,
+      "end": 412,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 15
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 16
         }
       }
@@ -844,31 +844,31 @@
         "postfix": false,
         "binop": null
       },
-      "start": 320,
-      "end": 321,
+      "start": 412,
+      "end": 413,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 16,
           "column": 16
         },
         "end": {
-          "line": 14,
+          "line": 16,
           "column": 17
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {AbortController}\n   * Returns an AbortController that allows\n   * to abort the schedule.\n   * @abstract\n   ",
-      "start": 325,
-      "end": 658,
+      "value": "*\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   ",
+      "start": 417,
+      "end": 743,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 18,
           "column": 2
         },
         "end": {
-          "line": 26,
+          "line": 28,
           "column": 5
         }
       }
@@ -886,15 +886,15 @@
         "binop": null
       },
       "value": "delay",
-      "start": 661,
-      "end": 666,
+      "start": 746,
+      "end": 751,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 2
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 7
         }
       }
@@ -911,15 +911,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 666,
-      "end": 667,
+      "start": 751,
+      "end": 752,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 7
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 8
         }
       }
@@ -937,15 +937,15 @@
         "binop": null
       },
       "value": "fn",
-      "start": 667,
-      "end": 669,
+      "start": 752,
+      "end": 754,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 8
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 10
         }
       }
@@ -963,15 +963,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 669,
-      "end": 670,
+      "start": 754,
+      "end": 755,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 10
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 11
         }
       }
@@ -989,15 +989,15 @@
         "binop": null
       },
       "value": "amount",
-      "start": 671,
-      "end": 677,
+      "start": 756,
+      "end": 762,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 12
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 18
         }
       }
@@ -1014,15 +1014,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 677,
-      "end": 678,
+      "start": 762,
+      "end": 763,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 18
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 19
         }
       }
@@ -1039,15 +1039,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 679,
-      "end": 680,
+      "start": 764,
+      "end": 765,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 29,
           "column": 20
         },
         "end": {
-          "line": 27,
+          "line": 29,
           "column": 21
         }
       }
@@ -1064,15 +1064,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 683,
-      "end": 684,
+      "start": 768,
+      "end": 769,
       "loc": {
         "start": {
-          "line": 28,
+          "line": 30,
           "column": 2
         },
         "end": {
-          "line": 28,
+          "line": 30,
           "column": 3
         }
       }
@@ -1089,15 +1089,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 685,
-      "end": 686,
+      "start": 770,
+      "end": 771,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 31,
           "column": 0
         },
         "end": {
-          "line": 29,
+          "line": 31,
           "column": 1
         }
       }
@@ -1115,15 +1115,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 687,
-      "end": 687,
+      "start": 772,
+      "end": 772,
       "loc": {
         "start": {
-          "line": 30,
+          "line": 32,
           "column": 0
         },
         "end": {
-          "line": 30,
+          "line": 32,
           "column": 0
         }
       }

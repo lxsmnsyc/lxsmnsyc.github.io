@@ -38,8 +38,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -73,11 +73,13 @@
 <p>CDN</p>
 <ul>
 <li><p>jsDelivr</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 <li><p>unpkg</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-cancellable/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 </ul>
@@ -141,6 +143,7 @@ Hello World, Immediate 100</code>
 </tr>
 </tbody>
 </table>
+<p>Each scheduler types has two methods: <code>schedule</code>, which executes the schedule immediately on their own threads and <code>delay</code>, which schedules the function with a timer on their own threads. Both methods return a Cancellable instance, that allows you to cancel the scheduled functions if necessary.</p>
 <h2 id="creating-your-own-scheduler">Creating your own Scheduler</h2><p>You can create your own Scheduler that is recognizable by the implementations by extending <code>Scheduler.interface</code></p>
 <pre><code class="lang-js"><code class="source-code prettyprint">class MyScheduler extends Scheduler.interface {
   schedule(fn) {
@@ -159,6 +162,17 @@ Hello World, Immediate 100</code>
 <p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
+<h2 id="changelogs">Changelogs</h2><ul>
+<li>0.2.0<ul>
+<li>Replaced AbortController with <a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a>.</li>
+<li><code>schedule</code> and <code>delay</code> now returns a <code>Cancellable</code> to cancel schedules.</li>
+</ul>
+</li>
+<li>0.1.0<ul>
+<li>Release</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 

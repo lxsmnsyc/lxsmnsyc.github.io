@@ -61,91 +61,103 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber202",
+    "test-file/test/index.js.html#lineNumber236",
     "Scheduler #async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber255",
+    "test-file/test/index.js.html#lineNumber305",
     "Scheduler #async #delay",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber275",
+    "test-file/test/index.js.html#lineNumber325",
     "Scheduler #async #delay should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber283",
+    "test-file/test/index.js.html#lineNumber333",
     "Scheduler #async #delay should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber299",
+    "test-file/test/index.js.html#lineNumber349",
     "Scheduler #async #delay should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber291",
+    "test-file/test/index.js.html#lineNumber341",
     "Scheduler #async #delay should execute before timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber259",
-    "Scheduler #async #delay should return an AbortController",
+    "test-file/test/index.js.html#lineNumber309",
+    "Scheduler #async #delay should return a Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber267",
-    "Scheduler #async #delay should return an aborted AbortControler if first arg is not a function.",
+    "test-file/test/index.js.html#lineNumber317",
+    "Scheduler #async #delay should return a cancelled Cancellable if first arg is not a function.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber218",
+    "test-file/test/index.js.html#lineNumber252",
     "Scheduler #async #schedule",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber222",
+    "test-file/test/index.js.html#lineNumber272",
     "Scheduler #async #schedule should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber230",
+    "test-file/test/index.js.html#lineNumber280",
     "Scheduler #async #schedule should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber246",
+    "test-file/test/index.js.html#lineNumber296",
     "Scheduler #async #schedule should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber238",
+    "test-file/test/index.js.html#lineNumber288",
     "Scheduler #async #schedule should execute before timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber212",
+    "test-file/test/index.js.html#lineNumber256",
+    "Scheduler #async #schedule should return a Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber264",
+    "Scheduler #async #schedule should return a cancelled Cancellable if first arg is not a function.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber246",
     "Scheduler #async should return a AsyncScheduler",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber206",
+    "test-file/test/index.js.html#lineNumber240",
     "Scheduler #async should return a SchedulerInterface",
     "test"
   ],
@@ -157,331 +169,373 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber41",
+    "test-file/test/index.js.html#lineNumber59",
     "Scheduler #current #delay",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber69",
+    "test-file/test/index.js.html#lineNumber87",
     "Scheduler #current #delay should execute before async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber85",
+    "test-file/test/index.js.html#lineNumber103",
     "Scheduler #current #delay should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber61",
+    "test-file/test/index.js.html#lineNumber79",
     "Scheduler #current #delay should execute before tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber77",
+    "test-file/test/index.js.html#lineNumber95",
     "Scheduler #current #delay should execute before timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber45",
-    "Scheduler #current #delay should return an AbortController",
+    "test-file/test/index.js.html#lineNumber63",
+    "Scheduler #current #delay should return a Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber53",
-    "Scheduler #current #delay should return an aborted AbortControler if first arg is not a function.",
+    "test-file/test/index.js.html#lineNumber71",
+    "Scheduler #current #delay should return a cancelled Cancellable if first arg is not a function.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber35",
+    "test-file/test/index.js.html#lineNumber51",
     "Scheduler #current #schedule",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber29",
-    "Scheduler #current should return a CurrentScheduler",
+    "test-file/test/index.js.html#lineNumber52",
+    "Scheduler #current #schedule should return a Cancellable.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber23",
+    "Scheduler #current should return a Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber45",
+    "Scheduler #current should return a CurrentScheduler",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber39",
     "Scheduler #current should return a SchedulerInterface",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber95",
+    "test-file/test/index.js.html#lineNumber31",
+    "Scheduler #current should return a cancelled Cancellable if first arg is not a function.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber113",
     "Scheduler #immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber148",
+    "test-file/test/index.js.html#lineNumber182",
     "Scheduler #immediate #delay",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber184",
+    "test-file/test/index.js.html#lineNumber218",
     "Scheduler #immediate #delay should execute after async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber168",
+    "test-file/test/index.js.html#lineNumber202",
     "Scheduler #immediate #delay should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber176",
+    "test-file/test/index.js.html#lineNumber210",
     "Scheduler #immediate #delay should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber192",
+    "test-file/test/index.js.html#lineNumber226",
     "Scheduler #immediate #delay should execute after timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber152",
-    "Scheduler #immediate #delay should return an AbortController",
+    "test-file/test/index.js.html#lineNumber186",
+    "Scheduler #immediate #delay should return a Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber160",
-    "Scheduler #immediate #delay should return an aborted AbortControler if first arg is not a function.",
+    "test-file/test/index.js.html#lineNumber194",
+    "Scheduler #immediate #delay should return a cancelled Cancellable if first arg is not a function.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber111",
+    "test-file/test/index.js.html#lineNumber129",
     "Scheduler #immediate #schedule",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber131",
+    "test-file/test/index.js.html#lineNumber165",
     "Scheduler #immediate #schedule should execute after async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber115",
+    "test-file/test/index.js.html#lineNumber149",
     "Scheduler #immediate #schedule should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber123",
+    "test-file/test/index.js.html#lineNumber157",
     "Scheduler #immediate #schedule should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber139",
+    "test-file/test/index.js.html#lineNumber173",
     "Scheduler #immediate #schedule should execute after timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber105",
+    "test-file/test/index.js.html#lineNumber133",
+    "Scheduler #immediate #schedule should return a Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber141",
+    "Scheduler #immediate #schedule should return a cancelled Cancellable if first arg is not a function.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber123",
     "Scheduler #immediate should return a ImmediateScheduler",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber99",
+    "test-file/test/index.js.html#lineNumber117",
     "Scheduler #immediate should return a SchedulerInterface",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber416",
+    "test-file/test/index.js.html#lineNumber482",
     "Scheduler #tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber469",
+    "test-file/test/index.js.html#lineNumber535",
     "Scheduler #tick #delay",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber489",
+    "test-file/test/index.js.html#lineNumber555",
     "Scheduler #tick #delay should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber497",
+    "test-file/test/index.js.html#lineNumber563",
     "Scheduler #tick #delay should execute before async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber513",
+    "test-file/test/index.js.html#lineNumber579",
     "Scheduler #tick #delay should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber505",
+    "test-file/test/index.js.html#lineNumber571",
     "Scheduler #tick #delay should execute before timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber473",
-    "Scheduler #tick #delay should return an AbortController",
+    "test-file/test/index.js.html#lineNumber539",
+    "Scheduler #tick #delay should return a Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber481",
-    "Scheduler #tick #delay should return an aborted AbortControler if first arg is not a function.",
+    "test-file/test/index.js.html#lineNumber547",
+    "Scheduler #tick #delay should return a cancelled Cancellable if first arg is not a function.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber432",
+    "test-file/test/index.js.html#lineNumber498",
     "Scheduler #tick #schedule",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber436",
+    "test-file/test/index.js.html#lineNumber502",
     "Scheduler #tick #schedule should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber444",
+    "test-file/test/index.js.html#lineNumber510",
     "Scheduler #tick #schedule should execute before async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber460",
+    "test-file/test/index.js.html#lineNumber526",
     "Scheduler #tick #schedule should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber452",
+    "test-file/test/index.js.html#lineNumber518",
     "Scheduler #tick #schedule should execute before timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber420",
+    "test-file/test/index.js.html#lineNumber486",
     "Scheduler #tick should return a SchedulerInterface",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber426",
+    "test-file/test/index.js.html#lineNumber492",
     "Scheduler #tick should return a TickScheduler",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber309",
+    "test-file/test/index.js.html#lineNumber359",
     "Scheduler #timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber362",
+    "test-file/test/index.js.html#lineNumber428",
     "Scheduler #timeout #delay",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber398",
+    "test-file/test/index.js.html#lineNumber464",
     "Scheduler #timeout #delay should execute after async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber382",
+    "test-file/test/index.js.html#lineNumber448",
     "Scheduler #timeout #delay should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber390",
+    "test-file/test/index.js.html#lineNumber456",
     "Scheduler #timeout #delay should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber406",
+    "test-file/test/index.js.html#lineNumber472",
     "Scheduler #timeout #delay should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber366",
-    "Scheduler #timeout #delay should return an AbortController",
+    "test-file/test/index.js.html#lineNumber432",
+    "Scheduler #timeout #delay should return a Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber374",
-    "Scheduler #timeout #delay should return an aborted AbortControler if first arg is not a function.",
+    "test-file/test/index.js.html#lineNumber440",
+    "Scheduler #timeout #delay should return a cancelled Cancellable if first arg is not a function.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber325",
+    "test-file/test/index.js.html#lineNumber375",
     "Scheduler #timeout #schedule",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber345",
+    "test-file/test/index.js.html#lineNumber411",
     "Scheduler #timeout #schedule should execute after async",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber329",
+    "test-file/test/index.js.html#lineNumber395",
     "Scheduler #timeout #schedule should execute after current thread",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber337",
+    "test-file/test/index.js.html#lineNumber403",
     "Scheduler #timeout #schedule should execute after tick",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber353",
+    "test-file/test/index.js.html#lineNumber419",
     "Scheduler #timeout #schedule should execute before immediate",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber313",
+    "test-file/test/index.js.html#lineNumber379",
+    "Scheduler #timeout #schedule should return a Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber387",
+    "Scheduler #timeout #schedule should return a cancelled Cancellable if first arg is not a function.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber363",
     "Scheduler #timeout should return a SchedulerInterface",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber319",
+    "test-file/test/index.js.html#lineNumber369",
     "Scheduler #timeout should return a TimeoutScheduler",
     "test"
   ],
@@ -870,9 +924,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.browser.js~abortcontroller",
-    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
-    "src/index.browser.js~AbortController",
+    "src/index.browser.js~cancellable",
+    "https://lxsmnsyc.github.io/rx-cancellable/",
+    "src/index.browser.js~Cancellable",
     "external"
   ],
   [
@@ -912,9 +966,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.node.js~abortcontroller",
-    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
-    "src/index.node.js~AbortController",
+    "src/index.node.js~cancellable",
+    "https://lxsmnsyc.github.io/rx-cancellable/",
+    "src/index.node.js~Cancellable",
     "external"
   ],
   [
@@ -1018,6 +1072,12 @@ window.esdocSearchIndex = [
     "class/src/timeout.js~TimeoutScheduler.html#static-get-instance",
     "src/timeout.js~TimeoutScheduler.instance",
     "member"
+  ],
+  [
+    "src/utils.js",
+    "file/src/utils.js.html",
+    "src/utils.js",
+    "file"
   ],
   [
     "test/index.js",

@@ -38,8 +38,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -47,7 +47,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
-import AbortController from &apos;abort-controller&apos;;
+import Cancellable from &apos;rx-cancellable&apos;;
 import Scheduler from &apos;../src/index.node&apos;;
 import SchedulerInterface from &apos;../src/scheduler-interface&apos;;
 import CurrentScheduler from &apos;../src/current&apos;;
@@ -67,6 +67,22 @@ describe(&apos;Scheduler&apos;, () =&gt; {
     /**
      *
      */
+    it(&apos;should return a Cancellable&apos;, () =&gt; {
+      const controller = Scheduler.current.schedule(() =&gt; {});
+
+      assert(controller instanceof Cancellable);
+    });
+    /**
+     *
+     */
+    it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
+      const controller = Scheduler.current.schedule(null);
+
+      assert(controller.cancelled);
+    });
+    /**
+     *
+     */
     it(&apos;should return a SchedulerInterface&apos;, () =&gt; {
       assert(Scheduler.current instanceof SchedulerInterface);
     });
@@ -80,7 +96,9 @@ describe(&apos;Scheduler&apos;, () =&gt; {
      *
      */
     describe(&apos;#schedule&apos;, () =&gt; {
+      it(&apos;should return a Cancellable.&apos;, () =&gt; {
 
+      });
     });
     /**
      *
@@ -89,18 +107,18 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
-      it(&apos;should return an AbortController&apos;, () =&gt; {
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
         const controller = Scheduler.current.delay(() =&gt; {}, 100);
 
-        assert(controller instanceof AbortController);
+        assert(controller instanceof Cancellable);
       });
       /**
        *
        */
-      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
         const controller = Scheduler.current.delay(null, 100);
 
-        assert(controller.signal.aborted);
+        assert(controller.cancelled);
       });
       /**
        *
@@ -159,6 +177,22 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
+        const controller = Scheduler.immediate.schedule(() =&gt; {});
+
+        assert(controller instanceof Cancellable);
+      });
+      /**
+       *
+       */
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.immediate.schedule(null);
+
+        assert(controller.cancelled);
+      });
+      /**
+       *
+       */
       it(&apos;should execute after current thread&apos;, (done) =&gt; {
         let executed;
         Scheduler.current.schedule(() =&gt; { executed = true; });
@@ -196,18 +230,18 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
-      it(&apos;should return an AbortController&apos;, () =&gt; {
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
         const controller = Scheduler.immediate.delay(() =&gt; {}, 100);
 
-        assert(controller instanceof AbortController);
+        assert(controller instanceof Cancellable);
       });
       /**
        *
        */
-      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
         const controller = Scheduler.immediate.delay(null, 100);
 
-        assert(controller.signal.aborted);
+        assert(controller.cancelled);
       });
       /**
        *
@@ -266,6 +300,22 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
+        const controller = Scheduler.async.schedule(() =&gt; {});
+
+        assert(controller instanceof Cancellable);
+      });
+      /**
+       *
+       */
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.async.schedule(null);
+
+        assert(controller.cancelled);
+      });
+      /**
+       *
+       */
       it(&apos;should execute after current thread&apos;, (done) =&gt; {
         let executed;
         Scheduler.current.schedule(() =&gt; { executed = true; });
@@ -303,18 +353,18 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
-      it(&apos;should return an AbortController&apos;, () =&gt; {
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
         const controller = Scheduler.async.delay(() =&gt; {}, 100);
 
-        assert(controller instanceof AbortController);
+        assert(controller instanceof Cancellable);
       });
       /**
        *
        */
-      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
         const controller = Scheduler.async.delay(null, 100);
 
-        assert(controller.signal.aborted);
+        assert(controller.cancelled);
       });
       /**
        *
@@ -373,6 +423,22 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
+        const controller = Scheduler.timeout.schedule(() =&gt; {});
+
+        assert(controller instanceof Cancellable);
+      });
+      /**
+       *
+       */
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
+        const controller = Scheduler.timeout.schedule(null);
+
+        assert(controller.cancelled);
+      });
+      /**
+       *
+       */
       it(&apos;should execute after current thread&apos;, (done) =&gt; {
         let executed;
         Scheduler.current.schedule(() =&gt; { executed = true; });
@@ -410,18 +476,18 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
-      it(&apos;should return an AbortController&apos;, () =&gt; {
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
         const controller = Scheduler.timeout.delay(() =&gt; {}, 100);
 
-        assert(controller instanceof AbortController);
+        assert(controller instanceof Cancellable);
       });
       /**
        *
        */
-      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
         const controller = Scheduler.timeout.delay(null, 100);
 
-        assert(controller.signal.aborted);
+        assert(controller.cancelled);
       });
       /**
        *
@@ -517,18 +583,18 @@ describe(&apos;Scheduler&apos;, () =&gt; {
       /**
        *
        */
-      it(&apos;should return an AbortController&apos;, () =&gt; {
+      it(&apos;should return a Cancellable&apos;, () =&gt; {
         const controller = Scheduler.tick.delay(() =&gt; {}, 100);
 
-        assert(controller instanceof AbortController);
+        assert(controller instanceof Cancellable);
       });
       /**
        *
        */
-      it(&apos;should return an aborted AbortControler if first arg is not a function.&apos;, () =&gt; {
+      it(&apos;should return a cancelled Cancellable if first arg is not a function.&apos;, () =&gt; {
         const controller = Scheduler.tick.delay(null, 100);
 
-        assert(controller.signal.aborted);
+        assert(controller.cancelled);
       });
       /**
        *

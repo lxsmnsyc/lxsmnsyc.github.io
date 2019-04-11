@@ -38,20 +38,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CurrentScheduler from &apos;<span><a href="file/src/current.js.html#lineNumber10">rx-scheduler/src/current.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CurrentScheduler from &apos;<span><a href="file/src/current.js.html#lineNumber14">rx-scheduler/src/current.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/current.js.html#lineNumber10">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/current.js.html#lineNumber14">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -140,7 +140,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
@@ -169,7 +169,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
@@ -206,7 +206,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
@@ -235,7 +235,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
@@ -268,7 +268,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber11">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
@@ -313,11 +313,11 @@
     
     
     
-    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+    <span class="code" data-ice="name">delay</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
@@ -361,9 +361,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>Returns an AbortController that allows
-to abort the schedule.</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Returns an Cancellable that allows
+to cancel the schedule.</p>
 </td>
         </tr>
       </tbody>
@@ -395,11 +395,11 @@ to abort the schedule.</p>
     
     
     
-    <span class="code" data-ice="name">schedule</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+    <span class="code" data-ice="name">schedule</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
@@ -423,14 +423,29 @@ to abort the schedule.</p>
       <td data-ice="name" class="code" data-depth="0">fn</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>A function that is called after being scheduled.</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Returns an Cancellable that allows
+to cancel the schedule.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 

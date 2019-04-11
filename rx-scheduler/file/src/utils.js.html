@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/scheduler-interface.js | rx-scheduler</title>
+  <title data-ice="title">src/utils.js | rx-scheduler</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -44,38 +44,44 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/scheduler-interface.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
+<div class="content" data-ice="content"><h1 data-ice="title">src/utils.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Cancellable from &apos;rx-cancellable&apos;;
 /**
- * @interface
+ * @ignore
  */
-export default class SchedulerInterface {
-  /**
-   * Schedules the given function immediately.
-   * @param {!function} fn
-   * A function that is called after being scheduled.
-   * @returns {Cancellable}
-   * Returns an Cancellable that allows
-   * to cancel the schedule.
-   * @abstract
-   */
-  schedule(fn) {}
-
-  /**
-   * Schedules the given function at a delayed time.
-   * @param {!function} fn
-   * A function that is called after being scheduled.
-   * @param {!number} amount
-   * The amount of delay in milliseconds.
-   * @returns {Cancellable}
-   * Returns an Cancellable that allows
-   * to cancel the schedule.
-   * @abstract
-   */
-  delay(fn, amount) {
+const createController = (scheduler, fn, body) =&gt; {
+  const controller = new Cancellable();
+  if (typeof fn === &apos;function&apos;) {
+    // eslint-disable-next-line no-new
+    scheduler(() =&gt; body(controller));
+  } else {
+    controller.cancel();
   }
-}
+  return controller;
+};
+/**
+ * @ignore
+ */
+export const schedule = scheduler =&gt; fn =&gt; createController(
+  scheduler,
+  fn,
+  x =&gt; !x.cancelled &amp;&amp; fn(),
+);
+/**
+ * @ignore
+ */
+export const delay = scheduler =&gt; (fn, amount) =&gt; createController(
+  scheduler,
+  fn,
+  (x) =&gt; {
+    if (x.cancelled) {
+      return;
+    }
+    const inner = setTimeout(fn, amount);
+
+    x.addEventListener(&apos;cancel&apos;, () =&gt; clearTimeout(inner));
+  },
+);
 </code></pre>
 
 </div>
