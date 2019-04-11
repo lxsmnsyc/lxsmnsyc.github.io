@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href>
-  <title data-ice="title">Test | rx-disposable</title>
+  <title data-ice="title">Test | rx-cancellable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Reactive Extensions - represents the state of disposition"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-disposable"><meta property="twitter:description" content="Reactive Extensions - represents the state of disposition"></head>
+<meta name="description" content="Reactive Extensions - represents the state of cancellation"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-cancellable"><meta property="twitter:description" content="Reactive Extensions - represents the state of cancellation"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -24,12 +24,12 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-disposable"><img width="20px" src="./image/github.png"></a></header>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-cancellable"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Disposable.html">Disposable</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Cancellable.html">Cancellable</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -44,7 +44,7 @@
   </thead>
 
   <tbody data-ice="tests"><tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="0">
-  <td data-ice="testDescription" style="padding-left: 10px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber6"><p>Disposable</p>
+  <td data-ice="testDescription" style="padding-left: 10px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber6"><p>Cancellable</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -56,7 +56,7 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber8"><p>should create a Disposable</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber8"><p>should create a Cancellable</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -68,67 +68,67 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber13"><p>should return true if Disposable is enabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber13"><p>should return true if Cancellable is enabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber17"><p>should return false if Disposable is disabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber17"><p>should return false if Cancellable is disabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber22"><p>should return true if Disposable is disabled then enabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber22"><p>should return true if Cancellable is disabled then enabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber28"><p>should return true if Disposable is enabled, disposed, and disabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber28"><p>should return true if Cancellable is enabled, cancelled, and disabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber34"><p>should return true if Disposable is disabled, disposed, and enabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber34"><p>should return true if Cancellable is disabled, cancelled, and enabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber42"><p>#disposed</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber42"><p>#cancelled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber43"><p>should return true if Disposable is disposed.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber43"><p>should return true if Cancellable is cancelled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber48"><p>should return true if Disposable is not disposed.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber48"><p>should return true if Cancellable is not cancelled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber53"><p>#dispose</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/index.js.html#lineNumber53"><p>#cancel</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber54"><p>should return true if Disposable is disposed for the first time.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber54"><p>should return true if Cancellable is cancelled for the first time.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber57"><p>should return false if Disposable has been disposed before.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber57"><p>should return false if Cancellable has been cancelled before.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -140,13 +140,13 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber64"><p>should return true if Disposable is enabled after being disabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber64"><p>should return true if Cancellable is enabled after being disabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber69"><p>should return false if Disposable is enabled already.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber69"><p>should return false if Cancellable is enabled already.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -158,13 +158,13 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber75"><p>should return true if Disposable is disabled after being enabled.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber75"><p>should return true if Cancellable is disabled after being enabled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber79"><p>should return false if Disposable is disabled already.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber79"><p>should return false if Cancellable is disabled already.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -176,31 +176,31 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber86"><p>should return false if the Disposable parent given is the same as the child</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber86"><p>should return false if the Cancellable parent given is the same as the child</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber90"><p>should return false if the Disposable parent given is not a Disposable</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber90"><p>should return false if the Cancellable parent given is not a Cancellable</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber93"><p>should return false if the Disposable parent given is a child of the source Disposable</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber93"><p>should return false if the Cancellable parent given is a child of the source Cancellable</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber99"><p>should return false if the Disposable parent is already disposed.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber99"><p>should return false if the Cancellable parent is already cancelled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber106"><p>should the children be disposed if the parent is disposed</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber106"><p>should the children be cancelled if the parent is cancelled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -218,13 +218,13 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber122"><p>should return false if the Disposable given is not the child.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber122"><p>should return false if the Cancellable given is not the child.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber127"><p>should return false if the source is already disposed.</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber127"><p>should return false if the source is already cancelled.</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -242,25 +242,25 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber143"><p>should fire the enable listener if the Disposable is enabled</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber143"><p>should fire the enable listener if the Cancellable is enabled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber150"><p>should fire the disable listener if the Disposable is disabled</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber150"><p>should fire the disable listener if the Cancellable is disabled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber156"><p>should fire the dispose listener if the Disposable is disposed</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber156"><p>should fire the cancel listener if the Cancellable is cancelled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber162"><p>should not fire the dispose listener if the Disposable is already disposed</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber162"><p>should not fire the cancel listener if the Cancellable is already cancelled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
@@ -272,19 +272,19 @@
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber170"><p>should not fire the enable listener if the Disposable is enabled</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber170"><p>should not fire the enable listener if the Cancellable is enabled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber180"><p>should not fire the disable listener if the Disposable is disabled</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber180"><p>should not fire the disable listener if the Cancellable is disabled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="2">
-  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber189"><p>should not fire the dispose listener if the Disposable is disposed</p>
+  <td data-ice="testDescription" style="padding-left: 30px"><span><a href="test-file/test/index.js.html#lineNumber189"><p>should not fire the cancel listener if the Cancellable is cancelled</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/index.js | rx-cancellable</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Reactive Extensions - represents the state of cancellation"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rx-cancellable"><meta property="twitter:description" content="Reactive Extensions - represents the state of cancellation"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/rx-cancellable"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Cancellable.html">Cancellable</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+import assert from &apos;assert&apos;;
+import Cancellable from &apos;../src&apos;;
+
+
+describe(&apos;Cancellable&apos;, () =&gt; {
+  describe(&apos;#create&apos;, () =&gt; {
+    it(&apos;should create a Cancellable&apos;, () =&gt; {
+      assert(Cancellable.create() instanceof Cancellable);
+    });
+  });
+  describe(&apos;#active&apos;, () =&gt; {
+    it(&apos;should return true if Cancellable is enabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      assert(d.active === true);
+    });
+    it(&apos;should return false if Cancellable is disabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.disable();
+      assert(d.active === false);
+    });
+    it(&apos;should return true if Cancellable is disabled then enabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.disable();
+      d.enable();
+      assert(d.active === true);
+    });
+    it(&apos;should return true if Cancellable is enabled, cancelled, and disabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.cancel();
+      d.disable();
+      assert(d.active === true);
+    });
+    it(&apos;should return true if Cancellable is disabled, cancelled, and enabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.disable();
+      d.cancel();
+      d.enable();
+      assert(d.active === false);
+    });
+  });
+  describe(&apos;#cancelled&apos;, () =&gt; {
+    it(&apos;should return true if Cancellable is cancelled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.cancel();
+      assert(d.cancelled === true);
+    });
+    it(&apos;should return true if Cancellable is not cancelled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      assert(d.cancelled === false);
+    });
+  });
+  describe(&apos;#cancel&apos;, () =&gt; {
+    it(&apos;should return true if Cancellable is cancelled for the first time.&apos;, () =&gt; {
+      assert(Cancellable.create().cancel());
+    });
+    it(&apos;should return false if Cancellable has been cancelled before.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.cancel();
+      assert(d.cancel() === false);
+    });
+  });
+  describe(&apos;#enable&apos;, () =&gt; {
+    it(&apos;should return true if Cancellable is enabled after being disabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.disable();
+      assert(d.enable());
+    });
+    it(&apos;should return false if Cancellable is enabled already.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      assert(d.enable() === false);
+    });
+  });
+  describe(&apos;#disable&apos;, () =&gt; {
+    it(&apos;should return true if Cancellable is disabled after being enabled.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      assert(d.disable());
+    });
+    it(&apos;should return false if Cancellable is disabled already.&apos;, () =&gt; {
+      const d = Cancellable.create();
+      d.disable();
+      assert(d.disable() === false);
+    });
+  });
+  describe(&apos;#setParent&apos;, () =&gt; {
+    it(&apos;should return false if the Cancellable parent given is the same as the child&apos;, () =&gt; {
+      const d = Cancellable.create();
+      assert(d.setParent(d) === false);
+    });
+    it(&apos;should return false if the Cancellable parent given is not a Cancellable&apos;, () =&gt; {
+      assert(Cancellable.create().setParent() === false);
+    });
+    it(&apos;should return false if the Cancellable parent given is a child of the source Cancellable&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      a.setParent(b);
+      assert(b.setParent(a) === false);
+    });
+    it(&apos;should return false if the Cancellable parent is already cancelled.&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      a.cancel();
+      assert(b.setParent(a) === false);
+      assert(a.cancelled);
+    });
+    it(&apos;should the children be cancelled if the parent is cancelled&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      b.setParent(a);
+      a.cancel();
+      assert(b.cancelled);
+    });
+    it(&apos;should the children be disabled if the parent is disabled&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      b.setParent(a);
+      a.disable();
+      assert(b.active);
+    });
+  });
+  describe(&apos;#remove&apos;, () =&gt; {
+    it(&apos;should return false if the Cancellable given is not the child.&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      assert(a.remove(b) === false);
+    });
+    it(&apos;should return false if the source is already cancelled.&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      a.cancel();
+      assert(b.remove(a) === false);
+    });
+    it(&apos;should return true if the removal is successful&apos;, () =&gt; {
+      const a = Cancellable.create();
+      const b = Cancellable.create();
+      a.add(b);
+      assert(a.remove(b) === true);
+      a.cancel();
+      assert(b.cancelled === false);
+    });
+  });
+  describe(&apos;#addEventListener&apos;, () =&gt; {
+    it(&apos;should fire the enable listener if the Cancellable is enabled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      a.addEventListener(&apos;enable&apos;);
+      a.addEventListener(&apos;enable&apos;, () =&gt; done());
+      a.disable();
+      a.enable();
+    });
+    it(&apos;should fire the disable listener if the Cancellable is disabled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      a.addEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;disable&apos;, () =&gt; done());
+      a.disable();
+    });
+    it(&apos;should fire the cancel listener if the Cancellable is cancelled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      a.addEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;cancel&apos;, () =&gt; done());
+      a.cancel();
+    });
+    it(&apos;should not fire the cancel listener if the Cancellable is already cancelled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      a.cancel();
+      a.addEventListener(&apos;cancel&apos;, () =&gt; done(false));
+      done();
+    });
+  });
+  describe(&apos;#removeEventListener&apos;, () =&gt; {
+    it(&apos;should not fire the enable listener if the Cancellable is enabled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      const listener = () =&gt; done(false);
+      a.removeEventListener(&apos;enable&apos;);
+      a.addEventListener(&apos;enable&apos;, listener);
+      a.removeEventListener(&apos;enable&apos;, listener);
+      a.disable();
+      a.enable();
+      done();
+    });
+    it(&apos;should not fire the disable listener if the Cancellable is disabled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      const listener = () =&gt; done(false);
+      a.removeEventListener(&apos;&apos;, () =&gt; done());
+      a.addEventListener(&apos;disable&apos;, listener);
+      a.removeEventListener(&apos;disable&apos;, listener);
+      a.disable();
+      done();
+    });
+    it(&apos;should not fire the cancel listener if the Cancellable is cancelled&apos;, (done) =&gt; {
+      const a = Cancellable.create();
+      const listener = () =&gt; done(false);
+      a.addEventListener(&apos;cancel&apos;, listener);
+      a.removeEventListener(&apos;cancel&apos;, listener);
+      a.cancel();
+      done();
+    });
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

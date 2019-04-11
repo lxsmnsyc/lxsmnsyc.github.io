@@ -1,254 +1,254 @@
 window.esdocSearchIndex = [
   [
-    "rx-disposable/src/index.js~disposable",
-    "class/src/index.js~Disposable.html",
-    "<span>Disposable</span> <span class=\"search-result-import-path\">rx-disposable/src/index.js</span>",
+    "rx-cancellable/src/index.js~cancellable",
+    "class/src/index.js~Cancellable.html",
+    "<span>Cancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/index.js</span>",
     "class"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber6",
-    "Disposable",
+    "Cancellable",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber12",
-    "Disposable #active",
+    "Cancellable #active",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber17",
-    "Disposable #active should return false if Disposable is disabled.",
+    "Cancellable #active should return false if Cancellable is disabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber22",
-    "Disposable #active should return true if Disposable is disabled then enabled.",
+    "Cancellable #active should return true if Cancellable is disabled then enabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber34",
-    "Disposable #active should return true if Disposable is disabled, disposed, and enabled.",
+    "Cancellable #active should return true if Cancellable is disabled, cancelled, and enabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber28",
-    "Disposable #active should return true if Disposable is enabled, disposed, and disabled.",
+    "Cancellable #active should return true if Cancellable is enabled, cancelled, and disabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber13",
-    "Disposable #active should return true if Disposable is enabled.",
+    "Cancellable #active should return true if Cancellable is enabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber142",
-    "Disposable #addEventListener",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber150",
-    "Disposable #addEventListener should fire the disable listener if the Disposable is disabled",
+    "Cancellable #addEventListener",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber156",
-    "Disposable #addEventListener should fire the dispose listener if the Disposable is disposed",
+    "Cancellable #addEventListener should fire the cancel listener if the Cancellable is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber150",
+    "Cancellable #addEventListener should fire the disable listener if the Cancellable is disabled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber143",
-    "Disposable #addEventListener should fire the enable listener if the Disposable is enabled",
+    "Cancellable #addEventListener should fire the enable listener if the Cancellable is enabled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber162",
-    "Disposable #addEventListener should not fire the dispose listener if the Disposable is already disposed",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber7",
-    "Disposable #create",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber8",
-    "Disposable #create should create a Disposable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber74",
-    "Disposable #disable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber79",
-    "Disposable #disable should return false if Disposable is disabled already.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber75",
-    "Disposable #disable should return true if Disposable is disabled after being enabled.",
+    "Cancellable #addEventListener should not fire the cancel listener if the Cancellable is already cancelled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber53",
-    "Disposable #dispose",
+    "Cancellable #cancel",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber57",
-    "Disposable #dispose should return false if Disposable has been disposed before.",
+    "Cancellable #cancel should return false if Cancellable has been cancelled before.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber54",
-    "Disposable #dispose should return true if Disposable is disposed for the first time.",
+    "Cancellable #cancel should return true if Cancellable is cancelled for the first time.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber42",
-    "Disposable #disposed",
+    "Cancellable #cancelled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber43",
-    "Disposable #disposed should return true if Disposable is disposed.",
+    "Cancellable #cancelled should return true if Cancellable is cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber48",
-    "Disposable #disposed should return true if Disposable is not disposed.",
+    "Cancellable #cancelled should return true if Cancellable is not cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber7",
+    "Cancellable #create",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber8",
+    "Cancellable #create should create a Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber74",
+    "Cancellable #disable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber79",
+    "Cancellable #disable should return false if Cancellable is disabled already.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber75",
+    "Cancellable #disable should return true if Cancellable is disabled after being enabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber63",
-    "Disposable #enable",
+    "Cancellable #enable",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber69",
-    "Disposable #enable should return false if Disposable is enabled already.",
+    "Cancellable #enable should return false if Cancellable is enabled already.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber64",
-    "Disposable #enable should return true if Disposable is enabled after being disabled.",
+    "Cancellable #enable should return true if Cancellable is enabled after being disabled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber121",
-    "Disposable #remove",
+    "Cancellable #remove",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber122",
-    "Disposable #remove should return false if the Disposable given is not the child.",
+    "Cancellable #remove should return false if the Cancellable given is not the child.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber127",
-    "Disposable #remove should return false if the source is already disposed.",
+    "Cancellable #remove should return false if the source is already cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber133",
-    "Disposable #remove should return true if the removal is successful",
+    "Cancellable #remove should return true if the removal is successful",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber169",
-    "Disposable #removeEventListener",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber180",
-    "Disposable #removeEventListener should not fire the disable listener if the Disposable is disabled",
+    "Cancellable #removeEventListener",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber189",
-    "Disposable #removeEventListener should not fire the dispose listener if the Disposable is disposed",
+    "Cancellable #removeEventListener should not fire the cancel listener if the Cancellable is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber180",
+    "Cancellable #removeEventListener should not fire the disable listener if the Cancellable is disabled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber170",
-    "Disposable #removeEventListener should not fire the enable listener if the Disposable is enabled",
+    "Cancellable #removeEventListener should not fire the enable listener if the Cancellable is enabled",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber85",
-    "Disposable #setParent",
+    "Cancellable #setParent",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber93",
-    "Disposable #setParent should return false if the Disposable parent given is a child of the source Disposable",
+    "Cancellable #setParent should return false if the Cancellable parent given is a child of the source Cancellable",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber90",
-    "Disposable #setParent should return false if the Disposable parent given is not a Disposable",
+    "Cancellable #setParent should return false if the Cancellable parent given is not a Cancellable",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber86",
-    "Disposable #setParent should return false if the Disposable parent given is the same as the child",
+    "Cancellable #setParent should return false if the Cancellable parent given is the same as the child",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber99",
-    "Disposable #setParent should return false if the Disposable parent is already disposed.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber113",
-    "Disposable #setParent should the children be disabled if the parent is disabled",
+    "Cancellable #setParent should return false if the Cancellable parent is already cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber106",
-    "Disposable #setParent should the children be disposed if the parent is disposed",
+    "Cancellable #setParent should the children be cancelled if the parent is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber113",
+    "Cancellable #setParent should the children be disabled if the parent is disabled",
     "test"
   ],
   [
@@ -540,81 +540,81 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.js~disposable#active",
-    "class/src/index.js~Disposable.html#instance-get-active",
-    "src/index.js~Disposable#active",
+    "src/index.js~cancellable#active",
+    "class/src/index.js~Cancellable.html#instance-get-active",
+    "src/index.js~Cancellable#active",
     "member"
   ],
   [
-    "src/index.js~disposable#add",
-    "class/src/index.js~Disposable.html#instance-method-add",
-    "src/index.js~Disposable#add",
+    "src/index.js~cancellable#add",
+    "class/src/index.js~Cancellable.html#instance-method-add",
+    "src/index.js~Cancellable#add",
     "method"
   ],
   [
-    "src/index.js~disposable#addeventlistener",
-    "class/src/index.js~Disposable.html#instance-method-addEventListener",
-    "src/index.js~Disposable#addEventListener",
+    "src/index.js~cancellable#addeventlistener",
+    "class/src/index.js~Cancellable.html#instance-method-addEventListener",
+    "src/index.js~Cancellable#addEventListener",
     "method"
   ],
   [
-    "src/index.js~disposable#disable",
-    "class/src/index.js~Disposable.html#instance-method-disable",
-    "src/index.js~Disposable#disable",
+    "src/index.js~cancellable#cancel",
+    "class/src/index.js~Cancellable.html#instance-method-cancel",
+    "src/index.js~Cancellable#cancel",
     "method"
   ],
   [
-    "src/index.js~disposable#dispose",
-    "class/src/index.js~Disposable.html#instance-method-dispose",
-    "src/index.js~Disposable#dispose",
-    "method"
-  ],
-  [
-    "src/index.js~disposable#disposed",
-    "class/src/index.js~Disposable.html#instance-get-disposed",
-    "src/index.js~Disposable#disposed",
+    "src/index.js~cancellable#cancelled",
+    "class/src/index.js~Cancellable.html#instance-get-cancelled",
+    "src/index.js~Cancellable#cancelled",
     "member"
   ],
   [
-    "src/index.js~disposable#enable",
-    "class/src/index.js~Disposable.html#instance-method-enable",
-    "src/index.js~Disposable#enable",
+    "src/index.js~cancellable#disable",
+    "class/src/index.js~Cancellable.html#instance-method-disable",
+    "src/index.js~Cancellable#disable",
     "method"
   ],
   [
-    "src/index.js~disposable#isparentto",
-    "class/src/index.js~Disposable.html#instance-method-isParentTo",
-    "src/index.js~Disposable#isParentTo",
+    "src/index.js~cancellable#enable",
+    "class/src/index.js~Cancellable.html#instance-method-enable",
+    "src/index.js~Cancellable#enable",
     "method"
   ],
   [
-    "src/index.js~disposable#remove",
-    "class/src/index.js~Disposable.html#instance-method-remove",
-    "src/index.js~Disposable#remove",
+    "src/index.js~cancellable#isparentto",
+    "class/src/index.js~Cancellable.html#instance-method-isParentTo",
+    "src/index.js~Cancellable#isParentTo",
     "method"
   ],
   [
-    "src/index.js~disposable#removeeventlistener",
-    "class/src/index.js~Disposable.html#instance-method-removeEventListener",
-    "src/index.js~Disposable#removeEventListener",
+    "src/index.js~cancellable#remove",
+    "class/src/index.js~Cancellable.html#instance-method-remove",
+    "src/index.js~Cancellable#remove",
     "method"
   ],
   [
-    "src/index.js~disposable#removeparent",
-    "class/src/index.js~Disposable.html#instance-method-removeParent",
-    "src/index.js~Disposable#removeParent",
+    "src/index.js~cancellable#removeeventlistener",
+    "class/src/index.js~Cancellable.html#instance-method-removeEventListener",
+    "src/index.js~Cancellable#removeEventListener",
     "method"
   ],
   [
-    "src/index.js~disposable#setparent",
-    "class/src/index.js~Disposable.html#instance-method-setParent",
-    "src/index.js~Disposable#setParent",
+    "src/index.js~cancellable#removeparent",
+    "class/src/index.js~Cancellable.html#instance-method-removeParent",
+    "src/index.js~Cancellable#removeParent",
     "method"
   ],
   [
-    "src/index.js~disposable.create",
-    "class/src/index.js~Disposable.html#static-method-create",
-    "src/index.js~Disposable.create",
+    "src/index.js~cancellable#setparent",
+    "class/src/index.js~Cancellable.html#instance-method-setParent",
+    "src/index.js~Cancellable#setParent",
+    "method"
+  ],
+  [
+    "src/index.js~cancellable.create",
+    "class/src/index.js~Cancellable.html#static-method-create",
+    "src/index.js~Cancellable.create",
     "method"
   ],
   [
