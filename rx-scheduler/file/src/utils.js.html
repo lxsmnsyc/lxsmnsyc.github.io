@@ -45,12 +45,12 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/utils.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Cancellable from &apos;rx-cancellable&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
 /**
  * @ignore
  */
 const createController = (scheduler, fn, body) =&gt; {
-  const controller = new Cancellable();
+  const controller = new BooleanCancellable();
   if (typeof fn === &apos;function&apos;) {
     // eslint-disable-next-line no-new
     scheduler(() =&gt; body(controller));
