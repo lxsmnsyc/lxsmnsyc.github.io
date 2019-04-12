@@ -29,19 +29,20 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/utils.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
 /**
  * @ignore
  */
@@ -82,57 +83,6 @@ export const isPromise = (obj) =&gt; {
 /**
  * @ignore
  */
-export function onSuccessHandler(value) {
-  const { onSuccess, onError, controller } = this;
-  if (controller.signal.aborted) {
-    return;
-  }
-  try {
-    if (value == null) {
-      onError(new Error(&apos;onSuccess called with null value.&apos;));
-    } else {
-      onSuccess(value);
-    }
-  } finally {
-    controller.abort();
-  }
-}
-/**
- * @ignore
- */
-export function onCompleteHandler() {
-  const { onComplete, controller } = this;
-  if (controller.signal.aborted) {
-    return;
-  }
-  try {
-    onComplete();
-  } finally {
-    controller.abort();
-  }
-}
-/**
- * @ignore
- */
-export function onErrorHandler(err) {
-  const { onError, controller } = this;
-  let report = err;
-  if (!(err instanceof Error)) {
-    report = new Error(&apos;onError called with a non-Error value.&apos;);
-  }
-  if (controller.signal.aborted) {
-    return;
-  }
-
-  try {
-    onError(report);
-  } finally {
-    controller.abort();
-  }
-}
-/**
- * @ignore
- */
 const identity = x =&gt; x;
 /**
  * @ignore
@@ -153,12 +103,12 @@ export const cleanObserver = x =&gt; ({
 export const immediateSuccess = (o, x) =&gt; {
   // const disposable = new SimpleDisposable();
   const { onSubscribe, onSuccess } = cleanObserver(o);
-  const controller = new AbortController();
+  const controller = new BooleanCancellable();
   onSubscribe(controller);
 
-  if (!controller.signal.aborted) {
+  if (!controller.cancelled) {
     onSuccess(x);
-    controller.abort();
+    controller.cancel();
   }
 };
 
@@ -168,12 +118,12 @@ export const immediateSuccess = (o, x) =&gt; {
 export const immediateComplete = (o) =&gt; {
   // const disposable = new SimpleDisposable();
   const { onSubscribe, onComplete } = cleanObserver(o);
-  const controller = new AbortController();
+  const controller = new BooleanCancellable();
   onSubscribe(controller);
 
-  if (!controller.signal.aborted) {
+  if (!controller.cancelled) {
     onComplete();
-    controller.abort();
+    controller.cancel();
   }
 };
 /**
@@ -181,12 +131,12 @@ export const immediateComplete = (o) =&gt; {
  */
 export const immediateError = (o, x) =&gt; {
   const { onSubscribe, onError } = cleanObserver(o);
-  const controller = new AbortController();
+  const controller = new BooleanCancellable();
   onSubscribe(controller);
 
-  if (!controller.signal.aborted) {
+  if (!controller.cancelled) {
     onError(x);
-    controller.abort();
+    controller.cancel();
   }
 };
 </code></pre>

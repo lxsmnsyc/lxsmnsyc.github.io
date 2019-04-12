@@ -29,18 +29,19 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">161/173</span></h1>
+<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">162/173</span></h1>
 
 <table class="files-summary" data-ice="files" data-use-coverage="true">
   <thead>
@@ -56,12 +57,12 @@
   <tbody>
     
   <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/emitter.js.html">src/emitter.js</a></span></td>
-      <td data-ice="identifier" class="identifiers"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></td>
-      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">4/4</span></td>
-      <td style="display: none;" data-ice="size">723 byte</td>
-      <td style="display: none;" data-ice="lines">32</td>
-      <td style="display: none;" data-ice="updated">2019-04-02 07:59:28 (UTC)</td>
+      <td data-ice="filePath"><span><a href="file/src/emitter.js.html#errorLines=17">src/emitter.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></td>
+      <td class="coverage"><span data-ice="coverage">91 %</span><span data-ice="coverageCount" class="coverage-count">11/12</span></td>
+      <td style="display: none;" data-ice="size">2748 byte</td>
+      <td style="display: none;" data-ice="lines">129</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:49:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/index.js.html">src/index.js</a></span></td>
@@ -75,33 +76,33 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators.js.html">src/internal/operators.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">2848 byte</td>
+      <td style="display: none;" data-ice="size">2850 byte</td>
       <td style="display: none;" data-ice="lines">49</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 08:02:56 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:18:09 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/amb.js.html">src/internal/operators/amb.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1422 byte</td>
-      <td style="display: none;" data-ice="lines">67</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:35 (UTC)</td>
+      <td style="display: none;" data-ice="size">1284 byte</td>
+      <td style="display: none;" data-ice="lines">57</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:47:31 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/ambWith.js.html">src/internal/operators/ambWith.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1513 byte</td>
-      <td style="display: none;" data-ice="lines">77</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:39 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">1/1</span></td>
+      <td style="display: none;" data-ice="size">205 byte</td>
+      <td style="display: none;" data-ice="lines">11</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:46:13 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/cache.js.html">src/internal/operators/cache.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">2124 byte</td>
-      <td style="display: none;" data-ice="lines">96</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:40 (UTC)</td>
+      <td style="display: none;" data-ice="size">2134 byte</td>
+      <td style="display: none;" data-ice="lines">94</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:47:27 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/compose.js.html">src/internal/operators/compose.js</a></span></td>
@@ -115,17 +116,17 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/create.js.html">src/internal/operators/create.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1047 byte</td>
-      <td style="display: none;" data-ice="lines">44</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 06:53:00 (UTC)</td>
+      <td style="display: none;" data-ice="size">740 byte</td>
+      <td style="display: none;" data-ice="lines">34</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:50:25 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/defaultIfEmpty.js.html#errorLines=5">src/internal/operators/defaultIfEmpty.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">974 byte</td>
-      <td style="display: none;" data-ice="lines">54</td>
-      <td style="display: none;" data-ice="updated">2019-04-06 00:04:41 (UTC)</td>
+      <td style="display: none;" data-ice="size">736 byte</td>
+      <td style="display: none;" data-ice="lines">41</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:54:54 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/defer.js.html">src/internal/operators/defer.js</a></span></td>
@@ -139,25 +140,25 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/delay.js.html">src/internal/operators/delay.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1735 byte</td>
-      <td style="display: none;" data-ice="lines">81</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:52:08 (UTC)</td>
+      <td style="display: none;" data-ice="size">1289 byte</td>
+      <td style="display: none;" data-ice="lines">56</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:30:56 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/delaySubscription.js.html">src/internal/operators/delaySubscription.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1362 byte</td>
-      <td style="display: none;" data-ice="lines">63</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:51:34 (UTC)</td>
+      <td style="display: none;" data-ice="size">1038 byte</td>
+      <td style="display: none;" data-ice="lines">47</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:59:50 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/delayUntil.js.html">src/internal/operators/delayUntil.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1377 byte</td>
-      <td style="display: none;" data-ice="lines">70</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 03:06:40 (UTC)</td>
+      <td style="display: none;" data-ice="size">963 byte</td>
+      <td style="display: none;" data-ice="lines">51</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:00:36 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/doAfterSuccess.js.html">src/internal/operators/doAfterSuccess.js</a></span></td>
@@ -179,17 +180,17 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/doFinally.js.html">src/internal/operators/doFinally.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1100 byte</td>
+      <td style="display: none;" data-ice="size">1094 byte</td>
       <td style="display: none;" data-ice="lines">60</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:00:08 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:01:05 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/internal/operators/doOnAbort.js.html">src/internal/operators/doOnAbort.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/internal/operators/doOnCancel.js.html">src/internal/operators/doOnCancel.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">685 byte</td>
+      <td style="display: none;" data-ice="size">679 byte</td>
       <td style="display: none;" data-ice="lines">36</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:00:25 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:00:52 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/doOnComplete.js.html">src/internal/operators/doOnComplete.js</a></span></td>
@@ -243,9 +244,9 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/empty.js.html">src/internal/operators/empty.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">399 byte</td>
-      <td style="display: none;" data-ice="lines">21</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:39:01 (UTC)</td>
+      <td style="display: none;" data-ice="size">336 byte</td>
+      <td style="display: none;" data-ice="lines">20</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:01:43 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/error.js.html">src/internal/operators/error.js</a></span></td>
@@ -259,41 +260,41 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/filter.js.html">src/internal/operators/filter.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1259 byte</td>
-      <td style="display: none;" data-ice="lines">70</td>
-      <td style="display: none;" data-ice="updated">2019-04-06 00:42:36 (UTC)</td>
+      <td style="display: none;" data-ice="size">1050 byte</td>
+      <td style="display: none;" data-ice="lines">58</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:02:29 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/flatMap.js.html">src/internal/operators/flatMap.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1622 byte</td>
-      <td style="display: none;" data-ice="lines">82</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:24:21 (UTC)</td>
+      <td style="display: none;" data-ice="size">1203 byte</td>
+      <td style="display: none;" data-ice="lines">62</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:07:02 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/fromCallable.js.html">src/internal/operators/fromCallable.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1038 byte</td>
-      <td style="display: none;" data-ice="lines">52</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:24:33 (UTC)</td>
+      <td style="display: none;" data-ice="size">1255 byte</td>
+      <td style="display: none;" data-ice="lines">60</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 05:52:57 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/fromPromise.js.html">src/internal/operators/fromPromise.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">784 byte</td>
-      <td style="display: none;" data-ice="lines">38</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 03:29:48 (UTC)</td>
+      <td style="display: none;" data-ice="size">779 byte</td>
+      <td style="display: none;" data-ice="lines">34</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:28:34 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/fromResolvable.js.html#errorLines=8">src/internal/operators/fromResolvable.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">1074 byte</td>
-      <td style="display: none;" data-ice="lines">42</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:24:46 (UTC)</td>
+      <td style="display: none;" data-ice="size">766 byte</td>
+      <td style="display: none;" data-ice="lines">32</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:28:47 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/just.js.html">src/internal/operators/just.js</a></span></td>
@@ -323,25 +324,25 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/merge.js.html">src/internal/operators/merge.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1533 byte</td>
-      <td style="display: none;" data-ice="lines">73</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">1114 byte</td>
+      <td style="display: none;" data-ice="lines">53</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:07:11 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/internal/operators/never.js.html#errorLines=12,4">src/internal/operators/never.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/internal/operators/never.js.html">src/internal/operators/never.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">2/4</span></td>
-      <td style="display: none;" data-ice="size">606 byte</td>
-      <td style="display: none;" data-ice="lines">36</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:52 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
+      <td style="display: none;" data-ice="size">404 byte</td>
+      <td style="display: none;" data-ice="lines">23</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:07:29 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/observeOn.js.html#errorLines=6">src/internal/operators/observeOn.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">1232 byte</td>
-      <td style="display: none;" data-ice="lines">58</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:37:45 (UTC)</td>
+      <td style="display: none;" data-ice="size">1073 byte</td>
+      <td style="display: none;" data-ice="lines">48</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:27:15 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/onErrorComplete.js.html#errorLines=4">src/internal/operators/onErrorComplete.js</a></span></td>
@@ -355,9 +356,9 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/onErrorResumeNext.js.html#errorLines=5">src/internal/operators/onErrorResumeNext.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">1804 byte</td>
-      <td style="display: none;" data-ice="lines">83</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:25:46 (UTC)</td>
+      <td style="display: none;" data-ice="size">1383 byte</td>
+      <td style="display: none;" data-ice="lines">63</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:10:39 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/onErrorReturn.js.html#errorLines=4">src/internal/operators/onErrorReturn.js</a></span></td>
@@ -379,89 +380,89 @@
       <td data-ice="filePath"><span><a href="file/src/internal/operators/retry.js.html">src/internal/operators/retry.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1361 byte</td>
-      <td style="display: none;" data-ice="lines">73</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:33:59 (UTC)</td>
+      <td style="display: none;" data-ice="size">1117 byte</td>
+      <td style="display: none;" data-ice="lines">59</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:11:43 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/subscribeOn.js.html#errorLines=6">src/internal/operators/subscribeOn.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">1206 byte</td>
-      <td style="display: none;" data-ice="lines">57</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:37:19 (UTC)</td>
+      <td style="display: none;" data-ice="size">917 byte</td>
+      <td style="display: none;" data-ice="lines">41</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:13:39 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/switchIfEmpty.js.html#errorLines=5">src/internal/operators/switchIfEmpty.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">1345 byte</td>
-      <td style="display: none;" data-ice="lines">69</td>
-      <td style="display: none;" data-ice="updated">2019-04-06 00:04:48 (UTC)</td>
+      <td style="display: none;" data-ice="size">925 byte</td>
+      <td style="display: none;" data-ice="lines">49</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:12:49 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/takeUntil.js.html">src/internal/operators/takeUntil.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1628 byte</td>
-      <td style="display: none;" data-ice="lines">80</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 00:38:43 (UTC)</td>
+      <td style="display: none;" data-ice="size">1434 byte</td>
+      <td style="display: none;" data-ice="lines">70</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:14:59 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/timeout.js.html">src/internal/operators/timeout.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1480 byte</td>
-      <td style="display: none;" data-ice="lines">71</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:36:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">1218 byte</td>
+      <td style="display: none;" data-ice="lines">55</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:15:53 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/timer.js.html">src/internal/operators/timer.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">989 byte</td>
-      <td style="display: none;" data-ice="lines">43</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 07:35:26 (UTC)</td>
+      <td style="display: none;" data-ice="size">730 byte</td>
+      <td style="display: none;" data-ice="lines">30</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:16:17 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/zip.js.html#errorLines=7">src/internal/operators/zip.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">66 %</span><span data-ice="coverageCount" class="coverage-count">2/3</span></td>
-      <td style="display: none;" data-ice="size">2355 byte</td>
-      <td style="display: none;" data-ice="lines">106</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:34:29 (UTC)</td>
+      <td style="display: none;" data-ice="size">2156 byte</td>
+      <td style="display: none;" data-ice="lines">94</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:17:15 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/operators/zipWith.js.html">src/internal/operators/zipWith.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">3/3</span></td>
-      <td style="display: none;" data-ice="size">2440 byte</td>
-      <td style="display: none;" data-ice="lines">128</td>
-      <td style="display: none;" data-ice="updated">2019-04-05 07:34:37 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">1/1</span></td>
+      <td style="display: none;" data-ice="size">222 byte</td>
+      <td style="display: none;" data-ice="lines">12</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:17:55 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/internal/utils.js.html">src/internal/utils.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">17/17</span></td>
-      <td style="display: none;" data-ice="size">3031 byte</td>
-      <td style="display: none;" data-ice="lines">148</td>
-      <td style="display: none;" data-ice="updated">2019-04-06 00:56:55 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">14/14</span></td>
+      <td style="display: none;" data-ice="size">2121 byte</td>
+      <td style="display: none;" data-ice="lines">97</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:23:27 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/maybe.js.html">src/maybe.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">53/53</span></td>
-      <td style="display: none;" data-ice="size">27212 byte</td>
-      <td style="display: none;" data-ice="lines">851</td>
-      <td style="display: none;" data-ice="updated">2019-04-04 08:22:10 (UTC)</td>
+      <td style="display: none;" data-ice="size">26979 byte</td>
+      <td style="display: none;" data-ice="lines">837</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:43:59 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/observer.js.html">src/observer.js</a></span></td>
-      <td data-ice="identifier" class="identifiers"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">5/5</span></td>
-      <td style="display: none;" data-ice="size">855 byte</td>
-      <td style="display: none;" data-ice="lines">39</td>
-      <td style="display: none;" data-ice="updated">2019-04-02 07:59:22 (UTC)</td>
+      <td style="display: none;" data-ice="size">1986 byte</td>
+      <td style="display: none;" data-ice="lines">59</td>
+      <td style="display: none;" data-ice="updated">2019-04-06 06:39:23 (UTC)</td>
     </tr>
 </tbody>
 </table>

@@ -176,7 +176,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/create.js.html#lineNumber56",
-    "#create should be aborted successfully if emitter is aborted before any signal.",
+    "#create should be cancelled successfully if emitter is cancelled before any signal.",
     "test"
   ],
   [
@@ -277,6 +277,60 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/delay.js.html#lineNumber8",
+    "#delay",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber12",
+    "#delay should create a Maybe",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber76",
+    "#delay should not signal complete if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber92",
+    "#delay should not signal error if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber60",
+    "#delay should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber19",
+    "#delay should return the same instance if the amount is not a number.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber38",
+    "#delay should signal complete",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber49",
+    "#delay should signal error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber27",
+    "#delay should signal success with the given value.",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/delaySubscription.js.html#lineNumber8",
     "#delaySubscription",
     "test"
@@ -290,19 +344,19 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber76",
-    "#delaySubscription should not signal complete if aborted.",
+    "#delaySubscription should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber92",
-    "#delaySubscription should not signal error if aborted.",
+    "#delaySubscription should not signal error if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber60",
-    "#delaySubscription should not signal success if aborted.",
+    "#delaySubscription should not signal success if cancelled.",
     "test"
   ],
   [
@@ -344,19 +398,19 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delayUntil.js.html#lineNumber87",
-    "#delayUntil should not signal complete if aborted.",
+    "#delayUntil should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delayUntil.js.html#lineNumber103",
-    "#delayUntil should not signal error if aborted.",
+    "#delayUntil should not signal error if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delayUntil.js.html#lineNumber71",
-    "#delayUntil should not signal success if aborted.",
+    "#delayUntil should not signal success if cancelled.",
     "test"
   ],
   [
@@ -493,44 +547,44 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber8",
-    "#doOnAbort",
+    "test-file/test/doOnCancel.js.html#lineNumber8",
+    "#doOnCancel",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber69",
-    "#doOnAbort should call the given function on abort.",
+    "test-file/test/doOnCancel.js.html#lineNumber69",
+    "#doOnCancel should call the given function on cancel.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber12",
-    "#doOnAbort should create a Maybe",
+    "test-file/test/doOnCancel.js.html#lineNumber12",
+    "#doOnCancel should create a Maybe",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber19",
-    "#doOnAbort should return the same instance if the method received a non-function parameter.",
+    "test-file/test/doOnCancel.js.html#lineNumber19",
+    "#doOnCancel should return the same instance if the method received a non-function parameter.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber41",
-    "#doOnAbort should signal the complete then fire abort callback.",
+    "test-file/test/doOnCancel.js.html#lineNumber41",
+    "#doOnCancel should signal the complete then fire cancel callback.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber55",
-    "#doOnAbort should signal the error value then fire abort callback.",
+    "test-file/test/doOnCancel.js.html#lineNumber55",
+    "#doOnCancel should signal the error value then fire cancel callback.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber27",
-    "#doOnAbort should signal the success value then fire abort callback.",
+    "test-file/test/doOnCancel.js.html#lineNumber27",
+    "#doOnCancel should signal the success value then fire cancel callback.",
     "test"
   ],
   [
@@ -925,13 +979,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/fromResolvable.js.html#lineNumber31",
+    "#fromResolvable should complete.",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/fromResolvable.js.html#lineNumber12",
     "#fromResolvable should create a Maybe",
     "test"
   ],
   [
     "",
-    "test-file/test/fromResolvable.js.html#lineNumber30",
+    "test-file/test/fromResolvable.js.html#lineNumber43",
+    "#fromResolvable should error with the given error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber55",
     "#fromResolvable should signal error if the given value is not a function",
     "test"
   ],
@@ -963,6 +1029,30 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/just.js.html#lineNumber20",
     "#just should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber7",
+    "#lift",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber11",
+    "#lift should return the same instance if no function is provided",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber20",
+    "#lift should signal an error if the lift operator returned a non-Observer",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber32",
+    "#lift should subscribe successfully",
     "test"
   ],
   [
@@ -1514,13 +1604,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timeout.js.html#lineNumber86",
-    "#timeout should not signal error if aborted.",
+    "#timeout should not signal error if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/timeout.js.html#lineNumber71",
-    "#timeout should not signal success if aborted.",
+    "#timeout should not signal success if cancelled.",
     "test"
   ],
   [
@@ -1568,7 +1658,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timer.js.html#lineNumber42",
-    "#timer should not signal success if aborted.",
+    "#timer should not signal success if cancelled.",
     "test"
   ],
   [
@@ -1610,7 +1700,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/zip.js.html#lineNumber119",
-    "#zip should not signal success if aborted.",
+    "#zip should not signal success if cancelled.",
     "test"
   ],
   [
@@ -1682,7 +1772,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/zipWith.js.html#lineNumber114",
-    "#zipWith should not signal success if aborted.",
+    "#zipWith should not signal success if cancelled.",
     "test"
   ],
   [
@@ -1740,112 +1830,22 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "rx-maybe/src/emitter.js~emitter",
-    "class/src/emitter.js~Emitter.html",
-    "<span>Emitter</span> <span class=\"search-result-import-path\">rx-maybe/src/emitter.js</span>",
-    "class"
-  ],
-  [
     "rx-maybe/src/maybe.js~maybe",
     "class/src/maybe.js~Maybe.html",
     "<span>Maybe</span> <span class=\"search-result-import-path\">rx-maybe/src/maybe.js</span>",
     "class"
   ],
   [
-    "rx-maybe/src/observer.js~observer",
-    "class/src/observer.js~Observer.html",
-    "<span>Observer</span> <span class=\"search-result-import-path\">rx-maybe/src/observer.js</span>",
+    "rx-maybe/src/emitter.js~maybeemitter",
+    "class/src/emitter.js~MaybeEmitter.html",
+    "<span>MaybeEmitter</span> <span class=\"search-result-import-path\">rx-maybe/src/emitter.js</span>",
     "class"
   ],
   [
-    "",
-    "test-file/test/lift.js.html#lineNumber7",
-    "Maybe",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber8",
-    "Maybe",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber12",
-    "Maybe #delay",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber16",
-    "Maybe #delay should create a Maybe",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber80",
-    "Maybe #delay should not signal complete if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber96",
-    "Maybe #delay should not signal error if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber64",
-    "Maybe #delay should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber23",
-    "Maybe #delay should return the same instance if the amount is not a number.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber42",
-    "Maybe #delay should signal complete",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber53",
-    "Maybe #delay should signal error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber31",
-    "Maybe #delay should signal success with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber11",
-    "Maybe #lift",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber15",
-    "Maybe #lift should return the same instance if no function is provided",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber24",
-    "Maybe #lift should signal an error if the lift operator returned a non-Observer",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber36",
-    "Maybe #lift should subscribe successfully",
-    "test"
+    "rx-maybe/src/observer.js~maybeobserver",
+    "class/src/observer.js~MaybeObserver.html",
+    "<span>MaybeObserver</span> <span class=\"search-result-import-path\">rx-maybe/src/observer.js</span>",
+    "class"
   ],
   [
     "src/.external-ecmascript.js~array",
@@ -2136,21 +2136,45 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/emitter.js~emitter#oncomplete",
-    "class/src/emitter.js~Emitter.html#instance-method-onComplete",
-    "src/emitter.js~Emitter#onComplete",
+    "src/emitter.js~maybeemitter#cancel",
+    "class/src/emitter.js~MaybeEmitter.html#instance-method-cancel",
+    "src/emitter.js~MaybeEmitter#cancel",
     "method"
   ],
   [
-    "src/emitter.js~emitter#onerror",
-    "class/src/emitter.js~Emitter.html#instance-method-onError",
-    "src/emitter.js~Emitter#onError",
+    "src/emitter.js~maybeemitter#cancelled",
+    "class/src/emitter.js~MaybeEmitter.html#instance-get-cancelled",
+    "src/emitter.js~MaybeEmitter#cancelled",
+    "member"
+  ],
+  [
+    "src/emitter.js~maybeemitter#constructor",
+    "class/src/emitter.js~MaybeEmitter.html#instance-constructor-constructor",
+    "src/emitter.js~MaybeEmitter#constructor",
     "method"
   ],
   [
-    "src/emitter.js~emitter#onsuccess",
-    "class/src/emitter.js~Emitter.html#instance-method-onSuccess",
-    "src/emitter.js~Emitter#onSuccess",
+    "src/emitter.js~maybeemitter#oncomplete",
+    "class/src/emitter.js~MaybeEmitter.html#instance-method-onComplete",
+    "src/emitter.js~MaybeEmitter#onComplete",
+    "method"
+  ],
+  [
+    "src/emitter.js~maybeemitter#onerror",
+    "class/src/emitter.js~MaybeEmitter.html#instance-method-onError",
+    "src/emitter.js~MaybeEmitter#onError",
+    "method"
+  ],
+  [
+    "src/emitter.js~maybeemitter#onsuccess",
+    "class/src/emitter.js~MaybeEmitter.html#instance-method-onSuccess",
+    "src/emitter.js~MaybeEmitter#onSuccess",
+    "method"
+  ],
+  [
+    "src/emitter.js~maybeemitter#setcancellable",
+    "class/src/emitter.js~MaybeEmitter.html#instance-method-setCancellable",
+    "src/emitter.js~MaybeEmitter#setCancellable",
     "method"
   ],
   [
@@ -2244,9 +2268,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/internal/operators/doonabort.js",
-    "file/src/internal/operators/doOnAbort.js.html",
-    "src/internal/operators/doOnAbort.js",
+    "src/internal/operators/dooncancel.js",
+    "file/src/internal/operators/doOnCancel.js.html",
+    "src/internal/operators/doOnCancel.js",
     "file"
   ],
   [
@@ -2448,9 +2472,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/maybe.js~abortcontroller",
-    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
-    "src/maybe.js~AbortController",
+    "src/maybe.js~cancellable",
+    "https://lxsmnsyc.github.io/rx-cancellable/",
+    "src/maybe.js~Cancellable",
     "external"
   ],
   [
@@ -2526,9 +2550,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/maybe.js~maybe#doonabort",
-    "class/src/maybe.js~Maybe.html#instance-method-doOnAbort",
-    "src/maybe.js~Maybe#doOnAbort",
+    "src/maybe.js~maybe#dooncancel",
+    "class/src/maybe.js~Maybe.html#instance-method-doOnCancel",
+    "src/maybe.js~Maybe#doOnCancel",
     "method"
   ],
   [
@@ -2766,6 +2790,12 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/maybe.js~scheduler",
+    "https://lxsmnsyc.github.io/rx-scheduler/",
+    "src/maybe.js~Scheduler",
+    "external"
+  ],
+  [
     "src/maybe.js~thennable",
     "https://promisesaplus.com/",
     "src/maybe.js~Thennable",
@@ -2778,27 +2808,27 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/observer.js~observer#oncomplete",
-    "class/src/observer.js~Observer.html#instance-method-onComplete",
-    "src/observer.js~Observer#onComplete",
+    "src/observer.js~maybeobserver#oncomplete",
+    "class/src/observer.js~MaybeObserver.html#instance-method-onComplete",
+    "src/observer.js~MaybeObserver#onComplete",
     "method"
   ],
   [
-    "src/observer.js~observer#onerror",
-    "class/src/observer.js~Observer.html#instance-method-onError",
-    "src/observer.js~Observer#onError",
+    "src/observer.js~maybeobserver#onerror",
+    "class/src/observer.js~MaybeObserver.html#instance-method-onError",
+    "src/observer.js~MaybeObserver#onError",
     "method"
   ],
   [
-    "src/observer.js~observer#onsubscribe",
-    "class/src/observer.js~Observer.html#instance-method-onSubscribe",
-    "src/observer.js~Observer#onSubscribe",
+    "src/observer.js~maybeobserver#onsubscribe",
+    "class/src/observer.js~MaybeObserver.html#instance-method-onSubscribe",
+    "src/observer.js~MaybeObserver#onSubscribe",
     "method"
   ],
   [
-    "src/observer.js~observer#onsuccess",
-    "class/src/observer.js~Observer.html#instance-method-onSuccess",
-    "src/observer.js~Observer#onSuccess",
+    "src/observer.js~maybeobserver#onsuccess",
+    "class/src/observer.js~MaybeObserver.html#instance-method-onSuccess",
+    "src/observer.js~MaybeObserver#onSuccess",
     "method"
   ],
   [
@@ -2886,9 +2916,9 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
-    "test/doonabort.js",
-    "test-file/test/doOnAbort.js.html",
-    "test/doOnAbort.js",
+    "test/dooncancel.js",
+    "test-file/test/doOnCancel.js.html",
+    "test/doOnCancel.js",
     "testFile"
   ],
   [

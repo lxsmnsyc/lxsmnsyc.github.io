@@ -29,48 +29,39 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/fromResolvable.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
-import {
-  onErrorHandler, onSuccessHandler, onCompleteHandler, cleanObserver, isFunction,
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+  cleanObserver, isFunction,
 } from &apos;../utils&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import error from &apos;./error&apos;;
+import MaybeEmitter from &apos;../../emitter&apos;;
 
 function subscribeActual(observer) {
   const {
     onSuccess, onComplete, onError, onSubscribe,
   } = cleanObserver(observer);
 
-  const controller = new AbortController();
+  const emitter = new MaybeEmitter(onSuccess, onComplete, onError);
 
-  onSubscribe(controller);
+  onSubscribe(emitter);
 
-  if (controller.signal.aborted) {
-    return;
-  }
-
-  this.controller = controller;
-  this.onComplete = onComplete;
-  this.onSuccess = onSuccess;
-  this.onError = onError;
-
-  const resolveNone = onCompleteHandler.bind(this);
-  const resolve = onSuccessHandler.bind(this);
-  const reject = onErrorHandler.bind(this);
-
-  this.subscriber(x =&gt; (x == null ? resolveNone() : resolve(x)), reject);
+  this.subscriber(
+    x =&gt; (x == null ? emitter.onComplete() : emitter.onSuccess(x)),
+    x =&gt; emitter.onError(x),
+  );
 }
 /**
  * @ignore

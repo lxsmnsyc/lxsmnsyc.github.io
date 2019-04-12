@@ -29,12 +29,13 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -47,44 +48,39 @@ import Maybe from &apos;../src/maybe&apos;;
 /**
  *
  */
-describe(&apos;Maybe&apos;, () =&gt; {
+describe(&apos;#lift&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#lift&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should return the same instance if no function is provided&apos;, () =&gt; {
-      const source = Maybe.just(&apos;Hello&apos;);
-      const maybe = source.lift();
+  it(&apos;should return the same instance if no function is provided&apos;, () =&gt; {
+    const source = Maybe.just(&apos;Hello&apos;);
+    const maybe = source.lift();
 
-      assert(source === maybe);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal an error if the lift operator returned a non-Observer&apos;, (done) =&gt; {
-      const maybe = Maybe.just(&apos;Hello&apos;).lift(() =&gt; {});
+    assert(source === maybe);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal an error if the lift operator returned a non-Observer&apos;, (done) =&gt; {
+    const maybe = Maybe.just(&apos;Hello&apos;).lift(() =&gt; {});
 
-      maybe.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should subscribe successfully&apos;, (done) =&gt; {
-      const maybe = Maybe.just(&apos;Hello&apos;).lift(observer =&gt; ({ onSubscribe: observer.onSubscribe, onSuccess: observer.onSuccess }));
+    maybe.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should subscribe successfully&apos;, (done) =&gt; {
+    const maybe = Maybe.just(&apos;Hello&apos;).lift(observer =&gt; ({ onSubscribe: observer.onSubscribe, onSuccess: observer.onSuccess }));
 
-      maybe.subscribe(
-        () =&gt; done(),
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
-    });
+    maybe.subscribe(
+      () =&gt; done(),
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
   });
 });
 </code></pre>

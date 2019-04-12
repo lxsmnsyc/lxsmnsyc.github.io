@@ -29,12 +29,13 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -68,7 +69,9 @@
  * @author Alexis Munsayac &lt;alexis.munsayac@gmail.com&gt;
  * @copyright Alexis Munsayac 2019
  */
-
+/**
+ * @external {Scheduler} https://lxsmnsyc.github.io/rx-scheduler/
+ */
 /**
  * @external {Iterable} https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
  */
@@ -79,15 +82,15 @@
  * @external {PromiseLike} https://promisesaplus.com/
  */
 /**
- * @external {AbortController} https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+ * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/
  */
-import AbortController from &apos;abort-controller&apos;;
+import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import { isObserver } from &apos;./internal/utils&apos;;
 import {
   amb, ambWith, cache, compose, create,
   defer, empty, defaultIfEmpty, delay,
   delaySubscription, delayUntil, doAfterSuccess,
-  doAfterTerminate, doFinally, doOnAbort,
+  doAfterTerminate, doFinally, doOnCancel,
   doOnComplete, doOnError, doOnEvent,
   doOnSubscribe, doOnSuccess, doOnTerminate,
   error, filter, flatMap, fromCallable,
@@ -101,8 +104,8 @@ import {
  * The Maybe class represents a deferred computation and emission of a single value,
  * no value at all or an exception.
  *
- * The Maybe class default consumer type it interacts with is the Observer via the
- * subscribe(Observer) method.
+ * The Maybe class default consumer type it interacts with is the MaybeObserver via the
+ * subscribe(MaybeObserver) method.
  *
  * The Maybe operates with the following sequential protocol:
  *
@@ -111,8 +114,8 @@ import {
  * Note that onSuccess, onError and onComplete are mutually exclusive events;
  * unlike Observable, onSuccess is never followed by onError or onComplete.
  *
- * Like Observable, a running Maybe can be stopped through the AbortController instance
- * provided to consumers through Observer.onSubscribe(AbortController).
+ * Like Observable, a running Maybe can be stopped through the Cancellable instance
+ * provided to consumers through MaybeObserver.onSubscribe(Cancellable).
  *
  * Like an Observable, a Maybe is lazy, can be either &quot;hot&quot; or &quot;cold&quot;, synchronous or
  * asynchronous.
@@ -184,11 +187,11 @@ export default class Maybe {
    * Transform a Maybe by applying a particular Transformer
    * function to it.
    *
-   * This method operates on the Maybe itself whereas lift(Observer)
+   * This method operates on the Maybe itself whereas lift(MaybeObserver)
    * operates on the Maybe&apos;s Observers.
    *
    * If the operator you are creating is designed to act on
-   * the individual item emitted by a Maybe, use lift(Observer).
+   * the individual item emitted by a Maybe, use lift(MaybeObserver).
    * If your operator is designed to transform the source
    * Maybe as a whole (for instance, by applying a particular
    * set of existing Maybe operators to it) use compose.
@@ -207,7 +210,7 @@ export default class Maybe {
    * reactive world with the callback-style world.
    *
    * @param {!function(e: Emitter):any} subscriber
-   * the emitter that is called when a Observer
+   * the emitter that is called when a MaybeObserver
    * subscribes to the returned Maybe
    * @returns {Maybe}
    */
@@ -236,11 +239,11 @@ export default class Maybe {
   }
 
   /**
-   * Calls a function for each individual Observer to return
+   * Calls a function for each individual MaybeObserver to return
    * the actual Maybe source to be subscribed to.
    *
    * @param {!function():Maybe} supplier
-   * the function that is called for each individual Observer
+   * the function that is called for each individual MaybeObserver
    * and returns a Maybe instance to subscribe to
    * @returns {Maybe}
    */
@@ -318,13 +321,13 @@ export default class Maybe {
 
   /**
    * Calls the specified action after this Maybe signals onSuccess,
-   * onError or onComplete or gets aborted by the downstream.
+   * onError or onComplete or gets cancelled by the downstream.
    *
-   * In case of a race between a terminal event and a abort call,
+   * In case of a race between a terminal event and a cancel call,
    * the provided onFinally action is executed once per subscription.
    *
    * @param {!function} action
-   * the action called when this Maybe terminates or gets aborted
+   * the action called when this Maybe terminates or gets cancelled
    * @returns {Maybe}
    */
   doFinally(action) {
@@ -332,15 +335,15 @@ export default class Maybe {
   }
 
   /**
-   * Calls the shared action if an Observer subscribed to the current
-   * Maybe aborts the common AbortController it received via onSubscribe.
+   * Calls the shared action if an MaybeObserver subscribed to the current
+   * Maybe cancels the common Cancellable it received via onSubscribe.
    *
    * @param {!function} action
-   * the action called when the subscription is aborted
+   * the action called when the subscription is cancelled
    * @returns {Maybe}
    */
-  doOnAbort(action) {
-    return doOnAbort(this, action);
+  doOnCancel(action) {
+    return doOnCancel(this, action);
   }
 
   /**
@@ -357,7 +360,7 @@ export default class Maybe {
 
   /**
    * Calls the shared consumer with the error sent via onError for each
-   * Observer that subscribes to the current Maybe.
+   * MaybeObserver that subscribes to the current Maybe.
    * @param {!function(e: Error)} consumer
    * the consumer called with the success value of onError
    * @returns {Maybe}
@@ -379,11 +382,11 @@ export default class Maybe {
   }
 
   /**
-   * Calls the shared consumer with the AbortController sent through
-   * the onSubscribe for each Observer that subscribes to the current Maybe.
+   * Calls the shared consumer with the Cancellable sent through
+   * the onSubscribe for each MaybeObserver that subscribes to the current Maybe.
    *
-   * @param {!function(ac: AbortController)} consumer
-   * the consumer called with the AbortController sent via onSubscribe
+   * @param {!function(ac: Cancellable)} consumer
+   * the consumer called with the Cancellable sent via onSubscribe
    * @returns {Maybe}
    */
   doOnSubscribe(consumer) {
@@ -392,7 +395,7 @@ export default class Maybe {
 
   /**
    * Calls the shared consumer with the success value sent via onSuccess
-   * for each Observer that subscribes to the current Maybe.
+   * for each MaybeObserver that subscribes to the current Maybe.
    *
    * @param {!function(success: any)} consumer
    * the consumer called with the success value of onSuccess
@@ -429,7 +432,7 @@ export default class Maybe {
    * the subscriber subscribes to it.
    * @param {!(function():Error|Error)} err
    * - the callable that is called for each individual
-   * Observer and returns or throws a value to be emitted.
+   * MaybeObserver and returns or throws a value to be emitted.
    * - the particular value to pass to onError
    * @returns {Maybe}
    * a Maybe that invokes the subscriber&apos;s onError method when the
@@ -469,21 +472,21 @@ export default class Maybe {
 
   /**
    * Returns a Maybe that invokes the given callable for each individual
-   * Observer that subscribes and emits the resulting non-null item via
+   * MaybeObserver that subscribes and emits the resulting non-null item via
    * onSuccess while considering a null result from the callable as
    * indication for valueless completion via onComplete.
    *
    * This operator allows you to defer the execution of the given Callable
-   * until a Observer subscribes to the returned Maybe. In other terms,
+   * until a MaybeObserver subscribes to the returned Maybe. In other terms,
    * this source operator evaluates the given callable &quot;lazily&quot;
    *
    * If the result is a Promise-like instance, the
-   * Observer is then subscribed to the Promise through
+   * MaybeObserver is then subscribed to the Promise through
    * the fromPromise operator.
    *
    * @param {!function():any} callable
    * a callable instance whose execution should be deferred and performed
-   * for each individual Observer that subscribes to the returned Maybe.
+   * for each individual MaybeObserver that subscribes to the returned Maybe.
    * @returns {Maybe}
    */
   static fromCallable(callable) {
@@ -529,17 +532,17 @@ export default class Maybe {
    * please consider other standard composition methods first;
    *
    * Returns a Maybe which, when subscribed to, invokes the operator
-   * method of the provided Observer for each individual downstream Maybe
+   * method of the provided MaybeObserver for each individual downstream Maybe
    * and allows the insertion of a custom operator by accessing the
-   * downstream&apos;s Observer during this subscription phase and providing a new
-   * Observer, containing the custom operator&apos;s intended business logic,
+   * downstream&apos;s MaybeObserver during this subscription phase and providing a new
+   * MaybeObserver, containing the custom operator&apos;s intended business logic,
    * that will be used in the subscription process going further upstream.
    *
-   * Generally, such a new Observer will wrap the downstream&apos;s Observer
+   * Generally, such a new MaybeObserver will wrap the downstream&apos;s MaybeObserver
    * and forwards the onSuccess, onError and onComplete events from the
    * upstream directly or according to the emission pattern the custom
    * operator&apos;s business logic requires. In addition, such operator can
-   * intercept the flow control calls of abort and signal.aborted that
+   * intercept the flow control calls of cancel and signal.cancelled that
    * would have traveled upstream and perform additional actions
    * depending on the same business logic requirements.
    *
@@ -549,9 +552,9 @@ export default class Maybe {
    * using compose() method and  creating a transformer function
    * with it is recommended.
    *
-   * @param {!function(observer: Observer):Observer} operator
-   * the function that receives the downstream&apos;s Observer and should
-   * return a Observer with custom behavior to be used as the consumer
+   * @param {!function(observer: MaybeObserver):MaybeObserver} operator
+   * the function that receives the downstream&apos;s MaybeObserver and should
+   * return a MaybeObserver with custom behavior to be used as the consumer
    * for the current Maybe.
    * @returns {Maybe}
    */
@@ -591,11 +594,11 @@ export default class Maybe {
 
   /**
    * Returns a Maybe that never sends any items or notifications to a
-   * Observer.
+   * MaybeObserver.
    *
    * @returns {Maybe}
    * a Maybe that never emits any items or sends any notifications to a
-   * Observer
+   * MaybeObserver
    */
   static never() {
     return never();
@@ -730,7 +733,7 @@ export default class Maybe {
    * Returns a Maybe that mirrors the source Maybe but applies a
    * timeout policy for each emitted item. If the next item isn&apos;t
    * emitted within the specified timeout duration starting from its
-   * predecessor, the resulting Maybe terminates and notifies Observer
+   * predecessor, the resulting Maybe terminates and notifies MaybeObserver
    * of an Error with TimeoutException.
    *
    * @param {!number} amount
@@ -771,7 +774,7 @@ export default class Maybe {
    * given function to those values and emits the function&apos;s resulting value to downstream.
    *
    * If either this or the other Maybe is empty or signals an error,
-   * the resulting Maybe will terminate immediately and abort the other source.
+   * the resulting Maybe will terminate immediately and cancel the other source.
    *
    * @param {Maybe} other
    * the other Maybe
@@ -786,9 +789,9 @@ export default class Maybe {
 
   /**
    * @desc
-   * Subscribes with an Object that is an Observer.
+   * Subscribes with an Object that is an MaybeObserver.
    *
-   * An Object is considered as an Observer if:
+   * An Object is considered as an MaybeObserver if:
    *  - if it has the method onSubscribe
    *  - if it has the method onComplete (optional)
    *  - if it has the method onSuccess (optional)
@@ -796,7 +799,7 @@ export default class Maybe {
    *
    * The onSubscribe method is called when subscribeWith
    * or subscribe is executed. This method receives an
-   * AbortController instance.
+   * Cancellable instance.
    *
    * @param {!Object} observer
    * @returns {undefined}
@@ -825,30 +828,14 @@ export default class Maybe {
    * @param {?function(x: any)} onError
    * the function you have designed to accept any error
    * notification from the Maybe
-   * @returns {AbortController}
-   * an AbortController reference can request the Maybe to abort.
+   * @returns {Cancellable}
+   * an Cancellable reference can request the Maybe to cancel.
    */
   subscribe(onSuccess, onComplete, onError) {
-    const controller = new AbortController();
-    let once = false;
+    const controller = new LinkedCancellable();
     this.subscribeWith({
       onSubscribe(ac) {
-        ac.signal.addEventListener(&apos;abort&apos;, () =&gt; {
-          if (!once) {
-            once = true;
-            if (!controller.signal.aborted) {
-              controller.abort();
-            }
-          }
-        });
-        controller.signal.addEventListener(&apos;abort&apos;, () =&gt; {
-          if (!once) {
-            once = true;
-            if (!ac.signal.aborted) {
-              ac.abort();
-            }
-          }
-        });
+        controller.link(ac);
       },
       onComplete,
       onSuccess,

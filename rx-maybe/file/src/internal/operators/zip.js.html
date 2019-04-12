@@ -29,12 +29,13 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~MaybeEmitter.html">MaybeEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~MaybeObserver.html">MaybeObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">Thennable</a></span></span></li>
 </ul>
 </div>
@@ -42,7 +43,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-loop-func */
-import AbortController from &apos;abort-controller&apos;;
+import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import { isIterable, cleanObserver, isFunction } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
@@ -58,15 +59,9 @@ function subscribeActual(observer) {
 
   const result = [];
 
-  const controller = new AbortController();
-
-  const { signal } = controller;
+  const controller = new CompositeCancellable();
 
   onSubscribe(controller);
-
-  if (signal.aborted) {
-    return;
-  }
 
   const { sources, zipper } = this;
 
@@ -74,30 +69,24 @@ function subscribeActual(observer) {
 
   if (size === 0) {
     onError(new Error(&apos;Maybe.zip: empty iterable&apos;));
-    controller.abort();
+    controller.cancel();
     return;
   }
   let pending = size;
 
   for (let i = 0; i &lt; size; i += 1) {
-    if (signal.aborted) {
-      return;
-    }
     const maybe = sources[i];
 
     if (maybe instanceof Maybe) {
       maybe.subscribeWith({
         onSubscribe(ac) {
-          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+          controller.add(ac);
         },
         onComplete() {
           onComplete();
-          controller.abort();
+          controller.cancel();
         },
         onSuccess(x) {
-          if (signal.aborted) {
-            return;
-          }
           result[i] = x;
           pending -= 1;
           if (pending === 0) {
@@ -109,16 +98,16 @@ function subscribeActual(observer) {
               }
             } catch (e) {
               onError(e);
-              controller.abort();
+              controller.cancel();
               return;
             }
             onSuccess(r);
-            controller.abort();
+            controller.cancel();
           }
         },
         onError(x) {
           onError(x);
-          controller.abort();
+          controller.cancel();
         },
       });
     } else if (maybe != null) {
@@ -126,7 +115,7 @@ function subscribeActual(observer) {
       pending -= 1;
     } else {
       onError(new Error(&apos;Maybe.zip: One of the sources is undefined.&apos;));
-      controller.abort();
+      controller.cancel();
       break;
     }
   }
