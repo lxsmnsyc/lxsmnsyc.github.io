@@ -65,7 +65,7 @@ const createController = (scheduler, fn, body) =&gt; {
 export const schedule = scheduler =&gt; fn =&gt; createController(
   scheduler,
   fn,
-  x =&gt; x.cancel() &amp;&amp; fn(),
+  x =&gt; !x.cancelled &amp;&amp; fn() &amp;&amp; x.cancel(),
 );
 /**
  * @ignore
@@ -77,7 +77,7 @@ export const delay = scheduler =&gt; (fn, amount) =&gt; createController(
     if (x.cancelled) {
       return;
     }
-    const inner = setTimeout(() =&gt; x.cancel() &amp;&amp; fn(), amount);
+    const inner = setTimeout(() =&gt; !x.cancelled &amp;&amp; fn() &amp;&amp; x.cancel(), amount);
 
     x.addEventListener(&apos;cancel&apos;, () =&gt; clearTimeout(inner));
   },
