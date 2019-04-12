@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">test/index.js | rx-cancellable</title>
+  <title data-ice="title">test/composite.js | rx-cancellable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,33 +41,66 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">test/composite.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
-import { CANCELLED, UNCANCELLED } from &apos;../src&apos;;
+import { CompositeCancellable, BooleanCancellable } from &apos;../src&apos;;
 
-describe(&apos;CancelledCancellable&apos;, () =&gt; {
+describe(&apos;CompositeCancellable&apos;, () =&gt; {
   describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancel() === false);
+    it(&apos;should return true if instance is never cancelled before&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      assert(c.cancel());
+    });
+    it(&apos;should return false if instance has been cancelled before.&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      c.cancel();
+      assert(c.cancel() === false);
+    });
+    it(&apos;should cancel the composed instances&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      const a = new BooleanCancellable();
+      c.add(a);
+      c.cancel();
+      assert(a.cancelled);
     });
   });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return true since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancelled);
+  describe(&apos;add&apos;, () =&gt; {
+    it(&apos;should return true if given instance is Cancellable&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      const a = new BooleanCancellable();
+      assert(c.add(a));
+    });
+    it(&apos;should return false if given instance is non-Cancellable.&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      assert(c.add() === false);
+    });
+    it(&apos;should return false and cancel given instance if source is cancelled.&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      c.cancel();
+      const a = new BooleanCancellable();
+      assert(c.add(a) === false &amp;&amp; a.cancelled);
     });
   });
-});
-
-describe(&apos;UncancelledCancellable&apos;, () =&gt; {
-  describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancel() === false);
+  describe(&apos;remove&apos;, () =&gt; {
+    it(&apos;should return true if given instance is in the composite&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      const a = new BooleanCancellable();
+      c.add(a);
+      assert(c.remove(a));
     });
-  });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancelled === false);
+    it(&apos;should return false if given instance is non-Cancellable.&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      assert(c.remove() === false);
+    });
+    it(&apos;should return false if given instance is the same as the source.&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      assert(c.remove(c) === false);
+    });
+    it(&apos;should return false if the given instance is not in the Composite&apos;, () =&gt; {
+      const c = new CompositeCancellable();
+      const a = new BooleanCancellable();
+      assert(c.remove(a) === false);
     });
   });
 });

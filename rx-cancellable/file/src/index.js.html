@@ -29,277 +29,52 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Cancellable.html">Cancellable</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/boolean.js~BooleanCancellable.html">BooleanCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/cancellable.js~Cancellable.html">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/cancelled.js~CancelledCancellable.html">CancelledCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/composite.js~CompositeCancellable.html">CompositeCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/linked.js~LinkedCancellable.html">LinkedCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uncancelled.js~UncancelledCancellable.html">UncancelledCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CANCELLED">CANCELLED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UNCANCELLED">UNCANCELLED</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-restricted-syntax */
-const dispatch = (s, e) =&gt; s.events[e].forEach(f =&gt; f.apply(s));
-
-const CANCELLED = {
-  cancelled: true,
-};
-
-const NOT_CANCELLED = {
-  cancelled: false,
-};
-
-const ACTIVE = {
-  active: true,
-};
-
-const INACTIVE = {
-  active: false,
-};
-
-const DISPOSE_STATE = new WeakMap();
-const ACTIVE_STATE = new WeakMap();
-const PARENT = new WeakMap();
-
-let BASIC_PARENT;
-
-/**
- * Represents a state of cancellation and activation.
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * @license
+ * MIT License
+ *
+ * Copyright (c) 2019 Alexis Munsayac
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ *
+ * @author Alexis Munsayac &lt;alexis.munsayac@gmail.com&gt;
+ * @copyright Alexis Munsayac 2019
  */
-export default class Cancellable {
-  /**
-   * @ignore
-   */
-  constructor() {
-    DISPOSE_STATE.set(this, NOT_CANCELLED);
-    ACTIVE_STATE.set(this, ACTIVE);
-    /**
-     * @ignore
-     */
-    this.events = {
-      enable: [],
-      disable: [],
-      cancel: [],
-    };
-    /**
-     * @ignore
-     */
-    this.children = [];
-  }
-
-  /**
-   * Creates a Cancellable instance.
-   *
-   * @return {Cancellable}
-   */
-  static create() {
-    if (BASIC_PARENT == null) {
-      BASIC_PARENT = new Cancellable();
-    }
-
-    const cancellable = new Cancellable();
-
-    DISPOSE_STATE.set(cancellable, BASIC_PARENT);
-    ACTIVE_STATE.set(cancellable, BASIC_PARENT);
-    PARENT.set(cancellable, BASIC_PARENT);
-
-    return cancellable;
-  }
-
-
-  /**
-   * Returns true if the Cancellable is cancelled.
-   * @return {boolean}
-   */
-  get cancelled() {
-    return DISPOSE_STATE.get(this).cancelled;
-  }
-
-  /**
-   * Returns true if the Cancellable is active.
-   * @return {boolean}
-   */
-  get active() {
-    return ACTIVE_STATE.get(this).active;
-  }
-
-  /**
-   * Enables a Cancellable.
-   *
-   * Fails to enable if the Cancellable instance is
-   * already cancelled.
-   * @returns {boolean}
-   */
-  enable() {
-    if (!(this.cancelled || this.active)) {
-      ACTIVE_STATE.set(this, PARENT.get(this));
-
-      dispatch(this, &apos;enable&apos;);
-      return true;
-    }
-    return false;
-  }
-
-
-  /**
-   * Disables a Cancellable.
-   *
-   * Fails to disable if the Cancellable instance is
-   * already cancelled.
-   * @returns {boolean}
-   */
-  disable() {
-    if (!this.cancelled &amp;&amp; this.active) {
-      ACTIVE_STATE.set(this, INACTIVE);
-
-      dispatch(this, &apos;disable&apos;);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Checks if this Cancellable is a parent of the given Cancellable (hierarchy).
-   * @param {Cancellable} cancellable
-   * The child Cancellable
-   * @returns {boolean}
-   */
-  isParentTo(cancellable) {
-    const parent = PARENT.get(cancellable);
-    return parent != null
-      &amp;&amp; (parent === this || (parent !== BASIC_PARENT &amp;&amp; this.isParentTo(parent)));
-  }
-
-  /**
-   * Sets the given Cancellable as a parent Cancellable.
-   *
-   * if the given Cancellable is already cancelled, this
-   * Cancellable is cancelled as well.
-   * @param {Cancellable} cancellable
-   * @returns {boolean}
-   */
-  setParent(cancellable) {
-    if (cancellable !== this
-      &amp;&amp; !this.isParentTo(cancellable) &amp;&amp; cancellable instanceof Cancellable) {
-      if (cancellable.cancelled) {
-        this.cancel();
-      } else {
-        PARENT.set(this, cancellable);
-        cancellable.children.push(this);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Removes the parent Cancellable
-   * @param {!Cancellable} cancellable
-   * The parent Cancellable
-   * @returns {boolean}
-   */
-  removeParent(cancellable) {
-    return cancellable.remove(this);
-  }
-
-  /**
-   * Adds a Cancellable as a child Cancellable.
-   *
-   * Child Disposables are cancelled, enabled and disabled if their
-   * parent Cancellable is cancelled as well.
-   *
-   * A child Cancellable cannot have more than one parent Cancellable.
-   *
-   * If a child Cancellable is added to a parent Cancellable that is
-   * already cancelled, the child Cancellable is cancelled.
-   *
-   * @param {!Cancellable} cancellable
-   * @returns {boolean}
-   */
-  add(cancellable) {
-    return cancellable.setParent(this);
-  }
-
-  /**
-   * Removes a direct child Cancellable.
-   *
-   * @param {!Cancellable} cancellable
-   * The child Cancellable to be removed.
-   * @returns {boolean}
-   */
-  remove(cancellable) {
-    if (!this.cancelled &amp;&amp; PARENT.get(cancellable) === this) {
-      this.children = this.children.filter(x =&gt; x !== cancellable);
-      PARENT.set(cancellable, BASIC_PARENT);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Disposes the instance.
-   *
-   * If the Cancellable instance has more than one children, the
-   * child Disposables are cancelled as well.
-   * @returns {boolean}
-   */
-  cancel() {
-    if (!this.cancelled) {
-      dispatch(this, &apos;cancel&apos;);
-      this.children.forEach(x =&gt; x.cancel());
-      DISPOSE_STATE.set(this, CANCELLED);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Registers a listener function to a target event dispatcher.
-   * @param {!string} ev
-   * Defines the event target
-   * - enable: fires whenever the Cancellable is enabled.
-   * - disable: fires whenever the Cancellable is disabled.
-   * - cancel: fires when the Cancellable is cancelled.
-   * @param {!function} fn
-   * a function to be called when the event is dispatched.
-   */
-  addEventListener(ev, fn) {
-    if (typeof fn !== &apos;function&apos;) {
-      return;
-    }
-    const { events } = this;
-    if (this.cancelled) {
-      return;
-    }
-    if (ev in events) {
-      events[ev].push(fn);
-    }
-  }
-
-
-  /**
-   * Removes a listener function from a target event dispatcher.
-   * @param {!string} ev
-   * Defines the event target
-   * - enable: fires whenever the Cancellable is enabled.
-   * - disable: fires whenever the Cancellable is disabled.
-   * - cancel: fires when the Cancellable is cancelled.
-   * @param {!function} fn
-   * a function from be removed from the target event dispatcher.
-   */
-  removeEventListener(ev, fn) {
-    if (typeof fn !== &apos;function&apos;) {
-      return;
-    }
-    const { events } = this;
-    if (this.cancelled) {
-      return;
-    }
-    if (ev in events) {
-      const index = events[ev].indexOf(fn);
-      if (index !== -1) {
-        events[ev].splice(index, 1);
-      }
-    }
-  }
-}
+export { default as Cancellable } from &apos;./cancellable&apos;;
+export { default as CANCELLED } from &apos;./cancelled&apos;;
+export { default as UNCANCELLED } from &apos;./uncancelled&apos;;
+export { default as BooleanCancellable } from &apos;./boolean&apos;;
+export { default as CompositeCancellable } from &apos;./composite&apos;;
+export { default as LinkedCancellable } from &apos;./linked&apos;;
 </code></pre>
 
 </div>

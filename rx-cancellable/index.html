@@ -29,7 +29,14 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Cancellable.html">Cancellable</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/boolean.js~BooleanCancellable.html">BooleanCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/cancellable.js~Cancellable.html">Cancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/cancelled.js~CancelledCancellable.html">CancelledCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/composite.js~CompositeCancellable.html">CompositeCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/linked.js~LinkedCancellable.html">LinkedCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uncancelled.js~UncancelledCancellable.html">UncancelledCancellable</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CANCELLED">CANCELLED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UNCANCELLED">UNCANCELLED</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -72,10 +79,66 @@
 </code></pre>
 </li>
 </ul>
-<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const Cancellable = require(&apos;rx-cancellable&apos;);</code>
+<h2 id="usage">Usage</h2><h3 id="loading-the-module">Loading the module</h3><h4 id="commonjs">CommonJS</h4><pre><code class="lang-js"><code class="source-code prettyprint">const {
+  Cancellable,
+  CANCELLED,
+  UNCANCELLED,
+  BooleanCancellable,
+  CompositeCancellable,
+  LinkedCancellable
+} = require(&apos;rx-cancellable&apos;);</code>
 </code></pre>
-<p>Loading the CommonJS module provides the Cancellable class.</p>
-<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-cancellable provides the Cancellable class</p>
+<h4 id="browser">Browser</h4><p>Loading the JavaScript file for the rx-cancellable the classes:</p>
+<ul>
+<li>Cancellable</li>
+<li>CANCELLED,</li>
+<li>UNCANCELLED,</li>
+<li>BooleanCancellable,</li>
+<li>CompositeCancellable,</li>
+<li>LinkedCancellable</li>
+</ul>
+<h2 id="types">Types</h2><p>There are 3 types of Cancellables provided:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BooleanCancellable</td>
+<td>Basic implementation of a Cancellable that represents a boolean state.</td>
+</tr>
+<tr>
+<td>CompositeCancellable</td>
+<td>An implementation of a Cancellable that allows composition of multiple Cancellable instances into a single Cancellable instance.</td>
+</tr>
+<tr>
+<td>LinkedCancellable</td>
+<td>A Cancellable whose state relies upon another Cancellable. If a LinkedCancellable has no link, it is treated as a BooleanCancellable.</td>
+</tr>
+</tbody>
+</table>
+<p>And provides 2 Singleton instance:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CANCELLED</td>
+<td>A Cancellable instance that is always cancelled.</td>
+</tr>
+<tr>
+<td>UNCANCELLED</td>
+<td>A Cancellable instance that is always uncancelled.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="documentation">Documentation</h2><p>You can read the documentation at the <a href="https://lxsmnsyc.github.io/rx-cancellable/">official doc site</a></p>
 <h2 id="build">Build</h2><p>Clone the repo first, then run the following to install the dependencies</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm install</code>
@@ -83,6 +146,13 @@
 <p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
+<h2 id="changelogs">Changelogs</h2><p>0.2.0</p>
+<ul>
+<li>Introduces 3 Cancellable classes instead of a tree-structured Cancellable.</li>
+<li>Introduces 2 singleton instances of Cancellable
+0.1.0</li>
+<li>Release</li>
+</ul>
 </div>
 </div>
 

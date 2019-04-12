@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">test/index.js | rx-cancellable</title>
+  <title data-ice="title">test/boolean.js | rx-cancellable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,33 +41,21 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">test/boolean.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
-import { CANCELLED, UNCANCELLED } from &apos;../src&apos;;
+import { BooleanCancellable } from &apos;../src&apos;;
 
-describe(&apos;CancelledCancellable&apos;, () =&gt; {
+describe(&apos;BooleanCancellable&apos;, () =&gt; {
   describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancel() === false);
+    it(&apos;should return true if instance is never cancelled before&apos;, () =&gt; {
+      const c = new BooleanCancellable();
+      assert(c.cancel());
     });
-  });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return true since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancelled);
-    });
-  });
-});
-
-describe(&apos;UncancelledCancellable&apos;, () =&gt; {
-  describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancel() === false);
-    });
-  });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancelled === false);
+    it(&apos;should return false if instance has been cancelled before.&apos;, () =&gt; {
+      const c = new BooleanCancellable();
+      c.cancel();
+      assert(c.cancel() === false);
     });
   });
 });

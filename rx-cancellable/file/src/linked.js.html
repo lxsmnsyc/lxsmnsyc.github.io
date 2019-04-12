@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">test/index.js | rx-cancellable</title>
+  <title data-ice="title">src/linked.js | rx-cancellable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,36 +41,117 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
-import assert from &apos;assert&apos;;
-import { CANCELLED, UNCANCELLED } from &apos;../src&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/linked.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Cancellable from &apos;./cancellable&apos;;
+import BooleanCancellable from &apos;./boolean&apos;;
+import { dispatch } from &apos;./utils&apos;;
+/**
+ * @ignore
+ */
+const ORIGIN = new WeakMap();
+/**
+ * @ignore
+ */
+const LINK = new WeakMap();
+/**
+ * @ignore
+ */
+const LISTENER = new WeakMap();
 
-describe(&apos;CancelledCancellable&apos;, () =&gt; {
-  describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancel() === false);
-    });
-  });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return true since it is always cancelled&apos;, () =&gt; {
-      assert(CANCELLED.cancelled);
-    });
-  });
-});
+/**
+ * A Cancellable class that allows linking on Cancellable instances.
+ *
+ * A LinkedCancellable will be disposed when the linked Cancellable
+ * instance is disposed and vice-versa
+ */
+export default class LinkedCancellable extends Cancellable {
+  /**
+   * Creates a LinkedCancellable
+   */
+  constructor() {
+    super();
 
-describe(&apos;UncancelledCancellable&apos;, () =&gt; {
-  describe(&apos;cancel&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancel() === false);
-    });
-  });
-  describe(&apos;cancelled&apos;, () =&gt; {
-    it(&apos;should return false since it is uncancellable&apos;, () =&gt; {
-      assert(UNCANCELLED.cancelled === false);
-    });
-  });
-});
+    const bool = new BooleanCancellable();
+    ORIGIN.set(this, bool);
+    LINK.set(this, bool);
+  }
+
+  /**
+   * Returns true if the instance is cancelled.
+   * @returns {boolean}
+   */
+  get cancelled() {
+    return ORIGIN.get(this).cancelled;
+  }
+
+  /**
+   * Cancels the instances contained.
+   * @returns {boolean}
+   * Returns true if the cancel was successful.
+   */
+  cancel() {
+    if (!this.cancelled) {
+      const link = LINK.get(this);
+      const origin = ORIGIN.get(this);
+      if (origin !== link) {
+        this.unlink();
+        link.cancel();
+        LINK.set(this, origin);
+      }
+      origin.cancel();
+      dispatch(this, &apos;cancel&apos;);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Links to a Cancellable instance.
+   * @param {Cancellable} cancellable
+   * @returns {boolean}
+   * Returns true if the link was successful
+   */
+  link(cancellable) {
+    if (cancellable instanceof Cancellable &amp;&amp; cancellable !== this) {
+      if (this.cancelled) {
+        cancellable.cancel();
+      } else if (cancellable.cancelled) {
+        this.cancel();
+      } else {
+        this.unlink();
+
+        LINK.set(this, cancellable);
+
+        const listener = () =&gt; this.cancel();
+        cancellable.addEventListener(&apos;cancel&apos;, listener);
+        LISTENER.set(this, listener);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Unlinks this cancellable
+   * @returns {boolean}
+   * Returns true if the unlink is successful
+   */
+  unlink() {
+    if (!this.cancelled) {
+      const link = LINK.get(this);
+      const origin = ORIGIN.get(this);
+
+      if (origin !== link) {
+        const listener = LISTENER.get(this);
+        link.removeEventListener(&apos;cancel&apos;, listener);
+        LISTENER.set(this, null);
+        LINK.set(this, origin);
+        return true;
+      }
+    }
+    return false;
+  }
+}
 </code></pre>
 
 </div>

@@ -1,254 +1,326 @@
 window.esdocSearchIndex = [
   [
-    "rx-cancellable/src/index.js~cancellable",
-    "class/src/index.js~Cancellable.html",
-    "<span>Cancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/index.js</span>",
+    "rx-cancellable/src/boolean.js~booleancancellable",
+    "class/src/boolean.js~BooleanCancellable.html",
+    "<span>BooleanCancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/boolean.js</span>",
+    "class"
+  ],
+  [
+    "rx-cancellable/src/cancelled.js~cancelled",
+    "variable/index.html#static-variable-CANCELLED",
+    "<span>CANCELLED</span> <span class=\"search-result-import-path\">rx-cancellable/src/cancelled.js</span>",
+    "variable"
+  ],
+  [
+    "rx-cancellable/src/cancellable.js~cancellable",
+    "class/src/cancellable.js~Cancellable.html",
+    "<span>Cancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/cancellable.js</span>",
+    "class"
+  ],
+  [
+    "rx-cancellable/src/cancelled.js~cancelledcancellable",
+    "class/src/cancelled.js~CancelledCancellable.html",
+    "<span>CancelledCancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/cancelled.js</span>",
+    "class"
+  ],
+  [
+    "rx-cancellable/src/composite.js~compositecancellable",
+    "class/src/composite.js~CompositeCancellable.html",
+    "<span>CompositeCancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/composite.js</span>",
+    "class"
+  ],
+  [
+    "rx-cancellable/src/linked.js~linkedcancellable",
+    "class/src/linked.js~LinkedCancellable.html",
+    "<span>LinkedCancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/linked.js</span>",
+    "class"
+  ],
+  [
+    "rx-cancellable/src/uncancelled.js~uncancelled",
+    "variable/index.html#static-variable-UNCANCELLED",
+    "<span>UNCANCELLED</span> <span class=\"search-result-import-path\">rx-cancellable/src/uncancelled.js</span>",
+    "variable"
+  ],
+  [
+    "rx-cancellable/src/uncancelled.js~uncancelledcancellable",
+    "class/src/uncancelled.js~UncancelledCancellable.html",
+    "<span>UncancelledCancellable</span> <span class=\"search-result-import-path\">rx-cancellable/src/uncancelled.js</span>",
     "class"
   ],
   [
     "",
+    "test-file/test/boolean.js.html#lineNumber5",
+    "BooleanCancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/boolean.js.html#lineNumber6",
+    "BooleanCancellable cancel",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/boolean.js.html#lineNumber11",
+    "BooleanCancellable cancel should return false if instance has been cancelled before.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/boolean.js.html#lineNumber7",
+    "BooleanCancellable cancel should return true if instance is never cancelled before",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber5",
+    "CancelledCancellable",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/index.js.html#lineNumber6",
-    "Cancellable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber12",
-    "Cancellable #active",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber17",
-    "Cancellable #active should return false if Cancellable is disabled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber22",
-    "Cancellable #active should return true if Cancellable is disabled then enabled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber34",
-    "Cancellable #active should return true if Cancellable is disabled, cancelled, and enabled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber28",
-    "Cancellable #active should return true if Cancellable is enabled, cancelled, and disabled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber13",
-    "Cancellable #active should return true if Cancellable is enabled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber142",
-    "Cancellable #addEventListener",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber156",
-    "Cancellable #addEventListener should fire the cancel listener if the Cancellable is cancelled",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber150",
-    "Cancellable #addEventListener should fire the disable listener if the Cancellable is disabled",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber143",
-    "Cancellable #addEventListener should fire the enable listener if the Cancellable is enabled",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber162",
-    "Cancellable #addEventListener should not fire the cancel listener if the Cancellable is already cancelled",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber53",
-    "Cancellable #cancel",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber57",
-    "Cancellable #cancel should return false if Cancellable has been cancelled before.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber54",
-    "Cancellable #cancel should return true if Cancellable is cancelled for the first time.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber42",
-    "Cancellable #cancelled",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber43",
-    "Cancellable #cancelled should return true if Cancellable is cancelled.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.js.html#lineNumber48",
-    "Cancellable #cancelled should return true if Cancellable is not cancelled.",
+    "CancelledCancellable cancel",
     "test"
   ],
   [
     "",
     "test-file/test/index.js.html#lineNumber7",
-    "Cancellable #create",
+    "CancelledCancellable cancel should return false since it is always cancelled",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber8",
-    "Cancellable #create should create a Cancellable",
+    "test-file/test/index.js.html#lineNumber11",
+    "CancelledCancellable cancelled",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber74",
-    "Cancellable #disable",
+    "test-file/test/index.js.html#lineNumber12",
+    "CancelledCancellable cancelled should return true since it is always cancelled",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber79",
-    "Cancellable #disable should return false if Cancellable is disabled already.",
+    "test-file/test/composite.js.html#lineNumber5",
+    "CompositeCancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber75",
-    "Cancellable #disable should return true if Cancellable is disabled after being enabled.",
+    "test-file/test/composite.js.html#lineNumber24",
+    "CompositeCancellable add",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber63",
-    "Cancellable #enable",
+    "test-file/test/composite.js.html#lineNumber34",
+    "CompositeCancellable add should return false and cancel given instance if source is cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber69",
-    "Cancellable #enable should return false if Cancellable is enabled already.",
+    "test-file/test/composite.js.html#lineNumber30",
+    "CompositeCancellable add should return false if given instance is non-Cancellable.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber64",
-    "Cancellable #enable should return true if Cancellable is enabled after being disabled.",
+    "test-file/test/composite.js.html#lineNumber25",
+    "CompositeCancellable add should return true if given instance is Cancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber121",
-    "Cancellable #remove",
+    "test-file/test/composite.js.html#lineNumber6",
+    "CompositeCancellable cancel",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber122",
-    "Cancellable #remove should return false if the Cancellable given is not the child.",
+    "test-file/test/composite.js.html#lineNumber16",
+    "CompositeCancellable cancel should cancel the composed instances",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber127",
-    "Cancellable #remove should return false if the source is already cancelled.",
+    "test-file/test/composite.js.html#lineNumber11",
+    "CompositeCancellable cancel should return false if instance has been cancelled before.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber133",
-    "Cancellable #remove should return true if the removal is successful",
+    "test-file/test/composite.js.html#lineNumber7",
+    "CompositeCancellable cancel should return true if instance is never cancelled before",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber169",
-    "Cancellable #removeEventListener",
+    "test-file/test/composite.js.html#lineNumber41",
+    "CompositeCancellable remove",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber189",
-    "Cancellable #removeEventListener should not fire the cancel listener if the Cancellable is cancelled",
+    "test-file/test/composite.js.html#lineNumber48",
+    "CompositeCancellable remove should return false if given instance is non-Cancellable.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber180",
-    "Cancellable #removeEventListener should not fire the disable listener if the Cancellable is disabled",
+    "test-file/test/composite.js.html#lineNumber52",
+    "CompositeCancellable remove should return false if given instance is the same as the source.",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber170",
-    "Cancellable #removeEventListener should not fire the enable listener if the Cancellable is enabled",
+    "test-file/test/composite.js.html#lineNumber56",
+    "CompositeCancellable remove should return false if the given instance is not in the Composite",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber85",
-    "Cancellable #setParent",
+    "test-file/test/composite.js.html#lineNumber42",
+    "CompositeCancellable remove should return true if given instance is in the composite",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber93",
-    "Cancellable #setParent should return false if the Cancellable parent given is a child of the source Cancellable",
+    "test-file/test/linked.js.html#lineNumber5",
+    "LinkedCancellable",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber90",
-    "Cancellable #setParent should return false if the Cancellable parent given is not a Cancellable",
+    "test-file/test/linked.js.html#lineNumber35",
+    "LinkedCancellable cancel",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber86",
-    "Cancellable #setParent should return false if the Cancellable parent given is the same as the child",
+    "test-file/test/linked.js.html#lineNumber36",
+    "LinkedCancellable cancel should return false if the source is cancelled",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber99",
-    "Cancellable #setParent should return false if the Cancellable parent is already cancelled.",
+    "test-file/test/linked.js.html#lineNumber46",
+    "LinkedCancellable cancel should return true and cancel the link if there is one",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber106",
-    "Cancellable #setParent should the children be cancelled if the parent is cancelled",
+    "test-file/test/linked.js.html#lineNumber42",
+    "LinkedCancellable cancel should return true if the source was never cancelled before",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber113",
-    "Cancellable #setParent should the children be disabled if the parent is disabled",
+    "test-file/test/linked.js.html#lineNumber65",
+    "LinkedCancellable cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber80",
+    "LinkedCancellable cancelled should return false if the source was never cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber72",
+    "LinkedCancellable cancelled should return true if the link is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber66",
+    "LinkedCancellable cancelled should return true if the source is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber6",
+    "LinkedCancellable link",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber21",
+    "LinkedCancellable link should return false and cancel the given Cancellable if the source is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber14",
+    "LinkedCancellable link should return false and cancel the source if the given Cancellable is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber7",
+    "LinkedCancellable link should return false if the given argument is a non-Cancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber10",
+    "LinkedCancellable link should return false if the given argument is the same as the source",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber28",
+    "LinkedCancellable link should return true if both the source and the given Cancellable are not cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber53",
+    "LinkedCancellable unlink",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber54",
+    "LinkedCancellable unlink should return false if the source is cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/linked.js.html#lineNumber60",
+    "LinkedCancellable unlink should return false if there is no link.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber18",
+    "UncancelledCancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber19",
+    "UncancelledCancellable cancel",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber20",
+    "UncancelledCancellable cancel should return false since it is uncancellable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber24",
+    "UncancelledCancellable cancelled",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber25",
+    "UncancelledCancellable cancelled should return false since it is uncancellable",
     "test"
   ],
   [
@@ -534,93 +606,201 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/boolean.js",
+    "file/src/boolean.js.html",
+    "src/boolean.js",
+    "file"
+  ],
+  [
+    "src/boolean.js~booleancancellable#cancel",
+    "class/src/boolean.js~BooleanCancellable.html#instance-method-cancel",
+    "src/boolean.js~BooleanCancellable#cancel",
+    "method"
+  ],
+  [
+    "src/boolean.js~booleancancellable#cancelled",
+    "class/src/boolean.js~BooleanCancellable.html#instance-get-cancelled",
+    "src/boolean.js~BooleanCancellable#cancelled",
+    "member"
+  ],
+  [
+    "src/boolean.js~booleancancellable#constructor",
+    "class/src/boolean.js~BooleanCancellable.html#instance-constructor-constructor",
+    "src/boolean.js~BooleanCancellable#constructor",
+    "method"
+  ],
+  [
+    "src/cancellable.js",
+    "file/src/cancellable.js.html",
+    "src/cancellable.js",
+    "file"
+  ],
+  [
+    "src/cancellable.js~cancellable#addeventlistener",
+    "class/src/cancellable.js~Cancellable.html#instance-method-addEventListener",
+    "src/cancellable.js~Cancellable#addEventListener",
+    "method"
+  ],
+  [
+    "src/cancellable.js~cancellable#cancel",
+    "class/src/cancellable.js~Cancellable.html#instance-method-cancel",
+    "src/cancellable.js~Cancellable#cancel",
+    "method"
+  ],
+  [
+    "src/cancellable.js~cancellable#cancelled",
+    "class/src/cancellable.js~Cancellable.html#instance-get-cancelled",
+    "src/cancellable.js~Cancellable#cancelled",
+    "member"
+  ],
+  [
+    "src/cancellable.js~cancellable#removeeventlistener",
+    "class/src/cancellable.js~Cancellable.html#instance-method-removeEventListener",
+    "src/cancellable.js~Cancellable#removeEventListener",
+    "method"
+  ],
+  [
+    "src/cancelled.js",
+    "file/src/cancelled.js.html",
+    "src/cancelled.js",
+    "file"
+  ],
+  [
+    "src/cancelled.js~cancelledcancellable#cancel",
+    "class/src/cancelled.js~CancelledCancellable.html#instance-method-cancel",
+    "src/cancelled.js~CancelledCancellable#cancel",
+    "method"
+  ],
+  [
+    "src/cancelled.js~cancelledcancellable#cancelled",
+    "class/src/cancelled.js~CancelledCancellable.html#instance-get-cancelled",
+    "src/cancelled.js~CancelledCancellable#cancelled",
+    "member"
+  ],
+  [
+    "src/composite.js",
+    "file/src/composite.js.html",
+    "src/composite.js",
+    "file"
+  ],
+  [
+    "src/composite.js~compositecancellable#add",
+    "class/src/composite.js~CompositeCancellable.html#instance-method-add",
+    "src/composite.js~CompositeCancellable#add",
+    "method"
+  ],
+  [
+    "src/composite.js~compositecancellable#cancel",
+    "class/src/composite.js~CompositeCancellable.html#instance-method-cancel",
+    "src/composite.js~CompositeCancellable#cancel",
+    "method"
+  ],
+  [
+    "src/composite.js~compositecancellable#cancelled",
+    "class/src/composite.js~CompositeCancellable.html#instance-get-cancelled",
+    "src/composite.js~CompositeCancellable#cancelled",
+    "member"
+  ],
+  [
+    "src/composite.js~compositecancellable#constructor",
+    "class/src/composite.js~CompositeCancellable.html#instance-constructor-constructor",
+    "src/composite.js~CompositeCancellable#constructor",
+    "method"
+  ],
+  [
+    "src/composite.js~compositecancellable#remove",
+    "class/src/composite.js~CompositeCancellable.html#instance-method-remove",
+    "src/composite.js~CompositeCancellable#remove",
+    "method"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
     "file"
   ],
   [
-    "src/index.js~cancellable#active",
-    "class/src/index.js~Cancellable.html#instance-get-active",
-    "src/index.js~Cancellable#active",
+    "src/linked.js",
+    "file/src/linked.js.html",
+    "src/linked.js",
+    "file"
+  ],
+  [
+    "src/linked.js~linkedcancellable#cancel",
+    "class/src/linked.js~LinkedCancellable.html#instance-method-cancel",
+    "src/linked.js~LinkedCancellable#cancel",
+    "method"
+  ],
+  [
+    "src/linked.js~linkedcancellable#cancelled",
+    "class/src/linked.js~LinkedCancellable.html#instance-get-cancelled",
+    "src/linked.js~LinkedCancellable#cancelled",
     "member"
   ],
   [
-    "src/index.js~cancellable#add",
-    "class/src/index.js~Cancellable.html#instance-method-add",
-    "src/index.js~Cancellable#add",
+    "src/linked.js~linkedcancellable#constructor",
+    "class/src/linked.js~LinkedCancellable.html#instance-constructor-constructor",
+    "src/linked.js~LinkedCancellable#constructor",
     "method"
   ],
   [
-    "src/index.js~cancellable#addeventlistener",
-    "class/src/index.js~Cancellable.html#instance-method-addEventListener",
-    "src/index.js~Cancellable#addEventListener",
+    "src/linked.js~linkedcancellable#link",
+    "class/src/linked.js~LinkedCancellable.html#instance-method-link",
+    "src/linked.js~LinkedCancellable#link",
     "method"
   ],
   [
-    "src/index.js~cancellable#cancel",
-    "class/src/index.js~Cancellable.html#instance-method-cancel",
-    "src/index.js~Cancellable#cancel",
+    "src/linked.js~linkedcancellable#unlink",
+    "class/src/linked.js~LinkedCancellable.html#instance-method-unlink",
+    "src/linked.js~LinkedCancellable#unlink",
     "method"
   ],
   [
-    "src/index.js~cancellable#cancelled",
-    "class/src/index.js~Cancellable.html#instance-get-cancelled",
-    "src/index.js~Cancellable#cancelled",
+    "src/uncancelled.js",
+    "file/src/uncancelled.js.html",
+    "src/uncancelled.js",
+    "file"
+  ],
+  [
+    "src/uncancelled.js~uncancelledcancellable#cancel",
+    "class/src/uncancelled.js~UncancelledCancellable.html#instance-method-cancel",
+    "src/uncancelled.js~UncancelledCancellable#cancel",
+    "method"
+  ],
+  [
+    "src/uncancelled.js~uncancelledcancellable#cancelled",
+    "class/src/uncancelled.js~UncancelledCancellable.html#instance-get-cancelled",
+    "src/uncancelled.js~UncancelledCancellable#cancelled",
     "member"
   ],
   [
-    "src/index.js~cancellable#disable",
-    "class/src/index.js~Cancellable.html#instance-method-disable",
-    "src/index.js~Cancellable#disable",
-    "method"
+    "src/utils.js",
+    "file/src/utils.js.html",
+    "src/utils.js",
+    "file"
   ],
   [
-    "src/index.js~cancellable#enable",
-    "class/src/index.js~Cancellable.html#instance-method-enable",
-    "src/index.js~Cancellable#enable",
-    "method"
+    "test/boolean.js",
+    "test-file/test/boolean.js.html",
+    "test/boolean.js",
+    "testFile"
   ],
   [
-    "src/index.js~cancellable#isparentto",
-    "class/src/index.js~Cancellable.html#instance-method-isParentTo",
-    "src/index.js~Cancellable#isParentTo",
-    "method"
-  ],
-  [
-    "src/index.js~cancellable#remove",
-    "class/src/index.js~Cancellable.html#instance-method-remove",
-    "src/index.js~Cancellable#remove",
-    "method"
-  ],
-  [
-    "src/index.js~cancellable#removeeventlistener",
-    "class/src/index.js~Cancellable.html#instance-method-removeEventListener",
-    "src/index.js~Cancellable#removeEventListener",
-    "method"
-  ],
-  [
-    "src/index.js~cancellable#removeparent",
-    "class/src/index.js~Cancellable.html#instance-method-removeParent",
-    "src/index.js~Cancellable#removeParent",
-    "method"
-  ],
-  [
-    "src/index.js~cancellable#setparent",
-    "class/src/index.js~Cancellable.html#instance-method-setParent",
-    "src/index.js~Cancellable#setParent",
-    "method"
-  ],
-  [
-    "src/index.js~cancellable.create",
-    "class/src/index.js~Cancellable.html#static-method-create",
-    "src/index.js~Cancellable.create",
-    "method"
+    "test/composite.js",
+    "test-file/test/composite.js.html",
+    "test/composite.js",
+    "testFile"
   ],
   [
     "test/index.js",
     "test-file/test/index.js.html",
     "test/index.js",
+    "testFile"
+  ],
+  [
+    "test/linked.js",
+    "test-file/test/linked.js.html",
+    "test/linked.js",
     "testFile"
   ]
 ]
