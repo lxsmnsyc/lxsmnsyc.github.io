@@ -30,9 +30,9 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~CompletableEmitter.html">CompletableEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~CompletableObserver.html">CompletableObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -43,15 +43,33 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/observer.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Provides a mechanism for receiving push-based notification of a valueless
+ * completion or an error.
+ *
+ * When a CompletableObserver is subscribed to a Completable through the
+ * Completable.subscribe(CompletableObserver) method, the Completable calls
+ * onSubscribe(Cancellable) with a Cancellable that allows cancelling the
+ * sequence at any time. A well-behaved Completable will call a CompletableObserver&apos;s
+ * onError(Error) or onComplete() method exactly once as they are considered
+ * mutually exclusive terminal signals.
+ *
+ * the invocation pattern must adhere to the following protocol:
+ *
+ * &lt;code&gt;onSubscribe (onError | onComplete)?&lt;/code&gt;
+ *
+ * Subscribing a CompletableObserver to multiple Completables is not recommended.
+ * If such reuse happens, it is the duty of the CompletableObserver implementation
+ * to be ready to receive multiple calls to its methods and ensure proper concurrent
+ * behavior of its business logic.
+ *
+ * Calling onSubscribe(Cancellable) or onError(Error) with a null argument is forbidden.
  * @interface
- * Represents an object that receives notification from
- * an Emitter.
  */
 // eslint-disable-next-line no-unused-vars
-export default class Observer {
+export default class CompletableObserver {
   /**
-   * Receives the AbortController subscription.
-   * @param {!AbortController} d
+   * Receives the Cancellable subscription.
+   * @param {!Cancellable} d
    * @abstract
    */
   // eslint-disable-next-line class-methods-use-this, no-unused-vars

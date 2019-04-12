@@ -30,9 +30,9 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~CompletableEmitter.html">CompletableEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~CompletableObserver.html">CompletableObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -44,7 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/merge.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-loop-func */
 /* eslint-disable no-restricted-syntax */
-import AbortController from &apos;abort-controller&apos;;
+import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
 import { isIterable, cleanObserver } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
@@ -55,60 +55,44 @@ import error from &apos;./error&apos;;
 function subscribeActual(observer) {
   const { onComplete, onError, onSubscribe } = cleanObserver(observer);
 
-  const controller = new AbortController();
-
-  const { signal } = controller;
+  const controller = new CompositeCancellable();
 
   onSubscribe(controller);
-
-  if (signal.aborted) {
-    return;
-  }
 
   const { sources } = this;
 
   const buffer = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const completable of sources) {
-    if (signal.aborted) {
-      return;
-    }
     if (completable instanceof Completable) {
       buffer.unshift(completable);
     } else {
       onError(new Error(&apos;Completable.amb: One of the sources is a non-Completable.&apos;));
-      controller.abort();
-      break;
+      controller.cancel();
+      return;
     }
   }
 
-  if (signal.aborted) {
-    return;
-  }
-
   let pending = buffer.length;
-  let current;
   for (const completable of buffer) {
     completable.subscribeWith({
       onSubscribe(ac) {
-        signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+        controller.add(ac);
       },
       onComplete() {
         pending -= 1;
 
         if (pending === 0) {
           onComplete();
-          controller.abort();
+          controller.cancel();
         }
       },
       onError(x) {
         onError(x);
-        controller.abort();
+        controller.cancel();
       },
     });
   }
-
-  current();
 }
 /**
  * @ignore

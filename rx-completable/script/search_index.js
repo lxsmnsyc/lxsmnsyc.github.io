@@ -260,7 +260,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/create.js.html#lineNumber53",
-    "#create should be aborted successfully if emitter is aborted before any signal.",
+    "#create should be cancelled successfully if emitter is cancelled before any signal.",
     "test"
   ],
   [
@@ -338,13 +338,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delay.js.html#lineNumber47",
-    "#delay should not signal complete if aborted.",
+    "#delay should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delay.js.html#lineNumber62",
-    "#delay should not signal error if aborted.",
+    "#delay should not signal error if cancelled.",
     "test"
   ],
   [
@@ -380,13 +380,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber47",
-    "#delaySubscription should not signal complete if aborted.",
+    "#delaySubscription should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/delaySubscription.js.html#lineNumber62",
-    "#delaySubscription should not signal error if aborted.",
+    "#delaySubscription should not signal error if cancelled.",
     "test"
   ],
   [
@@ -458,7 +458,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/doFinally.js.html#lineNumber51",
-    "#doFinally should call the given function on dispose.",
+    "#doFinally should call the given function on cancel.",
     "test"
   ],
   [
@@ -475,38 +475,38 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber8",
-    "#doOnAbort",
+    "test-file/test/doOnCancel.js.html#lineNumber8",
+    "#doOnCancel",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber55",
-    "#doOnAbort should call the given function on abort.",
+    "test-file/test/doOnCancel.js.html#lineNumber55",
+    "#doOnCancel should call the given function on cancel.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber12",
-    "#doOnAbort should create a Completable",
+    "test-file/test/doOnCancel.js.html#lineNumber12",
+    "#doOnCancel should create a Completable",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber19",
-    "#doOnAbort should return the same instance if the method received a non-function parameter.",
+    "test-file/test/doOnCancel.js.html#lineNumber19",
+    "#doOnCancel should return the same instance if the method received a non-function parameter.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber27",
-    "#doOnAbort should signal the complete then fire abort callback.",
+    "test-file/test/doOnCancel.js.html#lineNumber27",
+    "#doOnCancel should signal the complete then fire cancel callback.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnAbort.js.html#lineNumber41",
-    "#doOnAbort should signal the error value then fire abort callback.",
+    "test-file/test/doOnCancel.js.html#lineNumber41",
+    "#doOnCancel should signal the error value then fire cancel callback.",
     "test"
   ],
   [
@@ -752,6 +752,12 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/fromResolvable.js.html#lineNumber30",
+    "#fromResolvable should error with the given error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber41",
     "#fromResolvable should signal error if the given value is not a function",
     "test"
   ],
@@ -1256,13 +1262,13 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timeout.js.html#lineNumber58",
-    "#timeout should not signal complete if aborted.",
+    "#timeout should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
     "test-file/test/timeout.js.html#lineNumber73",
-    "#timeout should not signal error if aborted.",
+    "#timeout should not signal error if cancelled.",
     "test"
   ],
   [
@@ -1304,7 +1310,7 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/timer.js.html#lineNumber40",
-    "#timer should not signal complete if aborted.",
+    "#timer should not signal complete if cancelled.",
     "test"
   ],
   [
@@ -1338,15 +1344,15 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "rx-completable/src/emitter.js~emitter",
-    "class/src/emitter.js~Emitter.html",
-    "<span>Emitter</span> <span class=\"search-result-import-path\">rx-completable/src/emitter.js</span>",
+    "rx-completable/src/emitter.js~completableemitter",
+    "class/src/emitter.js~CompletableEmitter.html",
+    "<span>CompletableEmitter</span> <span class=\"search-result-import-path\">rx-completable/src/emitter.js</span>",
     "class"
   ],
   [
-    "rx-completable/src/observer.js~observer",
-    "class/src/observer.js~Observer.html",
-    "<span>Observer</span> <span class=\"search-result-import-path\">rx-completable/src/observer.js</span>",
+    "rx-completable/src/observer.js~completableobserver",
+    "class/src/observer.js~CompletableObserver.html",
+    "<span>CompletableObserver</span> <span class=\"search-result-import-path\">rx-completable/src/observer.js</span>",
     "class"
   ],
   [
@@ -1638,9 +1644,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/completable.js~abortcontroller",
-    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
-    "src/completable.js~AbortController",
+    "src/completable.js~cancellable",
+    "https://lxsmnsyc.github.io/rx-cancellable/",
+    "src/completable.js~Cancellable",
     "external"
   ],
   [
@@ -1704,9 +1710,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/completable.js~completable#doonabort",
-    "class/src/completable.js~Completable.html#instance-method-doOnAbort",
-    "src/completable.js~Completable#doOnAbort",
+    "src/completable.js~completable#dooncancel",
+    "class/src/completable.js~Completable.html#instance-method-doOnCancel",
+    "src/completable.js~Completable#doOnCancel",
     "method"
   ],
   [
@@ -1944,15 +1950,39 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/emitter.js~emitter#oncomplete",
-    "class/src/emitter.js~Emitter.html#instance-method-onComplete",
-    "src/emitter.js~Emitter#onComplete",
+    "src/emitter.js~completableemitter#cancel",
+    "class/src/emitter.js~CompletableEmitter.html#instance-method-cancel",
+    "src/emitter.js~CompletableEmitter#cancel",
     "method"
   ],
   [
-    "src/emitter.js~emitter#onerror",
-    "class/src/emitter.js~Emitter.html#instance-method-onError",
-    "src/emitter.js~Emitter#onError",
+    "src/emitter.js~completableemitter#cancelled",
+    "class/src/emitter.js~CompletableEmitter.html#instance-get-cancelled",
+    "src/emitter.js~CompletableEmitter#cancelled",
+    "member"
+  ],
+  [
+    "src/emitter.js~completableemitter#constructor",
+    "class/src/emitter.js~CompletableEmitter.html#instance-constructor-constructor",
+    "src/emitter.js~CompletableEmitter#constructor",
+    "method"
+  ],
+  [
+    "src/emitter.js~completableemitter#oncomplete",
+    "class/src/emitter.js~CompletableEmitter.html#instance-method-onComplete",
+    "src/emitter.js~CompletableEmitter#onComplete",
+    "method"
+  ],
+  [
+    "src/emitter.js~completableemitter#onerror",
+    "class/src/emitter.js~CompletableEmitter.html#instance-method-onError",
+    "src/emitter.js~CompletableEmitter#onError",
+    "method"
+  ],
+  [
+    "src/emitter.js~completableemitter#setcancellable",
+    "class/src/emitter.js~CompletableEmitter.html#instance-method-setCancellable",
+    "src/emitter.js~CompletableEmitter#setCancellable",
     "method"
   ],
   [
@@ -2046,9 +2076,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/internal/operators/doonabort.js",
-    "file/src/internal/operators/doOnAbort.js.html",
-    "src/internal/operators/doOnAbort.js",
+    "src/internal/operators/dooncancel.js",
+    "file/src/internal/operators/doOnCancel.js.html",
+    "src/internal/operators/doOnCancel.js",
     "file"
   ],
   [
@@ -2208,21 +2238,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/observer.js~observer#oncomplete",
-    "class/src/observer.js~Observer.html#instance-method-onComplete",
-    "src/observer.js~Observer#onComplete",
+    "src/observer.js~completableobserver#oncomplete",
+    "class/src/observer.js~CompletableObserver.html#instance-method-onComplete",
+    "src/observer.js~CompletableObserver#onComplete",
     "method"
   ],
   [
-    "src/observer.js~observer#onerror",
-    "class/src/observer.js~Observer.html#instance-method-onError",
-    "src/observer.js~Observer#onError",
+    "src/observer.js~completableobserver#onerror",
+    "class/src/observer.js~CompletableObserver.html#instance-method-onError",
+    "src/observer.js~CompletableObserver#onError",
     "method"
   ],
   [
-    "src/observer.js~observer#onsubscribe",
-    "class/src/observer.js~Observer.html#instance-method-onSubscribe",
-    "src/observer.js~Observer#onSubscribe",
+    "src/observer.js~completableobserver#onsubscribe",
+    "class/src/observer.js~CompletableObserver.html#instance-method-onSubscribe",
+    "src/observer.js~CompletableObserver#onSubscribe",
     "method"
   ],
   [
@@ -2310,9 +2340,9 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
-    "test/doonabort.js",
-    "test-file/test/doOnAbort.js.html",
-    "test/doOnAbort.js",
+    "test/dooncancel.js",
+    "test-file/test/doOnCancel.js.html",
+    "test/doOnCancel.js",
     "testFile"
   ],
   [

@@ -30,9 +30,9 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~CompletableEmitter.html">CompletableEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~CompletableObserver.html">CompletableObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -42,7 +42,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/repeatUntil.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
 import { cleanObserver, isFunction } from &apos;../utils&apos;;
 
@@ -52,26 +52,17 @@ import { cleanObserver, isFunction } from &apos;../utils&apos;;
 function subscribeActual(observer) {
   const { onSubscribe, onComplete, onError } = cleanObserver(observer);
 
-  const controller = new AbortController();
-
-  const { signal } = controller;
+  const controller = new LinkedCancellable();
 
   onSubscribe(controller);
-
-  if (signal.aborted) {
-    return;
-  }
 
   const { source, predicate } = this;
 
   const sub = () =&gt; {
-    if (signal.aborted) {
-      return;
-    }
-
+    controller.unlink();
     source.subscribeWith({
       onSubscribe(ac) {
-        signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+        controller.link(ac);
       },
       onComplete() {
         if (isFunction(predicate)) {
@@ -79,6 +70,7 @@ function subscribeActual(observer) {
 
           if (result) {
             onComplete();
+            controller.cancel();
           } else {
             sub();
           }
@@ -86,10 +78,7 @@ function subscribeActual(observer) {
           sub();
         }
       },
-      onError(x) {
-        onError(x);
-        controller.abort();
-      },
+      onError,
     });
   };
 

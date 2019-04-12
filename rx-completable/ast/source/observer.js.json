@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 687,
+  "end": 1655,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 31,
+      "line": 49,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 687,
+    "end": 1655,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 31,
+        "line": 49,
         "column": 0
       }
     },
@@ -30,77 +30,77 @@
     "body": [
       {
         "type": "ExportDefaultDeclaration",
-        "start": 136,
-        "end": 686,
+        "start": 1101,
+        "end": 1654,
         "loc": {
           "start": {
-            "line": 7,
+            "line": 25,
             "column": 0
           },
           "end": {
-            "line": 30,
+            "line": 48,
             "column": 1
           }
         },
         "declaration": {
           "type": "ClassDeclaration",
-          "start": 151,
-          "end": 686,
+          "start": 1116,
+          "end": 1654,
           "loc": {
             "start": {
-              "line": 7,
+              "line": 25,
               "column": 15
             },
             "end": {
-              "line": 30,
+              "line": 48,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 157,
-            "end": 165,
+            "start": 1122,
+            "end": 1141,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 25,
                 "column": 21
               },
               "end": {
-                "line": 7,
-                "column": 29
+                "line": 25,
+                "column": 40
               },
-              "identifierName": "Observer"
+              "identifierName": "CompletableObserver"
             },
-            "name": "Observer",
+            "name": "CompletableObserver",
             "leadingComments": null
           },
           "superClass": null,
           "body": {
             "type": "ClassBody",
-            "start": 166,
-            "end": 686,
+            "start": 1142,
+            "end": 1654,
             "loc": {
               "start": {
-                "line": 7,
-                "column": 30
+                "line": 25,
+                "column": 41
               },
               "end": {
-                "line": 30,
+                "line": 48,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ClassMethod",
-                "start": 347,
-                "end": 364,
+                "start": 1315,
+                "end": 1332,
                 "loc": {
                   "start": {
-                    "line": 14,
+                    "line": 32,
                     "column": 2
                   },
                   "end": {
-                    "line": 14,
+                    "line": 32,
                     "column": 19
                   }
                 },
@@ -108,15 +108,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 347,
-                  "end": 358,
+                  "start": 1315,
+                  "end": 1326,
                   "loc": {
                     "start": {
-                      "line": 14,
+                      "line": 32,
                       "column": 2
                     },
                     "end": {
-                      "line": 14,
+                      "line": 32,
                       "column": 13
                     },
                     "identifierName": "onSubscribe"
@@ -132,15 +132,15 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 359,
-                    "end": 360,
+                    "start": 1327,
+                    "end": 1328,
                     "loc": {
                       "start": {
-                        "line": 14,
+                        "line": 32,
                         "column": 14
                       },
                       "end": {
-                        "line": 14,
+                        "line": 32,
                         "column": 15
                       },
                       "identifierName": "d"
@@ -150,15 +150,15 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 362,
-                  "end": 364,
+                  "start": 1330,
+                  "end": 1332,
                   "loc": {
                     "start": {
-                      "line": 14,
+                      "line": 32,
                       "column": 17
                     },
                     "end": {
-                      "line": 14,
+                      "line": 32,
                       "column": 19
                     }
                   },
@@ -170,16 +170,16 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n   * Receives the AbortController subscription.\n   * @param {!AbortController} d\n   * @abstract\n   ",
-                    "start": 170,
-                    "end": 275,
+                    "value": "*\n   * Receives the Cancellable subscription.\n   * @param {!Cancellable} d\n   * @abstract\n   ",
+                    "start": 1146,
+                    "end": 1243,
                     "loc": {
                       "start": {
-                        "line": 8,
+                        "line": 26,
                         "column": 2
                       },
                       "end": {
-                        "line": 12,
+                        "line": 30,
                         "column": 5
                       }
                     }
@@ -187,15 +187,15 @@
                   {
                     "type": "CommentLine",
                     "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-                    "start": 278,
-                    "end": 344,
+                    "start": 1246,
+                    "end": 1312,
                     "loc": {
                       "start": {
-                        "line": 13,
+                        "line": 31,
                         "column": 2
                       },
                       "end": {
-                        "line": 13,
+                        "line": 31,
                         "column": 68
                       }
                     }
@@ -205,15 +205,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Receives a completion signal.\n   * @abstract\n   ",
-                    "start": 368,
-                    "end": 427,
+                    "start": 1336,
+                    "end": 1395,
                     "loc": {
                       "start": {
-                        "line": 16,
+                        "line": 34,
                         "column": 2
                       },
                       "end": {
-                        "line": 19,
+                        "line": 37,
                         "column": 5
                       }
                     }
@@ -221,15 +221,15 @@
                   {
                     "type": "CommentLine",
                     "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-                    "start": 430,
-                    "end": 496,
+                    "start": 1398,
+                    "end": 1464,
                     "loc": {
                       "start": {
-                        "line": 20,
+                        "line": 38,
                         "column": 2
                       },
                       "end": {
-                        "line": 20,
+                        "line": 38,
                         "column": 68
                       }
                     }
@@ -238,15 +238,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 499,
-                "end": 514,
+                "start": 1467,
+                "end": 1482,
                 "loc": {
                   "start": {
-                    "line": 21,
+                    "line": 39,
                     "column": 2
                   },
                   "end": {
-                    "line": 21,
+                    "line": 39,
                     "column": 17
                   }
                 },
@@ -254,15 +254,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 499,
-                  "end": 509,
+                  "start": 1467,
+                  "end": 1477,
                   "loc": {
                     "start": {
-                      "line": 21,
+                      "line": 39,
                       "column": 2
                     },
                     "end": {
-                      "line": 21,
+                      "line": 39,
                       "column": 12
                     },
                     "identifierName": "onComplete"
@@ -278,15 +278,15 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 512,
-                  "end": 514,
+                  "start": 1480,
+                  "end": 1482,
                   "loc": {
                     "start": {
-                      "line": 21,
+                      "line": 39,
                       "column": 15
                     },
                     "end": {
-                      "line": 21,
+                      "line": 39,
                       "column": 17
                     }
                   },
@@ -299,15 +299,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Receives a completion signal.\n   * @abstract\n   ",
-                    "start": 368,
-                    "end": 427,
+                    "start": 1336,
+                    "end": 1395,
                     "loc": {
                       "start": {
-                        "line": 16,
+                        "line": 34,
                         "column": 2
                       },
                       "end": {
-                        "line": 19,
+                        "line": 37,
                         "column": 5
                       }
                     }
@@ -315,15 +315,15 @@
                   {
                     "type": "CommentLine",
                     "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-                    "start": 430,
-                    "end": 496,
+                    "start": 1398,
+                    "end": 1464,
                     "loc": {
                       "start": {
-                        "line": 20,
+                        "line": 38,
                         "column": 2
                       },
                       "end": {
-                        "line": 20,
+                        "line": 38,
                         "column": 68
                       }
                     }
@@ -333,15 +333,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Receives an error value.\n   * @param {!Error} err\n   * @abstract\n   ",
-                    "start": 518,
-                    "end": 597,
+                    "start": 1486,
+                    "end": 1565,
                     "loc": {
                       "start": {
-                        "line": 23,
+                        "line": 41,
                         "column": 2
                       },
                       "end": {
-                        "line": 27,
+                        "line": 45,
                         "column": 5
                       }
                     }
@@ -349,15 +349,15 @@
                   {
                     "type": "CommentLine",
                     "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-                    "start": 600,
-                    "end": 666,
+                    "start": 1568,
+                    "end": 1634,
                     "loc": {
                       "start": {
-                        "line": 28,
+                        "line": 46,
                         "column": 2
                       },
                       "end": {
-                        "line": 28,
+                        "line": 46,
                         "column": 68
                       }
                     }
@@ -366,15 +366,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 669,
-                "end": 684,
+                "start": 1637,
+                "end": 1652,
                 "loc": {
                   "start": {
-                    "line": 29,
+                    "line": 47,
                     "column": 2
                   },
                   "end": {
-                    "line": 29,
+                    "line": 47,
                     "column": 17
                   }
                 },
@@ -382,15 +382,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 669,
-                  "end": 676,
+                  "start": 1637,
+                  "end": 1644,
                   "loc": {
                     "start": {
-                      "line": 29,
+                      "line": 47,
                       "column": 2
                     },
                     "end": {
-                      "line": 29,
+                      "line": 47,
                       "column": 9
                     },
                     "identifierName": "onError"
@@ -406,15 +406,15 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 677,
-                    "end": 680,
+                    "start": 1645,
+                    "end": 1648,
                     "loc": {
                       "start": {
-                        "line": 29,
+                        "line": 47,
                         "column": 10
                       },
                       "end": {
-                        "line": 29,
+                        "line": 47,
                         "column": 13
                       },
                       "identifierName": "err"
@@ -424,15 +424,15 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 682,
-                  "end": 684,
+                  "start": 1650,
+                  "end": 1652,
                   "loc": {
                     "start": {
-                      "line": 29,
+                      "line": 47,
                       "column": 15
                     },
                     "end": {
-                      "line": 29,
+                      "line": 47,
                       "column": 17
                     }
                   },
@@ -443,15 +443,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Receives an error value.\n   * @param {!Error} err\n   * @abstract\n   ",
-                    "start": 518,
-                    "end": 597,
+                    "start": 1486,
+                    "end": 1565,
                     "loc": {
                       "start": {
-                        "line": 23,
+                        "line": 41,
                         "column": 2
                       },
                       "end": {
-                        "line": 27,
+                        "line": 45,
                         "column": 5
                       }
                     }
@@ -459,15 +459,15 @@
                   {
                     "type": "CommentLine",
                     "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-                    "start": 600,
-                    "end": 666,
+                    "start": 1568,
+                    "end": 1634,
                     "loc": {
                       "start": {
-                        "line": 28,
+                        "line": 46,
                         "column": 2
                       },
                       "end": {
-                        "line": 28,
+                        "line": 46,
                         "column": 68
                       }
                     }
@@ -479,16 +479,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * @interface\n * Represents an object that receives notification from\n * an Emitter.\n ",
+              "value": "*\n * Provides a mechanism for receiving push-based notification of a valueless\n * completion or an error.\n *\n * When a CompletableObserver is subscribed to a Completable through the\n * Completable.subscribe(CompletableObserver) method, the Completable calls\n * onSubscribe(Cancellable) with a Cancellable that allows cancelling the\n * sequence at any time. A well-behaved Completable will call a CompletableObserver's\n * onError(Error) or onComplete() method exactly once as they are considered\n * mutually exclusive terminal signals.\n *\n * the invocation pattern must adhere to the following protocol:\n *\n * <code>onSubscribe (onError | onComplete)?</code>\n *\n * Subscribing a CompletableObserver to multiple Completables is not recommended.\n * If such reuse happens, it is the duty of the CompletableObserver implementation\n * to be ready to receive multiple calls to its methods and ensure proper concurrent\n * behavior of its business logic.\n *\n * Calling onSubscribe(Cancellable) or onError(Error) with a null argument is forbidden.\n * @interface\n ",
               "start": 0,
-              "end": 92,
+              "end": 1057,
               "loc": {
                 "start": {
                   "line": 1,
                   "column": 0
                 },
                 "end": {
-                  "line": 5,
+                  "line": 23,
                   "column": 3
                 }
               }
@@ -496,15 +496,15 @@
             {
               "type": "CommentLine",
               "value": " eslint-disable-next-line no-unused-vars",
-              "start": 93,
-              "end": 135,
+              "start": 1058,
+              "end": 1100,
               "loc": {
                 "start": {
-                  "line": 6,
+                  "line": 24,
                   "column": 0
                 },
                 "end": {
-                  "line": 6,
+                  "line": 24,
                   "column": 42
                 }
               }
@@ -515,16 +515,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * @interface\n * Represents an object that receives notification from\n * an Emitter.\n ",
+            "value": "*\n * Provides a mechanism for receiving push-based notification of a valueless\n * completion or an error.\n *\n * When a CompletableObserver is subscribed to a Completable through the\n * Completable.subscribe(CompletableObserver) method, the Completable calls\n * onSubscribe(Cancellable) with a Cancellable that allows cancelling the\n * sequence at any time. A well-behaved Completable will call a CompletableObserver's\n * onError(Error) or onComplete() method exactly once as they are considered\n * mutually exclusive terminal signals.\n *\n * the invocation pattern must adhere to the following protocol:\n *\n * <code>onSubscribe (onError | onComplete)?</code>\n *\n * Subscribing a CompletableObserver to multiple Completables is not recommended.\n * If such reuse happens, it is the duty of the CompletableObserver implementation\n * to be ready to receive multiple calls to its methods and ensure proper concurrent\n * behavior of its business logic.\n *\n * Calling onSubscribe(Cancellable) or onError(Error) with a null argument is forbidden.\n * @interface\n ",
             "start": 0,
-            "end": 92,
+            "end": 1057,
             "loc": {
               "start": {
                 "line": 1,
                 "column": 0
               },
               "end": {
-                "line": 5,
+                "line": 23,
                 "column": 3
               }
             }
@@ -532,15 +532,15 @@
           {
             "type": "CommentLine",
             "value": " eslint-disable-next-line no-unused-vars",
-            "start": 93,
-            "end": 135,
+            "start": 1058,
+            "end": 1100,
             "loc": {
               "start": {
-                "line": 6,
+                "line": 24,
                 "column": 0
               },
               "end": {
-                "line": 6,
+                "line": 24,
                 "column": 42
               }
             }
@@ -553,16 +553,16 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * @interface\n * Represents an object that receives notification from\n * an Emitter.\n ",
+      "value": "*\n * Provides a mechanism for receiving push-based notification of a valueless\n * completion or an error.\n *\n * When a CompletableObserver is subscribed to a Completable through the\n * Completable.subscribe(CompletableObserver) method, the Completable calls\n * onSubscribe(Cancellable) with a Cancellable that allows cancelling the\n * sequence at any time. A well-behaved Completable will call a CompletableObserver's\n * onError(Error) or onComplete() method exactly once as they are considered\n * mutually exclusive terminal signals.\n *\n * the invocation pattern must adhere to the following protocol:\n *\n * <code>onSubscribe (onError | onComplete)?</code>\n *\n * Subscribing a CompletableObserver to multiple Completables is not recommended.\n * If such reuse happens, it is the duty of the CompletableObserver implementation\n * to be ready to receive multiple calls to its methods and ensure proper concurrent\n * behavior of its business logic.\n *\n * Calling onSubscribe(Cancellable) or onError(Error) with a null argument is forbidden.\n * @interface\n ",
       "start": 0,
-      "end": 92,
+      "end": 1057,
       "loc": {
         "start": {
           "line": 1,
           "column": 0
         },
         "end": {
-          "line": 5,
+          "line": 23,
           "column": 3
         }
       }
@@ -570,31 +570,31 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line no-unused-vars",
-      "start": 93,
-      "end": 135,
+      "start": 1058,
+      "end": 1100,
       "loc": {
         "start": {
-          "line": 6,
+          "line": 24,
           "column": 0
         },
         "end": {
-          "line": 6,
+          "line": 24,
           "column": 42
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Receives the AbortController subscription.\n   * @param {!AbortController} d\n   * @abstract\n   ",
-      "start": 170,
-      "end": 275,
+      "value": "*\n   * Receives the Cancellable subscription.\n   * @param {!Cancellable} d\n   * @abstract\n   ",
+      "start": 1146,
+      "end": 1243,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 26,
           "column": 2
         },
         "end": {
-          "line": 12,
+          "line": 30,
           "column": 5
         }
       }
@@ -602,15 +602,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 278,
-      "end": 344,
+      "start": 1246,
+      "end": 1312,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 31,
           "column": 2
         },
         "end": {
-          "line": 13,
+          "line": 31,
           "column": 68
         }
       }
@@ -618,15 +618,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Receives a completion signal.\n   * @abstract\n   ",
-      "start": 368,
-      "end": 427,
+      "start": 1336,
+      "end": 1395,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 34,
           "column": 2
         },
         "end": {
-          "line": 19,
+          "line": 37,
           "column": 5
         }
       }
@@ -634,15 +634,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 430,
-      "end": 496,
+      "start": 1398,
+      "end": 1464,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 38,
           "column": 2
         },
         "end": {
-          "line": 20,
+          "line": 38,
           "column": 68
         }
       }
@@ -650,15 +650,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Receives an error value.\n   * @param {!Error} err\n   * @abstract\n   ",
-      "start": 518,
-      "end": 597,
+      "start": 1486,
+      "end": 1565,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 41,
           "column": 2
         },
         "end": {
-          "line": 27,
+          "line": 45,
           "column": 5
         }
       }
@@ -666,15 +666,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 600,
-      "end": 666,
+      "start": 1568,
+      "end": 1634,
       "loc": {
         "start": {
-          "line": 28,
+          "line": 46,
           "column": 2
         },
         "end": {
-          "line": 28,
+          "line": 46,
           "column": 68
         }
       }
@@ -683,16 +683,16 @@
   "tokens": [
     {
       "type": "CommentBlock",
-      "value": "*\n * @interface\n * Represents an object that receives notification from\n * an Emitter.\n ",
+      "value": "*\n * Provides a mechanism for receiving push-based notification of a valueless\n * completion or an error.\n *\n * When a CompletableObserver is subscribed to a Completable through the\n * Completable.subscribe(CompletableObserver) method, the Completable calls\n * onSubscribe(Cancellable) with a Cancellable that allows cancelling the\n * sequence at any time. A well-behaved Completable will call a CompletableObserver's\n * onError(Error) or onComplete() method exactly once as they are considered\n * mutually exclusive terminal signals.\n *\n * the invocation pattern must adhere to the following protocol:\n *\n * <code>onSubscribe (onError | onComplete)?</code>\n *\n * Subscribing a CompletableObserver to multiple Completables is not recommended.\n * If such reuse happens, it is the duty of the CompletableObserver implementation\n * to be ready to receive multiple calls to its methods and ensure proper concurrent\n * behavior of its business logic.\n *\n * Calling onSubscribe(Cancellable) or onError(Error) with a null argument is forbidden.\n * @interface\n ",
       "start": 0,
-      "end": 92,
+      "end": 1057,
       "loc": {
         "start": {
           "line": 1,
           "column": 0
         },
         "end": {
-          "line": 5,
+          "line": 23,
           "column": 3
         }
       }
@@ -700,15 +700,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line no-unused-vars",
-      "start": 93,
-      "end": 135,
+      "start": 1058,
+      "end": 1100,
       "loc": {
         "start": {
-          "line": 6,
+          "line": 24,
           "column": 0
         },
         "end": {
-          "line": 6,
+          "line": 24,
           "column": 42
         }
       }
@@ -728,15 +728,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 136,
-      "end": 142,
+      "start": 1101,
+      "end": 1107,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 25,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 25,
           "column": 6
         }
       }
@@ -756,15 +756,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 143,
-      "end": 150,
+      "start": 1108,
+      "end": 1115,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 25,
           "column": 7
         },
         "end": {
-          "line": 7,
+          "line": 25,
           "column": 14
         }
       }
@@ -784,15 +784,15 @@
         "updateContext": null
       },
       "value": "class",
-      "start": 151,
-      "end": 156,
+      "start": 1116,
+      "end": 1121,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 25,
           "column": 15
         },
         "end": {
-          "line": 7,
+          "line": 25,
           "column": 20
         }
       }
@@ -809,17 +809,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "Observer",
-      "start": 157,
-      "end": 165,
+      "value": "CompletableObserver",
+      "start": 1122,
+      "end": 1141,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 25,
           "column": 21
         },
         "end": {
-          "line": 7,
-          "column": 29
+          "line": 25,
+          "column": 40
         }
       }
     },
@@ -835,31 +835,31 @@
         "postfix": false,
         "binop": null
       },
-      "start": 166,
-      "end": 167,
+      "start": 1142,
+      "end": 1143,
       "loc": {
         "start": {
-          "line": 7,
-          "column": 30
+          "line": 25,
+          "column": 41
         },
         "end": {
-          "line": 7,
-          "column": 31
+          "line": 25,
+          "column": 42
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n   * Receives the AbortController subscription.\n   * @param {!AbortController} d\n   * @abstract\n   ",
-      "start": 170,
-      "end": 275,
+      "value": "*\n   * Receives the Cancellable subscription.\n   * @param {!Cancellable} d\n   * @abstract\n   ",
+      "start": 1146,
+      "end": 1243,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 26,
           "column": 2
         },
         "end": {
-          "line": 12,
+          "line": 30,
           "column": 5
         }
       }
@@ -867,15 +867,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 278,
-      "end": 344,
+      "start": 1246,
+      "end": 1312,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 31,
           "column": 2
         },
         "end": {
-          "line": 13,
+          "line": 31,
           "column": 68
         }
       }
@@ -893,15 +893,15 @@
         "binop": null
       },
       "value": "onSubscribe",
-      "start": 347,
-      "end": 358,
+      "start": 1315,
+      "end": 1326,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 2
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 13
         }
       }
@@ -918,15 +918,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 358,
-      "end": 359,
+      "start": 1326,
+      "end": 1327,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 13
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 14
         }
       }
@@ -944,15 +944,15 @@
         "binop": null
       },
       "value": "d",
-      "start": 359,
-      "end": 360,
+      "start": 1327,
+      "end": 1328,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 14
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 15
         }
       }
@@ -969,15 +969,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 360,
-      "end": 361,
+      "start": 1328,
+      "end": 1329,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 15
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 16
         }
       }
@@ -994,15 +994,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 362,
-      "end": 363,
+      "start": 1330,
+      "end": 1331,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 17
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 18
         }
       }
@@ -1019,15 +1019,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 363,
-      "end": 364,
+      "start": 1331,
+      "end": 1332,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 32,
           "column": 18
         },
         "end": {
-          "line": 14,
+          "line": 32,
           "column": 19
         }
       }
@@ -1035,15 +1035,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Receives a completion signal.\n   * @abstract\n   ",
-      "start": 368,
-      "end": 427,
+      "start": 1336,
+      "end": 1395,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 34,
           "column": 2
         },
         "end": {
-          "line": 19,
+          "line": 37,
           "column": 5
         }
       }
@@ -1051,15 +1051,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 430,
-      "end": 496,
+      "start": 1398,
+      "end": 1464,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 38,
           "column": 2
         },
         "end": {
-          "line": 20,
+          "line": 38,
           "column": 68
         }
       }
@@ -1077,15 +1077,15 @@
         "binop": null
       },
       "value": "onComplete",
-      "start": 499,
-      "end": 509,
+      "start": 1467,
+      "end": 1477,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 39,
           "column": 2
         },
         "end": {
-          "line": 21,
+          "line": 39,
           "column": 12
         }
       }
@@ -1102,15 +1102,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 509,
-      "end": 510,
+      "start": 1477,
+      "end": 1478,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 39,
           "column": 12
         },
         "end": {
-          "line": 21,
+          "line": 39,
           "column": 13
         }
       }
@@ -1127,15 +1127,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 510,
-      "end": 511,
+      "start": 1478,
+      "end": 1479,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 39,
           "column": 13
         },
         "end": {
-          "line": 21,
+          "line": 39,
           "column": 14
         }
       }
@@ -1152,15 +1152,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 512,
-      "end": 513,
+      "start": 1480,
+      "end": 1481,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 39,
           "column": 15
         },
         "end": {
-          "line": 21,
+          "line": 39,
           "column": 16
         }
       }
@@ -1177,15 +1177,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 513,
-      "end": 514,
+      "start": 1481,
+      "end": 1482,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 39,
           "column": 16
         },
         "end": {
-          "line": 21,
+          "line": 39,
           "column": 17
         }
       }
@@ -1193,15 +1193,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Receives an error value.\n   * @param {!Error} err\n   * @abstract\n   ",
-      "start": 518,
-      "end": 597,
+      "start": 1486,
+      "end": 1565,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 41,
           "column": 2
         },
         "end": {
-          "line": 27,
+          "line": 45,
           "column": 5
         }
       }
@@ -1209,15 +1209,15 @@
     {
       "type": "CommentLine",
       "value": " eslint-disable-next-line class-methods-use-this, no-unused-vars",
-      "start": 600,
-      "end": 666,
+      "start": 1568,
+      "end": 1634,
       "loc": {
         "start": {
-          "line": 28,
+          "line": 46,
           "column": 2
         },
         "end": {
-          "line": 28,
+          "line": 46,
           "column": 68
         }
       }
@@ -1235,15 +1235,15 @@
         "binop": null
       },
       "value": "onError",
-      "start": 669,
-      "end": 676,
+      "start": 1637,
+      "end": 1644,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 2
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 9
         }
       }
@@ -1260,15 +1260,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 676,
-      "end": 677,
+      "start": 1644,
+      "end": 1645,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 9
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 10
         }
       }
@@ -1286,15 +1286,15 @@
         "binop": null
       },
       "value": "err",
-      "start": 677,
-      "end": 680,
+      "start": 1645,
+      "end": 1648,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 10
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 13
         }
       }
@@ -1311,15 +1311,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 680,
-      "end": 681,
+      "start": 1648,
+      "end": 1649,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 13
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 14
         }
       }
@@ -1336,15 +1336,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 682,
-      "end": 683,
+      "start": 1650,
+      "end": 1651,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 15
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 16
         }
       }
@@ -1361,15 +1361,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 683,
-      "end": 684,
+      "start": 1651,
+      "end": 1652,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 47,
           "column": 16
         },
         "end": {
-          "line": 29,
+          "line": 47,
           "column": 17
         }
       }
@@ -1386,15 +1386,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 685,
-      "end": 686,
+      "start": 1653,
+      "end": 1654,
       "loc": {
         "start": {
-          "line": 30,
+          "line": 48,
           "column": 0
         },
         "end": {
-          "line": 30,
+          "line": 48,
           "column": 1
         }
       }
@@ -1412,15 +1412,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 687,
-      "end": 687,
+      "start": 1655,
+      "end": 1655,
       "loc": {
         "start": {
-          "line": 31,
+          "line": 49,
           "column": 0
         },
         "end": {
-          "line": 31,
+          "line": 49,
           "column": 0
         }
       }

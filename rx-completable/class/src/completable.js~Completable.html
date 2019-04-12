@@ -30,9 +30,9 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/completable.js~Completable.html">Completable</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~CompletableEmitter.html">CompletableEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~CompletableObserver.html">CompletableObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -80,8 +80,8 @@ reactive types).</p>
 <p>Note that as with the Observable protocol, onError and
 onComplete are mutually exclusive events.</p>
 <p>Like Observable, a running Completable can be stopped through
-the AbortController instance provided to consumers through
-Observer.onSubscribe(AbortController).</p>
+the Cancellable instance provided to consumers through
+Observer.onSubscribe(Cancellable).</p>
 <p>Like an Observable, a Completable is lazy, can be either
 &quot;hot&quot; or &quot;cold&quot;, synchronous or asynchronous.
 Completable instances returned by the methods of this class are
@@ -212,7 +212,7 @@ complete, one after another.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#static-method-create">create</a></span></span><span class="code" data-ice="signature">(subscriber: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#static-method-create">create</a></span></span><span class="code" data-ice="signature">(subscriber: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span>Emitter</span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -826,7 +826,7 @@ the downstream.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-doOnAbort">doOnAbort</a></span></span><span class="code" data-ice="signature">(action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-doOnCancel">doOnCancel</a></span></span><span class="code" data-ice="signature">(action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -834,7 +834,7 @@ the downstream.</p>
         
         <div data-ice="description"><p>Calls the shared Action if a Observer subscribed
 to the current Completable aborts the common
-Disposable it received via onSubscribe.</p>
+Cancellable it received via onSubscribe.</p>
 </div>
       </div>
     </td>
@@ -949,14 +949,14 @@ to the downstream.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-doOnSubscribe">doOnSubscribe</a></span></span><span class="code" data-ice="signature">(consumer: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-doOnSubscribe">doOnSubscribe</a></span></span><span class="code" data-ice="signature">(consumer: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
         
         
         <div data-ice="description"><p>Returns a Completable instance that calls the given onSubscribe
-callback with the AbortController that child subscribers receive
+callback with the Cancellable that child subscribers receive
 on subscription.</p>
 </div>
       </div>
@@ -1011,7 +1011,7 @@ an exception.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-lift">lift</a></span></span><span class="code" data-ice="signature">(operator: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span><a href="class/src/observer.js~Observer.html">Observer</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-lift">lift</a></span></span><span class="code" data-ice="signature">(operator: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span>Observer</span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
         </p>
       </div>
       <div>
@@ -1283,7 +1283,7 @@ then this completable if the other completed normally.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onComplete: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/completable.js~Completable.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(onComplete: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
@@ -1709,7 +1709,7 @@ complete, one after another.</p>
     
     
     
-    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(subscriber: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(subscriber: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span>Emitter</span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
@@ -1737,7 +1737,7 @@ reactive world with the callback-style world.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">subscriber</td>
-      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span>)</span></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(e: <span>Emitter</span>)</span></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the emitter that is called when a Observer subscribes
 to the returned Completable</p>
@@ -2653,7 +2653,7 @@ terminal event and relays/replays it to observers.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber827">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber811">source</a></span></span>
     </span>
   </h3>
 
@@ -3195,14 +3195,14 @@ is executed once per subscription.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-doOnAbort">
+  <h3 data-ice="anchor" id="instance-method-doOnCancel">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">doOnAbort</span><span class="code" data-ice="signature">(action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">doOnCancel</span><span class="code" data-ice="signature">(action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
@@ -3215,7 +3215,7 @@ is executed once per subscription.</p>
   
   <div data-ice="description"><p>Calls the shared Action if a Observer subscribed
 to the current Completable aborts the common
-Disposable it received via onSubscribe.</p>
+Cancellable it received via onSubscribe.</p>
 <p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-completable/master/assets/images/Completable.doOnDispose.png" class="diagram"></p>
 </div>
 
@@ -3505,7 +3505,7 @@ to the downstream.</p>
     
     
     
-    <span class="code" data-ice="name">doOnSubscribe</span><span class="code" data-ice="signature">(consumer: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">doOnSubscribe</span><span class="code" data-ice="signature">(consumer: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
@@ -3517,7 +3517,7 @@ to the downstream.</p>
   
   
   <div data-ice="description"><p>Returns a Completable instance that calls the given onSubscribe
-callback with the AbortController that child subscribers receive
+callback with the Cancellable that child subscribers receive
 on subscription.</p>
 <p><img src="https://raw.githubusercontent.com/LXSMNSYC/rx-completable/master/assets/images/Completable.doOnSubscribe.png" class="diagram"></p>
 </div>
@@ -3534,7 +3534,7 @@ on subscription.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">consumer</td>
-      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span>)</span></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(ac: <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span>)</span></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the callback called when a child subscriber subscribes</p>
 </td>
@@ -3657,7 +3657,7 @@ an exception.</p>
     
     
     
-    <span class="code" data-ice="name">lift</span><span class="code" data-ice="signature">(operator: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span><a href="class/src/observer.js~Observer.html">Observer</a></span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
+    <span class="code" data-ice="name">lift</span><span class="code" data-ice="signature">(operator: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span>Observer</span>)</span></span>): <span><a href="class/src/completable.js~Completable.html">Completable</a></span></span>
     <span class="right-info">
       
       
@@ -3703,7 +3703,7 @@ with it is recommended.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">operator</td>
-      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span><a href="class/src/observer.js~Observer.html">Observer</a></span>)</span></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(observer: <span>Observer</span>)</span></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
       <td data-ice="description"><p>the callback called when a child subscriber subscribes</p>
 </td>
@@ -4365,7 +4365,7 @@ then this completable if the other completed normally.</p>
     
     
     
-    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onComplete: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span>
+    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(onComplete: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>, onError: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span>any</span>)</span></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
     <span class="right-info">
       
       
@@ -4418,8 +4418,8 @@ notification from the Completable</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>an AbortController reference can request the Completable to abort.</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>an Cancellable reference can request the Completable to abort.</p>
 </td>
         </tr>
       </tbody>
@@ -4549,7 +4549,7 @@ on the specified Scheduler</p>
 </ul>
 <p>The onSubscribe method is called when subscribeWith
 or subscribe is executed. This method receives an
-AbortController instance.</p>
+Cancellable instance.</p>
 </div>
 
   
@@ -4695,7 +4695,7 @@ Completable until such time as other emits its item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber816">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber800">source</a></span></span>
     </span>
   </h3>
 
@@ -4858,7 +4858,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber802">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/completable.js.html#lineNumber786">source</a></span></span>
     </span>
   </h3>
 
