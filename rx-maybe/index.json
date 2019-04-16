@@ -4479,7 +4479,7 @@
     "__docId__": 212,
     "kind": "file",
     "name": "src/maybe.js",
-    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Scheduler} https://lxsmnsyc.github.io/rx-scheduler/\n */\n/**\n * @external {Iterable} https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols\n */\n/**\n * @external {Thennable} https://promisesaplus.com/\n */\n/**\n * @external {PromiseLike} https://promisesaplus.com/\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport { LinkedCancellable } from 'rx-cancellable';\nimport { isObserver } from './internal/utils';\nimport {\n  amb, ambWith, cache, compose, create,\n  defer, empty, defaultIfEmpty, delay,\n  delaySubscription, delayUntil, doAfterSuccess,\n  doAfterTerminate, doFinally, doOnCancel,\n  doOnComplete, doOnError, doOnEvent,\n  doOnSubscribe, doOnSuccess, doOnTerminate,\n  error, filter, flatMap, fromCallable,\n  fromPromise, fromResolvable, just,\n  lift, map, merge, never, onErrorComplete,\n  onErrorResumeNext, onErrorReturn,\n  onErrorReturnItem, retry, switchIfEmpty,\n  takeUntil, timeout, timer, zip, zipWith, subscribeOn, observeOn,\n} from './internal/operators';\n/**\n * The Maybe class represents a deferred computation and emission of a single value,\n * no value at all or an exception.\n *\n * The Maybe class default consumer type it interacts with is the MaybeObserver via the\n * subscribe(MaybeObserver) method.\n *\n * The Maybe operates with the following sequential protocol:\n *\n * onSubscribe (onSuccess | onError | onComplete)?\n *\n * Note that onSuccess, onError and onComplete are mutually exclusive events;\n * unlike Observable, onSuccess is never followed by onError or onComplete.\n *\n * Like Observable, a running Maybe can be stopped through the Cancellable instance\n * provided to consumers through MaybeObserver.onSubscribe(Cancellable).\n *\n * Like an Observable, a Maybe is lazy, can be either \"hot\" or \"cold\", synchronous or\n * asynchronous.\n *\n * The documentation for this class makes use of marble diagrams. The following\n * legend explains these diagrams:\n *\n * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-maybe/master/assets/images/maybe.png\" class=\"diagram\">\n */\nexport default class Maybe {\n  /**\n   * @ignore\n   */\n  constructor(subscribeActual) {\n    /**\n     * @ignore\n     */\n    this.subscribeActual = subscribeActual;\n  }\n\n  /**\n   * Runs multiple MaybeSources and signals the events\n   * of the first one that signals (aborting the rest).\n   *\n   * @param {!Iterable} sources\n   * the Iterable sequence of sources. A subscription\n   * to each source will occur in the same order as\n   * in the Iterable.\n   * @returns {Maybe}\n   */\n  static amb(sources) {\n    return amb(sources);\n  }\n\n  /**\n   * Mirrors the Maybe (current or provided) that\n   * first signals an event.\n   * @param {!Maybe} other\n   * a Maybe competing to react first. A subscription\n   * to this provided source will occur after subscribing\n   * to the current source.\n   * @returns {Maybe}\n   * a Maybe that emits the same sequence as whichever of the\n   * source MaybeSources first signalled\n   */\n  ambWith(other) {\n    return ambWith(this, other);\n  }\n\n  /**\n   * Returns a Maybe that subscribes to this Maybe lazily,\n   * caches its event and replays it, to all the downstream\n   * subscribers.\n   *\n   * The operator subscribes only when the first downstream\n   * subscriber subscribes and maintains a single subscription\n   * towards this Maybe.\n   *\n   * @returns {Maybe}\n   * a Maybe that, when first subscribed to, caches all of its\n   * items and notifications for the benefit of subsequent\n   * subscribers.\n   */\n  cache() {\n    return cache(this);\n  }\n\n  /**\n   * Transform a Maybe by applying a particular Transformer\n   * function to it.\n   *\n   * This method operates on the Maybe itself whereas lift(MaybeObserver)\n   * operates on the Maybe's Observers.\n   *\n   * If the operator you are creating is designed to act on\n   * the individual item emitted by a Maybe, use lift(MaybeObserver).\n   * If your operator is designed to transform the source\n   * Maybe as a whole (for instance, by applying a particular\n   * set of existing Maybe operators to it) use compose.\n   *\n   * @param {!function(source: Maybe):Maybe} transformer\n   * the transformer function, not null\n   * @returns {Maybe}\n   * a Maybe, transformed by the transformer function\n   */\n  compose(transformer) {\n    return compose(this, transformer);\n  }\n\n  /**\n   * Provides an API (via a cold Maybe) that bridges the\n   * reactive world with the callback-style world.\n   *\n   * @param {!function(e: Emitter):any} subscriber\n   * the emitter that is called when a MaybeObserver\n   * subscribes to the returned Maybe\n   * @returns {Maybe}\n   */\n  static create(subscriber) {\n    return create(subscriber);\n  }\n\n  /**\n   * Returns a Maybe that emits the item emitted by the\n   * source Maybe or a specified default item if the source\n   * Maybe is empty.\n   *\n   * Note that the result Maybe is semantically equivalent to a\n   * Single, since it's guaranteed to emit exactly one item or\n   * an error.\n   *\n   * @param {!any} value\n   * the item to emit if the source Maybe emits no items\n   * @returns {Maybe}\n   * a Maybe that emits either the specified default item\n   * if the source Maybe emits no items, or the items emitted\n   * by the source Maybe.\n   */\n  defaultIfEmpty(value) {\n    return defaultIfEmpty(this, value);\n  }\n\n  /**\n   * Calls a function for each individual MaybeObserver to return\n   * the actual Maybe source to be subscribed to.\n   *\n   * @param {!function():Maybe} supplier\n   * the function that is called for each individual MaybeObserver\n   * and returns a Maybe instance to subscribe to\n   * @returns {Maybe}\n   */\n  static defer(supplier) {\n    return defer(supplier);\n  }\n\n  /**\n   * Returns a Maybe that signals the events emitted by the\n   * source Maybe shifted forward in time by a specified delay.\n   * @param {!number} amount\n   * the delay to shift the source by in milliseconds.\n   * @param {?boolean} doDelayError\n   * if true, both success and error signals are delayed.\n   * if false, only success signals are delayed.\n   * @returns {Maybe}\n   */\n  delay(amount, doDelayError) {\n    return delay(this, amount, doDelayError);\n  }\n\n  /**\n   * Returns a Maybe that delays the subscription to the source\n   * Maybe by a given amount of time.\n   * @param {!number} amount\n   * the time to delay the subscription\n   * @returns {Maybe}\n   * a Maybe that delays the subscription to the source\n   * Maybe by the given amount\n   */\n  delaySubscription(amount) {\n    return delaySubscription(this, amount);\n  }\n\n  /**\n   * Delays the actual subscription to the current Maybe until\n   * the given other Maybe signals success.\n   *\n   * If the delaying source signals an error, that error is\n   * re-emitted and no subscription to the current Maybe happens.\n   *\n   * @param {!Maybe} other\n   * the Single that has to complete before the subscription\n   * to the current Single happens.\n   * @returns {Maybe}\n   */\n  delayUntil(other) {\n    return delayUntil(this, other);\n  }\n\n  /**\n   * Calls the specified consumer with the success item after this\n   * item has been emitted to the downstream.\n   * @param {!function(x:any)} consumer\n   * the consumer that will be called after emitting an item\n   * from upstream to the downstream\n   * @returns {Maybe}\n   */\n  doAfterSuccess(consumer) {\n    return doAfterSuccess(this, consumer);\n  }\n\n  /**\n   * Registers an Action to be called when this Maybe invokes either\n   * onSuccess, onComplete or onError.\n   * @param {!function} action\n   * an action to be invoked when the source Maybe finishes\n   * @returns {Maybe}\n   * a Maybe that emits the same items as the source Maybe,\n   * then invokes the Action\n   */\n  doAfterTerminate(action) {\n    return doAfterTerminate(this, action);\n  }\n\n  /**\n   * Calls the specified action after this Maybe signals onSuccess,\n   * onError or onComplete or gets cancelled by the downstream.\n   *\n   * In case of a race between a terminal event and a cancel call,\n   * the provided onFinally action is executed once per subscription.\n   *\n   * @param {!function} action\n   * the action called when this Maybe terminates or gets cancelled\n   * @returns {Maybe}\n   */\n  doFinally(action) {\n    return doFinally(this, action);\n  }\n\n  /**\n   * Calls the shared action if an MaybeObserver subscribed to the current\n   * Maybe cancels the common Cancellable it received via onSubscribe.\n   *\n   * @param {!function} action\n   * the action called when the subscription is cancelled\n   * @returns {Maybe}\n   */\n  doOnCancel(action) {\n    return doOnCancel(this, action);\n  }\n\n  /**\n   * Modifies the source Maybe so that it invokes an action when it calls\n   * onComplete.\n   * @param {!function} action\n   * the action to invoke when the source Maybe calls onComplete.\n   * @returns {Maybe}\n   * the new Maybe with the side-effecting behavior applied.\n   */\n  doOnComplete(action) {\n    return doOnComplete(this, action);\n  }\n\n  /**\n   * Calls the shared consumer with the error sent via onError for each\n   * MaybeObserver that subscribes to the current Maybe.\n   * @param {!function(e: Error)} consumer\n   * the consumer called with the success value of onError\n   * @returns {Maybe}\n   */\n  doOnError(consumer) {\n    return doOnError(this, consumer);\n  }\n\n  /**\n   * Calls the given onEvent callback with the (success value, null) for\n   * an onSuccess, (null, throwable) for an onError or (null, null) for\n   * an onComplete signal from this Maybe before delivering said signal to the downstream.\n   * @param {!function(success: any, e: Error)} biconsumer\n   * the callback to call with the terminal event tuple\n   * @returns {Maybe}\n   */\n  doOnEvent(biconsumer) {\n    return doOnEvent(this, biconsumer);\n  }\n\n  /**\n   * Calls the shared consumer with the Cancellable sent through\n   * the onSubscribe for each MaybeObserver that subscribes to the current Maybe.\n   *\n   * @param {!function(ac: Cancellable)} consumer\n   * the consumer called with the Cancellable sent via onSubscribe\n   * @returns {Maybe}\n   */\n  doOnSubscribe(consumer) {\n    return doOnSubscribe(this, consumer);\n  }\n\n  /**\n   * Calls the shared consumer with the success value sent via onSuccess\n   * for each MaybeObserver that subscribes to the current Maybe.\n   *\n   * @param {!function(success: any)} consumer\n   * the consumer called with the success value of onSuccess\n   * @returns {Maybe}\n   */\n  doOnSuccess(consumer) {\n    return doOnSuccess(this, consumer);\n  }\n\n  /**\n   * Returns a Maybe instance that calls the given onTerminate callback\n   * just before this Maybe completes normally or with an exception.\n   *\n   * This differs from doAfterTerminate in that this happens before\n   * the onComplete or onError notification.\n   * @param {!function} action\n   * the action to invoke when the consumer calls onComplete or onError\n   * @returns {Maybe}\n   */\n  doOnTerminate(action) {\n    return doOnTerminate(this, action);\n  }\n\n  /**\n   * Returns a (singleton) Maybe instance that calls onComplete immediately.\n   * @returns {Maybe}\n   */\n  static empty() {\n    return empty();\n  }\n\n  /**\n   * Returns a Maybe that invokes a subscriber's onError method when\n   * the subscriber subscribes to it.\n   * @param {!(function():Error|Error)} err\n   * - the callable that is called for each individual\n   * MaybeObserver and returns or throws a value to be emitted.\n   * - the particular value to pass to onError\n   * @returns {Maybe}\n   * a Maybe that invokes the subscriber's onError method when the\n   * subscriber subscribes to it\n   */\n  static error(err) {\n    return error(err);\n  }\n\n  /**\n   * Filters the success item of the Maybe via a predicate function\n   * and emitting it if the predicate returns true, completing otherwise.\n   * @param {!function(x: any):boolean} predicate\n   * a function that evaluates the item emitted by the source Maybe,\n   * returning true if it passes the filter\n   * @returns {Maybe}\n   * a Maybe that emit the item emitted by the source Maybe that the filter\n   * evaluates as true\n   */\n  filter(predicate) {\n    return filter(this, predicate);\n  }\n\n  /**\n   * Returns a Maybe that is based on applying a specified function to the\n   * item emitted by the source Maybe, where that function returns a Maybe.\n   * @param {!function(x: any):Maybe} mapper\n   * a function that, when applied to the item emitted by the source Maybe,\n   * returns a Maybe.\n   * @returns {Maybe}\n   * the Maybe returned from mapper when applied to the item emitted by the\n   * source Maybe\n   */\n  flatMap(mapper) {\n    return flatMap(this, mapper);\n  }\n\n  /**\n   * Returns a Maybe that invokes the given callable for each individual\n   * MaybeObserver that subscribes and emits the resulting non-null item via\n   * onSuccess while considering a null result from the callable as\n   * indication for valueless completion via onComplete.\n   *\n   * This operator allows you to defer the execution of the given Callable\n   * until a MaybeObserver subscribes to the returned Maybe. In other terms,\n   * this source operator evaluates the given callable \"lazily\"\n   *\n   * If the result is a Promise-like instance, the\n   * MaybeObserver is then subscribed to the Promise through\n   * the fromPromise operator.\n   *\n   * @param {!function():any} callable\n   * a callable instance whose execution should be deferred and performed\n   * for each individual MaybeObserver that subscribes to the returned Maybe.\n   * @returns {Maybe}\n   */\n  static fromCallable(callable) {\n    return fromCallable(callable);\n  }\n\n  /**\n   * Converts a Promise-like instance into a Maybe.\n   *\n   * @param {!(Promise|Thennable|PromiseLike)} promise\n   * The promise to be converted into a Maybe.\n   * @returns {Maybe}\n   */\n  static fromPromise(promise) {\n    return fromPromise(promise);\n  }\n\n  /**\n   * Provides a Promise-like interface for emitting signals.\n   *\n   * @param {!function(resolve: function, reject:function))} fulfillable\n   * A function that accepts two parameters: resolve and reject,\n   * similar to a Promise construct.\n   * @returns {Maybe}\n   */\n  static fromResolvable(fulfillable) {\n    return fromResolvable(fulfillable);\n  }\n\n  /**\n   * Returns a Maybe that emits a specified item.\n   * @param {!any} value\n   * the item to emit\n   * @returns {Maybe}\n   * a Maybe that emits item\n   */\n  static just(value) {\n    return just(value);\n  }\n\n  /**\n   * This method requires advanced knowledge about building operators,\n   * please consider other standard composition methods first;\n   *\n   * Returns a Maybe which, when subscribed to, invokes the operator\n   * method of the provided MaybeObserver for each individual downstream Maybe\n   * and allows the insertion of a custom operator by accessing the\n   * downstream's MaybeObserver during this subscription phase and providing a new\n   * MaybeObserver, containing the custom operator's intended business logic,\n   * that will be used in the subscription process going further upstream.\n   *\n   * Generally, such a new MaybeObserver will wrap the downstream's MaybeObserver\n   * and forwards the onSuccess, onError and onComplete events from the\n   * upstream directly or according to the emission pattern the custom\n   * operator's business logic requires. In addition, such operator can\n   * intercept the flow control calls of cancel and signal.cancelled that\n   * would have traveled upstream and perform additional actions\n   * depending on the same business logic requirements.\n   *\n   * Note that implementing custom operators via this lift()\n   * method adds slightly more overhead by requiring an additional\n   * allocation and indirection per assembled flows. Instead,\n   * using compose() method and  creating a transformer function\n   * with it is recommended.\n   *\n   * @param {!function(observer: MaybeObserver):MaybeObserver} operator\n   * the function that receives the downstream's MaybeObserver and should\n   * return a MaybeObserver with custom behavior to be used as the consumer\n   * for the current Maybe.\n   * @returns {Maybe}\n   */\n  lift(operator) {\n    return lift(this, operator);\n  }\n\n  /**\n   * Returns a Maybe that applies a specified function to the item\n   * emitted by the source Maybe and emits the result of this function\n   * application.\n   *\n   * @param {!function} mapper\n   * a function to apply to the item emitted by the Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the item from the source Maybe, transformed by\n   * the specified function\n   */\n  map(mapper) {\n    return map(this, mapper);\n  }\n\n\n  /**\n   * Flattens a Maybe that emits a Maybe into a single Maybe that emits\n   * the item emitted by the nested Maybe, without any transformation.\n   *\n   * @param {!Maybe} source\n   * a Maybe that emits a Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the item that is the result of flattening the\n   * Maybe emitted by source\n   */\n  static merge(source) {\n    return merge(source);\n  }\n\n  /**\n   * Returns a Maybe that never sends any items or notifications to a\n   * MaybeObserver.\n   *\n   * @returns {Maybe}\n   * a Maybe that never emits any items or sends any notifications to a\n   * MaybeObserver\n   */\n  static never() {\n    return never();\n  }\n\n  /**\n   * Returns a Maybe which emits the terminal events from the\n   * thread of the specified scheduler.\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   *\n   * @returns {Maybe}\n   * the source Maybe modified so that its subscribers are\n   * notified on the specified Scheduler\n   */\n  observeOn(scheduler) {\n    return observeOn(this, scheduler);\n  }\n\n  /**\n   * Returns a Maybe instance that if this Maybe emits an\n   * error and the predicate returns true, it will emit an onComplete\n   * and swallow the throwable.\n   *\n   * If no predicate is provided, returns a Maybe instance that\n   * if this Maybe emits an error, it will emit an onComplete\n   * and swallow the error\n   *\n   * @param {function(e: Error):boolean} predicate\n   * the predicate to call when an Error is emitted which should return true\n   * if the Error should be swallowed and replaced with an onComplete.\n   * @returns {Maybe}\n   */\n  onErrorComplete(predicate) {\n    return onErrorComplete(this, predicate);\n  }\n\n  /**\n   * Instructs a Maybe to pass control to another Maybe rather than\n   * invoking onError if it encounters an error.\n   *\n   * @param {!function(e: Error):Maybe|Maybe} other\n   * - the next Maybe that will take over if the source Maybe encounters an error\n   * - a function that returns a Maybe that will take over if the source Maybe encounters an error\n   * @returns {Maybe}\n   */\n  onErrorResumeNext(other) {\n    return onErrorResumeNext(this, other);\n  }\n\n  /**\n   * Instructs a Maybe to emit an item (returned by a specified function)\n   * rather than invoking onError if it encounters an error.\n   * @param {!function(e: Error):Maybe} supplier\n   * a function that returns a single value that will be emitted as success value\n   * the current Maybe signals an onError event\n   * @returns {Maybe}\n   */\n  onErrorReturn(supplier) {\n    return onErrorReturn(this, supplier);\n  }\n\n  /**\n   * Instructs a Maybe to emit an item (returned by a specified function)\n   * rather than invoking onError if it encounters an error.\n   * @param {any} value\n   * the value that is emitted as onSuccess in case this Maybe signals an onError\n   * @returns {Maybe}\n   */\n  onErrorReturnItem(value) {\n    return onErrorReturnItem(this, value);\n  }\n\n  /**\n   * Returns a Maybe that mirrors the source Maybe, resubscribing to it if it calls\n   * onError and the predicate returns true for that specific exception and retry count.\n   * @param {!function(retries: number, err: Error):boolean} bipredicate\n   * the predicate that determines if a resubscription may happen in case of a\n   * specific exception and retry count.\n   * @returns {Maybe}\n   */\n  retry(bipredicate) {\n    return retry(this, bipredicate);\n  }\n\n  /**\n   * Returns a Maybe which subscribes the child subscriber on the specified scheduler,\n   * making sure the subscription side-effects happen on that specific thread of the scheduler.\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   *\n   * @returns {Maybe}\n   * the source Maybe modified so that its subscriptions happen\n   * on the specified Scheduler\n   */\n  subscribeOn(scheduler) {\n    return subscribeOn(this, scheduler);\n  }\n\n  /**\n   * Returns a Maybe that emits the items emitted by the source Maybe or the items\n   * of an alternate Maybe if the current Maybe is empty.\n   * @param {Maybe} other\n   * the alternate Maybe to subscribe to if the main does not emit any items\n   * @returns {Maybe}\n   * a Maybe that emits the items emitted by the source Maybe\n   * or the items of an alternate Maybe if the source Maybe is empty.\n   */\n  switchIfEmpty(other) {\n    return switchIfEmpty(this, other);\n  }\n\n  /**\n   * Returns a Maybe that emits the items emitted by the source Maybe until\n   * a second Maybe emits an item.\n   * @param {Maybe} other\n   * the Maybe whose first emitted item will cause takeUntil to stop\n   * emitting items from the source Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the items emitted by the source Maybe until\n   * such time as other emits its first item\n   */\n  takeUntil(other) {\n    return takeUntil(this, other);\n  }\n\n  /**\n   * Returns a Maybe that mirrors the source Maybe but applies a\n   * timeout policy for each emitted item. If the next item isn't\n   * emitted within the specified timeout duration starting from its\n   * predecessor, the resulting Maybe terminates and notifies MaybeObserver\n   * of an Error with TimeoutException.\n   *\n   * @param {!number} amount\n   * Amount of time in milliseconds\n   * @returns {Maybe}\n   */\n  timeout(amount) {\n    return timeout(this, amount);\n  }\n\n  /**\n   * Returns a Maybe that emits 0L after a specified delay.\n   * @param {!number} amount\n   * Amount of time in milliseconds\n   * @returns {Maybe}\n   */\n  static timer(amount) {\n    return timer(amount);\n  }\n\n  /**\n   * Returns a Maybe that emits the results of a specified combiner function\n   * applied to combinations of items emitted, in sequence, by an Iterable of other\n   * Maybes.\n   * @param {!Iterable} sources\n   * an Iterable of source Maybe\n   * @param {?function(results: Array):any} zipper\n   * a function that, when applied to an item emitted by each of the source Maybe,\n   * results in an item that will be emitted by the resulting Maybe\n   * @returns {Maybe}\n   */\n  static zip(sources, zipper) {\n    return zip(sources, zipper);\n  }\n\n  /**\n   * Waits until this and the other Maybe signal a success value then applies the\n   * given function to those values and emits the function's resulting value to downstream.\n   *\n   * If either this or the other Maybe is empty or signals an error,\n   * the resulting Maybe will terminate immediately and cancel the other source.\n   *\n   * @param {Maybe} other\n   * the other Maybe\n   * @param {function(a: any, b: any):any} zipper\n   * a function that combines the pairs of items from the two Maybe to\n   * generate the items to be emitted by the resulting Maybe\n   * @returns {Maybe}\n   */\n  zipWith(other, zipper) {\n    return zipWith(this, other, zipper);\n  }\n\n  /**\n   * @desc\n   * Subscribes with an Object that is an MaybeObserver.\n   *\n   * An Object is considered as an MaybeObserver if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onComplete (optional)\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * Cancellable instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   */\n  subscribeWith(observer) {\n    if (isObserver(observer)) {\n      this.subscribeActual.call(this, observer);\n    }\n  }\n\n  /**\n   * @desc\n   * Subscribes to a Maybe instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Maybe\n   * @param {?function(x: any)} onComplete\n   * the function you have designed to accept the completion\n   * from the Maybe\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Maybe\n   * @returns {Cancellable}\n   * an Cancellable reference can request the Maybe to cancel.\n   */\n  subscribe(onSuccess, onComplete, onError) {\n    const controller = new LinkedCancellable();\n    this.subscribeWith({\n      onSubscribe(ac) {\n        controller.link(ac);\n      },\n      onComplete,\n      onSuccess,\n      onError,\n    });\n    return controller;\n  }\n\n\n  /**\n   * Converts the Maybe to a Promise instance.\n   *\n   * @returns {Promise}\n   */\n  toPromise() {\n    return new Promise((res, rej) => {\n      this.subscribe(res, rej);\n    });\n  }\n\n  /**\n   * Converts the Maybe to a Promise instance\n   * and attaches callbacks to it.\n   *\n   * @param {!function(x: any):any} onFulfill\n   * @param {?function(x: Error):any} onReject\n   * @returns {Promise}\n   */\n  then(onFulfill, onReject) {\n    return this.toPromise().then(onFulfill, onReject);\n  }\n\n  /**\n   * Converts the Maybe to a Promise instance\n   * and attaches an onRejection callback to it.\n   *\n   * @param {!function(x: Error):any} onReject\n   * @returns {Promise}\n   */\n  catch(onReject) {\n    return this.toPromise().catch(onReject);\n  }\n}\n",
+    "content": "/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Scheduler} https://lxsmnsyc.github.io/rx-scheduler/\n */\n/**\n * @external {Iterable} https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols\n */\n/**\n * @external {Thennable} https://promisesaplus.com/\n */\n/**\n * @external {PromiseLike} https://promisesaplus.com/\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport { LinkedCancellable } from 'rx-cancellable';\nimport { isObserver } from './internal/utils';\nimport {\n  amb, ambWith, cache, compose, create,\n  defer, empty, defaultIfEmpty, delay,\n  delaySubscription, delayUntil, doAfterSuccess,\n  doAfterTerminate, doFinally, doOnCancel,\n  doOnComplete, doOnError, doOnEvent,\n  doOnSubscribe, doOnSuccess, doOnTerminate,\n  error, filter, flatMap, fromCallable,\n  fromPromise, fromResolvable, just,\n  lift, map, merge, never, onErrorComplete,\n  onErrorResumeNext, onErrorReturn,\n  onErrorReturnItem, retry, switchIfEmpty,\n  takeUntil, timeout, timer, zip, zipWith, subscribeOn, observeOn,\n} from './internal/operators';\n/**\n * The Maybe class represents a deferred computation and emission of a single value,\n * no value at all or an exception.\n *\n * The Maybe class default consumer type it interacts with is the MaybeObserver via the\n * subscribe(MaybeObserver) method.\n *\n * The Maybe operates with the following sequential protocol:\n *\n * onSubscribe (onSuccess | onError | onComplete)?\n *\n * Note that onSuccess, onError and onComplete are mutually exclusive events;\n * unlike Observable, onSuccess is never followed by onError or onComplete.\n *\n * Like Observable, a running Maybe can be stopped through the Cancellable instance\n * provided to consumers through MaybeObserver.onSubscribe(Cancellable).\n *\n * Like an Observable, a Maybe is lazy, can be either \"hot\" or \"cold\", synchronous or\n * asynchronous.\n *\n * The documentation for this class makes use of marble diagrams. The following\n * legend explains these diagrams:\n *\n * <img src=\"https://raw.githubusercontent.com/LXSMNSYC/rx-maybe/master/assets/images/maybe.png\" class=\"diagram\">\n */\nexport default class Maybe {\n  /**\n   * @ignore\n   */\n  constructor(subscribeActual) {\n    /**\n     * @ignore\n     */\n    this.subscribeActual = subscribeActual;\n  }\n\n  /**\n   * Runs multiple MaybeSources and signals the events\n   * of the first one that signals (aborting the rest).\n   *\n   * @param {!Iterable} sources\n   * the Iterable sequence of sources. A subscription\n   * to each source will occur in the same order as\n   * in the Iterable.\n   * @returns {Maybe}\n   */\n  static amb(sources) {\n    return amb(sources);\n  }\n\n  /**\n   * Mirrors the Maybe (current or provided) that\n   * first signals an event.\n   * @param {!Maybe} other\n   * a Maybe competing to react first. A subscription\n   * to this provided source will occur after subscribing\n   * to the current source.\n   * @returns {Maybe}\n   * a Maybe that emits the same sequence as whichever of the\n   * source MaybeSources first signalled\n   */\n  ambWith(other) {\n    return ambWith(this, other);\n  }\n\n  /**\n   * Returns a Maybe that subscribes to this Maybe lazily,\n   * caches its event and replays it, to all the downstream\n   * subscribers.\n   *\n   * The operator subscribes only when the first downstream\n   * subscriber subscribes and maintains a single subscription\n   * towards this Maybe.\n   *\n   * @returns {Maybe}\n   * a Maybe that, when first subscribed to, caches all of its\n   * items and notifications for the benefit of subsequent\n   * subscribers.\n   */\n  cache() {\n    return cache(this);\n  }\n\n  /**\n   * Transform a Maybe by applying a particular Transformer\n   * function to it.\n   *\n   * This method operates on the Maybe itself whereas lift(MaybeObserver)\n   * operates on the Maybe's Observers.\n   *\n   * If the operator you are creating is designed to act on\n   * the individual item emitted by a Maybe, use lift(MaybeObserver).\n   * If your operator is designed to transform the source\n   * Maybe as a whole (for instance, by applying a particular\n   * set of existing Maybe operators to it) use compose.\n   *\n   * @param {!function(source: Maybe):Maybe} transformer\n   * the transformer function, not null\n   * @returns {Maybe}\n   * a Maybe, transformed by the transformer function\n   */\n  compose(transformer) {\n    return compose(this, transformer);\n  }\n\n  /**\n   * Provides an API (via a cold Maybe) that bridges the\n   * reactive world with the callback-style world.\n   *\n   * @param {!function(e: Emitter):any} subscriber\n   * the emitter that is called when a MaybeObserver\n   * subscribes to the returned Maybe\n   * @returns {Maybe}\n   */\n  static create(subscriber) {\n    return create(subscriber);\n  }\n\n  /**\n   * Returns a Maybe that emits the item emitted by the\n   * source Maybe or a specified default item if the source\n   * Maybe is empty.\n   *\n   * Note that the result Maybe is semantically equivalent to a\n   * Single, since it's guaranteed to emit exactly one item or\n   * an error.\n   *\n   * @param {!any} value\n   * the item to emit if the source Maybe emits no items\n   * @returns {Maybe}\n   * a Maybe that emits either the specified default item\n   * if the source Maybe emits no items, or the items emitted\n   * by the source Maybe.\n   */\n  defaultIfEmpty(value) {\n    return defaultIfEmpty(this, value);\n  }\n\n  /**\n   * Calls a function for each individual MaybeObserver to return\n   * the actual Maybe source to be subscribed to.\n   *\n   * @param {!function():Maybe} supplier\n   * the function that is called for each individual MaybeObserver\n   * and returns a Maybe instance to subscribe to\n   * @returns {Maybe}\n   */\n  static defer(supplier) {\n    return defer(supplier);\n  }\n\n  /**\n   * Returns a Maybe that signals the events emitted by the\n   * source Maybe shifted forward in time by a specified delay.\n   * @param {!number} amount\n   * the delay to shift the source by in milliseconds.\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @param {?boolean} doDelayError\n   * if true, both success and error signals are delayed.\n   * if false, only success signals are delayed.\n   * @returns {Maybe}\n   */\n  delay(amount, scheduler, doDelayError) {\n    return delay(this, amount, scheduler, doDelayError);\n  }\n\n  /**\n   * Returns a Maybe that delays the subscription to the source\n   * Maybe by a given amount of time.\n   * @param {!number} amount\n   * the time to delay the subscription\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Maybe}\n   * a Maybe that delays the subscription to the source\n   * Maybe by the given amount\n   */\n  delaySubscription(amount, scheduler) {\n    return delaySubscription(this, amount, scheduler);\n  }\n\n  /**\n   * Delays the actual subscription to the current Maybe until\n   * the given other Maybe signals success.\n   *\n   * If the delaying source signals an error, that error is\n   * re-emitted and no subscription to the current Maybe happens.\n   *\n   * @param {!Maybe} other\n   * the Single that has to complete before the subscription\n   * to the current Single happens.\n   * @returns {Maybe}\n   */\n  delayUntil(other) {\n    return delayUntil(this, other);\n  }\n\n  /**\n   * Calls the specified consumer with the success item after this\n   * item has been emitted to the downstream.\n   * @param {!function(x:any)} consumer\n   * the consumer that will be called after emitting an item\n   * from upstream to the downstream\n   * @returns {Maybe}\n   */\n  doAfterSuccess(consumer) {\n    return doAfterSuccess(this, consumer);\n  }\n\n  /**\n   * Registers an Action to be called when this Maybe invokes either\n   * onSuccess, onComplete or onError.\n   * @param {!function} action\n   * an action to be invoked when the source Maybe finishes\n   * @returns {Maybe}\n   * a Maybe that emits the same items as the source Maybe,\n   * then invokes the Action\n   */\n  doAfterTerminate(action) {\n    return doAfterTerminate(this, action);\n  }\n\n  /**\n   * Calls the specified action after this Maybe signals onSuccess,\n   * onError or onComplete or gets cancelled by the downstream.\n   *\n   * In case of a race between a terminal event and a cancel call,\n   * the provided onFinally action is executed once per subscription.\n   *\n   * @param {!function} action\n   * the action called when this Maybe terminates or gets cancelled\n   * @returns {Maybe}\n   */\n  doFinally(action) {\n    return doFinally(this, action);\n  }\n\n  /**\n   * Calls the shared action if an MaybeObserver subscribed to the current\n   * Maybe cancels the common Cancellable it received via onSubscribe.\n   *\n   * @param {!function} action\n   * the action called when the subscription is cancelled\n   * @returns {Maybe}\n   */\n  doOnCancel(action) {\n    return doOnCancel(this, action);\n  }\n\n  /**\n   * Modifies the source Maybe so that it invokes an action when it calls\n   * onComplete.\n   * @param {!function} action\n   * the action to invoke when the source Maybe calls onComplete.\n   * @returns {Maybe}\n   * the new Maybe with the side-effecting behavior applied.\n   */\n  doOnComplete(action) {\n    return doOnComplete(this, action);\n  }\n\n  /**\n   * Calls the shared consumer with the error sent via onError for each\n   * MaybeObserver that subscribes to the current Maybe.\n   * @param {!function(e: Error)} consumer\n   * the consumer called with the success value of onError\n   * @returns {Maybe}\n   */\n  doOnError(consumer) {\n    return doOnError(this, consumer);\n  }\n\n  /**\n   * Calls the given onEvent callback with the (success value, null) for\n   * an onSuccess, (null, throwable) for an onError or (null, null) for\n   * an onComplete signal from this Maybe before delivering said signal to the downstream.\n   * @param {!function(success: any, e: Error)} biconsumer\n   * the callback to call with the terminal event tuple\n   * @returns {Maybe}\n   */\n  doOnEvent(biconsumer) {\n    return doOnEvent(this, biconsumer);\n  }\n\n  /**\n   * Calls the shared consumer with the Cancellable sent through\n   * the onSubscribe for each MaybeObserver that subscribes to the current Maybe.\n   *\n   * @param {!function(ac: Cancellable)} consumer\n   * the consumer called with the Cancellable sent via onSubscribe\n   * @returns {Maybe}\n   */\n  doOnSubscribe(consumer) {\n    return doOnSubscribe(this, consumer);\n  }\n\n  /**\n   * Calls the shared consumer with the success value sent via onSuccess\n   * for each MaybeObserver that subscribes to the current Maybe.\n   *\n   * @param {!function(success: any)} consumer\n   * the consumer called with the success value of onSuccess\n   * @returns {Maybe}\n   */\n  doOnSuccess(consumer) {\n    return doOnSuccess(this, consumer);\n  }\n\n  /**\n   * Returns a Maybe instance that calls the given onTerminate callback\n   * just before this Maybe completes normally or with an exception.\n   *\n   * This differs from doAfterTerminate in that this happens before\n   * the onComplete or onError notification.\n   * @param {!function} action\n   * the action to invoke when the consumer calls onComplete or onError\n   * @returns {Maybe}\n   */\n  doOnTerminate(action) {\n    return doOnTerminate(this, action);\n  }\n\n  /**\n   * Returns a (singleton) Maybe instance that calls onComplete immediately.\n   * @returns {Maybe}\n   */\n  static empty() {\n    return empty();\n  }\n\n  /**\n   * Returns a Maybe that invokes a subscriber's onError method when\n   * the subscriber subscribes to it.\n   * @param {!(function():Error|Error)} err\n   * - the callable that is called for each individual\n   * MaybeObserver and returns or throws a value to be emitted.\n   * - the particular value to pass to onError\n   * @returns {Maybe}\n   * a Maybe that invokes the subscriber's onError method when the\n   * subscriber subscribes to it\n   */\n  static error(err) {\n    return error(err);\n  }\n\n  /**\n   * Filters the success item of the Maybe via a predicate function\n   * and emitting it if the predicate returns true, completing otherwise.\n   * @param {!function(x: any):boolean} predicate\n   * a function that evaluates the item emitted by the source Maybe,\n   * returning true if it passes the filter\n   * @returns {Maybe}\n   * a Maybe that emit the item emitted by the source Maybe that the filter\n   * evaluates as true\n   */\n  filter(predicate) {\n    return filter(this, predicate);\n  }\n\n  /**\n   * Returns a Maybe that is based on applying a specified function to the\n   * item emitted by the source Maybe, where that function returns a Maybe.\n   * @param {!function(x: any):Maybe} mapper\n   * a function that, when applied to the item emitted by the source Maybe,\n   * returns a Maybe.\n   * @returns {Maybe}\n   * the Maybe returned from mapper when applied to the item emitted by the\n   * source Maybe\n   */\n  flatMap(mapper) {\n    return flatMap(this, mapper);\n  }\n\n  /**\n   * Returns a Maybe that invokes the given callable for each individual\n   * MaybeObserver that subscribes and emits the resulting non-null item via\n   * onSuccess while considering a null result from the callable as\n   * indication for valueless completion via onComplete.\n   *\n   * This operator allows you to defer the execution of the given Callable\n   * until a MaybeObserver subscribes to the returned Maybe. In other terms,\n   * this source operator evaluates the given callable \"lazily\"\n   *\n   * If the result is a Promise-like instance, the\n   * MaybeObserver is then subscribed to the Promise through\n   * the fromPromise operator.\n   *\n   * @param {!function():any} callable\n   * a callable instance whose execution should be deferred and performed\n   * for each individual MaybeObserver that subscribes to the returned Maybe.\n   * @returns {Maybe}\n   */\n  static fromCallable(callable) {\n    return fromCallable(callable);\n  }\n\n  /**\n   * Converts a Promise-like instance into a Maybe.\n   *\n   * @param {!(Promise|Thennable|PromiseLike)} promise\n   * The promise to be converted into a Maybe.\n   * @returns {Maybe}\n   */\n  static fromPromise(promise) {\n    return fromPromise(promise);\n  }\n\n  /**\n   * Provides a Promise-like interface for emitting signals.\n   *\n   * @param {!function(resolve: function, reject:function))} fulfillable\n   * A function that accepts two parameters: resolve and reject,\n   * similar to a Promise construct.\n   * @returns {Maybe}\n   */\n  static fromResolvable(fulfillable) {\n    return fromResolvable(fulfillable);\n  }\n\n  /**\n   * Returns a Maybe that emits a specified item.\n   * @param {!any} value\n   * the item to emit\n   * @returns {Maybe}\n   * a Maybe that emits item\n   */\n  static just(value) {\n    return just(value);\n  }\n\n  /**\n   * This method requires advanced knowledge about building operators,\n   * please consider other standard composition methods first;\n   *\n   * Returns a Maybe which, when subscribed to, invokes the operator\n   * method of the provided MaybeObserver for each individual downstream Maybe\n   * and allows the insertion of a custom operator by accessing the\n   * downstream's MaybeObserver during this subscription phase and providing a new\n   * MaybeObserver, containing the custom operator's intended business logic,\n   * that will be used in the subscription process going further upstream.\n   *\n   * Generally, such a new MaybeObserver will wrap the downstream's MaybeObserver\n   * and forwards the onSuccess, onError and onComplete events from the\n   * upstream directly or according to the emission pattern the custom\n   * operator's business logic requires. In addition, such operator can\n   * intercept the flow control calls of cancel and signal.cancelled that\n   * would have traveled upstream and perform additional actions\n   * depending on the same business logic requirements.\n   *\n   * Note that implementing custom operators via this lift()\n   * method adds slightly more overhead by requiring an additional\n   * allocation and indirection per assembled flows. Instead,\n   * using compose() method and  creating a transformer function\n   * with it is recommended.\n   *\n   * @param {!function(observer: MaybeObserver):MaybeObserver} operator\n   * the function that receives the downstream's MaybeObserver and should\n   * return a MaybeObserver with custom behavior to be used as the consumer\n   * for the current Maybe.\n   * @returns {Maybe}\n   */\n  lift(operator) {\n    return lift(this, operator);\n  }\n\n  /**\n   * Returns a Maybe that applies a specified function to the item\n   * emitted by the source Maybe and emits the result of this function\n   * application.\n   *\n   * @param {!function} mapper\n   * a function to apply to the item emitted by the Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the item from the source Maybe, transformed by\n   * the specified function\n   */\n  map(mapper) {\n    return map(this, mapper);\n  }\n\n\n  /**\n   * Flattens a Maybe that emits a Maybe into a single Maybe that emits\n   * the item emitted by the nested Maybe, without any transformation.\n   *\n   * @param {!Maybe} source\n   * a Maybe that emits a Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the item that is the result of flattening the\n   * Maybe emitted by source\n   */\n  static merge(source) {\n    return merge(source);\n  }\n\n  /**\n   * Returns a Maybe that never sends any items or notifications to a\n   * MaybeObserver.\n   *\n   * @returns {Maybe}\n   * a Maybe that never emits any items or sends any notifications to a\n   * MaybeObserver\n   */\n  static never() {\n    return never();\n  }\n\n  /**\n   * Returns a Maybe which emits the terminal events from the\n   * thread of the specified scheduler.\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   *\n   * @returns {Maybe}\n   * the source Maybe modified so that its subscribers are\n   * notified on the specified Scheduler\n   */\n  observeOn(scheduler) {\n    return observeOn(this, scheduler);\n  }\n\n  /**\n   * Returns a Maybe instance that if this Maybe emits an\n   * error and the predicate returns true, it will emit an onComplete\n   * and swallow the throwable.\n   *\n   * If no predicate is provided, returns a Maybe instance that\n   * if this Maybe emits an error, it will emit an onComplete\n   * and swallow the error\n   *\n   * @param {function(e: Error):boolean} predicate\n   * the predicate to call when an Error is emitted which should return true\n   * if the Error should be swallowed and replaced with an onComplete.\n   * @returns {Maybe}\n   */\n  onErrorComplete(predicate) {\n    return onErrorComplete(this, predicate);\n  }\n\n  /**\n   * Instructs a Maybe to pass control to another Maybe rather than\n   * invoking onError if it encounters an error.\n   *\n   * @param {!function(e: Error):Maybe|Maybe} other\n   * - the next Maybe that will take over if the source Maybe encounters an error\n   * - a function that returns a Maybe that will take over if the source Maybe encounters an error\n   * @returns {Maybe}\n   */\n  onErrorResumeNext(other) {\n    return onErrorResumeNext(this, other);\n  }\n\n  /**\n   * Instructs a Maybe to emit an item (returned by a specified function)\n   * rather than invoking onError if it encounters an error.\n   * @param {!function(e: Error):Maybe} supplier\n   * a function that returns a single value that will be emitted as success value\n   * the current Maybe signals an onError event\n   * @returns {Maybe}\n   */\n  onErrorReturn(supplier) {\n    return onErrorReturn(this, supplier);\n  }\n\n  /**\n   * Instructs a Maybe to emit an item (returned by a specified function)\n   * rather than invoking onError if it encounters an error.\n   * @param {any} value\n   * the value that is emitted as onSuccess in case this Maybe signals an onError\n   * @returns {Maybe}\n   */\n  onErrorReturnItem(value) {\n    return onErrorReturnItem(this, value);\n  }\n\n  /**\n   * Returns a Maybe that mirrors the source Maybe, resubscribing to it if it calls\n   * onError and the predicate returns true for that specific exception and retry count.\n   * @param {!function(retries: number, err: Error):boolean} bipredicate\n   * the predicate that determines if a resubscription may happen in case of a\n   * specific exception and retry count.\n   * @returns {Maybe}\n   */\n  retry(bipredicate) {\n    return retry(this, bipredicate);\n  }\n\n  /**\n   * Returns a Maybe which subscribes the child subscriber on the specified scheduler,\n   * making sure the subscription side-effects happen on that specific thread of the scheduler.\n   *\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   *\n   * @returns {Maybe}\n   * the source Maybe modified so that its subscriptions happen\n   * on the specified Scheduler\n   */\n  subscribeOn(scheduler) {\n    return subscribeOn(this, scheduler);\n  }\n\n  /**\n   * Returns a Maybe that emits the items emitted by the source Maybe or the items\n   * of an alternate Maybe if the current Maybe is empty.\n   * @param {Maybe} other\n   * the alternate Maybe to subscribe to if the main does not emit any items\n   * @returns {Maybe}\n   * a Maybe that emits the items emitted by the source Maybe\n   * or the items of an alternate Maybe if the source Maybe is empty.\n   */\n  switchIfEmpty(other) {\n    return switchIfEmpty(this, other);\n  }\n\n  /**\n   * Returns a Maybe that emits the items emitted by the source Maybe until\n   * a second Maybe emits an item.\n   * @param {Maybe} other\n   * the Maybe whose first emitted item will cause takeUntil to stop\n   * emitting items from the source Maybe\n   * @returns {Maybe}\n   * a Maybe that emits the items emitted by the source Maybe until\n   * such time as other emits its first item\n   */\n  takeUntil(other) {\n    return takeUntil(this, other);\n  }\n\n  /**\n   * Returns a Maybe that mirrors the source Maybe but applies a\n   * timeout policy for each emitted item. If the next item isn't\n   * emitted within the specified timeout duration starting from its\n   * predecessor, the resulting Maybe terminates and notifies MaybeObserver\n   * of an Error with TimeoutException.\n   *\n   * @param {!number} amount\n   * Amount of time in milliseconds\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Maybe}\n   */\n  timeout(amount, scheduler) {\n    return timeout(this, amount, scheduler);\n  }\n\n  /**\n   * Returns a Maybe that emits 0L after a specified delay.\n   * @param {!number} amount\n   * Amount of time in milliseconds\n   * @param {?Scheduler} scheduler\n   * the target scheduler to use for the non-blocking wait and emission.\n   * By default, schedules on the current thread.\n   * @returns {Maybe}\n   */\n  static timer(amount, scheduler) {\n    return timer(amount, scheduler);\n  }\n\n  /**\n   * Returns a Maybe that emits the results of a specified combiner function\n   * applied to combinations of items emitted, in sequence, by an Iterable of other\n   * Maybes.\n   * @param {!Iterable} sources\n   * an Iterable of source Maybe\n   * @param {?function(results: Array):any} zipper\n   * a function that, when applied to an item emitted by each of the source Maybe,\n   * results in an item that will be emitted by the resulting Maybe\n   * @returns {Maybe}\n   */\n  static zip(sources, zipper) {\n    return zip(sources, zipper);\n  }\n\n  /**\n   * Waits until this and the other Maybe signal a success value then applies the\n   * given function to those values and emits the function's resulting value to downstream.\n   *\n   * If either this or the other Maybe is empty or signals an error,\n   * the resulting Maybe will terminate immediately and cancel the other source.\n   *\n   * @param {Maybe} other\n   * the other Maybe\n   * @param {function(a: any, b: any):any} zipper\n   * a function that combines the pairs of items from the two Maybe to\n   * generate the items to be emitted by the resulting Maybe\n   * @returns {Maybe}\n   */\n  zipWith(other, zipper) {\n    return zipWith(this, other, zipper);\n  }\n\n  /**\n   * @desc\n   * Subscribes with an Object that is an MaybeObserver.\n   *\n   * An Object is considered as an MaybeObserver if:\n   *  - if it has the method onSubscribe\n   *  - if it has the method onComplete (optional)\n   *  - if it has the method onSuccess (optional)\n   *  - if it has the method onError (optional)\n   *\n   * The onSubscribe method is called when subscribeWith\n   * or subscribe is executed. This method receives an\n   * Cancellable instance.\n   *\n   * @param {!Object} observer\n   * @returns {undefined}\n   */\n  subscribeWith(observer) {\n    if (isObserver(observer)) {\n      this.subscribeActual.call(this, observer);\n    }\n  }\n\n  /**\n   * @desc\n   * Subscribes to a Maybe instance with an onSuccess\n   * and an onError method.\n   *\n   * onSuccess receives a non-undefined value.\n   * onError receives a string(or an Error object).\n   *\n   * Both are called once.\n   * @param {?function(x: any)} onSuccess\n   * the function you have designed to accept the emission\n   * from the Maybe\n   * @param {?function(x: any)} onComplete\n   * the function you have designed to accept the completion\n   * from the Maybe\n   * @param {?function(x: any)} onError\n   * the function you have designed to accept any error\n   * notification from the Maybe\n   * @returns {Cancellable}\n   * an Cancellable reference can request the Maybe to cancel.\n   */\n  subscribe(onSuccess, onComplete, onError) {\n    const controller = new LinkedCancellable();\n    this.subscribeWith({\n      onSubscribe(ac) {\n        controller.link(ac);\n      },\n      onComplete,\n      onSuccess,\n      onError,\n    });\n    return controller;\n  }\n\n\n  /**\n   * Converts the Maybe to a Promise instance.\n   *\n   * @returns {Promise}\n   */\n  toPromise() {\n    return new Promise((res, rej) => {\n      this.subscribe(res, rej);\n    });\n  }\n\n  /**\n   * Converts the Maybe to a Promise instance\n   * and attaches callbacks to it.\n   *\n   * @param {!function(x: any):any} onFulfill\n   * @param {?function(x: Error):any} onReject\n   * @returns {Promise}\n   */\n  then(onFulfill, onReject) {\n    return this.toPromise().then(onFulfill, onReject);\n  }\n\n  /**\n   * Converts the Maybe to a Promise instance\n   * and attaches an onRejection callback to it.\n   *\n   * @param {!function(x: Error):any} onReject\n   * @returns {Promise}\n   */\n  catch(onReject) {\n    return this.toPromise().catch(onReject);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/src/maybe.js",
     "access": "public",
@@ -4861,7 +4861,7 @@
     "longname": "src/maybe.js~Maybe#delay",
     "access": "public",
     "description": "Returns a Maybe that signals the events emitted by the\nsource Maybe shifted forward in time by a specified delay.",
-    "lineNumber": 220,
+    "lineNumber": 223,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4878,6 +4878,16 @@
         "optional": false,
         "name": "amount",
         "description": "the delay to shift the source by in milliseconds."
+      },
+      {
+        "nullable": true,
+        "types": [
+          "Scheduler"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scheduler",
+        "description": "the target scheduler to use for the non-blocking wait and emission.\nBy default, schedules on the current thread."
       },
       {
         "nullable": true,
@@ -4910,7 +4920,7 @@
     "longname": "src/maybe.js~Maybe#delaySubscription",
     "access": "public",
     "description": "Returns a Maybe that delays the subscription to the source\nMaybe by a given amount of time.",
-    "lineNumber": 233,
+    "lineNumber": 239,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4927,6 +4937,16 @@
         "optional": false,
         "name": "amount",
         "description": "the time to delay the subscription"
+      },
+      {
+        "nullable": true,
+        "types": [
+          "Scheduler"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scheduler",
+        "description": "the target scheduler to use for the non-blocking wait and emission.\nBy default, schedules on the current thread."
       }
     ],
     "return": {
@@ -4949,7 +4969,7 @@
     "longname": "src/maybe.js~Maybe#delayUntil",
     "access": "public",
     "description": "Delays the actual subscription to the current Maybe until\nthe given other Maybe signals success.\n\nIf the delaying source signals an error, that error is\nre-emitted and no subscription to the current Maybe happens.",
-    "lineNumber": 249,
+    "lineNumber": 255,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4988,7 +5008,7 @@
     "longname": "src/maybe.js~Maybe#doAfterSuccess",
     "access": "public",
     "description": "Calls the specified consumer with the success item after this\nitem has been emitted to the downstream.",
-    "lineNumber": 261,
+    "lineNumber": 267,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5027,7 +5047,7 @@
     "longname": "src/maybe.js~Maybe#doAfterTerminate",
     "access": "public",
     "description": "Registers an Action to be called when this Maybe invokes either\nonSuccess, onComplete or onError.",
-    "lineNumber": 274,
+    "lineNumber": 280,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5066,7 +5086,7 @@
     "longname": "src/maybe.js~Maybe#doFinally",
     "access": "public",
     "description": "Calls the specified action after this Maybe signals onSuccess,\nonError or onComplete or gets cancelled by the downstream.\n\nIn case of a race between a terminal event and a cancel call,\nthe provided onFinally action is executed once per subscription.",
-    "lineNumber": 289,
+    "lineNumber": 295,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5105,7 +5125,7 @@
     "longname": "src/maybe.js~Maybe#doOnCancel",
     "access": "public",
     "description": "Calls the shared action if an MaybeObserver subscribed to the current\nMaybe cancels the common Cancellable it received via onSubscribe.",
-    "lineNumber": 301,
+    "lineNumber": 307,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5144,7 +5164,7 @@
     "longname": "src/maybe.js~Maybe#doOnComplete",
     "access": "public",
     "description": "Modifies the source Maybe so that it invokes an action when it calls\nonComplete.",
-    "lineNumber": 313,
+    "lineNumber": 319,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5183,7 +5203,7 @@
     "longname": "src/maybe.js~Maybe#doOnError",
     "access": "public",
     "description": "Calls the shared consumer with the error sent via onError for each\nMaybeObserver that subscribes to the current Maybe.",
-    "lineNumber": 324,
+    "lineNumber": 330,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5222,7 +5242,7 @@
     "longname": "src/maybe.js~Maybe#doOnEvent",
     "access": "public",
     "description": "Calls the given onEvent callback with the (success value, null) for\nan onSuccess, (null, throwable) for an onError or (null, null) for\nan onComplete signal from this Maybe before delivering said signal to the downstream.",
-    "lineNumber": 336,
+    "lineNumber": 342,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5261,7 +5281,7 @@
     "longname": "src/maybe.js~Maybe#doOnSubscribe",
     "access": "public",
     "description": "Calls the shared consumer with the Cancellable sent through\nthe onSubscribe for each MaybeObserver that subscribes to the current Maybe.",
-    "lineNumber": 348,
+    "lineNumber": 354,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5300,7 +5320,7 @@
     "longname": "src/maybe.js~Maybe#doOnSuccess",
     "access": "public",
     "description": "Calls the shared consumer with the success value sent via onSuccess\nfor each MaybeObserver that subscribes to the current Maybe.",
-    "lineNumber": 360,
+    "lineNumber": 366,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5339,7 +5359,7 @@
     "longname": "src/maybe.js~Maybe#doOnTerminate",
     "access": "public",
     "description": "Returns a Maybe instance that calls the given onTerminate callback\njust before this Maybe completes normally or with an exception.\n\nThis differs from doAfterTerminate in that this happens before\nthe onComplete or onError notification.",
-    "lineNumber": 374,
+    "lineNumber": 380,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5378,7 +5398,7 @@
     "longname": "src/maybe.js~Maybe.empty",
     "access": "public",
     "description": "Returns a (singleton) Maybe instance that calls onComplete immediately.",
-    "lineNumber": 382,
+    "lineNumber": 388,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5406,7 +5426,7 @@
     "longname": "src/maybe.js~Maybe.error",
     "access": "public",
     "description": "Returns a Maybe that invokes a subscriber's onError method when\nthe subscriber subscribes to it.",
-    "lineNumber": 397,
+    "lineNumber": 403,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5446,7 +5466,7 @@
     "longname": "src/maybe.js~Maybe#filter",
     "access": "public",
     "description": "Filters the success item of the Maybe via a predicate function\nand emitting it if the predicate returns true, completing otherwise.",
-    "lineNumber": 411,
+    "lineNumber": 417,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5485,7 +5505,7 @@
     "longname": "src/maybe.js~Maybe#flatMap",
     "access": "public",
     "description": "Returns a Maybe that is based on applying a specified function to the\nitem emitted by the source Maybe, where that function returns a Maybe.",
-    "lineNumber": 425,
+    "lineNumber": 431,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5524,7 +5544,7 @@
     "longname": "src/maybe.js~Maybe.fromCallable",
     "access": "public",
     "description": "Returns a Maybe that invokes the given callable for each individual\nMaybeObserver that subscribes and emits the resulting non-null item via\nonSuccess while considering a null result from the callable as\nindication for valueless completion via onComplete.\n\nThis operator allows you to defer the execution of the given Callable\nuntil a MaybeObserver subscribes to the returned Maybe. In other terms,\nthis source operator evaluates the given callable \"lazily\"\n\nIf the result is a Promise-like instance, the\nMaybeObserver is then subscribed to the Promise through\nthe fromPromise operator.",
-    "lineNumber": 448,
+    "lineNumber": 454,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5563,7 +5583,7 @@
     "longname": "src/maybe.js~Maybe.fromPromise",
     "access": "public",
     "description": "Converts a Promise-like instance into a Maybe.",
-    "lineNumber": 459,
+    "lineNumber": 465,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5604,7 +5624,7 @@
     "longname": "src/maybe.js~Maybe.fromResolvable",
     "access": "public",
     "description": "Provides a Promise-like interface for emitting signals.",
-    "lineNumber": 471,
+    "lineNumber": 477,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5643,7 +5663,7 @@
     "longname": "src/maybe.js~Maybe.just",
     "access": "public",
     "description": "Returns a Maybe that emits a specified item.",
-    "lineNumber": 482,
+    "lineNumber": 488,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5682,7 +5702,7 @@
     "longname": "src/maybe.js~Maybe#lift",
     "access": "public",
     "description": "This method requires advanced knowledge about building operators,\nplease consider other standard composition methods first;\n\nReturns a Maybe which, when subscribed to, invokes the operator\nmethod of the provided MaybeObserver for each individual downstream Maybe\nand allows the insertion of a custom operator by accessing the\ndownstream's MaybeObserver during this subscription phase and providing a new\nMaybeObserver, containing the custom operator's intended business logic,\nthat will be used in the subscription process going further upstream.\n\nGenerally, such a new MaybeObserver will wrap the downstream's MaybeObserver\nand forwards the onSuccess, onError and onComplete events from the\nupstream directly or according to the emission pattern the custom\noperator's business logic requires. In addition, such operator can\nintercept the flow control calls of cancel and signal.cancelled that\nwould have traveled upstream and perform additional actions\ndepending on the same business logic requirements.\n\nNote that implementing custom operators via this lift()\nmethod adds slightly more overhead by requiring an additional\nallocation and indirection per assembled flows. Instead,\nusing compose() method and  creating a transformer function\nwith it is recommended.",
-    "lineNumber": 517,
+    "lineNumber": 523,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5721,7 +5741,7 @@
     "longname": "src/maybe.js~Maybe#map",
     "access": "public",
     "description": "Returns a Maybe that applies a specified function to the item\nemitted by the source Maybe and emits the result of this function\napplication.",
-    "lineNumber": 532,
+    "lineNumber": 538,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5760,7 +5780,7 @@
     "longname": "src/maybe.js~Maybe.merge",
     "access": "public",
     "description": "Flattens a Maybe that emits a Maybe into a single Maybe that emits\nthe item emitted by the nested Maybe, without any transformation.",
-    "lineNumber": 547,
+    "lineNumber": 553,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5799,7 +5819,7 @@
     "longname": "src/maybe.js~Maybe.never",
     "access": "public",
     "description": "Returns a Maybe that never sends any items or notifications to a\nMaybeObserver.",
-    "lineNumber": 559,
+    "lineNumber": 565,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5827,7 +5847,7 @@
     "longname": "src/maybe.js~Maybe#observeOn",
     "access": "public",
     "description": "Returns a Maybe which emits the terminal events from the\nthread of the specified scheduler.",
-    "lineNumber": 575,
+    "lineNumber": 581,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5866,7 +5886,7 @@
     "longname": "src/maybe.js~Maybe#onErrorComplete",
     "access": "public",
     "description": "Returns a Maybe instance that if this Maybe emits an\nerror and the predicate returns true, it will emit an onComplete\nand swallow the throwable.\n\nIf no predicate is provided, returns a Maybe instance that\nif this Maybe emits an error, it will emit an onComplete\nand swallow the error",
-    "lineNumber": 593,
+    "lineNumber": 599,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5905,7 +5925,7 @@
     "longname": "src/maybe.js~Maybe#onErrorResumeNext",
     "access": "public",
     "description": "Instructs a Maybe to pass control to another Maybe rather than\ninvoking onError if it encounters an error.",
-    "lineNumber": 606,
+    "lineNumber": 612,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5945,7 +5965,7 @@
     "longname": "src/maybe.js~Maybe#onErrorReturn",
     "access": "public",
     "description": "Instructs a Maybe to emit an item (returned by a specified function)\nrather than invoking onError if it encounters an error.",
-    "lineNumber": 618,
+    "lineNumber": 624,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5984,7 +6004,7 @@
     "longname": "src/maybe.js~Maybe#onErrorReturnItem",
     "access": "public",
     "description": "Instructs a Maybe to emit an item (returned by a specified function)\nrather than invoking onError if it encounters an error.",
-    "lineNumber": 629,
+    "lineNumber": 635,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6023,7 +6043,7 @@
     "longname": "src/maybe.js~Maybe#retry",
     "access": "public",
     "description": "Returns a Maybe that mirrors the source Maybe, resubscribing to it if it calls\nonError and the predicate returns true for that specific exception and retry count.",
-    "lineNumber": 641,
+    "lineNumber": 647,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6062,7 +6082,7 @@
     "longname": "src/maybe.js~Maybe#subscribeOn",
     "access": "public",
     "description": "Returns a Maybe which subscribes the child subscriber on the specified scheduler,\nmaking sure the subscription side-effects happen on that specific thread of the scheduler.",
-    "lineNumber": 657,
+    "lineNumber": 663,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6101,7 +6121,7 @@
     "longname": "src/maybe.js~Maybe#switchIfEmpty",
     "access": "public",
     "description": "Returns a Maybe that emits the items emitted by the source Maybe or the items\nof an alternate Maybe if the current Maybe is empty.",
-    "lineNumber": 670,
+    "lineNumber": 676,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6140,7 +6160,7 @@
     "longname": "src/maybe.js~Maybe#takeUntil",
     "access": "public",
     "description": "Returns a Maybe that emits the items emitted by the source Maybe until\na second Maybe emits an item.",
-    "lineNumber": 684,
+    "lineNumber": 690,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6179,7 +6199,7 @@
     "longname": "src/maybe.js~Maybe#timeout",
     "access": "public",
     "description": "Returns a Maybe that mirrors the source Maybe but applies a\ntimeout policy for each emitted item. If the next item isn't\nemitted within the specified timeout duration starting from its\npredecessor, the resulting Maybe terminates and notifies MaybeObserver\nof an Error with TimeoutException.",
-    "lineNumber": 699,
+    "lineNumber": 708,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6196,6 +6216,16 @@
         "optional": false,
         "name": "amount",
         "description": "Amount of time in milliseconds"
+      },
+      {
+        "nullable": true,
+        "types": [
+          "Scheduler"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scheduler",
+        "description": "the target scheduler to use for the non-blocking wait and emission.\nBy default, schedules on the current thread."
       }
     ],
     "return": {
@@ -6218,7 +6248,7 @@
     "longname": "src/maybe.js~Maybe.timer",
     "access": "public",
     "description": "Returns a Maybe that emits 0L after a specified delay.",
-    "lineNumber": 709,
+    "lineNumber": 721,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6235,6 +6265,16 @@
         "optional": false,
         "name": "amount",
         "description": "Amount of time in milliseconds"
+      },
+      {
+        "nullable": true,
+        "types": [
+          "Scheduler"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scheduler",
+        "description": "the target scheduler to use for the non-blocking wait and emission.\nBy default, schedules on the current thread."
       }
     ],
     "return": {
@@ -6257,7 +6297,7 @@
     "longname": "src/maybe.js~Maybe.zip",
     "access": "public",
     "description": "Returns a Maybe that emits the results of a specified combiner function\napplied to combinations of items emitted, in sequence, by an Iterable of other\nMaybes.",
-    "lineNumber": 724,
+    "lineNumber": 736,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6306,7 +6346,7 @@
     "longname": "src/maybe.js~Maybe#zipWith",
     "access": "public",
     "description": "Waits until this and the other Maybe signal a success value then applies the\ngiven function to those values and emits the function's resulting value to downstream.\n\nIf either this or the other Maybe is empty or signals an error,\nthe resulting Maybe will terminate immediately and cancel the other source.",
-    "lineNumber": 742,
+    "lineNumber": 754,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6355,7 +6395,7 @@
     "longname": "src/maybe.js~Maybe#subscribeWith",
     "access": "public",
     "description": "Subscribes with an Object that is an MaybeObserver.\n\nAn Object is considered as an MaybeObserver if:\n - if it has the method onSubscribe\n - if it has the method onComplete (optional)\n - if it has the method onSuccess (optional)\n - if it has the method onError (optional)\n\nThe onSubscribe method is called when subscribeWith\nor subscribe is executed. This method receives an\nCancellable instance.",
-    "lineNumber": 763,
+    "lineNumber": 775,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6394,7 +6434,7 @@
     "longname": "src/maybe.js~Maybe#subscribe",
     "access": "public",
     "description": "Subscribes to a Maybe instance with an onSuccess\nand an onError method.\n\nonSuccess receives a non-undefined value.\nonError receives a string(or an Error object).\n\nBoth are called once.",
-    "lineNumber": 790,
+    "lineNumber": 802,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6453,7 +6493,7 @@
     "longname": "src/maybe.js~Maybe#toPromise",
     "access": "public",
     "description": "Converts the Maybe to a Promise instance.",
-    "lineNumber": 809,
+    "lineNumber": 821,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6481,7 +6521,7 @@
     "longname": "src/maybe.js~Maybe#then",
     "access": "public",
     "description": "Converts the Maybe to a Promise instance\nand attaches callbacks to it.",
-    "lineNumber": 823,
+    "lineNumber": 835,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6530,7 +6570,7 @@
     "longname": "src/maybe.js~Maybe#catch",
     "access": "public",
     "description": "Converts the Maybe to a Promise instance\nand attaches an onRejection callback to it.",
-    "lineNumber": 834,
+    "lineNumber": 846,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6691,7 +6731,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-maybe\",\n  \"version\": \"0.2.0\",\n  \"description\": \"represents a deferred computation and emission of a single value, no value at all or an exception.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-maybe.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"maybe\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-maybe/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-maybe#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.3\",\n    \"@babel/preset-env\": \"^7.4.3\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.1.3\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.10.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.2.0\",\n    \"rx-scheduler\": \"^0.2.3\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-maybe\",\n  \"version\": \"0.3.1\",\n  \"description\": \"represents a deferred computation and emission of a single value, no value at all or an exception.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-maybe.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"maybe\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-maybe/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-maybe#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.3\",\n    \"@babel/preset-env\": \"^7.4.3\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.1\",\n    \"mocha\": \"^6.1.3\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.10.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.0\",\n    \"rx-scheduler\": \"^0.2.4\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/package.json",
     "name": "package.json",
     "static": true,

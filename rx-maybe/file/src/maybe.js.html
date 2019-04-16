@@ -256,13 +256,16 @@ export default class Maybe {
    * source Maybe shifted forward in time by a specified delay.
    * @param {!number} amount
    * the delay to shift the source by in milliseconds.
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
    * @param {?boolean} doDelayError
    * if true, both success and error signals are delayed.
    * if false, only success signals are delayed.
    * @returns {Maybe}
    */
-  delay(amount, doDelayError) {
-    return delay(this, amount, doDelayError);
+  delay(amount, scheduler, doDelayError) {
+    return delay(this, amount, scheduler, doDelayError);
   }
 
   /**
@@ -270,12 +273,15 @@ export default class Maybe {
    * Maybe by a given amount of time.
    * @param {!number} amount
    * the time to delay the subscription
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
    * @returns {Maybe}
    * a Maybe that delays the subscription to the source
    * Maybe by the given amount
    */
-  delaySubscription(amount) {
-    return delaySubscription(this, amount);
+  delaySubscription(amount, scheduler) {
+    return delaySubscription(this, amount, scheduler);
   }
 
   /**
@@ -738,20 +744,26 @@ export default class Maybe {
    *
    * @param {!number} amount
    * Amount of time in milliseconds
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
    * @returns {Maybe}
    */
-  timeout(amount) {
-    return timeout(this, amount);
+  timeout(amount, scheduler) {
+    return timeout(this, amount, scheduler);
   }
 
   /**
    * Returns a Maybe that emits 0L after a specified delay.
    * @param {!number} amount
    * Amount of time in milliseconds
+   * @param {?Scheduler} scheduler
+   * the target scheduler to use for the non-blocking wait and emission.
+   * By default, schedules on the current thread.
    * @returns {Maybe}
    */
-  static timer(amount) {
-    return timer(amount);
+  static timer(amount, scheduler) {
+    return timer(amount, scheduler);
   }
 
   /**
