@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,55 +49,50 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#timer&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#timer&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.timer(100);
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if amount is not a number.&apos;, (done) =&gt; {
-      const single = Single.timer();
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.timer(100);
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if amount is not a number.&apos;, (done) =&gt; {
+    const single = Single.timer();
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal success 0&apos;, (done) =&gt; {
-      const single = Single.timer(100);
-      single.subscribe(
-        x =&gt; (x === 0 ? done() : done(false)),
-        () =&gt; done(false),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should not signal success if aborted.&apos;, (done) =&gt; {
-      const single = Single.timer(100);
-      const controller = single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal success 0&apos;, (done) =&gt; {
+    const single = Single.timer(100);
+    single.subscribe(
+      x =&gt; (x === 0 ? done() : done(false)),
+      () =&gt; done(false),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should not signal success if cancelled.&apos;, (done) =&gt; {
+    const single = Single.timer(100);
+    const controller = single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
 
 
-      controller.abort();
-      if (controller.signal.aborted) {
-        done();
-      }
-    });
+    controller.cancel();
+    if (controller.cancelled) {
+      done();
+    }
   });
 });
 </code></pre>

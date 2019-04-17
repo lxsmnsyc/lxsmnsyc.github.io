@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,103 +49,98 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#zipWith&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#zipWith&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;));
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should return the same instance if the other parameter is non-Single&apos;, () =&gt; {
-      const source = Single.just(&apos;Hello&apos;);
-      const single = source.zipWith();
-      assert(source === single);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal an error if the zipper returns undefined&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;), () =&gt; undefined);
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;));
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should return the same instance if the other parameter is non-Single&apos;, () =&gt; {
+    const source = Single.just(&apos;Hello&apos;);
+    const single = source.zipWith();
+    assert(source === single);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal an error if the zipper returns undefined&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;), () =&gt; undefined);
 
-      single.subscribe(
-        () =&gt; done(false),
-        e =&gt; (e instanceof Error ? done() : done(false)),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal an error if the zipper returns undefined&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;), () =&gt; undefined);
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal an error if the zipper returns undefined&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;), () =&gt; undefined);
 
-      single.subscribe(
-        () =&gt; done(false),
-        e =&gt; (e instanceof Error ? done() : done(false)),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal success with an array (no zipper function).&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;));
-      single.subscribe(
-        x =&gt; (x instanceof Array ? done() : done(false)),
-        done,
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal success with an array with the correct values (no zipper function).&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;));
-      single.subscribe(
-        x =&gt; (x[0] === &apos;Hello&apos; &amp;&amp; x[1] === &apos;World&apos; ? done() : done(false)),
-        done,
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if source throws error.&apos;, (done) =&gt; {
-      const source = Single.error(new Error(&apos;Hello&apos;)).zipWith(Single.just(&apos;World&apos;));
-      source.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if other Single throws error.&apos;, (done) =&gt; {
-      const source = Single.just(&apos;Hello&apos;).zipWith(Single.error(&apos;World&apos;));
-      source.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should not signal success if aborted.&apos;, (done) =&gt; {
-      const source = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;));
-      const controller = source.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal success with an array (no zipper function).&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;));
+    single.subscribe(
+      x =&gt; (x instanceof Array ? done() : done(false)),
+      done,
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal success with an array with the correct values (no zipper function).&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).zipWith(Single.just(&apos;World&apos;));
+    single.subscribe(
+      x =&gt; (x[0] === &apos;Hello&apos; &amp;&amp; x[1] === &apos;World&apos; ? done() : done(false)),
+      done,
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if source throws error.&apos;, (done) =&gt; {
+    const source = Single.error(new Error(&apos;Hello&apos;)).zipWith(Single.just(&apos;World&apos;));
+    source.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if other Single throws error.&apos;, (done) =&gt; {
+    const source = Single.just(&apos;Hello&apos;).zipWith(Single.error(&apos;World&apos;));
+    source.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should not signal success if cancelled.&apos;, (done) =&gt; {
+    const source = Single.just(&apos;Hello&apos;).delay(100).zipWith(Single.just(&apos;World&apos;));
+    const controller = source.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
 
-      controller.abort();
-      if (controller.signal.aborted) {
-        done();
-      }
-    });
+    controller.cancel();
+    if (controller.cancelled) {
+      done();
+    }
   });
 });
 </code></pre>

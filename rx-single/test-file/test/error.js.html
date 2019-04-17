@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,65 +49,60 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#error&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#error&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.error(new Error(&apos;Hello World&apos;));
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.error(new Error(&apos;Hello World&apos;));
 
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should error with the given value.&apos;, (done) =&gt; {
-      const single = Single.error(new Error(&apos;Hello World&apos;));
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should error with the given value.&apos;, (done) =&gt; {
+    const single = Single.error(new Error(&apos;Hello World&apos;));
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should error with the a message if the given value is undefined&apos;, (done) =&gt; {
-      const single = Single.error();
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should error with the a message if the given value is undefined&apos;, (done) =&gt; {
+    const single = Single.error();
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should error with the a message if the callable returned undefined&apos;, (done) =&gt; {
-      const single = Single.error(() =&gt; {});
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should error with the a message if the callable returned undefined&apos;, (done) =&gt; {
+    const single = Single.error(() =&gt; {});
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should error if the callable throws an error.&apos;, (done) =&gt; {
+    const single = Single.error(() =&gt; {
+      throw new Error(&apos;Expected&apos;);
     });
-    /**
-     *
-     */
-    it(&apos;should error if the callable throws an error.&apos;, (done) =&gt; {
-      const single = Single.error(() =&gt; {
-        throw new Error(&apos;Expected&apos;);
-      });
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
   });
 });
 </code></pre>

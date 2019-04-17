@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -71,12 +71,14 @@
 <p>CDN</p>
 <ul>
 <li><p>jsDelivr</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
 <li><p>unpkg</p>
-<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;script src=&quot;https://unpkg.com/rx-cancellable/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/rx-scheduler/dist/index.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;https://unpkg.com/rx-single/dist/index.min.js&quot;&gt;&lt;/script&gt;</code>
 </code></pre>
 </li>
@@ -93,6 +95,17 @@
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
 <h2 id="changelogs">Changelogs</h2><ul>
+<li>0.11.0<ul>
+<li>Massive performance boost</li>
+<li>Renamed <code>zip</code> to <code>zipArray</code></li>
+<li>added <code>ambArray</code></li>
+</ul>
+</li>
+<li>0.10.0<ul>
+<li>Replaced AbortController with <a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a>.</li>
+<li>Renamed <code>doOnAbort</code> with <code>doOnCancel</code></li>
+</ul>
+</li>
 <li>0.9.0<ul>
 <li>now uses <a href="https://github.com/LXSMNSYC/rx-scheduler">Schedulers</a></li>
 <li><code>delay</code>, <code>delaySubscription</code>, <code>timeout</code> and <code>timer</code> now accepts <code>Schedulers</code> (defaults to <code>Scheduler.current</code>).</li>

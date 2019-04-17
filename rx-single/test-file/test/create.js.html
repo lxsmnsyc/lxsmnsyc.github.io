@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,82 +49,77 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#create&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#create&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.create(e =&gt; e.onSuccess(&apos;Hello World&apos;));
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.create(e =&gt; e.onSuccess(&apos;Hello World&apos;));
 
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if the create received a non-function&apos;, (done) =&gt; {
-      const single = Single.create();
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if the create received a non-function&apos;, (done) =&gt; {
+    const single = Single.create();
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if the emitter signals success with undefined value.&apos;, (done) =&gt; {
-      const single = Single.create(e =&gt; e.onSuccess() || e.onSuccess());
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if the emitter signals success with undefined value.&apos;, (done) =&gt; {
+    const single = Single.create(e =&gt; e.onSuccess() || e.onSuccess());
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if the emitter signals error with undefined value.&apos;, (done) =&gt; {
-      const single = Single.create(e =&gt; e.onError() || e.onError());
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if the emitter signals error with undefined value.&apos;, (done) =&gt; {
+    const single = Single.create(e =&gt; e.onError() || e.onError());
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should be cancel successfully if emitter is cancel before any signal.&apos;, (done) =&gt; {
+    const single = Single.create((e) =&gt; {
+      setTimeout(() =&gt; e.onSuccess(true), 100);
     });
-    /**
-     *
-     */
-    it(&apos;should be aborted successfully if emitter is aborted before any signal.&apos;, (done) =&gt; {
-      const single = Single.create((e) =&gt; {
-        setTimeout(e.onSuccess, 100, true);
-        e.abort();
-      });
 
-      const controller = single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
-      if (controller.signal.aborted) {
-        done();
-      }
+    const controller = single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
+    controller.cancel();
+    if (controller.cancelled) {
+      done();
+    }
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if subscriber throws an error.&apos;, (done) =&gt; {
+    const single = Single.create(() =&gt; {
+      throw new Error(&apos;Expected&apos;);
     });
-    /**
-     *
-     */
-    it(&apos;should signal error if subscriber throws an error.&apos;, (done) =&gt; {
-      const single = Single.create(() =&gt; {
-        throw new Error(&apos;Expected&apos;);
-      });
 
-      single.subscribe(
-        () =&gt; done(false),
-        e =&gt; (e instanceof Error ? done() : done(e)),
-      );
-    });
+    single.subscribe(
+      () =&gt; done(false),
+      e =&gt; (e instanceof Error ? done() : done(e)),
+    );
   });
 });
 </code></pre>

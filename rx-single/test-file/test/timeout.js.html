@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,86 +49,81 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#timeout&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#timeout&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.just(&apos;Hello&apos;).timeout(100);
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should return the same instance if the amount is not a number.&apos;, () =&gt; {
-      const source = Single.just(&apos;Hello&apos;);
-      const single = source.timeout();
-      assert(source === single);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal success with the given value.&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).timeout(100);
-      single.subscribe(
-        x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
-        x =&gt; done(x),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error with the given value.&apos;, (done) =&gt; {
-      const single = Single.error(&apos;Hello&apos;).timeout(100);
-      single.subscribe(
-        x =&gt; done(x),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal error if the Single does not emit item within the given timeout.&apos;, (done) =&gt; {
-      const single = Single.timer(200).timeout(100);
-      single.subscribe(
-        x =&gt; done(x),
-        () =&gt; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should not signal success if aborted.&apos;, (done) =&gt; {
-      const source = Single.timer(200).timeout(100);
-      const controller = source.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.just(&apos;Hello&apos;).timeout(100);
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should return the same instance if the amount is not a number.&apos;, () =&gt; {
+    const source = Single.just(&apos;Hello&apos;);
+    const single = source.timeout();
+    assert(source === single);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal success with the given value.&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).timeout(100);
+    single.subscribe(
+      x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),
+      x =&gt; done(x),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error with the given value.&apos;, (done) =&gt; {
+    const single = Single.error(&apos;Hello&apos;).timeout(100);
+    single.subscribe(
+      x =&gt; done(x),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if the Single does not emit item within the given timeout.&apos;, (done) =&gt; {
+    const single = Single.timer(200).timeout(100);
+    single.subscribe(
+      x =&gt; done(x),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should not signal success if cancelled.&apos;, (done) =&gt; {
+    const source = Single.timer(200).timeout(100);
+    const controller = source.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
 
-      controller.abort();
-      if (controller.signal.aborted) {
-        done();
-      }
-    });
-    /**
-     *
-     */
-    it(&apos;should not signal error if aborted.&apos;, (done) =&gt; {
-      const source = Single.error(new Error(&apos;Hello&apos;)).delay(200).timeout(100);
-      const controller = source.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(false),
-      );
+    controller.cancel();
+    if (controller.cancelled) {
+      done();
+    }
+  });
+  /**
+   *
+   */
+  it(&apos;should not signal error if cancelled.&apos;, (done) =&gt; {
+    const source = Single.error(new Error(&apos;Hello&apos;)).delay(200).timeout(100);
+    const controller = source.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(false),
+    );
 
-      controller.abort();
-      if (controller.signal.aborted) {
-        done();
-      }
-    });
+    controller.cancel();
+    if (controller.cancelled) {
+      done();
+    }
   });
 });
 </code></pre>

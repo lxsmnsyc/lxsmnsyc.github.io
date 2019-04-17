@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,58 +49,53 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#retry&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#retry&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.error(new Error(&apos;Hello&apos;)).retry(x =&gt; x === 3);
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.error(new Error(&apos;Hello&apos;)).retry(x =&gt; x === 3);
 
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should signal a success if no error&apos;, (done) =&gt; {
-      const single = Single.just(&apos;Hello&apos;).retry(x =&gt; x === 3);
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should signal a success if no error&apos;, (done) =&gt; {
+    const single = Single.just(&apos;Hello&apos;).retry(x =&gt; x === 3);
 
-      single.subscribe(
-        () =&gt; done(),
-        () =&gt; done(false),
-      );
+    single.subscribe(
+      () =&gt; done(),
+      () =&gt; done(false),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should retry if there is an error and if it passes the predicate&apos;, (done) =&gt; {
+    let retried;
+    const single = Single.error(new Error(&apos;Hello&apos;)).retry((x) =&gt; {
+      if (x === 2) {
+        retried = true;
+      }
+      return x &lt; 3;
     });
-    /**
-     *
-     */
-    it(&apos;should retry if there is an error and if it passes the predicate&apos;, (done) =&gt; {
-      let retried;
-      const single = Single.error(new Error(&apos;Hello&apos;)).retry((x) =&gt; {
-        if (x === 2) {
-          retried = true;
-        }
-        return x &lt; 3;
-      });
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; retried &amp;&amp; done(),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should signal an error if predicate is false&apos;, (done) =&gt; {
-      const single = Single.error(new Error(&apos;Hello&apos;)).retry(x =&gt; x === 3);
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; retried &amp;&amp; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal an error if predicate is false&apos;, (done) =&gt; {
+    const single = Single.error(new Error(&apos;Hello&apos;)).retry(x =&gt; x === 3);
 
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; done(),
-      );
-    });
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
   });
 });
 </code></pre>

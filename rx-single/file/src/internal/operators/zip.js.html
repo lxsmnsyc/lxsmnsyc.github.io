@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -42,10 +42,15 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import AbortController from &apos;abort-controller&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-restricted-syntax */
+
+import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Single from &apos;../../single&apos;;
-import { isIterable, cleanObserver, isFunction } from &apos;../utils&apos;;
+import {
+  isIterable, cleanObserver, isFunction, isNull,
+} from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
+import is from &apos;../is&apos;;
 
 const defaultZipper = x =&gt; x;
 /**
@@ -56,75 +61,60 @@ function subscribeActual(observer) {
 
   const result = [];
 
-  const controller = new AbortController();
-
-  const { signal } = controller;
+  const controller = new CompositeCancellable();
 
   onSubscribe(controller);
 
-  if (signal.aborted) {
-    return;
-  }
-
   const { sources, zipper } = this;
 
-  const size = sources.length;
+  let pending = 0;
+  let count = 0;
+  let done = 0;
 
-  if (size === 0) {
-    onError(new Error(&apos;Single.zip: empty iterable&apos;));
-    controller.abort();
-    return;
-  }
-  let pending = size;
-
-  for (let i = 0; i &lt; size; i += 1) {
-    if (signal.aborted) {
+  for (const single of sources) {
+    pending += 1;
+    count += 1;
+    if (controller.cancelled) {
       return;
     }
-    const single = sources[i];
 
-    if (single instanceof Single) {
+    if (is(single)) {
       single.subscribeWith({
         onSubscribe(ac) {
-          signal.addEventListener(&apos;abort&apos;, () =&gt; ac.abort());
+          controller.add(ac);
         },
         // eslint-disable-next-line no-loop-func
         onSuccess(x) {
-          if (signal.aborted) {
-            return;
-          }
-          result[i] = x;
+          result[count] = x;
           pending -= 1;
-          if (pending === 0) {
+          if (pending === 0 &amp;&amp; done) {
             let r;
             try {
               r = zipper(result);
-              if (r == null) {
+              if (isNull(r)) {
                 throw new Error(&apos;Single.zip: zipper function returned a null value.&apos;);
               }
             } catch (e) {
               onError(e);
-              controller.abort();
+              controller.cancel();
               return;
             }
             onSuccess(r);
-            controller.abort();
+            controller.cancel();
           }
         },
         onError(x) {
           onError(x);
-          controller.abort();
+          controller.cancel();
         },
       });
-    } else if (single != null) {
-      result[i] = single;
-      pending -= 1;
     } else {
       onError(new Error(&apos;Single.zip: One of the sources is undefined.&apos;));
-      controller.abort();
-      break;
+      controller.cancel();
+      return;
     }
   }
+  done = true;
 }
 /**
  * @ignore

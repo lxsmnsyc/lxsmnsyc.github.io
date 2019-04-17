@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -47,6 +47,7 @@
  * @ignore
  */
 export { default as amb } from &apos;./operators/amb&apos;;
+export { default as ambArray } from &apos;./operators/ambArray&apos;;
 export { default as ambWith } from &apos;./operators/ambWith&apos;;
 export { default as cache } from &apos;./operators/cache&apos;;
 export { default as create } from &apos;./operators/create&apos;;
@@ -59,7 +60,7 @@ export { default as delayUntil } from &apos;./operators/delayUntil&apos;;
 export { default as doAfterSuccess } from &apos;./operators/doAfterSuccess&apos;;
 export { default as doAfterTerminate } from &apos;./operators/doAfterTerminate&apos;;
 export { default as doFinally } from &apos;./operators/doFinally&apos;;
-export { default as doOnAbort } from &apos;./operators/doOnAbort&apos;;
+export { default as doOnCancel } from &apos;./operators/doOnCancel&apos;;
 export { default as doOnError } from &apos;./operators/doOnError&apos;;
 export { default as doOnEvent } from &apos;./operators/doOnEvent&apos;;
 export { default as doOnSuccess } from &apos;./operators/doOnSuccess&apos;;
@@ -84,7 +85,7 @@ export { default as subscribeOn } from &apos;./operators/subscribeOn&apos;;
 export { default as takeUntil } from &apos;./operators/takeUntil&apos;;
 export { default as timer } from &apos;./operators/timer&apos;;
 export { default as timeout } from &apos;./operators/timeout&apos;;
-export { default as zip } from &apos;./operators/zip&apos;;
+export { default as zipArray } from &apos;./operators/zipArray&apos;;
 export { default as zipWith } from &apos;./operators/zipWith&apos;;
 </code></pre>
 

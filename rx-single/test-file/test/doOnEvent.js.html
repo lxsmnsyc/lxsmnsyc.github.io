@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -49,50 +49,45 @@ import Single from &apos;../src/single&apos;;
 /**
  *
  */
-describe(&apos;Single&apos;, () =&gt; {
+describe(&apos;#doOnEvent&apos;, () =&gt; {
   /**
    *
    */
-  describe(&apos;#doOnEvent&apos;, () =&gt; {
-    /**
-     *
-     */
-    it(&apos;should create a Single&apos;, () =&gt; {
-      const single = Single.just(&apos;Hello&apos;).doOnEvent(() =&gt; {});
-      assert(single instanceof Single);
-    });
-    /**
-     *
-     */
-    it(&apos;should return the same instance if the method received a non-function parameter.&apos;, () =&gt; {
-      const source = Single.just(&apos;Hello&apos;);
-      const single = source.doOnEvent();
-      assert(source === single);
-    });
-    /**
-     *
-     */
-    it(&apos;should call the given function on success.&apos;, (done) =&gt; {
-      let called;
-      const source = Single.just(&apos;Hello&apos;);
-      const single = source.doOnEvent(() =&gt; { called = true; });
-      single.subscribe(
-        () =&gt; called &amp;&amp; done(),
-        () =&gt; done(false),
-      );
-    });
-    /**
-     *
-     */
-    it(&apos;should call the given function on error.&apos;, (done) =&gt; {
-      let called;
-      const source = Single.error(new Error(&apos;Hello&apos;));
-      const single = source.doOnEvent(() =&gt; { called = true; });
-      single.subscribe(
-        () =&gt; done(false),
-        () =&gt; called &amp;&amp; done(),
-      );
-    });
+  it(&apos;should create a Single&apos;, () =&gt; {
+    const single = Single.just(&apos;Hello&apos;).doOnEvent(() =&gt; {});
+    assert(single instanceof Single);
+  });
+  /**
+   *
+   */
+  it(&apos;should return the same instance if the method received a non-function parameter.&apos;, () =&gt; {
+    const source = Single.just(&apos;Hello&apos;);
+    const single = source.doOnEvent();
+    assert(source === single);
+  });
+  /**
+   *
+   */
+  it(&apos;should call the given function on success.&apos;, (done) =&gt; {
+    let called;
+    const source = Single.just(&apos;Hello&apos;);
+    const single = source.doOnEvent(() =&gt; { called = true; });
+    single.subscribe(
+      () =&gt; called &amp;&amp; done(),
+      () =&gt; done(false),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should call the given function on error.&apos;, (done) =&gt; {
+    let called;
+    const source = Single.error(new Error(&apos;Hello&apos;));
+    const single = source.doOnEvent(() =&gt; { called = true; });
+    single.subscribe(
+      () =&gt; done(false),
+      () =&gt; called &amp;&amp; done(),
+    );
   });
 });
 </code></pre>

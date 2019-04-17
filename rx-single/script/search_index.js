@@ -1,6 +1,936 @@
 window.esdocSearchIndex = [
   [
     "",
+    "test-file/test/amb.js.html#lineNumber8",
+    "#amb",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/amb.js.html#lineNumber12",
+    "#amb should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/amb.js.html#lineNumber29",
+    "#amb should signal error from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/amb.js.html#lineNumber49",
+    "#amb should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/amb.js.html#lineNumber39",
+    "#amb should signal error if one of the source is non-Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/amb.js.html#lineNumber19",
+    "#amb should signal success from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber8",
+    "#ambArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber12",
+    "#ambArray should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber29",
+    "#ambArray should signal error from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber49",
+    "#ambArray should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber39",
+    "#ambArray should signal error if one of the source is non-Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber19",
+    "#ambArray should signal success from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber8",
+    "#ambWith",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber12",
+    "#ambWith should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber19",
+    "#ambWith should return the same instance if the other value is non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber57",
+    "#ambWith should signal error from the other (if earlier).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber47",
+    "#ambWith should signal error from the source (if earlier).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber37",
+    "#ambWith should signal success from the other (if earlier).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambWith.js.html#lineNumber27",
+    "#ambWith should signal success from the source (if earlier)",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/cache.js.html#lineNumber8",
+    "#cache",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/cache.js.html#lineNumber12",
+    "#cache should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/cache.js.html#lineNumber39",
+    "#cache should signal cached error value",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/cache.js.html#lineNumber19",
+    "#cache should signal cached success value",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/catch.js.html#lineNumber8",
+    "#catch",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/catch.js.html#lineNumber12",
+    "#catch should create a Promise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/compose.js.html#lineNumber8",
+    "#compose",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/compose.js.html#lineNumber29",
+    "#compose should correctly signal the composed Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/compose.js.html#lineNumber21",
+    "#compose should return a Single from the transformer",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/compose.js.html#lineNumber12",
+    "#compose should return the same instance if no function is provided",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/compose.js.html#lineNumber40",
+    "#compose should signal error if the transformer function returned a non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber8",
+    "#contains",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber12",
+    "#contains should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber19",
+    "#contains should return the same instance if the compared value is undefined",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber47",
+    "#contains should signal an error if the comparer throws an error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber37",
+    "#contains should signal false if the success value and the compared value are both equal.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/contains.js.html#lineNumber27",
+    "#contains should signal true if the success value and the compared value are both equal.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber8",
+    "#create",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber53",
+    "#create should be cancel successfully if emitter is cancel before any signal.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber12",
+    "#create should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber70",
+    "#create should signal error if subscriber throws an error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber20",
+    "#create should signal error if the create received a non-function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber42",
+    "#create should signal error if the emitter signals error with undefined value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/create.js.html#lineNumber31",
+    "#create should signal error if the emitter signals success with undefined value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/defer.js.html#lineNumber8",
+    "#defer",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/defer.js.html#lineNumber12",
+    "#defer should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/defer.js.html#lineNumber31",
+    "#defer should signal error if callable returns a non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/defer.js.html#lineNumber42",
+    "#defer should signal error if callable throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/defer.js.html#lineNumber20",
+    "#defer should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber8",
+    "#delay",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber12",
+    "#delay should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber62",
+    "#delay should not signal error if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber47",
+    "#delay should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber19",
+    "#delay should return the same instance if the amount is not a number.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber37",
+    "#delay should signal error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delay.js.html#lineNumber27",
+    "#delay should signal success with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber8",
+    "#delaySubscription",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber12",
+    "#delaySubscription should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber62",
+    "#delaySubscription should not signal error if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber47",
+    "#delaySubscription should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber19",
+    "#delaySubscription should return the same instance if the amount is not a number.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber37",
+    "#delaySubscription should signal error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delaySubscription.js.html#lineNumber27",
+    "#delaySubscription should signal success with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber8",
+    "#delayUntil",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber12",
+    "#delayUntil should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber72",
+    "#delayUntil should not signal error if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber57",
+    "#delayUntil should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber19",
+    "#delayUntil should return the same instance if the provided value is not a Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber47",
+    "#delayUntil should signal error if other Single signals error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber37",
+    "#delayUntil should signal error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/delayUntil.js.html#lineNumber27",
+    "#delayUntil should signal success with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterSuccess.js.html#lineNumber8",
+    "#doAfterSuccess",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterSuccess.js.html#lineNumber27",
+    "#doAfterSuccess should call the given function after success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterSuccess.js.html#lineNumber12",
+    "#doAfterSuccess should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterSuccess.js.html#lineNumber19",
+    "#doAfterSuccess should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterTerminate.js.html#lineNumber8",
+    "#doAfterTerminate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterTerminate.js.html#lineNumber39",
+    "#doAfterTerminate should call the given function after error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterTerminate.js.html#lineNumber27",
+    "#doAfterTerminate should call the given function after success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterTerminate.js.html#lineNumber12",
+    "#doAfterTerminate should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doAfterTerminate.js.html#lineNumber19",
+    "#doAfterTerminate should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber8",
+    "#doFinally",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber39",
+    "#doFinally should call the given function after error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber27",
+    "#doFinally should call the given function after success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber51",
+    "#doFinally should call the given function on cancel.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber12",
+    "#doFinally should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doFinally.js.html#lineNumber19",
+    "#doFinally should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnError.js.html#lineNumber8",
+    "#doOnError",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnError.js.html#lineNumber27",
+    "#doOnError should call the given function on error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnError.js.html#lineNumber12",
+    "#doOnError should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnError.js.html#lineNumber19",
+    "#doOnError should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnEvent.js.html#lineNumber8",
+    "#doOnEvent",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnEvent.js.html#lineNumber39",
+    "#doOnEvent should call the given function on error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnEvent.js.html#lineNumber27",
+    "#doOnEvent should call the given function on success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnEvent.js.html#lineNumber12",
+    "#doOnEvent should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnEvent.js.html#lineNumber19",
+    "#doOnEvent should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSubscribe.js.html#lineNumber8",
+    "#doOnSubscribe",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSubscribe.js.html#lineNumber27",
+    "#doOnSubscribe should be called before actual subscription.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSubscribe.js.html#lineNumber12",
+    "#doOnSubscribe should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSubscribe.js.html#lineNumber19",
+    "#doOnSubscribe should return the same instance if no function is passed",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSuccess.js.html#lineNumber8",
+    "#doOnSuccess",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSuccess.js.html#lineNumber27",
+    "#doOnSuccess should call the given function on success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSuccess.js.html#lineNumber12",
+    "#doOnSuccess should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnSuccess.js.html#lineNumber19",
+    "#doOnSuccess should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnTerminate.js.html#lineNumber8",
+    "#doOnTerminate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnTerminate.js.html#lineNumber39",
+    "#doOnTerminate should call the given function on error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnTerminate.js.html#lineNumber27",
+    "#doOnTerminate should call the given function on success.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnTerminate.js.html#lineNumber12",
+    "#doOnTerminate should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/doOnTerminate.js.html#lineNumber19",
+    "#doOnTerminate should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber8",
+    "#error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber12",
+    "#error should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber53",
+    "#error should error if the callable throws an error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber42",
+    "#error should error with the a message if the callable returned undefined",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber31",
+    "#error should error with the a message if the given value is undefined",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/error.js.html#lineNumber20",
+    "#error should error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/flatMap.js.html#lineNumber8",
+    "#flatMap",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/flatMap.js.html#lineNumber12",
+    "#flatMap should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/flatMap.js.html#lineNumber20",
+    "#flatMap should return the same instance if the method received a non-function parameter.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/flatMap.js.html#lineNumber28",
+    "#flatMap should signal error if mapper returns a non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/flatMap.js.html#lineNumber39",
+    "#flatMap should signal success of the returned Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber8",
+    "#fromCallable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber12",
+    "#fromCallable should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber54",
+    "#fromCallable should signal an error if the callable is not a function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber43",
+    "#fromCallable should signal an error if the callable returns a rejected Promise.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber30",
+    "#fromCallable should signal an error if the callable throws an error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromCallable.js.html#lineNumber19",
+    "#fromCallable should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromPromise.js.html#lineNumber8",
+    "#fromPromise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromPromise.js.html#lineNumber12",
+    "#fromPromise should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromPromise.js.html#lineNumber31",
+    "#fromPromise should signal error if the given value is not Promise like",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromPromise.js.html#lineNumber19",
+    "#fromPromise should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber8",
+    "#fromResolvable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber12",
+    "#fromResolvable should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber30",
+    "#fromResolvable should error with the given error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber41",
+    "#fromResolvable should signal error if the given value is not a function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/fromResolvable.js.html#lineNumber19",
+    "#fromResolvable should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/just.js.html#lineNumber8",
+    "#just",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/just.js.html#lineNumber12",
+    "#just should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/just.js.html#lineNumber31",
+    "#just should emit error if value is undefined.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/just.js.html#lineNumber20",
+    "#just should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber8",
+    "#lift",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber12",
+    "#lift should return the same instance if no function is provided",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber21",
+    "#lift should signal an error if the lift operator returned a non-Observer",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/lift.js.html#lineNumber32",
+    "#lift should subscribe successfully",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber8",
+    "#map",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber12",
+    "#map should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber54",
+    "#map should retain the value if no function is supplied.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber30",
+    "#map should signal an error if the mapper throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber43",
+    "#map should signal an error if the mapper throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/map.js.html#lineNumber19",
+    "#map should succeed with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/merge.js.html#lineNumber8",
+    "#merge",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/merge.js.html#lineNumber12",
+    "#merge should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/merge.js.html#lineNumber20",
+    "#merge should signal error if no source is provided",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/merge.js.html#lineNumber31",
+    "#merge should signal error if source emitted a non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/merge.js.html#lineNumber42",
+    "#merge should signal success of the signaled Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/never.js.html#lineNumber8",
+    "#never",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/never.js.html#lineNumber12",
+    "#never should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/never.js.html#lineNumber19",
+    "#never should not signal.",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/observeOn.js.html#lineNumber6",
     "#observeOn",
     "test"
@@ -45,6 +975,138 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/observeOn.js.html#lineNumber7",
     "#observeOn should return a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber8",
+    "#onErrorResumeNext",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber12",
+    "#onErrorResumeNext should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber57",
+    "#onErrorResumeNext should emit error if provide function returns non-Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber47",
+    "#onErrorResumeNext should emit error if provide function throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber19",
+    "#onErrorResumeNext should return the same instance if parameter passed is not a Single or a function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber27",
+    "#onErrorResumeNext should subscribe to the given Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorResumeNext.js.html#lineNumber37",
+    "#onErrorResumeNext should subscribe to the given Single-producing Function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber8",
+    "#onErrorReturn",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber12",
+    "#onErrorReturn should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber48",
+    "#onErrorReturn should emit error if provide function returns undefined.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber38",
+    "#onErrorReturn should emit error if provide function throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber27",
+    "#onErrorReturn should emit the supplied item by the given function in case of error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturn.js.html#lineNumber19",
+    "#onErrorReturn should return the same instance if parameter passed is not a Single or a function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber8",
+    "#onErrorReturnItem",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber12",
+    "#onErrorReturnItem should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber27",
+    "#onErrorReturnItem should emit the given item in case of error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/onErrorReturnItem.js.html#lineNumber19",
+    "#onErrorReturnItem should return the same instance if parameter passed is not a Single or a function",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/retry.js.html#lineNumber8",
+    "#retry",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/retry.js.html#lineNumber12",
+    "#retry should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/retry.js.html#lineNumber31",
+    "#retry should retry if there is an error and if it passes the predicate",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/retry.js.html#lineNumber20",
+    "#retry should signal a success if no error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/retry.js.html#lineNumber48",
+    "#retry should signal an error if predicate is false",
     "test"
   ],
   [
@@ -96,16 +1158,274 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "rx-single/src/emitter.js~emitter",
-    "class/src/emitter.js~Emitter.html",
-    "<span>Emitter</span> <span class=\"search-result-import-path\">rx-single/src/emitter.js</span>",
-    "class"
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber8",
+    "#takeUntil",
+    "test"
   ],
   [
-    "rx-single/src/observer.js~observer",
-    "class/src/observer.js~Observer.html",
-    "<span>Observer</span> <span class=\"search-result-import-path\">rx-single/src/observer.js</span>",
-    "class"
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber12",
+    "#takeUntil should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber20",
+    "#takeUntil should return the same instance if no other Single is provided",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber51",
+    "#takeUntil should signal error if other Single has emitted a success signal",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber62",
+    "#takeUntil should signal error if other Single has emitted an error signal",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber73",
+    "#takeUntil should signal error if source signals error, nonetheless",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber29",
+    "#takeUntil should signal success if other Single has not emitted a success signal",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/takeUntil.js.html#lineNumber40",
+    "#takeUntil should signal success if other Single has not emitted an error signal",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/then.js.html#lineNumber8",
+    "#then",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/then.js.html#lineNumber12",
+    "#then should create a Promise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber8",
+    "#timeout",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber12",
+    "#timeout should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber72",
+    "#timeout should not signal error if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber57",
+    "#timeout should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber19",
+    "#timeout should return the same instance if the amount is not a number.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber47",
+    "#timeout should signal error if the Single does not emit item within the given timeout.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber37",
+    "#timeout should signal error with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timeout.js.html#lineNumber27",
+    "#timeout should signal success with the given value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timer.js.html#lineNumber8",
+    "#timer",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timer.js.html#lineNumber12",
+    "#timer should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timer.js.html#lineNumber40",
+    "#timer should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timer.js.html#lineNumber19",
+    "#timer should signal error if amount is not a number.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/timer.js.html#lineNumber30",
+    "#timer should signal success 0",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/toPromise.js.html#lineNumber8",
+    "#toPromise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/toPromise.js.html#lineNumber12",
+    "#toPromise should create a Promise",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber8",
+    "#zipArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber12",
+    "#zipArray should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber90",
+    "#zipArray should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber39",
+    "#zipArray should signal an error if the zipper throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber80",
+    "#zipArray should signal error if a source throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber70",
+    "#zipArray should signal error if one of the sources is a non-Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber29",
+    "#zipArray should signal error if source is empty iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber19",
+    "#zipArray should signal error if sources is not iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber50",
+    "#zipArray should signal success with an array (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber60",
+    "#zipArray should signal success with an array with the correct values (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber8",
+    "#zipWith",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber12",
+    "#zipWith should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber89",
+    "#zipWith should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber19",
+    "#zipWith should return the same instance if the other parameter is non-Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber27",
+    "#zipWith should signal an error if the zipper returns undefined",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber38",
+    "#zipWith should signal an error if the zipper returns undefined",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber79",
+    "#zipWith should signal error if other Single throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber69",
+    "#zipWith should signal error if source throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber49",
+    "#zipWith should signal success with an array (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipWith.js.html#lineNumber59",
+    "#zipWith should signal success with an array with the correct values (no zipper function).",
+    "test"
   ],
   [
     "rx-single/src/single.js~single",
@@ -114,1581 +1434,57 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "rx-single/src/emitter.js~singleemitter",
+    "class/src/emitter.js~SingleEmitter.html",
+    "<span>SingleEmitter</span> <span class=\"search-result-import-path\">rx-single/src/emitter.js</span>",
+    "class"
+  ],
+  [
+    "rx-single/src/observer.js~singleobserver",
+    "class/src/observer.js~SingleObserver.html",
+    "<span>SingleObserver</span> <span class=\"search-result-import-path\">rx-single/src/observer.js</span>",
+    "class"
+  ],
+  [
     "",
-    "test-file/test/amb.js.html#lineNumber8",
+    "test-file/test/doOnCancel.js.html#lineNumber8",
     "Single",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnError.js.html#lineNumber8",
-    "Single",
+    "test-file/test/doOnCancel.js.html#lineNumber12",
+    "Single #doOnCancel",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnEvent.js.html#lineNumber8",
-    "Single",
+    "test-file/test/doOnCancel.js.html#lineNumber59",
+    "Single #doOnCancel should call the given function on cancel.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnSubscribe.js.html#lineNumber8",
-    "Single",
+    "test-file/test/doOnCancel.js.html#lineNumber16",
+    "Single #doOnCancel should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnSuccess.js.html#lineNumber8",
-    "Single",
+    "test-file/test/doOnCancel.js.html#lineNumber23",
+    "Single #doOnCancel should return the same instance if the method received a non-function parameter.",
     "test"
   ],
   [
     "",
-    "test-file/test/doOnTerminate.js.html#lineNumber8",
-    "Single",
+    "test-file/test/doOnCancel.js.html#lineNumber45",
+    "Single #doOnCancel should signal the error value then fire cancel callback.",
     "test"
   ],
   [
     "",
-    "test-file/test/error.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromPromise.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/cache.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromResolvable.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/just.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber7",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/never.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/catch.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/then.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/toPromise.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterSuccess.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber8",
-    "Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber12",
-    "Single #amb",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber16",
-    "Single #amb should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber33",
-    "Single #amb should signal error from the earliest source.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber53",
-    "Single #amb should signal error if given argument is not Iterable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber43",
-    "Single #amb should signal error if one of the source is non-Single.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/amb.js.html#lineNumber23",
-    "Single #amb should signal success from the earliest source.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber12",
-    "Single #ambWith",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber16",
-    "Single #ambWith should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber23",
-    "Single #ambWith should return the same instance if the other value is non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber61",
-    "Single #ambWith should signal error from the other (if earlier).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber51",
-    "Single #ambWith should signal error from the source (if earlier).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber41",
-    "Single #ambWith should signal success from the other (if earlier).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/ambWith.js.html#lineNumber31",
-    "Single #ambWith should signal success from the source (if earlier)",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/cache.js.html#lineNumber12",
-    "Single #cache",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/cache.js.html#lineNumber16",
-    "Single #cache should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/cache.js.html#lineNumber43",
-    "Single #cache should signal cached error value",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/cache.js.html#lineNumber23",
-    "Single #cache should signal cached success value",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/catch.js.html#lineNumber12",
-    "Single #catch",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/catch.js.html#lineNumber16",
-    "Single #catch should create a Promise",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber12",
-    "Single #compose",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber33",
-    "Single #compose should correctly signal the composed Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber25",
-    "Single #compose should return a Single from the transformer",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber16",
-    "Single #compose should return the same instance if no function is provided",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/compose.js.html#lineNumber44",
-    "Single #compose should signal error if the transformer function returned a non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber12",
-    "Single #contains",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber16",
-    "Single #contains should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber23",
-    "Single #contains should return the same instance if the compared value is undefined",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber51",
-    "Single #contains should signal an error if the comparer throws an error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber41",
-    "Single #contains should signal false if the success value and the compared value are both equal.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/contains.js.html#lineNumber31",
-    "Single #contains should signal true if the success value and the compared value are both equal.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber12",
-    "Single #create",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber57",
-    "Single #create should be aborted successfully if emitter is aborted before any signal.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber16",
-    "Single #create should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber74",
-    "Single #create should signal error if subscriber throws an error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber24",
-    "Single #create should signal error if the create received a non-function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber46",
-    "Single #create should signal error if the emitter signals error with undefined value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/create.js.html#lineNumber35",
-    "Single #create should signal error if the emitter signals success with undefined value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber12",
-    "Single #defer",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber16",
-    "Single #defer should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber35",
-    "Single #defer should signal error if callable returns a non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber46",
-    "Single #defer should signal error if callable throws an error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/defer.js.html#lineNumber24",
-    "Single #defer should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber12",
-    "Single #delay",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber16",
-    "Single #delay should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber66",
-    "Single #delay should not signal error if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber51",
-    "Single #delay should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber23",
-    "Single #delay should return the same instance if the amount is not a number.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber41",
-    "Single #delay should signal error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delay.js.html#lineNumber31",
-    "Single #delay should signal success with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber12",
-    "Single #delaySubscription",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber16",
-    "Single #delaySubscription should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber66",
-    "Single #delaySubscription should not signal error if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber51",
-    "Single #delaySubscription should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber23",
-    "Single #delaySubscription should return the same instance if the amount is not a number.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber41",
-    "Single #delaySubscription should signal error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delaySubscription.js.html#lineNumber31",
-    "Single #delaySubscription should signal success with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber12",
-    "Single #delayUntil",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber16",
-    "Single #delayUntil should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber76",
-    "Single #delayUntil should not signal error if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber61",
-    "Single #delayUntil should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber23",
-    "Single #delayUntil should return the same instance if the provided value is not a Single.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber51",
-    "Single #delayUntil should signal error if other Single signals error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber41",
-    "Single #delayUntil should signal error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/delayUntil.js.html#lineNumber31",
-    "Single #delayUntil should signal success with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterSuccess.js.html#lineNumber12",
-    "Single #doAfterSuccess",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterSuccess.js.html#lineNumber31",
-    "Single #doAfterSuccess should call the given function after success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterSuccess.js.html#lineNumber16",
-    "Single #doAfterSuccess should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterSuccess.js.html#lineNumber23",
-    "Single #doAfterSuccess should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber12",
-    "Single #doAfterTerminate",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber43",
-    "Single #doAfterTerminate should call the given function after error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber31",
-    "Single #doAfterTerminate should call the given function after success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber16",
-    "Single #doAfterTerminate should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doAfterTerminate.js.html#lineNumber23",
-    "Single #doAfterTerminate should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber12",
-    "Single #doFinally",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber43",
-    "Single #doFinally should call the given function after error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber31",
-    "Single #doFinally should call the given function after success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber55",
-    "Single #doFinally should call the given function on dispose.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber16",
-    "Single #doFinally should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doFinally.js.html#lineNumber23",
-    "Single #doFinally should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber12",
-    "Single #doOnAbort",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber59",
-    "Single #doOnAbort should call the given function on abort.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber16",
-    "Single #doOnAbort should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber23",
-    "Single #doOnAbort should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber45",
-    "Single #doOnAbort should signal the error value then fire abort callback.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnAbort.js.html#lineNumber31",
-    "Single #doOnAbort should signal the success value then fire abort callback.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnError.js.html#lineNumber12",
-    "Single #doOnError",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnError.js.html#lineNumber31",
-    "Single #doOnError should call the given function on error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnError.js.html#lineNumber16",
-    "Single #doOnError should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnError.js.html#lineNumber23",
-    "Single #doOnError should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnEvent.js.html#lineNumber12",
-    "Single #doOnEvent",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnEvent.js.html#lineNumber43",
-    "Single #doOnEvent should call the given function on error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnEvent.js.html#lineNumber31",
-    "Single #doOnEvent should call the given function on success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnEvent.js.html#lineNumber16",
-    "Single #doOnEvent should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnEvent.js.html#lineNumber23",
-    "Single #doOnEvent should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSubscribe.js.html#lineNumber12",
-    "Single #doOnSubscribe",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSubscribe.js.html#lineNumber31",
-    "Single #doOnSubscribe should be called before actual subscription.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSubscribe.js.html#lineNumber16",
-    "Single #doOnSubscribe should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSubscribe.js.html#lineNumber23",
-    "Single #doOnSubscribe should return the same instance if no function is passed",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSuccess.js.html#lineNumber12",
-    "Single #doOnSuccess",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSuccess.js.html#lineNumber31",
-    "Single #doOnSuccess should call the given function on success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSuccess.js.html#lineNumber16",
-    "Single #doOnSuccess should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnSuccess.js.html#lineNumber23",
-    "Single #doOnSuccess should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnTerminate.js.html#lineNumber12",
-    "Single #doOnTerminate",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnTerminate.js.html#lineNumber43",
-    "Single #doOnTerminate should call the given function on error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnTerminate.js.html#lineNumber31",
-    "Single #doOnTerminate should call the given function on success.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnTerminate.js.html#lineNumber16",
-    "Single #doOnTerminate should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/doOnTerminate.js.html#lineNumber23",
-    "Single #doOnTerminate should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber12",
-    "Single #error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber16",
-    "Single #error should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber57",
-    "Single #error should error if the callable throws an error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber46",
-    "Single #error should error with the a message if the callable returned undefined",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber35",
-    "Single #error should error with the a message if the given value is undefined",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/error.js.html#lineNumber24",
-    "Single #error should error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber12",
-    "Single #flatMap",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber16",
-    "Single #flatMap should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber24",
-    "Single #flatMap should return the same instance if the method received a non-function parameter.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber32",
-    "Single #flatMap should signal error if mapper returns a non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/flatMap.js.html#lineNumber43",
-    "Single #flatMap should signal success of the returned Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber12",
-    "Single #fromCallable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber16",
-    "Single #fromCallable should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber58",
-    "Single #fromCallable should signal an error if the callable is not a function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber47",
-    "Single #fromCallable should signal an error if the callable returns a rejected Promise.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber34",
-    "Single #fromCallable should signal an error if the callable throws an error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromCallable.js.html#lineNumber23",
-    "Single #fromCallable should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromPromise.js.html#lineNumber12",
-    "Single #fromPromise",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromPromise.js.html#lineNumber16",
-    "Single #fromPromise should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromPromise.js.html#lineNumber35",
-    "Single #fromPromise should signal error if the given value is not Promise like",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromPromise.js.html#lineNumber23",
-    "Single #fromPromise should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromResolvable.js.html#lineNumber12",
-    "Single #fromResolvable",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromResolvable.js.html#lineNumber16",
-    "Single #fromResolvable should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromResolvable.js.html#lineNumber34",
-    "Single #fromResolvable should signal error if the given value is not a function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/fromResolvable.js.html#lineNumber23",
-    "Single #fromResolvable should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/just.js.html#lineNumber12",
-    "Single #just",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/just.js.html#lineNumber16",
-    "Single #just should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/just.js.html#lineNumber35",
-    "Single #just should emit error if value is undefined.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/just.js.html#lineNumber24",
-    "Single #just should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber11",
-    "Single #lift",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber15",
-    "Single #lift should return the same instance if no function is provided",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber24",
-    "Single #lift should signal an error if the lift operator returned a non-Observer",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/lift.js.html#lineNumber35",
-    "Single #lift should subscribe successfully",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber12",
-    "Single #map",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber16",
-    "Single #map should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber58",
-    "Single #map should retain the value if no function is supplied.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber34",
-    "Single #map should signal an error if the mapper throws an error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber47",
-    "Single #map should signal an error if the mapper throws an error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/map.js.html#lineNumber23",
-    "Single #map should succeed with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber12",
-    "Single #merge",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber16",
-    "Single #merge should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber24",
-    "Single #merge should signal error if no source is provided",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber35",
-    "Single #merge should signal error if source emitted a non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/merge.js.html#lineNumber46",
-    "Single #merge should signal success of the signaled Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/never.js.html#lineNumber12",
-    "Single #never",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/never.js.html#lineNumber16",
-    "Single #never should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/never.js.html#lineNumber23",
-    "Single #never should not signal.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber12",
-    "Single #onErrorResumeNext",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber16",
-    "Single #onErrorResumeNext should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber61",
-    "Single #onErrorResumeNext should emit error if provide function returns non-Single.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber51",
-    "Single #onErrorResumeNext should emit error if provide function throws error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber23",
-    "Single #onErrorResumeNext should return the same instance if parameter passed is not a Single or a function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber31",
-    "Single #onErrorResumeNext should subscribe to the given Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorResumeNext.js.html#lineNumber41",
-    "Single #onErrorResumeNext should subscribe to the given Single-producing Function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber12",
-    "Single #onErrorReturn",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber16",
-    "Single #onErrorReturn should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber52",
-    "Single #onErrorReturn should emit error if provide function returns undefined.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber42",
-    "Single #onErrorReturn should emit error if provide function throws error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber31",
-    "Single #onErrorReturn should emit the supplied item by the given function in case of error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturn.js.html#lineNumber23",
-    "Single #onErrorReturn should return the same instance if parameter passed is not a Single or a function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber12",
-    "Single #onErrorReturnItem",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber16",
-    "Single #onErrorReturnItem should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber31",
-    "Single #onErrorReturnItem should emit the given item in case of error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/onErrorReturnItem.js.html#lineNumber23",
-    "Single #onErrorReturnItem should return the same instance if parameter passed is not a Single or a function",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber12",
-    "Single #retry",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber16",
-    "Single #retry should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber35",
-    "Single #retry should retry if there is an error and if it passes the predicate",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber24",
-    "Single #retry should signal a success if no error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/retry.js.html#lineNumber52",
-    "Single #retry should signal an error if predicate is false",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber12",
-    "Single #takeUntil",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber16",
-    "Single #takeUntil should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber24",
-    "Single #takeUntil should return the same instance if no other Single is provided",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber55",
-    "Single #takeUntil should signal error if other Single has emitted a success signal",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber66",
-    "Single #takeUntil should signal error if other Single has emitted an error signal",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber77",
-    "Single #takeUntil should signal error if source signals error, nonetheless",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber33",
-    "Single #takeUntil should signal success if other Single has not emitted a success signal",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/takeUntil.js.html#lineNumber44",
-    "Single #takeUntil should signal success if other Single has not emitted an error signal",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/then.js.html#lineNumber12",
-    "Single #then",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/then.js.html#lineNumber16",
-    "Single #then should create a Promise",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber12",
-    "Single #timeout",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber16",
-    "Single #timeout should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber76",
-    "Single #timeout should not signal error if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber61",
-    "Single #timeout should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber23",
-    "Single #timeout should return the same instance if the amount is not a number.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber51",
-    "Single #timeout should signal error if the Single does not emit item within the given timeout.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber41",
-    "Single #timeout should signal error with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timeout.js.html#lineNumber31",
-    "Single #timeout should signal success with the given value.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber12",
-    "Single #timer",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber16",
-    "Single #timer should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber44",
-    "Single #timer should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber23",
-    "Single #timer should signal error if amount is not a number.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/timer.js.html#lineNumber34",
-    "Single #timer should signal success 0",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/toPromise.js.html#lineNumber12",
-    "Single #toPromise",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/toPromise.js.html#lineNumber16",
-    "Single #toPromise should create a Promise",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber12",
-    "Single #zip",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber16",
-    "Single #zip should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber104",
-    "Single #zip should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber43",
-    "Single #zip should signal an error if the zipper throws an error",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber94",
-    "Single #zip should signal error if a source throws error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber84",
-    "Single #zip should signal error if one of the sources is undefined.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber33",
-    "Single #zip should signal error if source is empty iterable.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber23",
-    "Single #zip should signal error if sources is not iterable.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber54",
-    "Single #zip should signal success with an array (no zipper function).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber64",
-    "Single #zip should signal success with an array with the correct values (no zipper function).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zip.js.html#lineNumber74",
-    "Single #zip should signal success with an array with the correct values, consider non-Single (no zipper function).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber12",
-    "Single #zipWith",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber16",
-    "Single #zipWith should create a Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber93",
-    "Single #zipWith should not signal success if aborted.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber23",
-    "Single #zipWith should return the same instance if the other parameter is non-Single",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber31",
-    "Single #zipWith should signal an error if the zipper returns undefined",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber42",
-    "Single #zipWith should signal an error if the zipper returns undefined",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber83",
-    "Single #zipWith should signal error if other Single throws error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber73",
-    "Single #zipWith should signal error if source throws error.",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber53",
-    "Single #zipWith should signal success with an array (no zipper function).",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/zipWith.js.html#lineNumber63",
-    "Single #zipWith should signal success with an array with the correct values (no zipper function).",
+    "test-file/test/doOnCancel.js.html#lineNumber31",
+    "Single #doOnCancel should signal the success value then fire cancel callback.",
     "test"
   ],
   [
@@ -1980,21 +1776,51 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/emitter.js~emitter#onerror",
-    "class/src/emitter.js~Emitter.html#instance-method-onError",
-    "src/emitter.js~Emitter#onError",
+    "src/emitter.js~singleemitter#cancel",
+    "class/src/emitter.js~SingleEmitter.html#instance-method-cancel",
+    "src/emitter.js~SingleEmitter#cancel",
     "method"
   ],
   [
-    "src/emitter.js~emitter#onsuccess",
-    "class/src/emitter.js~Emitter.html#instance-method-onSuccess",
-    "src/emitter.js~Emitter#onSuccess",
+    "src/emitter.js~singleemitter#cancelled",
+    "class/src/emitter.js~SingleEmitter.html#instance-get-cancelled",
+    "src/emitter.js~SingleEmitter#cancelled",
+    "member"
+  ],
+  [
+    "src/emitter.js~singleemitter#constructor",
+    "class/src/emitter.js~SingleEmitter.html#instance-constructor-constructor",
+    "src/emitter.js~SingleEmitter#constructor",
+    "method"
+  ],
+  [
+    "src/emitter.js~singleemitter#onerror",
+    "class/src/emitter.js~SingleEmitter.html#instance-method-onError",
+    "src/emitter.js~SingleEmitter#onError",
+    "method"
+  ],
+  [
+    "src/emitter.js~singleemitter#onsuccess",
+    "class/src/emitter.js~SingleEmitter.html#instance-method-onSuccess",
+    "src/emitter.js~SingleEmitter#onSuccess",
+    "method"
+  ],
+  [
+    "src/emitter.js~singleemitter#setcancellable",
+    "class/src/emitter.js~SingleEmitter.html#instance-method-setCancellable",
+    "src/emitter.js~SingleEmitter#setCancellable",
     "method"
   ],
   [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
+    "file"
+  ],
+  [
+    "src/internal/is.js",
+    "file/src/internal/is.js.html",
+    "src/internal/is.js",
     "file"
   ],
   [
@@ -2007,6 +1833,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/amb.js",
     "file/src/internal/operators/amb.js.html",
     "src/internal/operators/amb.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/ambarray.js",
+    "file/src/internal/operators/ambArray.js.html",
+    "src/internal/operators/ambArray.js",
     "file"
   ],
   [
@@ -2082,9 +1914,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/internal/operators/doonabort.js",
-    "file/src/internal/operators/doOnAbort.js.html",
-    "src/internal/operators/doOnAbort.js",
+    "src/internal/operators/dooncancel.js",
+    "file/src/internal/operators/doOnCancel.js.html",
+    "src/internal/operators/doOnCancel.js",
     "file"
   ],
   [
@@ -2232,9 +2064,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/internal/operators/zip.js",
-    "file/src/internal/operators/zip.js.html",
-    "src/internal/operators/zip.js",
+    "src/internal/operators/ziparray.js",
+    "file/src/internal/operators/zipArray.js.html",
+    "src/internal/operators/zipArray.js",
     "file"
   ],
   [
@@ -2256,21 +2088,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/observer.js~observer#onerror",
-    "class/src/observer.js~Observer.html#instance-method-onError",
-    "src/observer.js~Observer#onError",
+    "src/observer.js~singleobserver#onerror",
+    "class/src/observer.js~SingleObserver.html#instance-method-onError",
+    "src/observer.js~SingleObserver#onError",
     "method"
   ],
   [
-    "src/observer.js~observer#onsubscribe",
-    "class/src/observer.js~Observer.html#instance-method-onSubscribe",
-    "src/observer.js~Observer#onSubscribe",
+    "src/observer.js~singleobserver#onsubscribe",
+    "class/src/observer.js~SingleObserver.html#instance-method-onSubscribe",
+    "src/observer.js~SingleObserver#onSubscribe",
     "method"
   ],
   [
-    "src/observer.js~observer#onsuccess",
-    "class/src/observer.js~Observer.html#instance-method-onSuccess",
-    "src/observer.js~Observer#onSuccess",
+    "src/observer.js~singleobserver#onsuccess",
+    "class/src/observer.js~SingleObserver.html#instance-method-onSuccess",
+    "src/observer.js~SingleObserver#onSuccess",
     "method"
   ],
   [
@@ -2280,9 +2112,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/single.js~abortcontroller",
-    "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
-    "src/single.js~AbortController",
+    "src/single.js~cancellable",
+    "https://lxsmnsyc.github.io/rx-cancellable/",
+    "src/single.js~Cancellable",
     "external"
   ],
   [
@@ -2370,9 +2202,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/single.js~single#doonabort",
-    "class/src/single.js~Single.html#instance-method-doOnAbort",
-    "src/single.js~Single#doOnAbort",
+    "src/single.js~single#dooncancel",
+    "class/src/single.js~Single.html#instance-method-doOnCancel",
+    "src/single.js~Single#doOnCancel",
     "method"
   ],
   [
@@ -2514,6 +2346,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/single.js~single.ambarray",
+    "class/src/single.js~Single.html#static-method-ambArray",
+    "src/single.js~Single.ambArray",
+    "method"
+  ],
+  [
     "src/single.js~single.create",
     "class/src/single.js~Single.html#static-method-create",
     "src/single.js~Single.create",
@@ -2574,9 +2412,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/single.js~single.zip",
-    "class/src/single.js~Single.html#static-method-zip",
-    "src/single.js~Single.zip",
+    "src/single.js~single.ziparray",
+    "class/src/single.js~Single.html#static-method-zipArray",
+    "src/single.js~Single.zipArray",
     "method"
   ],
   [
@@ -2589,6 +2427,12 @@ window.esdocSearchIndex = [
     "test/amb.js",
     "test-file/test/amb.js.html",
     "test/amb.js",
+    "testFile"
+  ],
+  [
+    "test/ambarray.js",
+    "test-file/test/ambArray.js.html",
+    "test/ambArray.js",
     "testFile"
   ],
   [
@@ -2670,9 +2514,9 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
-    "test/doonabort.js",
-    "test-file/test/doOnAbort.js.html",
-    "test/doOnAbort.js",
+    "test/dooncancel.js",
+    "test-file/test/doOnCancel.js.html",
+    "test/doOnCancel.js",
     "testFile"
   ],
   [
@@ -2832,9 +2676,9 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
-    "test/zip.js",
-    "test-file/test/zip.js.html",
-    "test/zip.js",
+    "test/ziparray.js",
+    "test-file/test/zipArray.js.html",
+    "test/zipArray.js",
     "testFile"
   ],
   [

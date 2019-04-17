@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">Emitter | rx-single</title>
+  <title data-ice="title">SingleObserver | rx-single</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -42,23 +42,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Emitter from &apos;<span><a href="file/src/emitter.js.html#lineNumber9">rx-single/src/emitter.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import SingleObserver from &apos;<span><a href="file/src/observer.js.html#lineNumber28">rx-single/src/observer.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
-  <span data-ice="kind">class</span>
+  <span data-ice="kind">interface</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/emitter.js.html#lineNumber9">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/observer.js.html#lineNumber28">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">Emitter</h1>
+  <h1 data-ice="name">SingleObserver</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span> &#x2192; Emitter</div></div>
+  
   
   
   
@@ -68,7 +68,25 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>Provides a mechanism for receiving push-based notification
+of a single value or an error.</p>
+<p>When a SingleObserver is subscribed to a Single through
+the Single.subscribe(SingleObserver) method, the Single
+calls onSubscribe(Cancellable) with a Cancellable that
+allows cancelling the sequence at any time. A well-behaved
+Single will call a SingleObserver&apos;s onSuccess(Object) method
+exactly once or the SingleObserver&apos;s onError(Error) method
+exactly once as they are considered mutually exclusive
+terminal signals.</p>
+<p>the invocation pattern must adhere to the following protocol:</p>
+<p><code>onSubscribe (onSuccess | onError)?</code></p>
+<p>Subscribing a SingleObserver to multiple Singles is not recommended.
+If such reuse happens, it is the duty of the SingleObserver
+implementation to be ready to receive multiple calls to its methods
+and ensure proper concurrent behavior of its business logic.</p>
+<p>Calling onSubscribe(Cancellable), onSuccess(Object) or onError(Error)
+with a null argument is forbidden.</p>
+</div>
   
 
   
@@ -102,13 +120,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/emitter.js~Emitter.html#instance-method-onError">onError</a></span></span><span class="code" data-ice="signature">(err: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html#instance-method-onError">onError</a></span></span><span class="code" data-ice="signature">(err: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Emits an error value.</p>
+        <div data-ice="description"><p>Receives an error value.</p>
 </div>
       </div>
     </td>
@@ -131,13 +149,42 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/emitter.js~Emitter.html#instance-method-onSuccess">onSuccess</a></span></span><span class="code" data-ice="signature">(value: <span>any</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html#instance-method-onSubscribe">onSubscribe</a></span></span><span class="code" data-ice="signature">(d: <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Emits a success value.</p>
+        <div data-ice="description"><p>Receives the Cancellable subscription.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      <span class="abstract" data-ice="abstract">abstract</span>
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html#instance-method-onSuccess">onSuccess</a></span></span><span class="code" data-ice="signature">(value: <span>any</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Receives a success value.</p>
 </div>
       </div>
     </td>
@@ -170,14 +217,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/emitter.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/observer.js.html#lineNumber51">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Emits an error value.</p>
+  <div data-ice="description"><p>Receives an error value.</p>
 </div>
 
   
@@ -219,6 +266,66 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-onSubscribe">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    <span class="abstract" data-ice="abstract">abstract</span>
+    
+    
+    <span class="code" data-ice="name">onSubscribe</span><span class="code" data-ice="signature">(d: <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/observer.js.html#lineNumber35">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Receives the Cancellable subscription.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">d</td>
+      <td data-ice="type" class="code"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-onSuccess">
     <span class="access" data-ice="access">public</span>
     
@@ -230,14 +337,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/emitter.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/observer.js.html#lineNumber43">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Emits a success value.</p>
+  <div data-ice="description"><p>Receives a success value.</p>
 </div>
 
   

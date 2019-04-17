@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -42,30 +42,113 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/emitter.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * @interface
- * Represents an object that receives notification to
- * an Observer.
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { Cancellable, BooleanCancellable } from &apos;rx-cancellable&apos;;
+import { isOf, isNull } from &apos;./internal/utils&apos;;
+/**
+ * Abstraction over a SingleObserver that allows associating
+ * a resource with it.
  *
- * Emitter is an abstraction layer of the Observer
+ * Calling onSuccess(Object) multiple times has no effect.
+ * Calling onError(Error) multiple times or after onSuccess
+ * has no effect.
  */
 // eslint-disable-next-line no-unused-vars
-export default class Emitter extends AbortController {
+export default class SingleEmitter extends Cancellable {
+  constructor(success, error) {
+    super();
+    /**
+     * @ignore
+     */
+    this.success = success;
+    /**
+     * @ignore
+     */
+    this.error = error;
+    /**
+     * @ignore
+     */
+    this.link = new BooleanCancellable();
+  }
+
+  /**
+   * Returns true if the emitter is cancelled.
+   * @returns {boolean}
+   */
+  get cancelled() {
+    return this.link.cancelled;
+  }
+
+  /**
+   * Returns true if the emitter is cancelled successfully.
+   * @returns {boolean}
+   */
+  cancel() {
+    return this.link.cancel();
+  }
+
+  /**
+   * Set the given Cancellable as the Emitter&apos;s cancellable state.
+   * @param {Cancellable} cancellable
+   * The Cancellable instance
+   * @returns {boolean}
+   * Returns true if the cancellable is valid.
+   */
+  setCancellable(cancellable) {
+    if (isOf(cancellable, Cancellable)) {
+      if (this.cancelled) {
+        cancellable.cancel();
+      } else if (cancellable.cancelled) {
+        this.cancel();
+        return true;
+      } else {
+        const { link } = this;
+        this.link = cancellable;
+        link.cancel();
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Emits a success value.
    * @param {!any} value
-   * @abstract
    */
   // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  onSuccess(value) {}
+  onSuccess(value) {
+    if (this.cancelled) {
+      return;
+    }
+    try {
+      if (isNull(value)) {
+        this.error(new Error(&apos;onSuccess called with a null value.&apos;));
+      } else {
+        this.success(value);
+      }
+    } finally {
+      this.cancel();
+    }
+  }
 
   /**
    * Emits an error value.
    * @param {!Error} err
-   * @abstract
    */
   // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  onError(err) {}
+  onError(err) {
+    let report = err;
+    if (!isOf(err, Error)) {
+      report = new Error(&apos;onError called with a non-Error value.&apos;);
+    }
+    if (this.cancelled) {
+      return;
+    }
+    try {
+      this.error(report);
+    } finally {
+      this.cancel();
+    }
+  }
 }
 </code></pre>
 

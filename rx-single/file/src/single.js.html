@@ -29,10 +29,10 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~Emitter.html">Emitter</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/observer.js~Observer.html">Observer</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://promisesaplus.com/">PromiseLike</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-scheduler/">Scheduler</a></span></span></li>
@@ -82,18 +82,18 @@
  * @external {PromiseLike} https://promisesaplus.com/
  */
 /**
- * @external {AbortController} https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+ * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/
  */
-import AbortController from &apos;abort-controller&apos;;
+import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import {
   create, contains, just, error, defer, delay,
   never, map, fromPromise, fromResolvable, fromCallable,
   timer, doAfterSuccess, doAfterTerminate, doFinally,
-  doOnAbort, doOnError, doOnSuccess, doOnEvent,
+  doOnCancel, doOnError, doOnSuccess, doOnEvent,
   onErrorResumeNext, onErrorReturnItem, onErrorReturn,
-  timeout, zipWith, zip, doOnSubscribe, ambWith, amb,
+  timeout, zipWith, doOnSubscribe, ambWith, amb,
   doOnTerminate, cache, delaySubscription, delayUntil,
-  merge, flatMap, retry, compose, lift, takeUntil, observeOn, subscribeOn,
+  merge, flatMap, retry, compose, lift, takeUntil, observeOn, subscribeOn, ambArray, zipArray,
 } from &apos;./internal/operators&apos;;
 import { isObserver } from &apos;./internal/utils&apos;;
 
@@ -107,7 +107,7 @@ import { isObserver } from &apos;./internal/utils&apos;;
  * as there is for an Observable).
  *
  * The Single class default consumer type it interacts
- * with is the Observer via the subscribeWith(Observer)
+ * with is the SingleObserver via the subscribeWith(SingleObserver)
  * or the subscribe(onSuccess, onError) method.
  *
  * The Single operates with the following sequential protocol:
@@ -118,8 +118,8 @@ import { isObserver } from &apos;./internal/utils&apos;;
  * by onError.
  *
  * Like Observable, a running Single can be stopped through
- * the AbortController instance provided to consumers through
- * Observer.onSubscribe(AbortController).
+ * the Cancellable instance provided to consumers through
+ * SingleObserver.onSubscribe(Cancellable).
  *
  * Singles are cold by default, but using a toPromise method,
  * you can achieve a hot-like Single.
@@ -157,8 +157,8 @@ export default class Single {
   }
 
   /**
-   * Runs multiple SingleSources and signals the events of
-   * the first one that signals (disposing the rest).
+   * Runs multiple Singles and signals the events of
+   * the first one that signals (cancelling the rest).
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.amb.png&quot; class=&quot;diagram&quot;&gt;
    *
@@ -170,6 +170,21 @@ export default class Single {
    */
   static amb(sources) {
     return amb(sources);
+  }
+
+  /**
+   * Runs multiple Singles and signals the events of
+   * the first one that signals (cancelling the rest).
+   *
+   * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.ambArray.png&quot; class=&quot;diagram&quot;&gt;
+   *
+   * @param {!Array} sources
+   * the array of sources. A subscription to each source
+   * will occur in the same order as in this array.
+   * @returns {Single}
+   */
+  static ambArray(sources) {
+    return ambArray(sources);
   }
 
   /**
@@ -242,14 +257,14 @@ export default class Single {
   }
 
   /**
-   * Calls a function for each individual Observer
+   * Calls a function for each individual SingleObserver
    * to return the actual Single to be subscribed to.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.defer.png&quot; class=&quot;diagram&quot;&gt;
    *
    * @param {!function():any} callable
    * the Callable that is called for each individual
-   * Observer and returns a Single instance to subscribe to.
+   * SingleObserver and returns a Single instance to subscribe to.
    * @returns {Single}
    */
   static defer(callable) {
@@ -295,7 +310,7 @@ export default class Single {
 
   /**
    * Delays the actual subscription to the current Single
-   * until the given other SingleSource signals success.
+   * until the given other Single signals success.
    *
    * If the delaying source signals an error, that error is
    * re-emitted and no subscription to the current Single
@@ -344,16 +359,16 @@ export default class Single {
 
   /**
    * Calls the specified action after this Single signals
-   * onSuccess or onError or gets aborted by the downstream.
+   * onSuccess or onError or gets cancelled by the downstream.
    *
-   * In case of a race between a terminal event and a abort
+   * In case of a race between a terminal event and a cancel
    * call, the provided onFinally action is executed once per
    * subscription.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doFinally.png&quot; class=&quot;diagram&quot;&gt;
    *
    * @param {!Function} callable
-   * the action function when this Single terminates or gets aborted
+   * the action function when this Single terminates or gets cancelled
    * @returns {Single}
    */
   doFinally(callable) {
@@ -361,24 +376,24 @@ export default class Single {
   }
 
   /**
-   * Calls the shared function if a Observer
-   * subscribed to the current Single aborts
-   * the common AbortController it received via
+   * Calls the shared function if a SingleObserver
+   * subscribed to the current Single cancels
+   * the common Cancellable it received via
    * onSubscribe.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnDispose.png&quot; class=&quot;diagram&quot;&gt;
    *
    * @param {!Function} callable
-   * the function called when the subscription is aborted
+   * the function called when the subscription is cancelled
    * @returns {Single}
    */
-  doOnAbort(callable) {
-    return doOnAbort(this, callable);
+  doOnCancel(callable) {
+    return doOnCancel(this, callable);
   }
 
   /**
    * Calls the shared function with the error
-   * sent via onError for each Observer that
+   * sent via onError for each SingleObserver that
    * subscribes to the current Single.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnError.2.png&quot; class=&quot;diagram&quot;&gt;
@@ -406,14 +421,14 @@ export default class Single {
   }
 
   /**
-   * Calls the shared function with the AbortController
-   * sent through the onSubscribe for each Observer
+   * Calls the shared function with the Cancellable
+   * sent through the onSubscribe for each SingleObserver
    * that subscribes to the current Single.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnSubscribe.png&quot; class=&quot;diagram&quot;&gt;
    *
-   * @param {!function(x: AbortController)} callable
-   * the function called with the AbortController sent via onSubscribe
+   * @param {!function(x: Cancellable)} callable
+   * the function called with the Cancellable sent via onSubscribe
    * @returns {Single}
    */
   doOnSubscribe(callable) {
@@ -422,7 +437,7 @@ export default class Single {
 
   /**
    * Calls the shared function with the error sent
-   * via onSuccess for each Observer that subscribes
+   * via onSuccess for each SingleObserver that subscribes
    * to the current Single.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.doOnSuccess.2.png&quot; class=&quot;diagram&quot;&gt;
@@ -456,7 +471,7 @@ export default class Single {
    * Creates a Single with an error.
    *
    * Signals an error returned by the callback function
-   * for each individual Observer or returns a Single
+   * for each individual SingleObserver or returns a Single
    * that invokes a subscriber&apos;s onError method when
    * the subscriber subscribes to it.
    *
@@ -465,7 +480,7 @@ export default class Single {
    *
    * @param {!(function():Error|Error)} err
    * - the callable that is called for each individual
-   * Observer and returns or throws a value to be emitted.
+   * SingleObserver and returns or throws a value to be emitted.
    * - the particular value to pass to onError
    * @returns {Single}
    * a Single that invokes the subscriber&apos;s onError method
@@ -482,7 +497,7 @@ export default class Single {
    *
    * @param {!function(x: any):Single} mapper
    * a function that, when applied to the item emitted by the
-   * source Single, returns a SingleSource
+   * source Single, returns a Single
    * @returns {Single}
    * the Single returned from mapper when applied to the item
    * emitted by the source Single
@@ -497,14 +512,14 @@ export default class Single {
    * subscribes.
    *
    * Allows you to defer execution of passed function
-   * until Observer subscribes to the Single. It makes
+   * until SingleObserver subscribes to the Single. It makes
    * passed function &quot;lazy&quot;.
    *
    * Result of the function invocation will be emitted
    * by the Single.
    *
    * If the result is a Promise-like instance, the
-   * Observer is then subscribed to the Promise through
+   * SingleObserver is then subscribed to the Promise through
    * the fromPromise operator.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.fromCallable.png&quot; class=&quot;diagram&quot;&gt;
@@ -514,7 +529,7 @@ export default class Single {
    * be invoked when SingleObserver will subscribe to
    * the Single.
    * @returns {Single}
-   * a Single whose Observer&apos; subscriptions trigger
+   * a Single whose SingleObserver&apos; subscriptions trigger
    * an invocation of the given function.
    */
   static fromCallable(callable) {
@@ -564,18 +579,18 @@ export default class Single {
    * methods first; Returns a Single which, when subscribed
    * to, invokes the operator function for each individual
    * downstream Single and allows the insertion of a custom
-   * operator by accessing the downstream&apos;s Observer during
-   * this subscription phase and providing a new Observer,
+   * operator by accessing the downstream&apos;s SingleObserver during
+   * this subscription phase and providing a new SingleObserver,
    * containing the custom operator&apos;s intended business logic,
    * that will be used in the subscription process going
    * further upstream.
    *
-   * Generally, such a new Observer will wrap the downstream&apos;s
-   * Observer and forwards the onSuccess and onError events
+   * Generally, such a new SingleObserver will wrap the downstream&apos;s
+   * SingleObserver and forwards the onSuccess and onError events
    * from the upstream directly or according to the emission
    * pattern the custom operator&apos;s business logic requires.
    * In addition, such operator can intercept the flow control
-   * calls of abort and signal.aborted that would have traveled
+   * calls of cancel and signal.cancelled that would have traveled
    * upstream and perform additional actions depending on the
    * same business logic requirements.
    *
@@ -585,7 +600,7 @@ export default class Single {
    * using compose() method and  creating a transformer function
    * with it is recommended.
    *
-   * @param {!function(observer: Observer):Observer} operator
+   * @param {!function(observer: SingleObserver):SingleObserver} operator
    * the function that receives the downstream&apos;s SingleObserver
    * and should return a SingleObserver with custom behavior
    * to be used as the consumer for the current Single.
@@ -660,12 +675,12 @@ export default class Single {
 
   /**
    * Instructs a Single to pass control to another
-   * Single rather than invoking Observer.onError
+   * Single rather than invoking SingleObserver.onError
    * if it encounters an error.
    *
    * By default, when a Single encounters an error
    * that prevents it from emitting the expected item
-   * to its Observer, the Single invokes its Observer&apos;s
+   * to its SingleObserver, the Single invokes its SingleObserver&apos;s
    * onError method, and then quits without invoking any
    * more of its SingleObserver&apos;s methods.
    *
@@ -674,12 +689,12 @@ export default class Single {
    * pass a function that will return another Single
    * (resumeIfError) to a Single&apos;s onErrorResumeNext
    * method, if the original Single encounters an error,
-   * instead of invoking its Observer&apos;s onError method,
+   * instead of invoking its SingleObserver&apos;s onError method,
    * it will instead relinquish control to resumeIfError
-   * which will invoke the Observer&apos;s onSuccess method
+   * which will invoke the SingleObserver&apos;s onSuccess method
    * if it is able to do so. In such a case,
    * because no Single necessarily invokes onError, the
-   * Observer may never know that an error happened.
+   * SingleObserver may never know that an error happened.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.f.png&quot; class=&quot;diagram&quot;&gt;
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.onErrorResumeNext.png&quot; class=&quot;diagram&quot;&gt;
@@ -699,13 +714,13 @@ export default class Single {
    * By default, when a Single encounters an error that
    * prevents it from emitting the expected item to its
    * subscriber, the Single invokes its subscriber&apos;s
-   * Observer.onError method, and then quits without
+   * SingleObserver.onError method, and then quits without
    * invoking any more of its subscriber&apos;s methods.
    * The onErrorReturn method changes this behavior.
    * If you pass a function (resumeFunction) to a Single&apos;s
    * onErrorReturn method, if the original Single encounters
    * an error, instead of invoking its subscriber&apos;s
-   * Observer.onError method, it will instead emit the
+   * SingleObserver.onError method, it will instead emit the
    * return value of resumeIfError.
    *
    * You can use this to prevent errors from propagating
@@ -770,16 +785,16 @@ export default class Single {
 
   /**
    * @desc
-   * Subscribes with an Object that is an Observer.
+   * Subscribes with an Object that is an SingleObserver.
    *
-   * An Object is considered as an Observer if:
+   * An Object is considered as an SingleObserver if:
    *  - if it has the method onSubscribe
    *  - if it has the method onSuccess (optional)
    *  - if it has the method onError (optional)
    *
    * The onSubscribe method is called when subscribeWith
    * or subscribe is executed. This method receives an
-   * AbortController instance.
+   * Cancellable instance.
    *
    * @param {!Object} observer
    * @returns {undefined}
@@ -805,30 +820,14 @@ export default class Single {
    * @param {?function(x: Error)} onError
    * the function you have designed to accept any error
    * notification from the Single
-   * @returns {AbortController}
-   * an AbortController reference can request the Single to abort.
+   * @returns {Cancellable}
+   * an Cancellable reference can request the Single to cancel.
    */
   subscribe(onSuccess, onError) {
-    const controller = new AbortController();
-    let once = false;
+    const controller = new LinkedCancellable();
     this.subscribeWith({
       onSubscribe(ac) {
-        ac.signal.addEventListener(&apos;abort&apos;, () =&gt; {
-          if (!once) {
-            once = true;
-            if (!controller.signal.aborted) {
-              controller.abort();
-            }
-          }
-        });
-        controller.signal.addEventListener(&apos;abort&apos;, () =&gt; {
-          if (!once) {
-            once = true;
-            if (!ac.signal.aborted) {
-              ac.abort();
-            }
-          }
-        });
+        controller.link(ac);
       },
       onSuccess,
       onError,
@@ -841,7 +840,7 @@ export default class Single {
    * the source Single until a second Single emits an
    * item. Upon emission of an item from other,
    * this will emit an error rather than go to
-   * Observer.onSuccess.
+   * SingleObserver.onSuccess.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/takeUntil.png&quot; class=&quot;diagram&quot;&gt;
    *
@@ -858,7 +857,7 @@ export default class Single {
 
   /**
    * Signals success with 0 value after the given
-   * delay for each Observer.
+   * delay for each SingleObserver.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.timer.png&quot; class=&quot;diagram&quot;&gt;
    *
@@ -889,28 +888,27 @@ export default class Single {
   }
 
   /**
-   * Waits until all Single sources provided via an
-   * iterable signal a success value and calls a zipper
+   * Waits until all Single sources provided via
+   * an array signal a success value and calls a zipper
    * function with an array of these values to return
    * a result to be emitted to downstream.
    *
-   * If the Iterable of SingleSources is empty a NoSuchElementException
-   * error is signalled after subscription.
+   * If the array of Single is empty an error is
+   * signalled immediately.
    *
    * &lt;img src=&quot;https://raw.githubusercontent.com/LXSMNSYC/rx-single/master/assets/images/Single.zip.png&quot; class=&quot;diagram&quot;&gt;
    *
-   * @param {!Iterable} sources
-   * the Iterable sequence of SingleSource instances.
-   * An empty sequence will result in an onError signal
-   * of NoSuchElementException.
+   * @param {!Array} sources
+   * the array of Single instances. An empty sequence
+   * will result in an onError signal.
    * @param {?Function} zipper
    * the function that receives an array with values
    * from each Single and should return a value to be
    * emitted to downstream
    * @returns {Single}
    */
-  static zip(sources, zipper) {
-    return zip(sources, zipper);
+  static zipArray(sources, zipper) {
+    return zipArray(sources, zipper);
   }
 
   /**
