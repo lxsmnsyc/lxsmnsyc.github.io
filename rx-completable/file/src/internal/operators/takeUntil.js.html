@@ -45,6 +45,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
 import { cleanObserver } from &apos;../utils&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
@@ -91,7 +92,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 const takeUntil = (source, other) =&gt; {
-  if (!(other instanceof Completable)) {
+  if (!is(other)) {
     return source;
   }
 

@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/internal/utils.js | rx-completable</title>
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/mergeArray.js | rx-completable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,105 +41,67 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/utils.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">test/mergeArray.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
+import assert from &apos;assert&apos;;
+import Completable from &apos;../src/completable&apos;;
 
 /**
- * @ignore
+ *
  */
-// eslint-disable-next-line valid-typeof
-const isType = (x, y) =&gt; typeof x === y;
-/**
- * @ignore
- */
-export const isFunction = x =&gt; isType(x, &apos;function&apos;);
-/**
- * @ignore
- */
-export const isNumber = x =&gt; isType(x, &apos;number&apos;);
-/**
- * @ignore
- */
-export const isObject = x =&gt; isType(x, &apos;object&apos;);
-/**
- * @ignore
- */
-export const isNull = x =&gt; x == null;
-/**
- * @ignore
- */
-export const exists = x =&gt; x != null;
-/**
- * @ignore
- */
-export const isOf = (x, y) =&gt; x instanceof y;
-/**
- * @ignore
- */
-export const isArray = x =&gt; isOf(x, Array);
-/**
- * @ignore
- */
-export const isIterable = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj[Symbol.iterator]);
-/**
- * @ignore
- */
-export const isObserver = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj.onSubscribe);
-/**
- * @ignore
- */
-export const toCallable = x =&gt; () =&gt; x;
-/**
- * @ignore
- */
-export const isPromise = (obj) =&gt; {
-  if (obj == null) return false;
-  if (isOf(obj, Promise)) return true;
-  return (isObject(obj) || isFunction(obj)) &amp;&amp; isFunction(obj.then);
-};
-/**
- * @ignore
- */
-const identity = x =&gt; x;
-/**
- * @ignore
- */
-const throwError = (x) =&gt; { throw x; };
-/**
- * @ignore
- */
-export const cleanObserver = x =&gt; ({
-  onSubscribe: x.onSubscribe,
-  onComplete: isFunction(x.onComplete) ? x.onComplete : identity,
-  onError: isFunction(x.onError) ? x.onError : throwError,
+describe(&apos;#mergeArray&apos;, () =&gt; {
+  /**
+   *
+   */
+  it(&apos;should create a Completable&apos;, () =&gt; {
+    const completable = Completable.mergeArray([Completable.complete(), Completable.complete()]);
+    assert(completable instanceof Completable);
+  });
+  /**
+   *
+   */
+  it(&apos;should start with the from the first completion to the last completion&apos;, (done) =&gt; {
+    let started = &apos;&apos;;
+    const prefix = Completable.complete().doOnComplete(() =&gt; { started += &apos;A&apos;; });
+    const suffix = Completable.complete().doOnComplete(() =&gt; { started += &apos;B&apos;; });
+    const source = Completable.mergeArray([prefix, suffix]);
+
+    source.subscribe(
+      () =&gt; (started === &apos;AB&apos; ? done() : done(false)),
+      () =&gt; done(false),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error from the first&apos;, (done) =&gt; {
+    const completable = Completable.mergeArray([Completable.error(new Error(&apos;Hello&apos;)), Completable.timer(100)]);
+    completable.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if one of the source is non-Completable.&apos;, (done) =&gt; {
+    const completable = Completable.mergeArray([&apos;Hello&apos;, Completable.timer(100)]);
+    completable.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
+  /**
+   *
+   */
+  it(&apos;should signal error if given argument is not Iterable&apos;, (done) =&gt; {
+    const completable = Completable.mergeArray();
+    completable.subscribe(
+      () =&gt; done(false),
+      () =&gt; done(),
+    );
+  });
 });
-/**
- * @ignore
- */
-export const immediateComplete = (o) =&gt; {
-  // const disposable = new SimpleDisposable();
-  const { onSubscribe, onComplete } = cleanObserver(o);
-  const controller = new BooleanCancellable();
-  onSubscribe(controller);
-
-  if (!controller.cancelled) {
-    onComplete();
-    controller.cancel();
-  }
-};
-/**
- * @ignore
- */
-export const immediateError = (o, x) =&gt; {
-  const { onSubscribe, onError } = cleanObserver(o);
-  const controller = new BooleanCancellable();
-  onSubscribe(controller);
-
-  if (!controller.cancelled) {
-    onError(x);
-    controller.cancel();
-  }
-};
 </code></pre>
 
 </div>

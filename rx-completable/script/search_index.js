@@ -37,6 +37,42 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/ambArray.js.html#lineNumber8",
+    "#ambArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber12",
+    "#ambArray should create a Completable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber19",
+    "#ambArray should signal complete from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber29",
+    "#ambArray should signal error from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber49",
+    "#ambArray should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber39",
+    "#ambArray should signal error if one of the source is non-Completable.",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/ambWith.js.html#lineNumber8",
     "#ambWith",
     "test"
@@ -213,6 +249,42 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/concat.js.html#lineNumber19",
     "#concat should start with the from left to right",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber8",
+    "#concatArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber12",
+    "#concatArray should create a Completable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber33",
+    "#concatArray should signal error from the first",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber53",
+    "#concatArray should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber43",
+    "#concatArray should signal error if one of the source is non-Completable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/concatArray.js.html#lineNumber19",
+    "#concatArray should start with the from left to right",
     "test"
   ],
   [
@@ -825,6 +897,42 @@ window.esdocSearchIndex = [
     "",
     "test-file/test/merge.js.html#lineNumber19",
     "#merge should start with the from the first completion to the last completion",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber8",
+    "#mergeArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber12",
+    "#mergeArray should create a Completable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber33",
+    "#mergeArray should signal error from the first",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber53",
+    "#mergeArray should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber43",
+    "#mergeArray should signal error if one of the source is non-Completable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/mergeArray.js.html#lineNumber19",
+    "#mergeArray should start with the from the first completion to the last completion",
     "test"
   ],
   [
@@ -1854,6 +1962,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/completable.js~completable.ambarray",
+    "class/src/completable.js~Completable.html#static-method-ambArray",
+    "src/completable.js~Completable.ambArray",
+    "method"
+  ],
+  [
     "src/completable.js~completable.complete",
     "class/src/completable.js~Completable.html#static-method-complete",
     "src/completable.js~Completable.complete",
@@ -1863,6 +1977,12 @@ window.esdocSearchIndex = [
     "src/completable.js~completable.concat",
     "class/src/completable.js~Completable.html#static-method-concat",
     "src/completable.js~Completable.concat",
+    "method"
+  ],
+  [
+    "src/completable.js~completable.concatarray",
+    "class/src/completable.js~Completable.html#static-method-concatArray",
+    "src/completable.js~Completable.concatArray",
     "method"
   ],
   [
@@ -1905,6 +2025,12 @@ window.esdocSearchIndex = [
     "src/completable.js~completable.merge",
     "class/src/completable.js~Completable.html#static-method-merge",
     "src/completable.js~Completable.merge",
+    "method"
+  ],
+  [
+    "src/completable.js~completable.mergearray",
+    "class/src/completable.js~Completable.html#static-method-mergeArray",
+    "src/completable.js~Completable.mergeArray",
     "method"
   ],
   [
@@ -1992,6 +2118,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/is.js",
+    "file/src/internal/is.js.html",
+    "src/internal/is.js",
+    "file"
+  ],
+  [
     "src/internal/operators.js",
     "file/src/internal/operators.js.html",
     "src/internal/operators.js",
@@ -2001,6 +2133,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/amb.js",
     "file/src/internal/operators/amb.js.html",
     "src/internal/operators/amb.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/ambarray.js",
+    "file/src/internal/operators/ambArray.js.html",
+    "src/internal/operators/ambArray.js",
     "file"
   ],
   [
@@ -2037,6 +2175,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/concat.js",
     "file/src/internal/operators/concat.js.html",
     "src/internal/operators/concat.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/concatarray.js",
+    "file/src/internal/operators/concatArray.js.html",
+    "src/internal/operators/concatArray.js",
     "file"
   ],
   [
@@ -2145,6 +2289,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/merge.js",
     "file/src/internal/operators/merge.js.html",
     "src/internal/operators/merge.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/mergearray.js",
+    "file/src/internal/operators/mergeArray.js.html",
+    "src/internal/operators/mergeArray.js",
     "file"
   ],
   [
@@ -2262,6 +2412,12 @@ window.esdocSearchIndex = [
     "testFile"
   ],
   [
+    "test/ambarray.js",
+    "test-file/test/ambArray.js.html",
+    "test/ambArray.js",
+    "testFile"
+  ],
+  [
     "test/ambwith.js",
     "test-file/test/ambWith.js.html",
     "test/ambWith.js",
@@ -2295,6 +2451,12 @@ window.esdocSearchIndex = [
     "test/concat.js",
     "test-file/test/concat.js.html",
     "test/concat.js",
+    "testFile"
+  ],
+  [
+    "test/concatarray.js",
+    "test-file/test/concatArray.js.html",
+    "test/concatArray.js",
     "testFile"
   ],
   [
@@ -2409,6 +2571,12 @@ window.esdocSearchIndex = [
     "test/merge.js",
     "test-file/test/merge.js.html",
     "test/merge.js",
+    "testFile"
+  ],
+  [
+    "test/mergearray.js",
+    "test-file/test/mergeArray.js.html",
+    "test/mergeArray.js",
     "testFile"
   ],
   [

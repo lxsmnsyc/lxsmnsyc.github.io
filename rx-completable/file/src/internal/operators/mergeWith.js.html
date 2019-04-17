@@ -42,16 +42,16 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/mergeWith.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Completable from &apos;../../completable&apos;;
-import merge from &apos;./merge&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import mergeArray from &apos;./mergeArray&apos;;
+import is from &apos;../is&apos;;
 /**
  * @ignore
  */
 export default (source, other) =&gt; {
-  if (!(other instanceof Completable)) {
+  if (!is(other)) {
     return source;
   }
-  return merge([source, other]);
+  return mergeArray([source, other]);
 };
 </code></pre>
 

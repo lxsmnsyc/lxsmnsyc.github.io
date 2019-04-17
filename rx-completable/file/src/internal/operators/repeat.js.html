@@ -44,7 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/repeat.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
-import { cleanObserver, isNumber } from &apos;../utils&apos;;
+import { cleanObserver, isNumber, exists } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -91,7 +91,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, times) =&gt; {
-  if (times != null) {
+  if (exists(times)) {
     if (!isNumber(times)) {
       return source;
     }

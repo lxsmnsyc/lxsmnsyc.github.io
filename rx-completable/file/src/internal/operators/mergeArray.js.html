@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/internal/utils.js | rx-completable</title>
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/internal/operators/mergeArray.js | rx-completable</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,104 +41,72 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/utils.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/mergeArray.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-loop-func */
+/* eslint-disable no-restricted-syntax */
+import { CompositeCancellable } from &apos;rx-cancellable&apos;;
+import Completable from &apos;../../completable&apos;;
+import { cleanObserver, isArray } from &apos;../utils&apos;;
+import error from &apos;./error&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
  */
-// eslint-disable-next-line valid-typeof
-const isType = (x, y) =&gt; typeof x === y;
-/**
- * @ignore
- */
-export const isFunction = x =&gt; isType(x, &apos;function&apos;);
-/**
- * @ignore
- */
-export const isNumber = x =&gt; isType(x, &apos;number&apos;);
-/**
- * @ignore
- */
-export const isObject = x =&gt; isType(x, &apos;object&apos;);
-/**
- * @ignore
- */
-export const isNull = x =&gt; x == null;
-/**
- * @ignore
- */
-export const exists = x =&gt; x != null;
-/**
- * @ignore
- */
-export const isOf = (x, y) =&gt; x instanceof y;
-/**
- * @ignore
- */
-export const isArray = x =&gt; isOf(x, Array);
-/**
- * @ignore
- */
-export const isIterable = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj[Symbol.iterator]);
-/**
- * @ignore
- */
-export const isObserver = obj =&gt; isObject(obj) &amp;&amp; isFunction(obj.onSubscribe);
-/**
- * @ignore
- */
-export const toCallable = x =&gt; () =&gt; x;
-/**
- * @ignore
- */
-export const isPromise = (obj) =&gt; {
-  if (obj == null) return false;
-  if (isOf(obj, Promise)) return true;
-  return (isObject(obj) || isFunction(obj)) &amp;&amp; isFunction(obj.then);
-};
-/**
- * @ignore
- */
-const identity = x =&gt; x;
-/**
- * @ignore
- */
-const throwError = (x) =&gt; { throw x; };
-/**
- * @ignore
- */
-export const cleanObserver = x =&gt; ({
-  onSubscribe: x.onSubscribe,
-  onComplete: isFunction(x.onComplete) ? x.onComplete : identity,
-  onError: isFunction(x.onError) ? x.onError : throwError,
-});
-/**
- * @ignore
- */
-export const immediateComplete = (o) =&gt; {
-  // const disposable = new SimpleDisposable();
-  const { onSubscribe, onComplete } = cleanObserver(o);
-  const controller = new BooleanCancellable();
+function subscribeActual(observer) {
+  const { onComplete, onError, onSubscribe } = cleanObserver(observer);
+
+  const controller = new CompositeCancellable();
+
   onSubscribe(controller);
 
-  if (!controller.cancelled) {
-    onComplete();
-    controller.cancel();
+  const { sources } = this;
+  const { length } = sources;
+  const buffer = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (let i = 0; i &lt; length; i += 1) {
+    const completable = sources[i];
+    if (is(completable)) {
+      buffer.unshift(completable);
+    } else {
+      onError(new Error(&apos;Completable.mergeArray: One of the sources is a non-Completable.&apos;));
+      controller.cancel();
+      return;
+    }
   }
-};
+
+  let pending = length;
+  for (let i = 0; i &lt; length; i += 1) {
+    const completable = sources[i];
+    completable.subscribeWith({
+      onSubscribe(ac) {
+        controller.add(ac);
+      },
+      onComplete() {
+        pending -= 1;
+
+        if (pending === 0) {
+          onComplete();
+          controller.cancel();
+        }
+      },
+      onError(x) {
+        onError(x);
+        controller.cancel();
+      },
+    });
+  }
+}
 /**
  * @ignore
  */
-export const immediateError = (o, x) =&gt; {
-  const { onSubscribe, onError } = cleanObserver(o);
-  const controller = new BooleanCancellable();
-  onSubscribe(controller);
-
-  if (!controller.cancelled) {
-    onError(x);
-    controller.cancel();
+export default (sources) =&gt; {
+  if (!isArray(sources)) {
+    return error(new Error(&apos;Completable.merge: sources is non-Array.&apos;));
   }
+  const completable = new Completable(subscribeActual);
+  completable.sources = sources;
+  return completable;
 };
 </code></pre>
 

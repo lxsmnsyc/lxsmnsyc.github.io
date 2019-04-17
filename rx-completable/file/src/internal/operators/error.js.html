@@ -42,7 +42,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/error.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { toCallable, immediateError } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+  toCallable, immediateError, isFunction, isOf, isNull,
+} from &apos;../utils&apos;;
 import Completable from &apos;../../completable&apos;;
 
 /**
@@ -54,7 +56,7 @@ function subscribeActual(observer) {
   try {
     err = this.supplier();
 
-    if (err == null) {
+    if (isNull(err)) {
       throw new Error(&apos;Completable.error: Error supplier returned a null value.&apos;);
     }
   } catch (e) {
@@ -67,11 +69,11 @@ function subscribeActual(observer) {
  */
 export default (value) =&gt; {
   let report = value;
-  if (!(value instanceof Error || typeof value === &apos;function&apos;)) {
+  if (!(isOf(value, Error) || isFunction(value))) {
     report = new Error(&apos;Completable.error received a non-Error value.&apos;);
   }
 
-  if (typeof value !== &apos;function&apos;) {
+  if (!isFunction(report)) {
     report = toCallable(report);
   }
   const completable = new Completable(subscribeActual);

@@ -45,7 +45,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
 import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
-import { cleanObserver, isNumber } from &apos;../utils&apos;;
+import { cleanObserver, isNumber, isOf } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -83,7 +83,7 @@ export default (source, amount, scheduler, doDelayError) =&gt; {
     return source;
   }
   let sched = scheduler;
-  if (!(sched instanceof Scheduler.interface)) {
+  if (!isOf(sched, Scheduler.interface)) {
     sched = Scheduler.current;
   }
   const completable = new Completable(subscribeActual);

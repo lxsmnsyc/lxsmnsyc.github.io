@@ -43,7 +43,8 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/defer.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Completable from &apos;../../completable&apos;;
-import { immediateError, cleanObserver } from &apos;../utils&apos;;
+import { immediateError, cleanObserver, exists } from &apos;../utils&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
@@ -56,14 +57,14 @@ function subscribeActual(observer) {
   let err;
   try {
     result = this.supplier();
-    if (!(result instanceof Completable)) {
+    if (!is(result)) {
       throw new Error(&apos;Completable.defer: supplier returned a non-Completable.&apos;);
     }
   } catch (e) {
     err = e;
   }
 
-  if (err != null) {
+  if (exists(err)) {
     immediateError(observer, err);
   } else {
     result.subscribeWith({

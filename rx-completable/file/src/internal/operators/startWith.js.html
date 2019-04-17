@@ -42,17 +42,17 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/startWith.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import concat from &apos;./concat&apos;;
-import Completable from &apos;../../completable&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import concatArray from &apos;./concatArray&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
  */
 export default (source, other) =&gt; {
-  if (!(other instanceof Completable)) {
+  if (!is(other)) {
     return source;
   }
-  return concat([other, source]);
+  return concatArray([other, source]);
 };
 </code></pre>
 
