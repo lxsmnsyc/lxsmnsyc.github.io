@@ -2094,6 +2094,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/emitter.js~completableemitter#link",
+    "class/src/emitter.js~CompletableEmitter.html#instance-member-link",
+    "src/emitter.js~CompletableEmitter#link",
+    "member"
+  ],
+  [
     "src/emitter.js~completableemitter#oncomplete",
     "class/src/emitter.js~CompletableEmitter.html#instance-method-onComplete",
     "src/emitter.js~CompletableEmitter#onComplete",
