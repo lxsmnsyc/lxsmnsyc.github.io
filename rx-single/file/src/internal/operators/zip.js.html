@@ -43,94 +43,28 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-restricted-syntax */
-
-import { CompositeCancellable } from &apos;rx-cancellable&apos;;
-import Single from &apos;../../single&apos;;
-import {
-  isIterable, cleanObserver, isFunction, isNull,
-} from &apos;../utils&apos;;
+import { isIterable } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 import is from &apos;../is&apos;;
-
-const defaultZipper = x =&gt; x;
-/**
- * @ignore
- */
-function subscribeActual(observer) {
-  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);
-
-  const result = [];
-
-  const controller = new CompositeCancellable();
-
-  onSubscribe(controller);
-
-  const { sources, zipper } = this;
-
-  let pending = 0;
-  let count = 0;
-  let done = 0;
-
-  for (const single of sources) {
-    pending += 1;
-    count += 1;
-    if (controller.cancelled) {
-      return;
-    }
-
-    if (is(single)) {
-      single.subscribeWith({
-        onSubscribe(ac) {
-          controller.add(ac);
-        },
-        // eslint-disable-next-line no-loop-func
-        onSuccess(x) {
-          result[count] = x;
-          pending -= 1;
-          if (pending === 0 &amp;&amp; done) {
-            let r;
-            try {
-              r = zipper(result);
-              if (isNull(r)) {
-                throw new Error(&apos;Single.zip: zipper function returned a null value.&apos;);
-              }
-            } catch (e) {
-              onError(e);
-              controller.cancel();
-              return;
-            }
-            onSuccess(r);
-            controller.cancel();
-          }
-        },
-        onError(x) {
-          onError(x);
-          controller.cancel();
-        },
-      });
-    } else {
-      onError(new Error(&apos;Single.zip: One of the sources is undefined.&apos;));
-      controller.cancel();
-      return;
-    }
-  }
-  done = true;
-}
+import zipArray from &apos;./zipArray&apos;;
 /**
  * @ignore
  */
 export default (sources, zipper) =&gt; {
   if (!isIterable(sources)) {
-    return error(new Error(&apos;Single.zip: sources is not Iterable.&apos;));
+    return error(new Error(&apos;Single.zip: sources is a non-Iterable.&apos;));
   }
-  let fn = zipper;
-  if (!isFunction(zipper)) {
-    fn = defaultZipper;
+
+  const singles = [];
+
+  for (const source of sources) {
+    if (is(source)) {
+      singles.push(source);
+    } else {
+      return error(new Error(&apos;Observable.zip: one of the sources is not a Single.&apos;));
+    }
   }
-  const single = new Single(subscribeActual);
-  single.sources = sources;
-  single.zipper = fn;
-  return single;
+  return zipArray(singles, zipper);
 };
 </code></pre>
 

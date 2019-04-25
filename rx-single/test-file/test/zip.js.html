@@ -29,7 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single-emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/emitter.js~SingleEmitter.html">SingleEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/single.js~Single.html">Single</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/observer.js~SingleObserver.html">SingleObserver</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
@@ -111,18 +111,8 @@ describe(&apos;#zip&apos;, () =&gt; {
   /**
   *
   */
-  it(&apos;should signal success with an array with the correct values, consider non-Single (no zipper function).&apos;, (done) =&gt; {
-    const single = Single.zip([&apos;Hello&apos;, Single.just(&apos;World&apos;)]);
-    single.subscribe(
-      x =&gt; (x[0] === &apos;Hello&apos; &amp;&amp; x[1] === &apos;World&apos; ? done() : done(false)),
-      done,
-    );
-  });
-  /**
-  *
-  */
-  it(&apos;should signal error if one of the sources is undefined.&apos;, (done) =&gt; {
-    const source = Single.zip([undefined, Single.just(&apos;World&apos;)]);
+  it(&apos;should signal error if one of the sources is a non-Single.&apos;, (done) =&gt; {
+    const source = Single.zip([&apos;Hello&apos;, Single.just(&apos;World&apos;)]);
     source.subscribe(
       () =&gt; done(false),
       () =&gt; done(),

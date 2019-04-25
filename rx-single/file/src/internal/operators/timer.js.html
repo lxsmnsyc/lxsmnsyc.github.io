@@ -42,9 +42,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
-import Single from &apos;../../single&apos;;
-import { cleanObserver, isNumber, isOf } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Single from &apos;../../single&apos;;
+import { cleanObserver, isNumber, defaultScheduler } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 
 /**
@@ -61,14 +60,9 @@ export default (amount, scheduler) =&gt; {
   if (!isNumber(amount)) {
     return error(new Error(&apos;Single.timer: &quot;amount&quot; is not a number.&apos;));
   }
-
-  let sched = scheduler;
-  if (!isOf(sched, Scheduler.interface)) {
-    sched = Scheduler.current;
-  }
   const single = new Single(subscribeActual);
   single.amount = amount;
-  single.scheduler = sched;
+  single.scheduler = defaultScheduler(scheduler);
   return single;
 };
 </code></pre>

@@ -479,6 +479,37 @@ delay for each SingleObserver.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#static-method-zip">zip</a></span></span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span>, zipper: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Waits until all Single sources provided by the Iterable sequence signal a
+success value and calls a zipper function with an array of these values to
+return a result to be emitted to downstream.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/single.js~Single.html#static-method-zipArray">zipArray</a></span></span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, zipper: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
         </p>
       </div>
@@ -2490,6 +2521,91 @@ By default, schedules on the current thread.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-zip">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">zip</span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span>, zipper: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/single.js~Single.html">Single</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber859">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Waits until all Single sources provided by the Iterable sequence signal a
+success value and calls a zipper function with an array of these values to
+return a result to be emitted to downstream.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">sources</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
+      <td data-ice="description"><p>the Iterable sequence of SingleSource instances. An empty sequence
+will result in an onError signal.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">zipper</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>the function that receives an array with values
+from each Single and should return a value to be
+emitted to downstream</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/single.js~Single.html">Single</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-method-zipArray">
     <span class="access" data-ice="access">public</span>
     <span data-ice="static">static</span>
@@ -2501,7 +2617,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber866">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber883">source</a></span></span>
     </span>
   </h3>
 
@@ -2777,7 +2893,7 @@ when the first SingleObserver subscribes.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber922">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber939">source</a></span></span>
     </span>
   </h3>
 
@@ -4950,7 +5066,7 @@ Single until such time as other emits its item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber911">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber928">source</a></span></span>
     </span>
   </h3>
 
@@ -5112,7 +5228,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber897">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber914">source</a></span></span>
     </span>
   </h3>
 
@@ -5168,7 +5284,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber888">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/single.js.html#lineNumber905">source</a></span></span>
     </span>
   </h3>
 

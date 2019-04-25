@@ -1309,6 +1309,66 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/zip.js.html#lineNumber8",
+    "#zip",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber12",
+    "#zip should create a Single",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber90",
+    "#zip should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber39",
+    "#zip should signal an error if the zipper throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber80",
+    "#zip should signal error if a source throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber70",
+    "#zip should signal error if one of the sources is a non-Single.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber29",
+    "#zip should signal error if source is empty iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber19",
+    "#zip should signal error if sources is not iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber50",
+    "#zip should signal success with an array (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zip.js.html#lineNumber60",
+    "#zip should signal success with an array with the correct values (no zipper function).",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/zipArray.js.html#lineNumber8",
     "#zipArray",
     "test"
@@ -2064,6 +2124,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/operators/zip.js",
+    "file/src/internal/operators/zip.js.html",
+    "src/internal/operators/zip.js",
+    "file"
+  ],
+  [
     "src/internal/operators/ziparray.js",
     "file/src/internal/operators/zipArray.js.html",
     "src/internal/operators/zipArray.js",
@@ -2412,6 +2478,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/single.js~single.zip",
+    "class/src/single.js~Single.html#static-method-zip",
+    "src/single.js~Single.zip",
+    "method"
+  ],
+  [
     "src/single.js~single.ziparray",
     "class/src/single.js~Single.html#static-method-zipArray",
     "src/single.js~Single.zipArray",
@@ -2673,6 +2745,12 @@ window.esdocSearchIndex = [
     "test/topromise.js",
     "test-file/test/toPromise.js.html",
     "test/toPromise.js",
+    "testFile"
+  ],
+  [
+    "test/zip.js",
+    "test-file/test/zip.js.html",
+    "test/zip.js",
     "testFile"
   ],
   [
