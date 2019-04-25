@@ -44,7 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/just.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
 import error from &apos;./error&apos;;
-import { immediateSuccess } from &apos;../utils&apos;;
+import { immediateSuccess, isNull } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -56,7 +56,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (value) =&gt; {
-  if (value == null) {
+  if (isNull(value)) {
     return error(new Error(&apos;Maybe.just: received a null value.&apos;));
   }
   const maybe = new Maybe(subscribeActual);

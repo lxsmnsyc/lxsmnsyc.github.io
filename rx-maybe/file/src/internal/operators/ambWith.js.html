@@ -42,16 +42,16 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/ambWith.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
-import amb from &apos;./amb&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import ambArray from &apos;./ambArray&apos;;
+import is from &apos;../is&apos;;
 /**
  * @ignore
  */
 export default (source, other) =&gt; {
-  if (!(other instanceof Maybe)) {
+  if (!is(other)) {
     return source;
   }
-  return amb([source, other]);
+  return ambArray([source, other]);
 };
 </code></pre>
 

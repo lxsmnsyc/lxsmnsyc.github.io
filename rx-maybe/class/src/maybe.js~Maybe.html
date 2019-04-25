@@ -42,13 +42,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Maybe from &apos;<span><a href="file/src/maybe.js.html#lineNumber84">rx-maybe/src/maybe.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Maybe from &apos;<span><a href="file/src/maybe.js.html#lineNumber85">rx-maybe/src/maybe.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/maybe.js.html#lineNumber84">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/maybe.js.html#lineNumber85">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -120,8 +120,38 @@ legend explains these diagrams:</p>
       <div>
         
         
-        <div data-ice="description"><p>Runs multiple MaybeSources and signals the events
-of the first one that signals (aborting the rest).</p>
+        <div data-ice="description"><p>Runs multiple Maybe and signals the events
+of the first one that signals (cancelling the rest).</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/maybe.js~Maybe.html#static-method-ambArray">ambArray</a></span></span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Runs multiple Maybe and signals the events of
+the first one that signals (cancelling the rest).</p>
 </div>
       </div>
     </td>
@@ -477,9 +507,40 @@ MaybeObserver.</p>
       <div>
         
         
-        <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner function
-applied to combinations of items emitted, in sequence, by an Iterable of other
-Maybes.</p>
+        <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner
+function applied to combinations of items emitted, in sequence,
+by an iterable sequence of other Maybe.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/maybe.js~Maybe.html#static-method-zipArray">zipArray</a></span></span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, zipper: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(results: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>: <span>any</span></span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner
+function applied to combinations of items emitted, in sequence,
+by an array of other Maybe.</p>
 </div>
       </div>
     </td>
@@ -1633,15 +1694,15 @@ the resulting Maybe will terminate immediately and cancel the other source.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber105">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber106">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Runs multiple MaybeSources and signals the events
-of the first one that signals (aborting the rest).</p>
+  <div data-ice="description"><p>Runs multiple Maybe and signals the events
+of the first one that signals (cancelling the rest).</p>
 </div>
 
   
@@ -1698,6 +1759,81 @@ in the Iterable.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-ambArray">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">ambArray</span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber119">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Runs multiple Maybe and signals the events of
+the first one that signals (cancelling the rest).</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">sources</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
+      <td data-ice="description"><p>the array of sources. A subscription to each source
+will occur in the same order as in the array.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-method-create">
     <span class="access" data-ice="access">public</span>
     <span data-ice="static">static</span>
@@ -1709,7 +1845,7 @@ in the Iterable.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber173">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber187">source</a></span></span>
     </span>
   </h3>
 
@@ -1784,7 +1920,7 @@ subscribes to the returned Maybe</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber206">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber220">source</a></span></span>
     </span>
   </h3>
 
@@ -1859,7 +1995,7 @@ and returns a Maybe instance to subscribe to</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber388">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber402">source</a></span></span>
     </span>
   </h3>
 
@@ -1915,7 +2051,7 @@ and returns a Maybe instance to subscribe to</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber403">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber417">source</a></span></span>
     </span>
   </h3>
 
@@ -1995,7 +2131,7 @@ subscriber subscribes to it</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber454">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber468">source</a></span></span>
     </span>
   </h3>
 
@@ -2078,7 +2214,7 @@ for each individual MaybeObserver that subscribes to the returned Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber465">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber479">source</a></span></span>
     </span>
   </h3>
 
@@ -2151,7 +2287,7 @@ for each individual MaybeObserver that subscribes to the returned Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber477">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber491">source</a></span></span>
     </span>
   </h3>
 
@@ -2225,7 +2361,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber488">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber502">source</a></span></span>
     </span>
   </h3>
 
@@ -2299,7 +2435,7 @@ similar to a Promise construct.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber553">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber567">source</a></span></span>
     </span>
   </h3>
 
@@ -2375,7 +2511,7 @@ Maybe emitted by source</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber565">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber579">source</a></span></span>
     </span>
   </h3>
 
@@ -2434,7 +2570,7 @@ MaybeObserver</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber721">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber735">source</a></span></span>
     </span>
   </h3>
 
@@ -2515,16 +2651,16 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber736">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber750">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner function
-applied to combinations of items emitted, in sequence, by an Iterable of other
-Maybes.</p>
+  <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner
+function applied to combinations of items emitted, in sequence,
+by an iterable sequence of other Maybe.</p>
 </div>
 
   
@@ -2541,7 +2677,90 @@ Maybes.</p>
       <td data-ice="name" class="code" data-depth="0">sources</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterable</a></span></td>
       <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
-      <td data-ice="description"><p>an Iterable of source Maybe</p>
+      <td data-ice="description"><p>an iterable sequence of source Maybes</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">zipper</td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(results: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>: <span>any</span></span></td>
+      <td data-ice="appendix"><ul><li>nullable: true</li></ul></td>
+      <td data-ice="description"><p>a function that, when applied to an item emitted by each of the source Maybe,
+results in an item that will be emitted by the resulting Maybe</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-zipArray">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">zipArray</span><span class="code" data-ice="signature">(sources: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, zipper: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(results: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>: <span>any</span></span>): <span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber765">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns a Maybe that emits the results of a specified combiner
+function applied to combinations of items emitted, in sequence,
+by an array of other Maybe.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">sources</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="appendix"><ul><li>nullable: false</li></ul></td>
+      <td data-ice="description"><p>an array of source Maybe</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
@@ -2603,7 +2822,7 @@ results in an item that will be emitted by the resulting Maybe</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber120">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber134">source</a></span></span>
     </span>
   </h3>
 
@@ -2645,7 +2864,7 @@ to the current source.</p>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="class/src/maybe.js~Maybe.html">Maybe</a></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>a Maybe that emits the same sequence as whichever of the
-source MaybeSources first signalled</p>
+source Maybe first signalled</p>
 </td>
         </tr>
       </tbody>
@@ -2681,7 +2900,7 @@ source MaybeSources first signalled</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber138">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber152">source</a></span></span>
     </span>
   </h3>
 
@@ -2745,7 +2964,7 @@ subscribers.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber846">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber875">source</a></span></span>
     </span>
   </h3>
 
@@ -2818,7 +3037,7 @@ and attaches an onRejection callback to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber160">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber174">source</a></span></span>
     </span>
   </h3>
 
@@ -2900,7 +3119,7 @@ set of existing Maybe operators to it) use compose.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber193">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber207">source</a></span></span>
     </span>
   </h3>
 
@@ -2981,7 +3200,7 @@ by the source Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber223">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber237">source</a></span></span>
     </span>
   </h3>
 
@@ -3071,7 +3290,7 @@ if false, only success signals are delayed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber239">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber253">source</a></span></span>
     </span>
   </h3>
 
@@ -3155,7 +3374,7 @@ Maybe by the given amount</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber255">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber269">source</a></span></span>
     </span>
   </h3>
 
@@ -3232,7 +3451,7 @@ to the current Single happens.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber267">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber281">source</a></span></span>
     </span>
   </h3>
 
@@ -3307,7 +3526,7 @@ from upstream to the downstream</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber280">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber294">source</a></span></span>
     </span>
   </h3>
 
@@ -3383,7 +3602,7 @@ then invokes the Action</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber295">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber309">source</a></span></span>
     </span>
   </h3>
 
@@ -3459,7 +3678,7 @@ the provided onFinally action is executed once per subscription.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber307">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber321">source</a></span></span>
     </span>
   </h3>
 
@@ -3533,7 +3752,7 @@ Maybe cancels the common Cancellable it received via onSubscribe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber319">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber333">source</a></span></span>
     </span>
   </h3>
 
@@ -3608,7 +3827,7 @@ onComplete.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber330">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber344">source</a></span></span>
     </span>
   </h3>
 
@@ -3682,7 +3901,7 @@ MaybeObserver that subscribes to the current Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber342">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber356">source</a></span></span>
     </span>
   </h3>
 
@@ -3757,7 +3976,7 @@ an onComplete signal from this Maybe before delivering said signal to the downst
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber354">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber368">source</a></span></span>
     </span>
   </h3>
 
@@ -3831,7 +4050,7 @@ the onSubscribe for each MaybeObserver that subscribes to the current Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber366">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber380">source</a></span></span>
     </span>
   </h3>
 
@@ -3905,7 +4124,7 @@ for each MaybeObserver that subscribes to the current Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber380">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber394">source</a></span></span>
     </span>
   </h3>
 
@@ -3981,7 +4200,7 @@ the onComplete or onError notification.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber417">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber431">source</a></span></span>
     </span>
   </h3>
 
@@ -4058,7 +4277,7 @@ evaluates as true</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber431">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber445">source</a></span></span>
     </span>
   </h3>
 
@@ -4135,7 +4354,7 @@ source Maybe</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber523">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber537">source</a></span></span>
     </span>
   </h3>
 
@@ -4229,7 +4448,7 @@ for the current Maybe.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber538">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber552">source</a></span></span>
     </span>
   </h3>
 
@@ -4306,7 +4525,7 @@ the specified function</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber581">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber595">source</a></span></span>
     </span>
   </h3>
 
@@ -4383,7 +4602,7 @@ notified on the specified Scheduler</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber599">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber613">source</a></span></span>
     </span>
   </h3>
 
@@ -4462,7 +4681,7 @@ if the Error should be swallowed and replaced with an onComplete.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber612">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber626">source</a></span></span>
     </span>
   </h3>
 
@@ -4539,7 +4758,7 @@ invoking onError if it encounters an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber624">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber638">source</a></span></span>
     </span>
   </h3>
 
@@ -4614,7 +4833,7 @@ the current Maybe signals an onError event</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber635">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber649">source</a></span></span>
     </span>
   </h3>
 
@@ -4688,7 +4907,7 @@ rather than invoking onError if it encounters an error.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber647">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber661">source</a></span></span>
     </span>
   </h3>
 
@@ -4763,7 +4982,7 @@ specific exception and retry count.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber802">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber831">source</a></span></span>
     </span>
   </h3>
 
@@ -4858,7 +5077,7 @@ notification from the Maybe</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber663">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber677">source</a></span></span>
     </span>
   </h3>
 
@@ -4935,7 +5154,7 @@ on the specified Scheduler</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber775">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber804">source</a></span></span>
     </span>
   </h3>
 
@@ -5017,7 +5236,7 @@ Cancellable instance.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber676">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber690">source</a></span></span>
     </span>
   </h3>
 
@@ -5093,7 +5312,7 @@ or the items of an alternate Maybe if the source Maybe is empty.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber690">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber704">source</a></span></span>
     </span>
   </h3>
 
@@ -5170,7 +5389,7 @@ such time as other emits its first item</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber835">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber864">source</a></span></span>
     </span>
   </h3>
 
@@ -5249,7 +5468,7 @@ and attaches callbacks to it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber708">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber722">source</a></span></span>
     </span>
   </h3>
 
@@ -5334,7 +5553,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber821">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber850">source</a></span></span>
     </span>
   </h3>
 
@@ -5390,7 +5609,7 @@ By default, schedules on the current thread.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber754">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/maybe.js.html#lineNumber783">source</a></span></span>
     </span>
   </h3>
 

@@ -66,7 +66,6 @@ function subscribeActual(observer) {
     },
     onComplete,
     onSuccess(x) {
-      controller.unlink();
       let result;
       try {
         result = mapper(x);
@@ -78,6 +77,7 @@ function subscribeActual(observer) {
         onError(e);
         return;
       }
+      controller.unlink();
       result.subscribeWith({
         onSubscribe(ac) {
           controller.link(ac);

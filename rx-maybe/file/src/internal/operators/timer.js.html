@@ -42,9 +42,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
-import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver, isNumber } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
+import { cleanObserver, isNumber, defaultScheduler } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 
 /**
@@ -62,14 +61,9 @@ export default (amount, scheduler) =&gt; {
   if (!isNumber(amount)) {
     return error(new Error(&apos;Maybe.timer: &quot;amount&quot; is not a number.&apos;));
   }
-
-  let sched = scheduler;
-  if (!(sched instanceof Scheduler.interface)) {
-    sched = Scheduler.current;
-  }
   const maybe = new Maybe(subscribeActual);
   maybe.amount = amount;
-  maybe.scheduler = sched;
+  maybe.scheduler = defaultScheduler(scheduler);
   return maybe;
 };
 </code></pre>

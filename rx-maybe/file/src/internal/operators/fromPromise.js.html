@@ -44,7 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/fromPromise.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
 import {
-  isPromise, cleanObserver,
+  isPromise, cleanObserver, isNull,
 } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 import MaybeEmitter from &apos;../../emitter&apos;;
@@ -61,7 +61,7 @@ function subscribeActual(observer) {
   onSubscribe(emitter);
 
   this.promise.then(
-    x =&gt; (x == null ? emitter.onComplete() : emitter.onSuccess(x)),
+    x =&gt; (isNull(x) ? emitter.onComplete() : emitter.onSuccess(x)),
     x =&gt; emitter.onError(x),
   );
 }

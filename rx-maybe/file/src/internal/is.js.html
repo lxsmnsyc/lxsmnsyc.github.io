@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../../">
-  <title data-ice="title">src/internal/operators/defaultIfEmpty.js | rx-maybe</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/internal/is.js | rx-maybe</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,48 +41,12 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/defaultIfEmpty.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
-import { cleanObserver, isNull } from &apos;../utils&apos;;
-import Maybe from &apos;../../maybe&apos;;
-
-function subscribeActual(observer) {
-  const {
-    onSubscribe, onSuccess, onError,
-  } = cleanObserver(observer);
-
-  const controller = new LinkedCancellable();
-
-  onSubscribe(controller);
-
-  const { source, value } = this;
-
-  source.subscribeWith({
-    onSubscribe(ac) {
-      controller.link(ac);
-    },
-    onComplete() {
-      onSuccess(value);
-    },
-    onSuccess,
-    onError,
-  });
-}
-
+<div class="content" data-ice="content"><h1 data-ice="title">src/internal/is.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../maybe&apos;;
 /**
  * @ignore
  */
-export default (source, value) =&gt; {
-  if (isNull(value)) {
-    return source;
-  }
-
-  const maybe = new Maybe(subscribeActual);
-  maybe.source = source;
-  maybe.value = value;
-
-  return maybe;
-};
+export default x =&gt; x instanceof Maybe;
 </code></pre>
 
 </div>

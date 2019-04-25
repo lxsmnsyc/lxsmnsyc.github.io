@@ -43,7 +43,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/onErrorReturnItem.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver } from &apos;../utils&apos;;
+import { cleanObserver, isNull } from &apos;../utils&apos;;
 
 function subscribeActual(observer) {
   const { onSuccess, onComplete, onSubscribe } = cleanObserver(observer);
@@ -63,7 +63,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, item) =&gt; {
-  if (item == null) {
+  if (isNull(item)) {
     return source;
   }
 

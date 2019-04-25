@@ -43,22 +43,15 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/empty.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
-import { immediateComplete } from &apos;../utils&apos;;
-
-/**
- * @ignore
- */
-function subscribeActual(observer) {
-  immediateComplete(observer);
-}
+import { immediateComplete, isNull } from &apos;../utils&apos;;
 
 let INSTANCE;
 /**
  * @ignore
  */
 export default () =&gt; {
-  if (typeof INSTANCE === &apos;undefined&apos;) {
-    INSTANCE = new Maybe(subscribeActual);
+  if (isNull(INSTANCE)) {
+    INSTANCE = new Maybe(observer =&gt; immediateComplete(observer));
   }
   return INSTANCE;
 };

@@ -42,7 +42,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/create.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { cleanObserver } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { cleanObserver, isFunction } from &apos;../utils&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import error from &apos;./error&apos;;
 import MaybeEmitter from &apos;../../emitter&apos;;
@@ -69,7 +69,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (subscriber) =&gt; {
-  if (typeof subscriber !== &apos;function&apos;) {
+  if (!isFunction(subscriber)) {
     return error(new Error(&apos;Maybe.create: There are no subscribers.&apos;));
   }
   const maybe = new Maybe(subscribeActual);

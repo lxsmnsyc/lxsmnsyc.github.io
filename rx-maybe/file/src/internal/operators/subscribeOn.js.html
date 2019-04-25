@@ -42,10 +42,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/subscribeOn.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
-import { LinkedCancellable } from &apos;rx-cancellable&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver } from &apos;../utils&apos;;
+import { cleanObserver, defaultScheduler } from &apos;../utils&apos;;
 
 function subscribeActual(observer) {
   const {
@@ -74,13 +73,9 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, scheduler) =&gt; {
-  let sched = scheduler;
-  if (!(sched instanceof Scheduler.interface)) {
-    sched = Scheduler.current;
-  }
   const maybe = new Maybe(subscribeActual);
   maybe.source = source;
-  maybe.scheduler = sched;
+  maybe.scheduler = defaultScheduler(scheduler);
   return maybe;
 };
 </code></pre>

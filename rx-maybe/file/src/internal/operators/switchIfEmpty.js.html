@@ -45,6 +45,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import { cleanObserver } from &apos;../utils&apos;;
 import Maybe from &apos;../../maybe&apos;;
+import is from &apos;../is&apos;;
 
 function subscribeActual(observer) {
   const {
@@ -81,7 +82,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, other) =&gt; {
-  if (!(other instanceof Maybe)) {
+  if (!is(other)) {
     return source;
   }
 

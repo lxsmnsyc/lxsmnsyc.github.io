@@ -42,99 +42,29 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zip.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-loop-func */
-import { CompositeCancellable } from &apos;rx-cancellable&apos;;
-import Maybe from &apos;../../maybe&apos;;
-import { isIterable, cleanObserver, isFunction } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-restricted-syntax */
+import { isIterable } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
-
-const defaultZipper = x =&gt; x;
-/**
- * @ignore
- */
-function subscribeActual(observer) {
-  const {
-    onSuccess, onComplete, onError, onSubscribe,
-  } = cleanObserver(observer);
-
-  const result = [];
-
-  const controller = new CompositeCancellable();
-
-  onSubscribe(controller);
-
-  const { sources, zipper } = this;
-
-  const size = sources.length;
-
-  if (size === 0) {
-    onError(new Error(&apos;Maybe.zip: empty iterable&apos;));
-    controller.cancel();
-    return;
-  }
-  let pending = size;
-
-  for (let i = 0; i &lt; size; i += 1) {
-    const maybe = sources[i];
-
-    if (maybe instanceof Maybe) {
-      maybe.subscribeWith({
-        onSubscribe(ac) {
-          controller.add(ac);
-        },
-        onComplete() {
-          onComplete();
-          controller.cancel();
-        },
-        onSuccess(x) {
-          result[i] = x;
-          pending -= 1;
-          if (pending === 0) {
-            let r;
-            try {
-              r = zipper(result);
-              if (r == null) {
-                throw new Error(&apos;Maybe.zip: zipper function returned a null value.&apos;);
-              }
-            } catch (e) {
-              onError(e);
-              controller.cancel();
-              return;
-            }
-            onSuccess(r);
-            controller.cancel();
-          }
-        },
-        onError(x) {
-          onError(x);
-          controller.cancel();
-        },
-      });
-    } else if (maybe != null) {
-      result[i] = maybe;
-      pending -= 1;
-    } else {
-      onError(new Error(&apos;Maybe.zip: One of the sources is undefined.&apos;));
-      controller.cancel();
-      break;
-    }
-  }
-}
+import is from &apos;../is&apos;;
+import zipArray from &apos;./zipArray&apos;;
 /**
  * @ignore
  */
 export default (sources, zipper) =&gt; {
   if (!isIterable(sources)) {
-    return error(new Error(&apos;Maybe.zip: sources is not Iterable.&apos;));
+    return error(new Error(&apos;Maybe.zip: sources is a non-Iterable.&apos;));
   }
-  let fn = zipper;
-  if (!isFunction(zipper)) {
-    fn = defaultZipper;
+
+  const singles = [];
+
+  for (const source of sources) {
+    if (is(source)) {
+      singles.push(source);
+    } else {
+      return error(new Error(&apos;Maybe.zip: one of the sources is not a Maybe.&apos;));
+    }
   }
-  const maybe = new Maybe(subscribeActual);
-  maybe.sources = sources;
-  maybe.zipper = fn;
-  return maybe;
+  return zipArray(singles, zipper);
 };
 </code></pre>
 

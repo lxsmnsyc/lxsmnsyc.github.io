@@ -45,13 +45,6 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable class-methods-use-this */
 import { UNCANCELLED } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
-
-/**
- * @ignore
- */
-function subscribeActual(observer) {
-  observer.onSubscribe(UNCANCELLED);
-}
 /**
  * @ignore
  */
@@ -61,7 +54,7 @@ let INSTANCE;
  */
 export default () =&gt; {
   if (typeof INSTANCE === &apos;undefined&apos;) {
-    INSTANCE = new Maybe(subscribeActual);
+    INSTANCE = new Maybe(o =&gt; o.onSubscribe(UNCANCELLED));
   }
   return INSTANCE;
 };

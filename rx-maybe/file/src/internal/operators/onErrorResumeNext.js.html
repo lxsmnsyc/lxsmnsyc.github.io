@@ -44,7 +44,8 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/onErrorResumeNext.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver, isFunction } from &apos;../utils&apos;;
+import { cleanObserver, isFunction, isNull } from &apos;../utils&apos;;
+import is from &apos;../is&apos;;
 
 function subscribeActual(observer) {
   const {
@@ -64,13 +65,12 @@ function subscribeActual(observer) {
     onComplete,
     onSuccess,
     onError(x) {
-      controller.unlink();
       let result;
 
       if (isFunction(resumeIfError)) {
         try {
           result = resumeIfError(x);
-          if (result == null) {
+          if (isNull(result)) {
             throw new Error(&apos;Maybe.onErrorResumeNext: returned an non-Maybe.&apos;);
           }
         } catch (e) {
@@ -80,7 +80,7 @@ function subscribeActual(observer) {
       } else {
         result = resumeIfError;
       }
-
+      controller.unlink();
       result.subscribeWith({
         onSubscribe(ac) {
           controller.link(ac);
@@ -96,7 +96,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, resumeIfError) =&gt; {
-  if (!(isFunction(resumeIfError) || resumeIfError instanceof Maybe)) {
+  if (!(isFunction(resumeIfError) || is(resumeIfError))) {
     return source;
   }
 

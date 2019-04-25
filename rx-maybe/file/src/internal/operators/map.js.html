@@ -43,12 +43,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/map.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Maybe from &apos;../../maybe&apos;;
-import { cleanObserver, isFunction } from &apos;../utils&apos;;
-
-/**
- * @ignore
- */
-const defaultMapper = x =&gt; x;
+import { cleanObserver, isFunction, isNull } from &apos;../utils&apos;;
 
 /**
  * @ignore
@@ -66,7 +61,7 @@ function subscribeActual(observer) {
       let result;
       try {
         result = mapper(x);
-        if (result == null) {
+        if (isNull(result)) {
           throw new Error(&apos;Maybe.map: mapper function returned a null value.&apos;);
         }
       } catch (e) {
@@ -83,14 +78,13 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, mapper) =&gt; {
-  let ms = mapper;
   if (!isFunction(mapper)) {
-    ms = defaultMapper;
+    return source;
   }
 
   const maybe = new Maybe(subscribeActual);
   maybe.source = source;
-  maybe.mapper = ms;
+  maybe.mapper = mapper;
   return maybe;
 };
 </code></pre>

@@ -47,6 +47,7 @@ import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
 import { isIterable, cleanObserver } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
@@ -63,7 +64,7 @@ function subscribeActual(observer) {
   const { sources } = this;
 
   for (const maybe of sources) {
-    if (maybe instanceof Maybe) {
+    if (is(maybe)) {
       maybe.subscribeWith({
         onSubscribe(ac) {
           controller.add(ac);

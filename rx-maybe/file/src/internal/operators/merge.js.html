@@ -46,6 +46,7 @@
 import Maybe from &apos;../../maybe&apos;;
 import error from &apos;./error&apos;;
 import { cleanObserver } from &apos;../utils&apos;;
+import is from &apos;../is&apos;;
 
 /**
  * @ignore
@@ -65,12 +66,12 @@ function subscribeActual(observer) {
     },
     onComplete,
     onSuccess(x) {
-      controller.unlink();
-      let result = x;
-      if (!(x instanceof Maybe)) {
-        result = error(new Error(&apos;Maybe.merge: source emitted a non-Maybe value.&apos;));
+      if (!is(x)) {
+        onError(new Error(&apos;Maybe.merge: source emitted a non-Maybe value.&apos;));
+        return;
       }
-      result.subscribeWith({
+      controller.unlink();
+      x.subscribeWith({
         onSubscribe(ac) {
           controller.link(ac);
         },
@@ -87,7 +88,7 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source) =&gt; {
-  if (!(source instanceof Maybe)) {
+  if (!is(source)) {
     return error(new Error(&apos;Maybe.merge: source is not a Maybe.&apos;));
   }
 

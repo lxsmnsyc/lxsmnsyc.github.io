@@ -43,6 +43,48 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/ambArray.js.html#lineNumber7",
+    "#ambArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber11",
+    "#ambArray should create a Maybe",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber29",
+    "#ambArray should signal complete from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber40",
+    "#ambArray should signal error from the earliest source.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber62",
+    "#ambArray should signal error if given argument is not Iterable",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber51",
+    "#ambArray should signal error if one of the source is non-Maybe.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/ambArray.js.html#lineNumber18",
+    "#ambArray should signal success from the earliest source.",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/ambWith.js.html#lineNumber8",
     "#ambWith",
     "test"
@@ -1759,6 +1801,78 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/zipArray.js.html#lineNumber8",
+    "#zipArray",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber12",
+    "#zipArray should create a Maybe",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber119",
+    "#zipArray should not signal success if cancelled.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber41",
+    "#zipArray should signal an error if the zipper throws an error",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber108",
+    "#zipArray should signal complete if a source throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber97",
+    "#zipArray should signal error if a source throws error.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber86",
+    "#zipArray should signal error if one of the sources is undefined.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber30",
+    "#zipArray should signal error if source is empty iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber19",
+    "#zipArray should signal error if sources is not iterable.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber53",
+    "#zipArray should signal success with an array (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber64",
+    "#zipArray should signal success with an array with the correct values (no zipper function).",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/zipArray.js.html#lineNumber75",
+    "#zipArray should signal success with an array with the correct values, consider non-Maybe (no zipper function).",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/zipWith.js.html#lineNumber8",
     "#zipWith",
     "test"
@@ -2148,12 +2262,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/emitter.js~maybeemitter#constructor",
-    "class/src/emitter.js~MaybeEmitter.html#instance-constructor-constructor",
-    "src/emitter.js~MaybeEmitter#constructor",
-    "method"
-  ],
-  [
     "src/emitter.js~maybeemitter#oncomplete",
     "class/src/emitter.js~MaybeEmitter.html#instance-method-onComplete",
     "src/emitter.js~MaybeEmitter#onComplete",
@@ -2184,6 +2292,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/is.js",
+    "file/src/internal/is.js.html",
+    "src/internal/is.js",
+    "file"
+  ],
+  [
     "src/internal/operators.js",
     "file/src/internal/operators.js.html",
     "src/internal/operators.js",
@@ -2193,6 +2307,12 @@ window.esdocSearchIndex = [
     "src/internal/operators/amb.js",
     "file/src/internal/operators/amb.js.html",
     "src/internal/operators/amb.js",
+    "file"
+  ],
+  [
+    "src/internal/operators/ambarray.js",
+    "file/src/internal/operators/ambArray.js.html",
+    "src/internal/operators/ambArray.js",
     "file"
   ],
   [
@@ -2454,6 +2574,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/internal/operators/ziparray.js",
+    "file/src/internal/operators/zipArray.js.html",
+    "src/internal/operators/zipArray.js",
+    "file"
+  ],
+  [
     "src/internal/operators/zipwith.js",
     "file/src/internal/operators/zipWith.js.html",
     "src/internal/operators/zipWith.js",
@@ -2712,6 +2838,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/maybe.js~maybe.ambarray",
+    "class/src/maybe.js~Maybe.html#static-method-ambArray",
+    "src/maybe.js~Maybe.ambArray",
+    "method"
+  ],
+  [
     "src/maybe.js~maybe.create",
     "class/src/maybe.js~Maybe.html#static-method-create",
     "src/maybe.js~Maybe.create",
@@ -2784,6 +2916,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/maybe.js~maybe.ziparray",
+    "class/src/maybe.js~Maybe.html#static-method-zipArray",
+    "src/maybe.js~Maybe.zipArray",
+    "method"
+  ],
+  [
     "src/maybe.js~promiselike",
     "https://promisesaplus.com/",
     "src/maybe.js~PromiseLike",
@@ -2835,6 +2973,12 @@ window.esdocSearchIndex = [
     "test/amb.js",
     "test-file/test/amb.js.html",
     "test/amb.js",
+    "testFile"
+  ],
+  [
+    "test/ambarray.js",
+    "test-file/test/ambArray.js.html",
+    "test/ambArray.js",
     "testFile"
   ],
   [
@@ -3105,6 +3249,12 @@ window.esdocSearchIndex = [
     "test/zip.js",
     "test-file/test/zip.js.html",
     "test/zip.js",
+    "testFile"
+  ],
+  [
+    "test/ziparray.js",
+    "test-file/test/zipArray.js.html",
+    "test/zipArray.js",
     "testFile"
   ],
   [

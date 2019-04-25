@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../../">
-  <title data-ice="title">src/internal/operators/defaultIfEmpty.js | rx-maybe</title>
+  <title data-ice="title">src/internal/operators/zipArray.js | rx-maybe</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -41,46 +41,102 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/defaultIfEmpty.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
-import { cleanObserver, isNull } from &apos;../utils&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/zipArray.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+import { CompositeCancellable } from &apos;rx-cancellable&apos;;
 import Maybe from &apos;../../maybe&apos;;
+import {
+  cleanObserver, isFunction, isArray, isNull, immediateError,
+} from &apos;../utils&apos;;
+import error from &apos;./error&apos;;
+import is from &apos;../is&apos;;
 
-function subscribeActual(observer) {
-  const {
-    onSubscribe, onSuccess, onError,
-  } = cleanObserver(observer);
-
-  const controller = new LinkedCancellable();
-
-  onSubscribe(controller);
-
-  const { source, value } = this;
-
-  source.subscribeWith({
-    onSubscribe(ac) {
-      controller.link(ac);
-    },
-    onComplete() {
-      onSuccess(value);
-    },
-    onSuccess,
-    onError,
-  });
-}
-
+const defaultZipper = x =&gt; x;
 /**
  * @ignore
  */
-export default (source, value) =&gt; {
-  if (isNull(value)) {
-    return source;
+function subscribeActual(observer) {
+  const {
+    onSuccess, onComplete, onError, onSubscribe,
+  } = cleanObserver(observer);
+
+  const result = [];
+
+  const { sources, zipper } = this;
+
+  const size = sources.length;
+
+  if (size === 0) {
+    immediateError(observer, new Error(&apos;Maybe.zipArray: source array is empty&apos;));
+  } else {
+    const controller = new CompositeCancellable();
+
+    onSubscribe(controller);
+
+    let pending = size;
+
+    for (let i = 0; i &lt; size; i += 1) {
+      if (controller.cancelled) {
+        return;
+      }
+      const maybe = sources[i];
+
+      if (is(maybe)) {
+        maybe.subscribeWith({
+          onSubscribe(ac) {
+            controller.add(ac);
+          },
+          // eslint-disable-next-line no-loop-func
+          onSuccess(x) {
+            result[i] = x;
+            pending -= 1;
+            if (pending === 0) {
+              let r;
+              try {
+                r = zipper(result);
+                if (isNull(r)) {
+                  throw new Error(&apos;Maybe.zipArray: zipper function returned a null value.&apos;);
+                }
+              } catch (e) {
+                onError(e);
+                controller.cancel();
+                return;
+              }
+              onSuccess(r);
+              controller.cancel();
+            }
+          },
+          onComplete() {
+            onComplete();
+            controller.cancel();
+          },
+          onError(x) {
+            onError(x);
+            controller.cancel();
+          },
+        });
+      } else {
+        onError(new Error(&apos;Maybe.zipArray: One of the sources is non-Maybe.&apos;));
+        controller.cancel();
+        return;
+      }
+    }
   }
-
+}
+/**
+ * @ignore
+ */
+export default (sources, zipper) =&gt; {
+  if (!isArray(sources)) {
+    return error(new Error(&apos;Maybe.zipArray: sources is a non-Array.&apos;));
+  }
+  let fn = zipper;
+  if (!isFunction(zipper)) {
+    fn = defaultZipper;
+  }
   const maybe = new Maybe(subscribeActual);
-  maybe.source = source;
-  maybe.value = value;
-
+  maybe.sources = sources;
+  maybe.zipper = fn;
   return maybe;
 };
 </code></pre>
