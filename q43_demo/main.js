@@ -47,7 +47,7 @@ const WEIGHTS = {
 };
 const MAXIMUM_VELOCITY = 2;
 const FOV = 45*Math.PI/180;
-const PARTICLES = 200;
+const PARTICLES = 1000;
 
 /**
  * The clockwise test 
