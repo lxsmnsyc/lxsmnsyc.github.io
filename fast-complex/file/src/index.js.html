@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/index.js | fast-complex</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Fast complex numbers in JavaScript"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="fast-complex"><meta property="twitter:description" content="Fast complex numbers in JavaScript"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/LXSMNSYC/fast-complex"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-abs">abs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-acos">acos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-acosh">acosh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arg">arg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-asin">asin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-asinh">asinh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-atan">atan</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-atanh">atanh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ceil">ceil</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-conjugate">conjugate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cos">cos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cosh">cosh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-div">div</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-equals">equals</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-euler">euler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-exp">exp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-floor">floor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isComplex">isComplex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ln">ln</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log10">log10</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mul">mul</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-negate">negate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-polar">polar</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-pow">pow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reciprocal">reciprocal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sign">sign</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sinh">sinh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sqrt">sqrt</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-tan">tan</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-tanh">tanh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-zero">zero</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HALF_I">HALF_I</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-I">I</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NAN">NAN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NI">NI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ONE">ONE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TWO">TWO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ZERO">ZERO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-complex">complex</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * @license
+ * MIT License
+ *
+ * Copyright (c) 2019 Alexis Munsayac
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ *
+ * @author Alexis Munsayac &lt;alexis.munsayac@gmail.com&gt;
+ * @copyright Alexis Munsayac 2019
+ */
+/* eslint-disable no-nested-ternary */
+/**
+ * @typedef {Array|Float32Array|Float64Array|number} complex
+ */
+/**
+ * @ignore
+ */
+const {
+  sqrt: msqrt, max, ceil: mceil,
+  floor: mfloor, abs: mabs, exp: mexp, log10: mlog10,
+  log: mlog, cos: mcos, sin: msin, tan: mtan,
+  asin: masin, acos: macos, atan: matan, atan2: matan2,
+  cosh: mcosh, sinh: msinh, tanh: mtanh, sign: msign,
+} = Math;
+/**
+ * @ignore
+ */
+const masinh = x =&gt; mlog(x + msqrt(x * x + 1));
+/**
+ * @ignore
+ */
+const macosh = x =&gt; mlog(x + msqrt(x * x - 1));
+/**
+ * @ignore
+ */
+const matanh = x =&gt; mlog((1 + x) / (1 - x)) / 2;
+/**
+ * @ignore
+ */
+const BASE_10 = [mlog(10), 0];
+/**
+ * The value 2 in complex form
+ */
+export const TWO = Object.freeze([2, 0]);
+/**
+ * The value 1 in complex form
+ */
+export const ONE = Object.freeze([1, 0]);
+/**
+ * The value 0 in complex form
+ */
+export const ZERO = Object.freeze([0, 0]);
+/**
+ * The square root of -1
+ */
+export const I = Object.freeze([0, 1]);
+/**
+ * The square root of -1
+ */
+export const HALF_I = Object.freeze([0, 0.5]);
+/**
+ * The negative square root of -1
+ */
+export const NI = Object.freeze([0, -1]);
+/**
+ * A NaN complex
+ */
+export const NAN = Object.freeze([NaN, NaN]);
+/**
+ * @ignore
+ */
+const EPSILON = 1e-7;
+/**
+ * @ignore
+ */
+const eq = (a, b) =&gt; mabs(a - b) &lt;= EPSILON * max(1, mabs(a), mabs(b));
+/**
+ * @ignore
+ */
+const isNumber = x =&gt; typeof x === &apos;number&apos;;
+/**
+ * @ignore
+ */
+const unsafeL2 = c =&gt; c[0] * c[0] + c[1] * c[1];
+/**
+ * @ignore
+ */
+const unsafeAbs = c =&gt; msqrt(unsafeL2(c));
+/**
+ * @ignore
+ */
+const unsafeArg = c =&gt; matan2(c[1], c[0]);
+/**
+ * @ignore
+ */
+const unsafeAdd = (a, b) =&gt; [a[0] + b[0], a[1] + b[1]];
+/**
+ * @ignore
+ */
+const unsafeSub = (a, b) =&gt; [a[0] - b[0], a[1] - b[1]];
+/**
+ * @ignore
+ */
+const unsafeMul = (a, b) =&gt; [
+  a[0] * b[0] - a[1] * b[1],
+  a[0] * b[1] + a[1] * b[0],
+];
+/**
+ * @ignore
+ */
+const unsafeDiv = (a, b) =&gt; [
+  (a[0] * b[0] + a[1] * b[1]) / unsafeL2(b),
+  (a[1] * b[0] - a[0] * b[1]) / unsafeL2(b),
+];
+/**
+ * @ignore
+ */
+const unsafeSqrt = c =&gt; [
+  msqrt((c[0] + unsafeAbs(c)) / 2),
+  msqrt((-c[0] + unsafeAbs(c)) / 2) * msign(c[1]),
+];
+/**
+ * @ignore
+ */
+const unsafeLn = c =&gt; [
+  mlog(unsafeAbs(c)),
+  unsafeArg(c),
+];
+/**
+ * @ignore
+ */
+const unsafeExp = c =&gt; [
+  mexp(c[0]) * mcos(c[1]),
+  mexp(c[0]) * msin(c[1]),
+];
+/**
+ * @ignore
+ */
+const unsafeCos = c =&gt; [mcos(c[0]) * mcosh(c[1]), -msin(c[0]) * msinh(c[1])];
+/**
+ * @ignore
+ */
+const unsafeSin = c =&gt; [msin(c[0]) * mcosh(c[1]), mcos(c[0]) * msinh(c[1])];
+/**
+ * @ignore
+ */
+const unsafeCosh = c =&gt; [mcosh(c[0]) * mcos(c[1]), msinh(c[0]) * msin(c[1])];
+/**
+ * @ignore
+ */
+const unsafeSinh = c =&gt; [msinh(c[0]) * mcos(c[1]), mcosh(c[0]) * msin(c[1])];
+/**
+ * @ignore
+ */
+const unsafeAsin = c =&gt; unsafeMul(
+  NI,
+  unsafeLn(
+    unsafeAdd(
+      unsafeMul(I, c),
+      unsafeSqrt(unsafeSub(ONE, unsafeMul(c, c))),
+    ),
+  ),
+);
+/**
+ * @ignore
+ */
+const unsafeAcos = c =&gt; unsafeMul(
+  NI,
+  unsafeLn(
+    unsafeAdd(
+      c,
+      unsafeSqrt(unsafeSub(unsafeMul(c, c), ONE)),
+    ),
+  ),
+);
+/**
+ * @ignore
+ */
+const unsafeAtan = c =&gt; unsafeMul(
+  HALF_I,
+  unsafeLn(
+    unsafeDiv(
+      [c[0], 1 + c[1]],
+      [-c[0], 1 - c[1]],
+    ),
+  ),
+);
+/**
+ * @ignore
+ */
+const unsafeAsinh = (c) =&gt; {
+  const r = unsafeMul(c, c);
+  r[0] += 1;
+  return unsafeLn(unsafeAdd(c, unsafeSqrt(r)));
+};
+/**
+ * @ignore
+ */
+const unsafeAcosh = (c) =&gt; {
+  const r = unsafeMul(c, c);
+  r[0] -= 1;
+  return unsafeLn(unsafeAdd(c, unsafeSqrt(r)));
+};
+/**
+ * @ignore
+ */
+const unsafeAtanh = c =&gt; unsafeMul(
+  unsafeLn(unsafeDiv(
+    unsafeAdd(ONE, c),
+    unsafeSub(ONE, c),
+  )),
+  [0.5, 0],
+);
+/**
+ * Checks if a value is a valid complex value.
+ */
+export const isComplex = x =&gt; (x instanceof Array &amp;&amp; isNumber(x[0]) &amp;&amp; isNumber(x[1]))
+  || x instanceof Float32Array
+  || x instanceof Float64Array;
+/**
+ * Creates a zero complex value (different from ZERO)
+ */
+export const zero = () =&gt; [0, 0];
+/**
+ * Solves the conjugate of a given complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const conjugate = c =&gt; (
+  (isComplex(c) &amp;&amp; [c[0], -c[1]])
+  || (isNumber(c) &amp;&amp; [c, 0])
+  || NAN
+);
+/**
+ * Negates the given complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const negate = c =&gt; (
+  (isComplex(c) &amp;&amp; [-c[0], -c[1]])
+  || (isNumber(c) &amp;&amp; [-c, 0])
+  || NAN
+);
+
+/**
+ * Adds two complex
+ * @param {!complex} a
+ * @param {!complex} b
+ * Returns NaN complex if one of the given values is not a complex.
+ */
+export const add = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; unsafeAdd(a, b))
+    || (isNumber(b) &amp;&amp; [a[0] + b, a[1]])
+  ))
+  || (isNumber(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; [a + b[0], b[1]])
+    || (isNumber(b) &amp;&amp; [a + b, 0])
+  ))
+  || NAN
+);
+
+/**
+ * Subtracts two complex
+ * @param {!complex} a
+ * @param {!complex} b
+ * Returns NaN complex if one of the given values is not a complex.
+ */
+export const sub = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; unsafeSub(a, b))
+    || (isNumber(b) &amp;&amp; [a[0] - b, a[1]])
+  ))
+  || (isNumber(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; [a - b[0], b[1]])
+    || (isNumber(b) &amp;&amp; [a - b, 0])
+  ))
+  || NAN
+);
+
+/**
+ * Multiplies two complex
+ * @param {!complex} a
+ * @param {!complex} b
+ * Returns NaN complex if one of the given values is not a complex.
+ */
+export const mul = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; unsafeMul(a, b))
+    || (isNumber(b) &amp;&amp; [a[0] * b, a[1] * b])
+  ))
+  || (isNumber(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; [a * b[0], a * b[1]])
+    || (isNumber(b) &amp;&amp; [a * b, 0])
+  ))
+  || NAN
+);
+
+/**
+ * Divides two complex
+ * @param {!complex} a
+ * @param {!complex} b
+ * Returns NaN complex if one of the given values is not a complex.
+ */
+export const div = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; unsafeDiv(a, b))
+    || (isNumber(b) &amp;&amp; [a[0] / b, a[1] / b])
+  ))
+  || (isNumber(a) &amp;&amp; (
+    (isComplex(b) &amp;&amp; [a / b[0], a / b[1]])
+    || (isNumber(b) &amp;&amp; [a * b, 0])
+  ))
+  || NAN
+);
+
+/**
+ * Returns the reciprocal of a complex
+ * @param {!complex} c
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const reciprocal = c =&gt; (isComplex(c)
+  &amp;&amp; [
+    c[0] / unsafeL2(c),
+    -c[1] / unsafeL2(c),
+  ])
+  || (isNumber(c) &amp;&amp; [1 / c, 0])
+  || NAN;
+/**
+ * Returns the modulus/magnitude of the complex
+ * @param {!complex} c
+ * @returns {number}
+ * Returns NaN if the value is not a valid complex
+ */
+export const abs = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAbs(c))
+  || (isNumber(c) ? c : NaN)
+);
+
+/**
+ * Returns the argument of a complex
+ * @param {!complex} c
+ * @returns {number}
+ * Returns NaN if the value is not a valid complex.
+ */
+export const arg = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeArg(c))
+  || (isNumber(c) ? 0 : NaN)
+);
+
+/**
+ * Converts a radian value into a complex number.
+ * @param {!number} x
+ * @returns {complex}
+ * Returns NaN if the value is not a number.
+ */
+export const euler = x =&gt; (
+  (isNumber(x) &amp;&amp; [mcos(x), msin(x)])
+  || NAN
+);
+
+/**
+ * Calculates the signum of a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const sign = c =&gt; (
+  (isComplex(c) &amp;&amp; [c[0] / unsafeAbs(c), c[1] / unsafeAbs(c)])
+  || (isNumber(c) &amp;&amp; [msign(c), 0])
+  || NAN
+);
+
+/**
+ * Calculates the square root of a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const sqrt = c =&gt; (
+  (isComplex(c) &amp;&amp; (
+    (eq(c[1], 0) &amp;&amp; [msqrt(c[0]), 0])
+    || unsafeSqrt(c)
+  ))
+  || (isNumber(c) &amp;&amp; [msqrt(c), 0])
+  || NAN
+);
+
+/**
+ * Calculates the exponentiation of a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const exp = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeExp(c))
+  || (isNumber(c) &amp;&amp; [mexp(c), 0])
+  || NAN
+);
+
+/**
+ * Calculates the natural logarithm of a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const ln = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeLn(c))
+  || (isNumber(c) &amp;&amp; [mlog(c), 0])
+  || NAN
+);
+
+/**
+ * Calculates the base 10 logarithm of a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const log10 = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeDiv(unsafeLn(c), BASE_10))
+  || (isNumber(c) &amp;&amp; [mlog10(c), 0])
+  || NAN
+);
+
+/**
+ * Raises the complex to the n-th complex power
+ * @param {!complex} a
+ * @param {!complex} b
+ * @returns {complex}
+ * Returns NaN complex if one of the given values is not a complex.
+ */
+export const pow = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; isComplex(b) &amp;&amp; unsafeExp(unsafeMul(unsafeLn(a), b)))
+  || (isNumber(a) &amp;&amp; pow([a, 0], b))
+  || (isNumber(b) &amp;&amp; pow(a, [b, 0]))
+  || NAN
+);
+
+/**
+ * Applies a floor function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const floor = c =&gt; (
+  (isComplex(c) &amp;&amp; [mfloor(c[0]), mfloor(c[1])])
+  || (isNumber(c) &amp;&amp; [mfloor(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a ceiling function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const ceil = c =&gt; (
+  (isComplex(c) &amp;&amp; [mceil(c[0]), mceil(c[1])])
+  || (isNumber(c) &amp;&amp; [mceil(c), 0])
+  || NAN
+);
+
+/**
+ * Converts polar coordinates into a complex
+ * @param {!number} radius
+ * @param {!number} phi
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const polar = (radius, phi) =&gt; (
+  (isNumber(radius) &amp;&amp; isNumber(phi) &amp;&amp; [radius * mcos(phi), radius * msin(phi)])
+  || NAN
+);
+
+/**
+ * Applies a sine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const sin = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeSin(c))
+  || (isNumber(c) &amp;&amp; [msin(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a cosine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const cos = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeCos(c))
+  || (isNumber(c) &amp;&amp; [mcos(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a tangent function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const tan = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeDiv(unsafeSin(c), unsafeCos(c)))
+  || (isNumber(c) &amp;&amp; [mtan(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a inverse sine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const asin = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAsin(c))
+  || (isNumber(c) &amp;&amp; [masin(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a inverse cosine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const acos = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAcos(c))
+  || (isNumber(c) &amp;&amp; [macos(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a inverse tangent function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const atan = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAtan(c))
+  || (isNumber(c) &amp;&amp; [matan(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic sine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const sinh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeSinh(c))
+  || (isNumber(c) &amp;&amp; [msinh(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic cosine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const cosh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeCosh(c))
+  || (isNumber(c) &amp;&amp; [mcosh(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic tangent function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const tanh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeDiv(unsafeSinh(c), unsafeCosh(c)))
+  || (isNumber(c) &amp;&amp; [mtanh(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic inverse sine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const asinh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAsinh(c))
+  || (isNumber(c) &amp;&amp; [masinh(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic inverse cosine function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const acosh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAcosh(c))
+  || (isNumber(c) &amp;&amp; [macosh(c), 0])
+  || NAN
+);
+
+/**
+ * Applies a hyperbolic inverse tangent function to a complex
+ * @param {!complex} c
+ * @returns {complex}
+ * Returns NaN complex if the given value is not a complex.
+ */
+export const atanh = c =&gt; (
+  (isComplex(c) &amp;&amp; unsafeAtanh(c))
+  || (isNumber(c) &amp;&amp; [matanh(c), 0])
+  || NAN
+);
+
+/**
+ * Check if two complex are equal
+ * @param {!complex} a
+ * @param {!complex} b
+ * @returns {boolean}
+ */
+export const equals = (a, b) =&gt; (
+  (isComplex(a) &amp;&amp; isComplex(b) &amp;&amp; eq(a[0], b[0]) &amp;&amp; eq(a[1], b[1]))
+  || a === b
+);
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
