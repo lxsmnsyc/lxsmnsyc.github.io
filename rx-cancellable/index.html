@@ -146,8 +146,12 @@
 <p>To build the coverages, run the test suite, the docs, and the distributable modules:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
-<h2 id="changelogs">Changelogs</h2><p>0.2.0</p>
+<h2 id="changelogs">Changelogs</h2><p>0.3.2</p>
 <ul>
+<li>Fixed CompositeCancellable not dispatching event listeners when cancelled.
+0.3.0</li>
+<li>Removed privacy of cancellable states. The decision of replacement is due to performance issues with WeakMaps.
+0.2.0</li>
 <li>Introduces 3 Cancellable classes instead of a tree-structured Cancellable.</li>
 <li>Introduces 2 singleton instances of Cancellable
 0.1.0</li>

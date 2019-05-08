@@ -83,8 +83,6 @@ export default class Cancellable {
    * Registers a listener function to a target event dispatcher.
    * @param {!string} ev
    * Defines the event target
-   * - enable: fires whenever the Cancellable is enabled.
-   * - disable: fires whenever the Cancellable is disabled.
    * - cancel: fires when the Cancellable is cancelled.
    * @param {!function} listener
    * a function to be called when the event is dispatched.
@@ -107,8 +105,6 @@ export default class Cancellable {
    * Removes a listener function from a target event dispatcher.
    * @param {!string} ev
    * Defines the event target
-   * - enable: fires whenever the Cancellable is enabled.
-   * - disable: fires whenever the Cancellable is disabled.
    * - cancel: fires when the Cancellable is cancelled.
    * @param {!function} listener
    * a function from be removed from the target event dispatcher.

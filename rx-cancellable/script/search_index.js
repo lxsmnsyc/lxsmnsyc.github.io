@@ -750,6 +750,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/linked.js~linkedcancellable#listener",
+    "class/src/linked.js~LinkedCancellable.html#instance-member-listener",
+    "src/linked.js~LinkedCancellable#listener",
+    "member"
+  ],
+  [
     "src/linked.js~linkedcancellable#unlink",
     "class/src/linked.js~LinkedCancellable.html#instance-method-unlink",
     "src/linked.js~LinkedCancellable#unlink",
