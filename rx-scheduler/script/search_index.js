@@ -24,6 +24,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "rx-scheduler/src/pool.browser.js~poolscheduler",
+    "class/src/pool.browser.js~PoolScheduler.html",
+    "<span>PoolScheduler</span> <span class=\"search-result-import-path\">rx-scheduler/src/pool.browser.js</span>",
+    "class"
+  ],
+  [
     "rx-scheduler/src/index.browser.js~scheduler",
     "class/src/index.browser.js~Scheduler.html",
     "<span>Scheduler</span> <span class=\"search-result-import-path\">rx-scheduler/src/index.browser.js</span>",
@@ -51,6 +57,12 @@ window.esdocSearchIndex = [
     "rx-scheduler/src/timeout.js~timeoutscheduler",
     "class/src/timeout.js~TimeoutScheduler.html",
     "<span>TimeoutScheduler</span> <span class=\"search-result-import-path\">rx-scheduler/src/timeout.js</span>",
+    "class"
+  ],
+  [
+    "rx-scheduler/src/worker.browser.js~workerscheduler",
+    "class/src/worker.browser.js~WorkerScheduler.html",
+    "<span>WorkerScheduler</span> <span class=\"search-result-import-path\">rx-scheduler/src/worker.browser.js</span>",
     "class"
   ],
   [
@@ -954,9 +966,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/index.browser.js~scheduler.pool",
+    "class/src/index.browser.js~Scheduler.html#static-get-pool",
+    "src/index.browser.js~Scheduler.pool",
+    "member"
+  ],
+  [
     "src/index.browser.js~scheduler.timeout",
     "class/src/index.browser.js~Scheduler.html#static-get-timeout",
     "src/index.browser.js~Scheduler.timeout",
+    "member"
+  ],
+  [
+    "src/index.browser.js~scheduler.worker",
+    "class/src/index.browser.js~Scheduler.html#static-get-worker",
+    "src/index.browser.js~Scheduler.worker",
     "member"
   ],
   [
@@ -1005,6 +1029,30 @@ window.esdocSearchIndex = [
     "src/index.node.js~scheduler.timeout",
     "class/src/index.node.js~Scheduler.html#static-get-timeout",
     "src/index.node.js~Scheduler.timeout",
+    "member"
+  ],
+  [
+    "src/pool.browser.js",
+    "file/src/pool.browser.js.html",
+    "src/pool.browser.js",
+    "file"
+  ],
+  [
+    "src/pool.browser.js~poolscheduler#delay",
+    "class/src/pool.browser.js~PoolScheduler.html#instance-method-delay",
+    "src/pool.browser.js~PoolScheduler#delay",
+    "method"
+  ],
+  [
+    "src/pool.browser.js~poolscheduler#schedule",
+    "class/src/pool.browser.js~PoolScheduler.html#instance-method-schedule",
+    "src/pool.browser.js~PoolScheduler#schedule",
+    "method"
+  ],
+  [
+    "src/pool.browser.js~poolscheduler.instance",
+    "class/src/pool.browser.js~PoolScheduler.html#static-get-instance",
+    "src/pool.browser.js~PoolScheduler.instance",
     "member"
   ],
   [
@@ -1078,6 +1126,30 @@ window.esdocSearchIndex = [
     "file/src/utils.js.html",
     "src/utils.js",
     "file"
+  ],
+  [
+    "src/worker.browser.js",
+    "file/src/worker.browser.js.html",
+    "src/worker.browser.js",
+    "file"
+  ],
+  [
+    "src/worker.browser.js~workerscheduler#delay",
+    "class/src/worker.browser.js~WorkerScheduler.html#instance-method-delay",
+    "src/worker.browser.js~WorkerScheduler#delay",
+    "method"
+  ],
+  [
+    "src/worker.browser.js~workerscheduler#schedule",
+    "class/src/worker.browser.js~WorkerScheduler.html#instance-method-schedule",
+    "src/worker.browser.js~WorkerScheduler#schedule",
+    "method"
+  ],
+  [
+    "src/worker.browser.js~workerscheduler.instance",
+    "class/src/worker.browser.js~WorkerScheduler.html#static-get-instance",
+    "src/worker.browser.js~WorkerScheduler.instance",
+    "member"
   ],
   [
     "test/index.js",

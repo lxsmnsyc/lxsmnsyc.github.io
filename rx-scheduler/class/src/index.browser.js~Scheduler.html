@@ -35,8 +35,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pool.browser.js~PoolScheduler.html">PoolScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html">WorkerScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
@@ -45,13 +47,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Scheduler from &apos;<span><a href="file/src/index.browser.js.html#lineNumber50">rx-scheduler/src/index.browser.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Scheduler from &apos;<span><a href="file/src/index.browser.js.html#lineNumber52">rx-scheduler/src/index.browser.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/index.browser.js.html#lineNumber50">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/index.browser.js.html#lineNumber52">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -227,6 +229,34 @@ executed using a callback mechanism.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html#static-get-pool">pool</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html#static-get-timeout">timeout</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span>: <span>*</span></span>
         </p>
       </div>
@@ -235,6 +265,34 @@ executed using a callback mechanism.</p>
         
         <div data-ice="description"><p>A Scheduler that allows timeout scheduling on the current thread.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html#static-get-worker">worker</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -266,7 +324,7 @@ executed using a callback mechanism.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber80">source</a></span></span>
     </span>
   </h3>
 
@@ -322,7 +380,7 @@ executed using a callback mechanism.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber64">source</a></span></span>
     </span>
   </h3>
 
@@ -378,7 +436,7 @@ executed using a callback mechanism.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber72">source</a></span></span>
     </span>
   </h3>
 
@@ -434,7 +492,7 @@ executed using a callback mechanism.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber54">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber56">source</a></span></span>
     </span>
   </h3>
 
@@ -443,6 +501,49 @@ executed using a callback mechanism.</p>
   
   <div data-ice="description"><p>Interface for all scheduler types.</p>
 </div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-get-pool">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    <span class="kind" data-ice="kind">get</span>
+    
+    
+    
+    <span class="code" data-ice="name">pool</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber96">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
 
   
 
@@ -478,7 +579,7 @@ executed using a callback mechanism.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
@@ -506,6 +607,49 @@ executed using a callback mechanism.</p>
     <div data-ice="returnProperties">
 </div>
   </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-get-worker">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    <span class="kind" data-ice="kind">get</span>
+    
+    
+    
+    <span class="code" data-ice="name">worker</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/index.browser.js.html#lineNumber92">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
 
   
 

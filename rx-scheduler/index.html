@@ -35,8 +35,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pool.browser.js~PoolScheduler.html">PoolScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html">WorkerScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
@@ -112,7 +114,7 @@ Hello World, Tick 100
 Hello World, Async 100
 Hello World, Timeout 100
 Hello World, Immediate 100</code>
-</code></pre><h2 id="scheduler-types">Scheduler Types</h2><p>There are three scheduler types</p>
+</code></pre><h2 id="scheduler-types">Scheduler Types</h2><p>There are 4 major scheduler types</p>
 <table>
 <thead>
 <tr>
@@ -137,12 +139,17 @@ Hello World, Immediate 100</code>
 <td>Timeout</td>
 <td>Schedules the task using <code>setTimeout</code></td>
 </tr>
-<tr>
-<td>Tick</td>
-<td>NodeJS only. Schedules the task immediately after the current thread.</td>
-</tr>
 </tbody>
 </table>
+<p>There are 1 NodeJS exclusive types
+| Type | Description |
+| --- | --- |
+| Tick | NodeJS only. Schedules the task immediately after the current thread. |</p>
+<p>There are 2 Browser exclusive types
+| Type | Description |
+| --- | --- |
+| Worker | Browser only. Schedules the task on a worker thread. The worker thread does not execute the task, but rather, the event the worker emits notifies the schedule execution. |
+| Pool | Browser only. Schedules the task on an idle worker from the worker pool. Like the Worker, The worker thread does not execute the task, but rather, the event the worker emits notifies the schedule execution. The time of execution may vary due to varying execution times/responses from different worker threads. |</p>
 <p>Each scheduler types has two methods: <code>schedule</code>, which executes the schedule immediately on their own threads and <code>delay</code>, which schedules the function with a timer on their own threads. Both methods return a Cancellable instance, that allows you to cancel the scheduled functions if necessary.</p>
 <h2 id="creating-your-own-scheduler">Creating your own Scheduler</h2><p>You can create your own Scheduler that is recognizable by the implementations by extending <code>Scheduler.interface</code></p>
 <pre><code class="lang-js"><code class="source-code prettyprint">class MyScheduler extends Scheduler.interface {
@@ -163,6 +170,18 @@ Hello World, Immediate 100</code>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm run build</code>
 </code></pre>
 <h2 id="changelogs">Changelogs</h2><ul>
+<li>0.3.0<ul>
+<li>Introduces 2 new Browser-exclusive schedulers: Worker and Pool.</li>
+</ul>
+</li>
+<li>0.2.6<ul>
+<li>Guaranteed cancel if the schedule handlers throw an error.</li>
+</ul>
+</li>
+<li>0.2.5<ul>
+<li>Delayed schedules with 0 time will be executed immediately.</li>
+</ul>
+</li>
 <li>0.2.2<ul>
 <li>Compliance with <a href="mailto:rx-cancellable@0.2.0">rx-cancellable@0.2.0</a></li>
 </ul>

@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/async.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => Promise.resolve().then(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows async scheduling on the current thread.\n */\nexport default class AsyncScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new AsyncScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\n/**\n * @ignore\n */\nlet INSTANCE;\n\n/**\n * @ignore\n */\nconst func = x => Promise.resolve().then(x);\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows async scheduling on the current thread.\n */\nexport default class AsyncScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new AsyncScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the async task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/async.js",
     "access": "public",
@@ -587,9 +587,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/async.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -598,8 +598,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 50,
@@ -612,15 +611,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/async.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 17,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 51,
@@ -633,15 +631,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/async.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 21,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 52,
@@ -655,7 +652,7 @@
     "importPath": "rx-scheduler/src/async.js",
     "importStyle": "AsyncScheduler",
     "description": "A Scheduler that allows async scheduling on the current thread.",
-    "lineNumber": 14,
+    "lineNumber": 26,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
@@ -672,7 +669,7 @@
     "longname": "src/async.js~AsyncScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 27,
     "undocument": true,
     "type": {
       "types": [
@@ -691,7 +688,7 @@
     "longname": "src/async.js~AsyncScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately on the async task.",
-    "lineNumber": 30,
+    "lineNumber": 42,
     "unknown": [
       {
         "tagName": "@returns",
@@ -730,7 +727,7 @@
     "longname": "src/async.js~AsyncScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the async task.",
-    "lineNumber": 44,
+    "lineNumber": 56,
     "unknown": [
       {
         "tagName": "@returns",
@@ -772,7 +769,7 @@
     "__docId__": 56,
     "kind": "file",
     "name": "src/current.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => x();\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling on the current thread.\n */\nexport default class CurrentScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new CurrentScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\n/**\n * @ignore\n */\nlet INSTANCE;\n/**\n * @ignore\n */\nconst func = x => x();\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling on the current thread.\n */\nexport default class CurrentScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new CurrentScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the current task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/current.js",
     "access": "public",
@@ -792,9 +789,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/current.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 12,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -803,8 +800,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 58,
@@ -817,15 +813,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/current.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 16,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 59,
@@ -838,15 +833,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/current.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 20,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 60,
@@ -860,7 +854,7 @@
     "importPath": "rx-scheduler/src/current.js",
     "importStyle": "CurrentScheduler",
     "description": "A Scheduler that allows scheduling on the current thread.",
-    "lineNumber": 14,
+    "lineNumber": 25,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
@@ -877,7 +871,7 @@
     "longname": "src/current.js~CurrentScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 26,
     "undocument": true,
     "type": {
       "types": [
@@ -896,7 +890,7 @@
     "longname": "src/current.js~CurrentScheduler#schedule",
     "access": "public",
     "description": "Schedules the function on the current task.",
-    "lineNumber": 30,
+    "lineNumber": 41,
     "unknown": [
       {
         "tagName": "@returns",
@@ -935,7 +929,7 @@
     "longname": "src/current.js~CurrentScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the current task.",
-    "lineNumber": 44,
+    "lineNumber": 55,
     "unknown": [
       {
         "tagName": "@returns",
@@ -977,7 +971,7 @@
     "__docId__": 64,
     "kind": "file",
     "name": "src/immediate.browser.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => requestAnimationFrame(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n/**\n * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\n/**\n * @ignore\n */\nlet INSTANCE;\n/**\n * @ignore\n */\nconst func = x => requestAnimationFrame(x);\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n/**\n * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/immediate.browser.js",
     "access": "public",
@@ -997,9 +991,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.browser.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 12,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -1008,8 +1002,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 66,
@@ -1022,15 +1015,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.browser.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 16,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 67,
@@ -1043,15 +1035,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.browser.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 20,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 68,
@@ -1065,7 +1056,7 @@
     "importPath": "rx-scheduler/src/immediate.browser.js",
     "importStyle": "ImmediateScheduler",
     "description": "A Scheduler that allows immediate scheduling, using requestAnimationFrame.",
-    "lineNumber": 13,
+    "lineNumber": 24,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
@@ -1082,7 +1073,7 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 25,
     "undocument": true,
     "type": {
       "types": [
@@ -1101,7 +1092,7 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 29,
+    "lineNumber": 40,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1140,7 +1131,7 @@
     "longname": "src/immediate.browser.js~ImmediateScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 43,
+    "lineNumber": 54,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1182,7 +1173,7 @@
     "__docId__": 72,
     "kind": "file",
     "name": "src/immediate.node.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => setImmediate(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows immediate scheduling, using setImmediate.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n/**\n * @ignore\n */\nconst func = x => setImmediate(x);\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows immediate scheduling, using setImmediate.\n */\nexport default class ImmediateScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new ImmediateScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/immediate.node.js",
     "access": "public",
@@ -1202,9 +1193,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.node.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 9,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -1213,8 +1204,7 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
     "__docId__": 74,
@@ -1227,15 +1217,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.node.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 75,
@@ -1248,15 +1237,14 @@
     "export": false,
     "importPath": "rx-scheduler/src/immediate.node.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 17,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
     "__docId__": 76,
@@ -1270,7 +1258,7 @@
     "importPath": "rx-scheduler/src/immediate.node.js",
     "importStyle": "ImmediateScheduler",
     "description": "A Scheduler that allows immediate scheduling, using setImmediate.",
-    "lineNumber": 14,
+    "lineNumber": 22,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
@@ -1287,7 +1275,7 @@
     "longname": "src/immediate.node.js~ImmediateScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 23,
     "undocument": true,
     "type": {
       "types": [
@@ -1306,7 +1294,7 @@
     "longname": "src/immediate.node.js~ImmediateScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 30,
+    "lineNumber": 38,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1345,7 +1333,7 @@
     "longname": "src/immediate.node.js~ImmediateScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 44,
+    "lineNumber": 52,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1387,7 +1375,7 @@
     "__docId__": 80,
     "kind": "file",
     "name": "src/index.browser.js",
-    "content": "\n/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport ImmediateScheduler from './immediate.browser';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n}\n",
+    "content": "\n/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport ImmediateScheduler from './immediate.browser';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport SchedulerInterface from './scheduler-interface';\nimport WorkerScheduler from './worker.browser';\nimport PoolScheduler from './pool.browser';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n\n  static get worker() {\n    return WorkerScheduler.instance;\n  }\n\n  static get pool() {\n    return PoolScheduler.instance;\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/index.browser.js",
     "access": "public",
@@ -1418,7 +1406,7 @@
     "importPath": "rx-scheduler/src/index.browser.js",
     "importStyle": "Scheduler",
     "description": "Scheduler is an object that specifies an API for scheduling units of work.\nThese units of work are scheduled either executed immediately or enqueued and\nexecuted using a callback mechanism.\n\nScheduler provides 4 types of scheduling mechanism:\n- Current: executes the task immediately.\n- Immediate: schedules the task for the next frame.\n- Async: schedules the task asynchronously (as a microtask).\n- Timeout: schedules the task using setTimeout.",
-    "lineNumber": 50,
+    "lineNumber": 52,
     "interface": false
   },
   {
@@ -1432,7 +1420,7 @@
     "longname": "src/index.browser.js~Scheduler.interface",
     "access": "public",
     "description": "Interface for all scheduler types.",
-    "lineNumber": 54,
+    "lineNumber": 56,
     "type": {
       "types": [
         "*"
@@ -1450,7 +1438,7 @@
     "longname": "src/index.browser.js~Scheduler.current",
     "access": "public",
     "description": "A Scheduler that allows scheduling on the current thread.",
-    "lineNumber": 62,
+    "lineNumber": 64,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1482,7 +1470,7 @@
     "longname": "src/index.browser.js~Scheduler.immediate",
     "access": "public",
     "description": "A Scheduler that allows immediate scheduling, using requestAnimationFrame.",
-    "lineNumber": 70,
+    "lineNumber": 72,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1514,7 +1502,7 @@
     "longname": "src/index.browser.js~Scheduler.async",
     "access": "public",
     "description": "A Scheduler that allows async scheduling on the current thread.",
-    "lineNumber": 78,
+    "lineNumber": 80,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1546,7 +1534,7 @@
     "longname": "src/index.browser.js~Scheduler.timeout",
     "access": "public",
     "description": "A Scheduler that allows timeout scheduling on the current thread.",
-    "lineNumber": 86,
+    "lineNumber": 88,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1569,6 +1557,44 @@
   },
   {
     "__docId__": 88,
+    "kind": "get",
+    "name": "worker",
+    "memberof": "src/index.browser.js~Scheduler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/index.browser.js~Scheduler.worker",
+    "access": "public",
+    "description": null,
+    "lineNumber": 92,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 89,
+    "kind": "get",
+    "name": "pool",
+    "memberof": "src/index.browser.js~Scheduler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/index.browser.js~Scheduler.pool",
+    "access": "public",
+    "description": null,
+    "lineNumber": 96,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 90,
     "kind": "file",
     "name": "src/index.node.js",
     "content": "/* eslint-disable class-methods-use-this */\n/**\n * @license\n * MIT License\n *\n * Copyright (c) 2019 Alexis Munsayac\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n *\n *\n * @author Alexis Munsayac <alexis.munsayac@gmail.com>\n * @copyright Alexis Munsayac 2019\n */\n/**\n * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/\n */\nimport ImmediateScheduler from './immediate.node';\nimport AsyncScheduler from './async';\nimport TimeoutScheduler from './timeout';\nimport CurrentScheduler from './current';\nimport TickScheduler from './tick';\nimport SchedulerInterface from './scheduler-interface';\n\n/**\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 5 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n * - Tick: schedules the task using process.nextTick.\n */\nexport default class Scheduler {\n  /**\n   * Interface for all scheduler types.\n   */\n  static get interface() {\n    return SchedulerInterface;\n  }\n\n  /**\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   */\n  static get current() {\n    return CurrentScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   */\n  static get immediate() {\n    return ImmediateScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   */\n  static get async() {\n    return AsyncScheduler.instance;\n  }\n\n  /**\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   */\n  static get timeout() {\n    return TimeoutScheduler.instance;\n  }\n\n\n  /**\n   * A Scheduler that allows scheduling using process.nextTick.\n   * @returns {TickScheduler}\n   */\n  static get tick() {\n    return TickScheduler.instance;\n  }\n}\n",
@@ -1579,7 +1605,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 89,
+    "__docId__": 91,
     "kind": "external",
     "name": "Cancellable",
     "externalLink": "https://lxsmnsyc.github.io/rx-cancellable/",
@@ -1591,7 +1617,7 @@
     "lineNumber": 32
   },
   {
-    "__docId__": 90,
+    "__docId__": 92,
     "kind": "class",
     "name": "Scheduler",
     "memberof": "src/index.node.js",
@@ -1606,7 +1632,7 @@
     "interface": false
   },
   {
-    "__docId__": 91,
+    "__docId__": 93,
     "kind": "get",
     "name": "interface",
     "memberof": "src/index.node.js~Scheduler",
@@ -1624,7 +1650,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 94,
     "kind": "get",
     "name": "current",
     "memberof": "src/index.node.js~Scheduler",
@@ -1656,7 +1682,7 @@
     }
   },
   {
-    "__docId__": 93,
+    "__docId__": 95,
     "kind": "get",
     "name": "immediate",
     "memberof": "src/index.node.js~Scheduler",
@@ -1688,7 +1714,7 @@
     }
   },
   {
-    "__docId__": 94,
+    "__docId__": 96,
     "kind": "get",
     "name": "async",
     "memberof": "src/index.node.js~Scheduler",
@@ -1720,7 +1746,7 @@
     }
   },
   {
-    "__docId__": 95,
+    "__docId__": 97,
     "kind": "get",
     "name": "timeout",
     "memberof": "src/index.node.js~Scheduler",
@@ -1752,7 +1778,7 @@
     }
   },
   {
-    "__docId__": 96,
+    "__docId__": 98,
     "kind": "get",
     "name": "tick",
     "memberof": "src/index.node.js~Scheduler",
@@ -1784,7 +1810,203 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 99,
+    "kind": "file",
+    "name": "src/pool.browser.js",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\n/**\n * @ignore\n */\nlet INSTANCE;\n\n/**\n * @ignore\n */\nconst func = (() => {\n  const script = '(()=>{self.addEventListener(\"message\",a=>self.postMessage(a.data))})();';\n\n  const url = URL.createObjectURL(new Blob([script]));\n\n  const maxWorkers = 256;\n  const totalWorkers = navigator.hardwareConcurrency || 4;\n\n  const workers = [];\n  const jobs = [];\n\n  const recycler = [1];\n  const jobQueue = [];\n\n  const allocate = () => {\n    const i = recycler[0];\n    const n = recycler[i] || 0;\n    if (n === 0) {\n      recycler[0] = i + 1;\n    } else {\n      recycler[0] = n;\n    }\n    recycler[i] = -1;\n    return i;\n  };\n\n  const deallocate = (i) => {\n    if (recycler[i] === -1) {\n      recycler[i] = recycler[0];\n      recycler[0] = i;\n    }\n  };\n\n  const createWorker = () => {\n    const worker = new Worker(url);\n\n    worker.addEventListener('message', ({ data }) => {\n      if (jobs[data]) {\n        jobs[data]();\n        jobs[data] = null;\n        deallocate(data);\n      }\n\n      if (jobQueue.length > 0) {\n        worker.postMessage(jobQueue.shift());\n      } else {\n        workers.push(worker);\n      }\n    });\n\n    return worker;\n  };\n\n  for (let i = 0; i < totalWorkers; i += 1) {\n    workers[i] = createWorker();\n  }\n\n  function pushJob(fn) {\n    const id = allocate();\n    jobs[id] = fn;\n\n    jobQueue.push(id);\n\n    if (workers.length > 0) {\n      workers.shift().postMessage(jobQueue.shift());\n    } else if (totalWorkers < maxWorkers) {\n      createWorker().postMessage(jobQueue.shift());\n    }\n  }\n\n  return pushJob;\n})();\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling on an idle worker thread from the worker pool.\n *\n * Scheduled functions are not executed on the worker thread, rather,\n * the worker thread emits a message event that schedules the function, in\n * which the functions are called on the main thread.\n *\n * There are a maximum of 256 workers, only 4 or your hardware's concurrency\n * (nagivator.hardwareConcurrency) size are precreated.\n *\n * Execution sequence may be arbitrary due to varying execution times for each worker.\n */\nexport default class PoolScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new PoolScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on an idle worker thread from the worker pool.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the function on an idle worker thread from the worker pool.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/pool.browser.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 100,
+    "kind": "variable",
+    "name": "func",
+    "memberof": "src/pool.browser.js",
+    "static": true,
+    "longname": "src/pool.browser.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/pool.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/pool.browser.js",
+    "static": true,
+    "longname": "src/pool.browser.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/pool.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 88,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 102,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/pool.browser.js",
+    "static": true,
+    "longname": "src/pool.browser.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/pool.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 92,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 103,
+    "kind": "class",
+    "name": "PoolScheduler",
+    "memberof": "src/pool.browser.js",
+    "static": true,
+    "longname": "src/pool.browser.js~PoolScheduler",
+    "access": "public",
+    "export": true,
+    "importPath": "rx-scheduler/src/pool.browser.js",
+    "importStyle": "PoolScheduler",
+    "description": "A Scheduler that allows scheduling on an idle worker thread from the worker pool.\n\nScheduled functions are not executed on the worker thread, rather,\nthe worker thread emits a message event that schedules the function, in\nwhich the functions are called on the main thread.\n\nThere are a maximum of 256 workers, only 4 or your hardware's concurrency\n(nagivator.hardwareConcurrency) size are precreated.\n\nExecution sequence may be arbitrary due to varying execution times for each worker.",
+    "lineNumber": 106,
+    "interface": false,
+    "extends": [
+      "src/scheduler-interface.js~SchedulerInterface"
+    ]
+  },
+  {
+    "__docId__": 104,
+    "kind": "get",
+    "name": "instance",
+    "memberof": "src/pool.browser.js~PoolScheduler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/pool.browser.js~PoolScheduler.instance",
+    "access": "public",
+    "description": null,
+    "lineNumber": 107,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 105,
+    "kind": "method",
+    "name": "schedule",
+    "memberof": "src/pool.browser.js~PoolScheduler",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pool.browser.js~PoolScheduler#schedule",
+    "access": "public",
+    "description": "Schedules the function on an idle worker thread from the worker pool.",
+    "lineNumber": 122,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fn",
+        "description": "A function that is called after being scheduled."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
+  },
+  {
+    "__docId__": 106,
+    "kind": "method",
+    "name": "delay",
+    "memberof": "src/pool.browser.js~PoolScheduler",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pool.browser.js~PoolScheduler#delay",
+    "access": "public",
+    "description": "Schedules the function on an idle worker thread from the worker pool.",
+    "lineNumber": 136,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fn",
+        "description": "A function that is called after being scheduled."
+      },
+      {
+        "nullable": false,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "amount",
+        "description": "The amount of delay in milliseconds."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
+  },
+  {
+    "__docId__": 107,
     "kind": "file",
     "name": "src/scheduler-interface.js",
     "content": "/* eslint-disable no-unused-vars */\n/* eslint-disable class-methods-use-this */\n/**\n * @interface\n */\nexport default class SchedulerInterface {\n  /**\n   * Schedules the given function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   */\n  schedule(fn) {}\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   * @abstract\n   */\n  delay(fn, amount) {\n  }\n}\n",
@@ -1795,7 +2017,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 98,
+    "__docId__": 108,
     "kind": "class",
     "name": "SchedulerInterface",
     "memberof": "src/scheduler-interface.js",
@@ -1810,7 +2032,7 @@
     "interface": true
   },
   {
-    "__docId__": 99,
+    "__docId__": 109,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/scheduler-interface.js~SchedulerInterface",
@@ -1850,7 +2072,7 @@
     "abstract": true
   },
   {
-    "__docId__": 100,
+    "__docId__": 110,
     "kind": "method",
     "name": "delay",
     "memberof": "src/scheduler-interface.js~SchedulerInterface",
@@ -1900,10 +2122,10 @@
     "abstract": true
   },
   {
-    "__docId__": 101,
+    "__docId__": 111,
     "kind": "file",
     "name": "src/tick.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => process.nextTick(x);\nconst sched = schedule(func);\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling using process.nextTick.\n */\nexport default class TickScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TickScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n/**\n * @ignore\n */\nconst func = x => process.nextTick(x);\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling using process.nextTick.\n */\nexport default class TickScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TickScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/tick.js",
     "access": "public",
@@ -1911,7 +2133,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 102,
+    "__docId__": 112,
     "kind": "function",
     "name": "func",
     "memberof": "src/tick.js",
@@ -1923,9 +2145,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/tick.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 9,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -1934,11 +2156,10 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
-    "__docId__": 103,
+    "__docId__": 113,
     "kind": "variable",
     "name": "sched",
     "memberof": "src/tick.js",
@@ -1948,18 +2169,17 @@
     "export": false,
     "importPath": "rx-scheduler/src/tick.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
-    "__docId__": 104,
+    "__docId__": 114,
     "kind": "variable",
     "name": "timed",
     "memberof": "src/tick.js",
@@ -1969,18 +2189,17 @@
     "export": false,
     "importPath": "rx-scheduler/src/tick.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 17,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
-    "__docId__": 105,
+    "__docId__": 115,
     "kind": "class",
     "name": "TickScheduler",
     "memberof": "src/tick.js",
@@ -1991,14 +2210,14 @@
     "importPath": "rx-scheduler/src/tick.js",
     "importStyle": "TickScheduler",
     "description": "A Scheduler that allows scheduling using process.nextTick.",
-    "lineNumber": 14,
+    "lineNumber": 22,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 106,
+    "__docId__": 116,
     "kind": "get",
     "name": "instance",
     "memberof": "src/tick.js~TickScheduler",
@@ -2008,7 +2227,7 @@
     "longname": "src/tick.js~TickScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 23,
     "undocument": true,
     "type": {
       "types": [
@@ -2017,7 +2236,7 @@
     }
   },
   {
-    "__docId__": 107,
+    "__docId__": 117,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/tick.js~TickScheduler",
@@ -2027,7 +2246,7 @@
     "longname": "src/tick.js~TickScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately.",
-    "lineNumber": 30,
+    "lineNumber": 38,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2056,7 +2275,7 @@
     }
   },
   {
-    "__docId__": 108,
+    "__docId__": 118,
     "kind": "method",
     "name": "delay",
     "memberof": "src/tick.js~TickScheduler",
@@ -2066,7 +2285,7 @@
     "longname": "src/tick.js~TickScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time.",
-    "lineNumber": 44,
+    "lineNumber": 52,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2105,10 +2324,10 @@
     }
   },
   {
-    "__docId__": 109,
+    "__docId__": 119,
     "kind": "file",
     "name": "src/timeout.js",
-    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n\nconst func = x => setTimeout(x, 0);\nconst sched = schedule(func);\nconst timed = delay(func);\n/**\n * A Scheduler that allows timeout scheduling on the current thread.\n */\nexport default class TimeoutScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TimeoutScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\nlet INSTANCE;\n/**\n * @ignore\n */\nconst func = x => setTimeout(x, 0);\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n/**\n * A Scheduler that allows timeout scheduling on the current thread.\n */\nexport default class TimeoutScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new TimeoutScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function immediately on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the given function at a delayed time on the timeout task.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/timeout.js",
     "access": "public",
@@ -2116,7 +2335,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 110,
+    "__docId__": 120,
     "kind": "function",
     "name": "func",
     "memberof": "src/timeout.js",
@@ -2128,9 +2347,9 @@
     "export": false,
     "importPath": "rx-scheduler/src/timeout.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 9,
+    "ignore": true,
     "params": [
       {
         "name": "x",
@@ -2139,11 +2358,10 @@
         ]
       }
     ],
-    "return": null,
-    "ignore": true
+    "return": null
   },
   {
-    "__docId__": 111,
+    "__docId__": 121,
     "kind": "variable",
     "name": "sched",
     "memberof": "src/timeout.js",
@@ -2153,18 +2371,17 @@
     "export": false,
     "importPath": "rx-scheduler/src/timeout.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
-    "__docId__": 112,
+    "__docId__": 122,
     "kind": "variable",
     "name": "timed",
     "memberof": "src/timeout.js",
@@ -2174,18 +2391,17 @@
     "export": false,
     "importPath": "rx-scheduler/src/timeout.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 17,
+    "ignore": true,
     "type": {
       "types": [
         "*"
       ]
-    },
-    "ignore": true
+    }
   },
   {
-    "__docId__": 113,
+    "__docId__": 123,
     "kind": "class",
     "name": "TimeoutScheduler",
     "memberof": "src/timeout.js",
@@ -2196,14 +2412,14 @@
     "importPath": "rx-scheduler/src/timeout.js",
     "importStyle": "TimeoutScheduler",
     "description": "A Scheduler that allows timeout scheduling on the current thread.",
-    "lineNumber": 13,
+    "lineNumber": 21,
     "interface": false,
     "extends": [
       "src/scheduler-interface.js~SchedulerInterface"
     ]
   },
   {
-    "__docId__": 114,
+    "__docId__": 124,
     "kind": "get",
     "name": "instance",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -2213,7 +2429,7 @@
     "longname": "src/timeout.js~TimeoutScheduler.instance",
     "access": "public",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 22,
     "undocument": true,
     "type": {
       "types": [
@@ -2222,7 +2438,7 @@
     }
   },
   {
-    "__docId__": 115,
+    "__docId__": 125,
     "kind": "method",
     "name": "schedule",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -2232,7 +2448,7 @@
     "longname": "src/timeout.js~TimeoutScheduler#schedule",
     "access": "public",
     "description": "Schedules the function immediately on the timeout task.",
-    "lineNumber": 29,
+    "lineNumber": 37,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2261,7 +2477,7 @@
     }
   },
   {
-    "__docId__": 116,
+    "__docId__": 126,
     "kind": "method",
     "name": "delay",
     "memberof": "src/timeout.js~TimeoutScheduler",
@@ -2271,7 +2487,7 @@
     "longname": "src/timeout.js~TimeoutScheduler#delay",
     "access": "public",
     "description": "Schedules the given function at a delayed time on the timeout task.",
-    "lineNumber": 43,
+    "lineNumber": 51,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2310,10 +2526,10 @@
     }
   },
   {
-    "__docId__": 117,
+    "__docId__": 127,
     "kind": "file",
     "name": "src/utils.js",
-    "content": "import { BooleanCancellable } from 'rx-cancellable';\n/**\n * @ignore\n */\nconst createController = (scheduler, fn, body) => {\n  const controller = new BooleanCancellable();\n  if (typeof fn === 'function') {\n    // eslint-disable-next-line no-new\n    scheduler(() => body(controller));\n  } else {\n    controller.cancel();\n  }\n  return controller;\n};\n/**\n * @ignore\n */\nexport const schedule = scheduler => fn => createController(\n  scheduler,\n  fn,\n  x => !x.cancelled && fn() && x.cancel(),\n);\n/**\n * @ignore\n */\nexport const delay = scheduler => (fn, amount) => createController(\n  scheduler,\n  fn,\n  (x) => {\n    if (x.cancelled) {\n      return;\n    }\n    const inner = setTimeout(() => !x.cancelled && fn() && x.cancel(), amount);\n\n    x.addEventListener('cancel', () => clearTimeout(inner));\n  },\n);\n",
+    "content": "import { BooleanCancellable } from 'rx-cancellable';\n\n/**\n * @ignore\n */\nconst protect = (fn, x) => {\n  try {\n    fn();\n  } finally {\n    x.cancel();\n  }\n};\n/**\n * @ignore\n */\nconst createController = (scheduler, fn, body) => {\n  const controller = new BooleanCancellable();\n  if (typeof fn === 'function') {\n    // eslint-disable-next-line no-new\n    scheduler(() => body(controller));\n  } else {\n    controller.cancel();\n  }\n  return controller;\n};\n/**\n * @ignore\n */\nexport const schedule = scheduler => fn => createController(\n  scheduler,\n  fn,\n  x => !x.cancelled && protect(fn, x),\n);\n/**\n * @ignore\n */\nexport const delay = scheduler => (fn, amount) => createController(\n  scheduler,\n  fn,\n  (x) => {\n    if (x.cancelled) {\n      return;\n    }\n\n    if (typeof amount === 'number' && amount > 0) {\n      const inner = setTimeout(() => !x.cancelled && protect(fn, x), amount);\n      x.addEventListener('cancel', () => clearTimeout(inner));\n    } else {\n      protect(fn, x);\n    }\n  },\n);\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/utils.js",
     "access": "public",
@@ -2321,7 +2537,39 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 118,
+    "__docId__": 128,
+    "kind": "function",
+    "name": "protect",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~protect",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/utils.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 6,
+    "ignore": true,
+    "params": [
+      {
+        "name": "fn",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 129,
     "kind": "function",
     "name": "createController",
     "memberof": "src/utils.js",
@@ -2334,7 +2582,7 @@
     "importPath": "rx-scheduler/src/utils.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 5,
+    "lineNumber": 16,
     "ignore": true,
     "params": [
       {
@@ -2363,7 +2611,7 @@
     }
   },
   {
-    "__docId__": 119,
+    "__docId__": 130,
     "kind": "function",
     "name": "schedule",
     "memberof": "src/utils.js",
@@ -2376,7 +2624,7 @@
     "importPath": "rx-scheduler/src/utils.js",
     "importStyle": "{schedule}",
     "description": "",
-    "lineNumber": 18,
+    "lineNumber": 29,
     "ignore": true,
     "params": [
       {
@@ -2389,7 +2637,7 @@
     "return": null
   },
   {
-    "__docId__": 120,
+    "__docId__": 131,
     "kind": "function",
     "name": "delay",
     "memberof": "src/utils.js",
@@ -2402,7 +2650,7 @@
     "importPath": "rx-scheduler/src/utils.js",
     "importStyle": "{delay}",
     "description": "",
-    "lineNumber": 26,
+    "lineNumber": 37,
     "ignore": true,
     "params": [
       {
@@ -2415,8 +2663,204 @@
     "return": null
   },
   {
+    "__docId__": 132,
+    "kind": "file",
+    "name": "src/worker.browser.js",
+    "content": "/* eslint-disable class-methods-use-this */\nimport SchedulerInterface from './scheduler-interface';\nimport { schedule, delay } from './utils';\n\n/**\n * @ignore\n */\nlet INSTANCE;\n\n/**\n * @ignore\n */\nconst func = (() => {\n  const script = '(()=>{self.addEventListener(\"message\",a=>self.postMessage(a.data))})();';\n\n  const url = URL.createObjectURL(new Blob([script]));\n\n  const worker = new Worker(url);\n  let busy = false;\n\n  const jobs = [];\n  worker.addEventListener('message', () => {\n    if (jobs.length > 0) {\n      jobs.shift()();\n\n      if (jobs.length > 0) {\n        worker.postMessage(0);\n      } else {\n        busy = false;\n      }\n    }\n  });\n\n  const pushJob = (fn) => {\n    jobs.push(fn);\n\n    if (!busy) {\n      busy = true;\n      worker.postMessage(0);\n    }\n  };\n\n  return pushJob;\n})();\n/**\n * @ignore\n */\nconst sched = schedule(func);\n/**\n * @ignore\n */\nconst timed = delay(func);\n\n/**\n * A Scheduler that allows scheduling on a separate worker thread.\n *\n * Scheduled functions are not executed on the worker thread, rather,\n * the worker thread emits a message event that schedules the function.\n */\nexport default class WorkerScheduler extends SchedulerInterface {\n  static get instance() {\n    if (typeof INSTANCE === 'undefined') {\n      INSTANCE = new WorkerScheduler();\n    }\n    return INSTANCE;\n  }\n\n  /**\n   * Schedules the function on the separate worker thread.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  schedule(fn) {\n    return sched(fn);\n  }\n\n  /**\n   * Schedules the function on the separate worker thread.\n   * @param {!function} fn\n   * A function that is called after being scheduled.\n   * @param {!number} amount\n   * The amount of delay in milliseconds.\n   * @returns {Cancellable}\n   * Returns an Cancellable that allows\n   * to cancel the schedule.\n   */\n  delay(fn, amount) {\n    return timed(fn, amount);\n  }\n}\n",
+    "static": true,
+    "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/src/worker.browser.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 133,
+    "kind": "variable",
+    "name": "func",
+    "memberof": "src/worker.browser.js",
+    "static": true,
+    "longname": "src/worker.browser.js~func",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/worker.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 13,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 134,
+    "kind": "variable",
+    "name": "sched",
+    "memberof": "src/worker.browser.js",
+    "static": true,
+    "longname": "src/worker.browser.js~sched",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/worker.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 48,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 135,
+    "kind": "variable",
+    "name": "timed",
+    "memberof": "src/worker.browser.js",
+    "static": true,
+    "longname": "src/worker.browser.js~timed",
+    "access": "public",
+    "export": false,
+    "importPath": "rx-scheduler/src/worker.browser.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 52,
+    "ignore": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 136,
+    "kind": "class",
+    "name": "WorkerScheduler",
+    "memberof": "src/worker.browser.js",
+    "static": true,
+    "longname": "src/worker.browser.js~WorkerScheduler",
+    "access": "public",
+    "export": true,
+    "importPath": "rx-scheduler/src/worker.browser.js",
+    "importStyle": "WorkerScheduler",
+    "description": "A Scheduler that allows scheduling on a separate worker thread.\n\nScheduled functions are not executed on the worker thread, rather,\nthe worker thread emits a message event that schedules the function.",
+    "lineNumber": 60,
+    "interface": false,
+    "extends": [
+      "src/scheduler-interface.js~SchedulerInterface"
+    ]
+  },
+  {
+    "__docId__": 137,
+    "kind": "get",
+    "name": "instance",
+    "memberof": "src/worker.browser.js~WorkerScheduler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/worker.browser.js~WorkerScheduler.instance",
+    "access": "public",
+    "description": null,
+    "lineNumber": 61,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 138,
+    "kind": "method",
+    "name": "schedule",
+    "memberof": "src/worker.browser.js~WorkerScheduler",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/worker.browser.js~WorkerScheduler#schedule",
+    "access": "public",
+    "description": "Schedules the function on the separate worker thread.",
+    "lineNumber": 76,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fn",
+        "description": "A function that is called after being scheduled."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
+  },
+  {
+    "__docId__": 139,
+    "kind": "method",
+    "name": "delay",
+    "memberof": "src/worker.browser.js~WorkerScheduler",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/worker.browser.js~WorkerScheduler#delay",
+    "access": "public",
+    "description": "Schedules the function on the separate worker thread.",
+    "lineNumber": 90,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Cancellable}\nReturns an Cancellable that allows\nto cancel the schedule."
+      }
+    ],
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fn",
+        "description": "A function that is called after being scheduled."
+      },
+      {
+        "nullable": false,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "amount",
+        "description": "The amount of delay in milliseconds."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cancellable"
+      ],
+      "spread": false,
+      "description": "Returns an Cancellable that allows\nto cancel the schedule."
+    }
+  },
+  {
     "kind": "index",
-    "content": "# rx-scheduler\n\nReactive Extensions - an object that specifies an API for scheduling units of work\n\n[![NPM](https://nodei.co/npm/rx-scheduler.png)](https://nodei.co/npm/rx-scheduler/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-scheduler/badge)](https://www.jsdelivr.com/package/npm/rx-scheduler)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-scheduler.svg)](http://hits.dwyl.io/lxsmnsyc/rx-scheduler)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-scheduler.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-scheduler) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-scheduler) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-scheduler/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-scheduler)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-scheduler\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Scheduler = require('rx-scheduler');\n```\n\nLoading the CommonJS module provides the Scheduler class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-scheduler provides the Scheduler class\n\n## Example\n\n```js\nimport Scheduler from 'rx-scheduler';\n\nScheduler.immediate.delay(() => console.log('Hello World, Immediate 100'), 100);\nScheduler.timeout.delay(() => console.log('Hello World, Timeout 100'), 100);\nScheduler.async.delay(() => console.log('Hello World, Async 100'), 100);\nScheduler.tick.delay(() => console.log('Hello World, Tick 100'), 100);\nScheduler.current.delay(() => console.log('Hello World, Current 100'), 100);\n\nScheduler.immediate.schedule(() => console.log('Hello World, Immediate'));\nScheduler.timeout.schedule(() => console.log('Hello World, Timeout'));\nScheduler.async.schedule(() => console.log('Hello World, Async'));\nScheduler.tick.schedule(() => console.log('Hello World, Tick'));\nScheduler.current.schedule(() => console.log('Hello World, Current'));\n```\n\nOutput:\n\n```\nHello World, Current\nHello World, Tick\nHello World, Async\nHello World, Timeout\nHello World, Immediate\nHello World, Current 100\nHello World, Tick 100\nHello World, Async 100\nHello World, Timeout 100\nHello World, Immediate 100\n```\n\n## Scheduler Types\n\nThere are three scheduler types\n\n| Type | Description |\n| --- | --- |\n| Current | Schedules the task as the next task for the current thread. |\n| Immediate | Schedules the task immediately for the next frame, using setImmediate (NodeJS) or requestAnimationFrame (Browser). |\n| Async | Schedules the task in async fashion. |\n| Timeout | Schedules the task using ```setTimeout``` |\n| Tick | NodeJS only. Schedules the task immediately after the current thread. |\n\nEach scheduler types has two methods: `schedule`, which executes the schedule immediately on their own threads and `delay`, which schedules the function with a timer on their own threads. Both methods return a Cancellable instance, that allows you to cancel the scheduled functions if necessary.\n\n## Creating your own Scheduler\n\nYou can create your own Scheduler that is recognizable by the implementations by extending ```Scheduler.interface```\n\n```js\nclass MyScheduler extends Scheduler.interface {\n  schedule(fn) {\n    // scheduling logic\n  }\n\n  delay(fn, amount) {\n    // delayed scheduling logic\n  }\n}\n```\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-scheduler/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.2.2\n  - Compliance with rx-cancellable@0.2.0\n* 0.2.1\n  - scheduled functions now cancels the `Cancellable` instance when finished.\n* 0.2.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - `schedule` and `delay` now returns a `Cancellable` to cancel schedules.\n* 0.1.0\n  - Release",
+    "content": "# rx-scheduler\n\nReactive Extensions - an object that specifies an API for scheduling units of work\n\n[![NPM](https://nodei.co/npm/rx-scheduler.png)](https://nodei.co/npm/rx-scheduler/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-scheduler/badge)](https://www.jsdelivr.com/package/npm/rx-scheduler)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-scheduler.svg)](http://hits.dwyl.io/lxsmnsyc/rx-scheduler)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-scheduler.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-scheduler) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-scheduler) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-scheduler/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-scheduler)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-scheduler\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Scheduler = require('rx-scheduler');\n```\n\nLoading the CommonJS module provides the Scheduler class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-scheduler provides the Scheduler class\n\n## Example\n\n```js\nimport Scheduler from 'rx-scheduler';\n\nScheduler.immediate.delay(() => console.log('Hello World, Immediate 100'), 100);\nScheduler.timeout.delay(() => console.log('Hello World, Timeout 100'), 100);\nScheduler.async.delay(() => console.log('Hello World, Async 100'), 100);\nScheduler.tick.delay(() => console.log('Hello World, Tick 100'), 100);\nScheduler.current.delay(() => console.log('Hello World, Current 100'), 100);\n\nScheduler.immediate.schedule(() => console.log('Hello World, Immediate'));\nScheduler.timeout.schedule(() => console.log('Hello World, Timeout'));\nScheduler.async.schedule(() => console.log('Hello World, Async'));\nScheduler.tick.schedule(() => console.log('Hello World, Tick'));\nScheduler.current.schedule(() => console.log('Hello World, Current'));\n```\n\nOutput:\n\n```\nHello World, Current\nHello World, Tick\nHello World, Async\nHello World, Timeout\nHello World, Immediate\nHello World, Current 100\nHello World, Tick 100\nHello World, Async 100\nHello World, Timeout 100\nHello World, Immediate 100\n```\n\n## Scheduler Types\n\nThere are 4 major scheduler types\n\n| Type | Description |\n| --- | --- |\n| Current | Schedules the task as the next task for the current thread. |\n| Immediate | Schedules the task immediately for the next frame, using setImmediate (NodeJS) or requestAnimationFrame (Browser). |\n| Async | Schedules the task in async fashion. |\n| Timeout | Schedules the task using ```setTimeout``` |\n\nThere are 1 NodeJS exclusive types\n| Type | Description |\n| --- | --- |\n| Tick | NodeJS only. Schedules the task immediately after the current thread. |\n\nThere are 2 Browser exclusive types\n| Type | Description |\n| --- | --- |\n| Worker | Browser only. Schedules the task on a worker thread. The worker thread does not execute the task, but rather, the event the worker emits notifies the schedule execution. |\n| Pool | Browser only. Schedules the task on an idle worker from the worker pool. Like the Worker, The worker thread does not execute the task, but rather, the event the worker emits notifies the schedule execution. The time of execution may vary due to varying execution times/responses from different worker threads. |\n\nEach scheduler types has two methods: `schedule`, which executes the schedule immediately on their own threads and `delay`, which schedules the function with a timer on their own threads. Both methods return a Cancellable instance, that allows you to cancel the scheduled functions if necessary.\n\n## Creating your own Scheduler\n\nYou can create your own Scheduler that is recognizable by the implementations by extending ```Scheduler.interface```\n\n```js\nclass MyScheduler extends Scheduler.interface {\n  schedule(fn) {\n    // scheduling logic\n  }\n\n  delay(fn, amount) {\n    // delayed scheduling logic\n  }\n}\n```\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-scheduler/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.3.0\n  - Introduces 2 new Browser-exclusive schedulers: Worker and Pool.\n* 0.2.6\n  - Guaranteed cancel if the schedule handlers throw an error.\n* 0.2.5\n  - Delayed schedules with 0 time will be executed immediately.\n* 0.2.2\n  - Compliance with rx-cancellable@0.2.0\n* 0.2.1\n  - scheduled functions now cancels the `Cancellable` instance when finished.\n* 0.2.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - `schedule` and `delay` now returns a `Cancellable` to cancel schedules.\n* 0.1.0\n  - Release",
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/README.md",
     "name": "./README.md",
     "static": true,
@@ -2424,14 +2868,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-scheduler\",\n  \"version\": \"0.2.2\",\n  \"description\": \"an object that specifies an API for scheduling units of work\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-scheduler.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"scheduler\",\n    \"async\",\n    \"worker\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-scheduler/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-scheduler#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.3\",\n    \"@babel/preset-env\": \"^7.4.3\",\n    \"@babel/register\": \"^7.4.0\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.16.0\",\n    \"mocha\": \"^6.1.3\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.10.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.2.0\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-scheduler\",\n  \"version\": \"0.2.8\",\n  \"description\": \"an object that specifies an API for scheduling units of work\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.node.js --format cjs --name \\\"Scheduler\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.browser.js --format iife --name \\\"Scheduler\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-scheduler.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"scheduler\",\n    \"async\",\n    \"worker\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-scheduler/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-scheduler#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.4\",\n    \"@babel/preset-env\": \"^7.4.4\",\n    \"@babel/register\": \"^7.4.4\",\n    \"acorn\": \"^6.1.1\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.2\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.11.3\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.2\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-scheduler/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 121,
+    "__docId__": 140,
     "kind": "testFile",
     "name": "test/index.js",
     "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport { Cancellable } from 'rx-cancellable';\nimport Scheduler from '../src/index.node';\nimport SchedulerInterface from '../src/scheduler-interface';\nimport CurrentScheduler from '../src/current';\nimport ImmediateScheduler from '../src/immediate.node';\nimport AsyncScheduler from '../src/async';\nimport TimeoutScheduler from '../src/timeout';\nimport TickScheduler from '../src/tick';\n\n/**\n *\n */\ndescribe('Scheduler', () => {\n  /**\n   *\n   */\n  describe('#current', () => {\n    /**\n     *\n     */\n    it('should return a Cancellable', () => {\n      const controller = Scheduler.current.schedule(() => {});\n\n      assert(controller instanceof Cancellable);\n    });\n    /**\n     *\n     */\n    it('should return a cancelled Cancellable if first arg is not a function.', () => {\n      const controller = Scheduler.current.schedule(null);\n\n      assert(controller.cancelled);\n    });\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.current instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a CurrentScheduler', () => {\n      assert(Scheduler.current instanceof CurrentScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      it('should return a Cancellable.', () => {\n\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.current.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.current.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute before tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.current.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#immediate', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.immediate instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a ImmediateScheduler', () => {\n      assert(Scheduler.immediate instanceof ImmediateScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.immediate.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.immediate.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => { executed = true; });\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.immediate.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.immediate.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#async', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.async instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a AsyncScheduler', () => {\n      assert(Scheduler.async instanceof AsyncScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.async.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.async.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.async.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.async.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.async.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.async.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#timeout', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.timeout instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TimeoutScheduler', () => {\n      assert(Scheduler.timeout instanceof TimeoutScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.timeout.schedule(() => {});\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.timeout.schedule(null);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => { executed = true; });\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.timeout.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.timeout.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.timeout.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after tick', (done) => {\n        let executed;\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute after async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => { executed = true; }, 100);\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.timeout.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n  /**\n   *\n   */\n  describe('#tick', () => {\n    /**\n     *\n     */\n    it('should return a SchedulerInterface', () => {\n      assert(Scheduler.tick instanceof SchedulerInterface);\n    });\n    /**\n     *\n     */\n    it('should return a TickScheduler', () => {\n      assert(Scheduler.tick instanceof TickScheduler);\n    });\n    /**\n     *\n     */\n    describe('#schedule', () => {\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.schedule(() => { executed = true; });\n        Scheduler.tick.schedule(() => (executed ? done() : done(false)));\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.schedule(() => (executed ? done() : done(false)));\n        Scheduler.tick.schedule(() => { executed = true; });\n      });\n    });\n    /**\n     *\n     */\n    describe('#delay', () => {\n      /**\n       *\n       */\n      it('should return a Cancellable', () => {\n        const controller = Scheduler.tick.delay(() => {}, 100);\n\n        assert(controller instanceof Cancellable);\n      });\n      /**\n       *\n       */\n      it('should return a cancelled Cancellable if first arg is not a function.', () => {\n        const controller = Scheduler.tick.delay(null, 100);\n\n        assert(controller.cancelled);\n      });\n      /**\n       *\n       */\n      it('should execute after current thread', (done) => {\n        let executed;\n        Scheduler.current.delay(() => { executed = true; }, 100);\n        Scheduler.tick.delay(() => (executed ? done() : done(false)), 100);\n      });\n      /**\n       *\n       */\n      it('should execute before async', (done) => {\n        let executed;\n        Scheduler.async.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before timeout', (done) => {\n        let executed;\n        Scheduler.timeout.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n      /**\n       *\n       */\n      it('should execute before immediate', (done) => {\n        let executed;\n        Scheduler.immediate.delay(() => (executed ? done() : done(false)), 100);\n        Scheduler.tick.delay(() => { executed = true; }, 100);\n      });\n    });\n  });\n});\n",
@@ -2442,7 +2886,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 122,
+    "__docId__": 141,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -2455,7 +2899,7 @@
     "lineNumber": 15
   },
   {
-    "__docId__": 123,
+    "__docId__": 142,
     "kind": "test",
     "name": "describe1",
     "testId": 1,
@@ -2468,7 +2912,7 @@
     "lineNumber": 19
   },
   {
-    "__docId__": 124,
+    "__docId__": 143,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -2481,7 +2925,7 @@
     "lineNumber": 23
   },
   {
-    "__docId__": 125,
+    "__docId__": 144,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -2494,7 +2938,7 @@
     "lineNumber": 31
   },
   {
-    "__docId__": 126,
+    "__docId__": 145,
     "kind": "test",
     "name": "it4",
     "testId": 4,
@@ -2507,7 +2951,7 @@
     "lineNumber": 39
   },
   {
-    "__docId__": 127,
+    "__docId__": 146,
     "kind": "test",
     "name": "it5",
     "testId": 5,
@@ -2520,7 +2964,7 @@
     "lineNumber": 45
   },
   {
-    "__docId__": 128,
+    "__docId__": 147,
     "kind": "test",
     "name": "describe6",
     "testId": 6,
@@ -2533,7 +2977,7 @@
     "lineNumber": 51
   },
   {
-    "__docId__": 129,
+    "__docId__": 148,
     "kind": "test",
     "name": "it7",
     "testId": 7,
@@ -2546,7 +2990,7 @@
     "lineNumber": 52
   },
   {
-    "__docId__": 130,
+    "__docId__": 149,
     "kind": "test",
     "name": "describe8",
     "testId": 8,
@@ -2559,7 +3003,7 @@
     "lineNumber": 59
   },
   {
-    "__docId__": 131,
+    "__docId__": 150,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -2572,7 +3016,7 @@
     "lineNumber": 63
   },
   {
-    "__docId__": 132,
+    "__docId__": 151,
     "kind": "test",
     "name": "it10",
     "testId": 10,
@@ -2585,7 +3029,7 @@
     "lineNumber": 71
   },
   {
-    "__docId__": 133,
+    "__docId__": 152,
     "kind": "test",
     "name": "it11",
     "testId": 11,
@@ -2598,7 +3042,7 @@
     "lineNumber": 79
   },
   {
-    "__docId__": 134,
+    "__docId__": 153,
     "kind": "test",
     "name": "it12",
     "testId": 12,
@@ -2611,7 +3055,7 @@
     "lineNumber": 87
   },
   {
-    "__docId__": 135,
+    "__docId__": 154,
     "kind": "test",
     "name": "it13",
     "testId": 13,
@@ -2624,7 +3068,7 @@
     "lineNumber": 95
   },
   {
-    "__docId__": 136,
+    "__docId__": 155,
     "kind": "test",
     "name": "it14",
     "testId": 14,
@@ -2637,7 +3081,7 @@
     "lineNumber": 103
   },
   {
-    "__docId__": 137,
+    "__docId__": 156,
     "kind": "test",
     "name": "describe15",
     "testId": 15,
@@ -2650,7 +3094,7 @@
     "lineNumber": 113
   },
   {
-    "__docId__": 138,
+    "__docId__": 157,
     "kind": "test",
     "name": "it16",
     "testId": 16,
@@ -2663,7 +3107,7 @@
     "lineNumber": 117
   },
   {
-    "__docId__": 139,
+    "__docId__": 158,
     "kind": "test",
     "name": "it17",
     "testId": 17,
@@ -2676,7 +3120,7 @@
     "lineNumber": 123
   },
   {
-    "__docId__": 140,
+    "__docId__": 159,
     "kind": "test",
     "name": "describe18",
     "testId": 18,
@@ -2689,7 +3133,7 @@
     "lineNumber": 129
   },
   {
-    "__docId__": 141,
+    "__docId__": 160,
     "kind": "test",
     "name": "it19",
     "testId": 19,
@@ -2702,7 +3146,7 @@
     "lineNumber": 133
   },
   {
-    "__docId__": 142,
+    "__docId__": 161,
     "kind": "test",
     "name": "it20",
     "testId": 20,
@@ -2715,7 +3159,7 @@
     "lineNumber": 141
   },
   {
-    "__docId__": 143,
+    "__docId__": 162,
     "kind": "test",
     "name": "it21",
     "testId": 21,
@@ -2728,7 +3172,7 @@
     "lineNumber": 149
   },
   {
-    "__docId__": 144,
+    "__docId__": 163,
     "kind": "test",
     "name": "it22",
     "testId": 22,
@@ -2741,7 +3185,7 @@
     "lineNumber": 157
   },
   {
-    "__docId__": 145,
+    "__docId__": 164,
     "kind": "test",
     "name": "it23",
     "testId": 23,
@@ -2754,7 +3198,7 @@
     "lineNumber": 165
   },
   {
-    "__docId__": 146,
+    "__docId__": 165,
     "kind": "test",
     "name": "it24",
     "testId": 24,
@@ -2767,7 +3211,7 @@
     "lineNumber": 173
   },
   {
-    "__docId__": 147,
+    "__docId__": 166,
     "kind": "test",
     "name": "describe25",
     "testId": 25,
@@ -2780,7 +3224,7 @@
     "lineNumber": 182
   },
   {
-    "__docId__": 148,
+    "__docId__": 167,
     "kind": "test",
     "name": "it26",
     "testId": 26,
@@ -2793,7 +3237,7 @@
     "lineNumber": 186
   },
   {
-    "__docId__": 149,
+    "__docId__": 168,
     "kind": "test",
     "name": "it27",
     "testId": 27,
@@ -2806,7 +3250,7 @@
     "lineNumber": 194
   },
   {
-    "__docId__": 150,
+    "__docId__": 169,
     "kind": "test",
     "name": "it28",
     "testId": 28,
@@ -2819,7 +3263,7 @@
     "lineNumber": 202
   },
   {
-    "__docId__": 151,
+    "__docId__": 170,
     "kind": "test",
     "name": "it29",
     "testId": 29,
@@ -2832,7 +3276,7 @@
     "lineNumber": 210
   },
   {
-    "__docId__": 152,
+    "__docId__": 171,
     "kind": "test",
     "name": "it30",
     "testId": 30,
@@ -2845,7 +3289,7 @@
     "lineNumber": 218
   },
   {
-    "__docId__": 153,
+    "__docId__": 172,
     "kind": "test",
     "name": "it31",
     "testId": 31,
@@ -2858,7 +3302,7 @@
     "lineNumber": 226
   },
   {
-    "__docId__": 154,
+    "__docId__": 173,
     "kind": "test",
     "name": "describe32",
     "testId": 32,
@@ -2871,7 +3315,7 @@
     "lineNumber": 236
   },
   {
-    "__docId__": 155,
+    "__docId__": 174,
     "kind": "test",
     "name": "it33",
     "testId": 33,
@@ -2884,7 +3328,7 @@
     "lineNumber": 240
   },
   {
-    "__docId__": 156,
+    "__docId__": 175,
     "kind": "test",
     "name": "it34",
     "testId": 34,
@@ -2897,7 +3341,7 @@
     "lineNumber": 246
   },
   {
-    "__docId__": 157,
+    "__docId__": 176,
     "kind": "test",
     "name": "describe35",
     "testId": 35,
@@ -2910,7 +3354,7 @@
     "lineNumber": 252
   },
   {
-    "__docId__": 158,
+    "__docId__": 177,
     "kind": "test",
     "name": "it36",
     "testId": 36,
@@ -2923,7 +3367,7 @@
     "lineNumber": 256
   },
   {
-    "__docId__": 159,
+    "__docId__": 178,
     "kind": "test",
     "name": "it37",
     "testId": 37,
@@ -2936,7 +3380,7 @@
     "lineNumber": 264
   },
   {
-    "__docId__": 160,
+    "__docId__": 179,
     "kind": "test",
     "name": "it38",
     "testId": 38,
@@ -2949,7 +3393,7 @@
     "lineNumber": 272
   },
   {
-    "__docId__": 161,
+    "__docId__": 180,
     "kind": "test",
     "name": "it39",
     "testId": 39,
@@ -2962,7 +3406,7 @@
     "lineNumber": 280
   },
   {
-    "__docId__": 162,
+    "__docId__": 181,
     "kind": "test",
     "name": "it40",
     "testId": 40,
@@ -2975,7 +3419,7 @@
     "lineNumber": 288
   },
   {
-    "__docId__": 163,
+    "__docId__": 182,
     "kind": "test",
     "name": "it41",
     "testId": 41,
@@ -2988,7 +3432,7 @@
     "lineNumber": 296
   },
   {
-    "__docId__": 164,
+    "__docId__": 183,
     "kind": "test",
     "name": "describe42",
     "testId": 42,
@@ -3001,7 +3445,7 @@
     "lineNumber": 305
   },
   {
-    "__docId__": 165,
+    "__docId__": 184,
     "kind": "test",
     "name": "it43",
     "testId": 43,
@@ -3014,7 +3458,7 @@
     "lineNumber": 309
   },
   {
-    "__docId__": 166,
+    "__docId__": 185,
     "kind": "test",
     "name": "it44",
     "testId": 44,
@@ -3027,7 +3471,7 @@
     "lineNumber": 317
   },
   {
-    "__docId__": 167,
+    "__docId__": 186,
     "kind": "test",
     "name": "it45",
     "testId": 45,
@@ -3040,7 +3484,7 @@
     "lineNumber": 325
   },
   {
-    "__docId__": 168,
+    "__docId__": 187,
     "kind": "test",
     "name": "it46",
     "testId": 46,
@@ -3053,7 +3497,7 @@
     "lineNumber": 333
   },
   {
-    "__docId__": 169,
+    "__docId__": 188,
     "kind": "test",
     "name": "it47",
     "testId": 47,
@@ -3066,7 +3510,7 @@
     "lineNumber": 341
   },
   {
-    "__docId__": 170,
+    "__docId__": 189,
     "kind": "test",
     "name": "it48",
     "testId": 48,
@@ -3079,7 +3523,7 @@
     "lineNumber": 349
   },
   {
-    "__docId__": 171,
+    "__docId__": 190,
     "kind": "test",
     "name": "describe49",
     "testId": 49,
@@ -3092,7 +3536,7 @@
     "lineNumber": 359
   },
   {
-    "__docId__": 172,
+    "__docId__": 191,
     "kind": "test",
     "name": "it50",
     "testId": 50,
@@ -3105,7 +3549,7 @@
     "lineNumber": 363
   },
   {
-    "__docId__": 173,
+    "__docId__": 192,
     "kind": "test",
     "name": "it51",
     "testId": 51,
@@ -3118,7 +3562,7 @@
     "lineNumber": 369
   },
   {
-    "__docId__": 174,
+    "__docId__": 193,
     "kind": "test",
     "name": "describe52",
     "testId": 52,
@@ -3131,7 +3575,7 @@
     "lineNumber": 375
   },
   {
-    "__docId__": 175,
+    "__docId__": 194,
     "kind": "test",
     "name": "it53",
     "testId": 53,
@@ -3144,7 +3588,7 @@
     "lineNumber": 379
   },
   {
-    "__docId__": 176,
+    "__docId__": 195,
     "kind": "test",
     "name": "it54",
     "testId": 54,
@@ -3157,7 +3601,7 @@
     "lineNumber": 387
   },
   {
-    "__docId__": 177,
+    "__docId__": 196,
     "kind": "test",
     "name": "it55",
     "testId": 55,
@@ -3170,7 +3614,7 @@
     "lineNumber": 395
   },
   {
-    "__docId__": 178,
+    "__docId__": 197,
     "kind": "test",
     "name": "it56",
     "testId": 56,
@@ -3183,7 +3627,7 @@
     "lineNumber": 403
   },
   {
-    "__docId__": 179,
+    "__docId__": 198,
     "kind": "test",
     "name": "it57",
     "testId": 57,
@@ -3196,7 +3640,7 @@
     "lineNumber": 411
   },
   {
-    "__docId__": 180,
+    "__docId__": 199,
     "kind": "test",
     "name": "it58",
     "testId": 58,
@@ -3209,7 +3653,7 @@
     "lineNumber": 419
   },
   {
-    "__docId__": 181,
+    "__docId__": 200,
     "kind": "test",
     "name": "describe59",
     "testId": 59,
@@ -3222,7 +3666,7 @@
     "lineNumber": 428
   },
   {
-    "__docId__": 182,
+    "__docId__": 201,
     "kind": "test",
     "name": "it60",
     "testId": 60,
@@ -3235,7 +3679,7 @@
     "lineNumber": 432
   },
   {
-    "__docId__": 183,
+    "__docId__": 202,
     "kind": "test",
     "name": "it61",
     "testId": 61,
@@ -3248,7 +3692,7 @@
     "lineNumber": 440
   },
   {
-    "__docId__": 184,
+    "__docId__": 203,
     "kind": "test",
     "name": "it62",
     "testId": 62,
@@ -3261,7 +3705,7 @@
     "lineNumber": 448
   },
   {
-    "__docId__": 185,
+    "__docId__": 204,
     "kind": "test",
     "name": "it63",
     "testId": 63,
@@ -3274,7 +3718,7 @@
     "lineNumber": 456
   },
   {
-    "__docId__": 186,
+    "__docId__": 205,
     "kind": "test",
     "name": "it64",
     "testId": 64,
@@ -3287,7 +3731,7 @@
     "lineNumber": 464
   },
   {
-    "__docId__": 187,
+    "__docId__": 206,
     "kind": "test",
     "name": "it65",
     "testId": 65,
@@ -3300,7 +3744,7 @@
     "lineNumber": 472
   },
   {
-    "__docId__": 188,
+    "__docId__": 207,
     "kind": "test",
     "name": "describe66",
     "testId": 66,
@@ -3313,7 +3757,7 @@
     "lineNumber": 482
   },
   {
-    "__docId__": 189,
+    "__docId__": 208,
     "kind": "test",
     "name": "it67",
     "testId": 67,
@@ -3326,7 +3770,7 @@
     "lineNumber": 486
   },
   {
-    "__docId__": 190,
+    "__docId__": 209,
     "kind": "test",
     "name": "it68",
     "testId": 68,
@@ -3339,7 +3783,7 @@
     "lineNumber": 492
   },
   {
-    "__docId__": 191,
+    "__docId__": 210,
     "kind": "test",
     "name": "describe69",
     "testId": 69,
@@ -3352,7 +3796,7 @@
     "lineNumber": 498
   },
   {
-    "__docId__": 192,
+    "__docId__": 211,
     "kind": "test",
     "name": "it70",
     "testId": 70,
@@ -3365,7 +3809,7 @@
     "lineNumber": 502
   },
   {
-    "__docId__": 193,
+    "__docId__": 212,
     "kind": "test",
     "name": "it71",
     "testId": 71,
@@ -3378,7 +3822,7 @@
     "lineNumber": 510
   },
   {
-    "__docId__": 194,
+    "__docId__": 213,
     "kind": "test",
     "name": "it72",
     "testId": 72,
@@ -3391,7 +3835,7 @@
     "lineNumber": 518
   },
   {
-    "__docId__": 195,
+    "__docId__": 214,
     "kind": "test",
     "name": "it73",
     "testId": 73,
@@ -3404,7 +3848,7 @@
     "lineNumber": 526
   },
   {
-    "__docId__": 196,
+    "__docId__": 215,
     "kind": "test",
     "name": "describe74",
     "testId": 74,
@@ -3417,7 +3861,7 @@
     "lineNumber": 535
   },
   {
-    "__docId__": 197,
+    "__docId__": 216,
     "kind": "test",
     "name": "it75",
     "testId": 75,
@@ -3430,7 +3874,7 @@
     "lineNumber": 539
   },
   {
-    "__docId__": 198,
+    "__docId__": 217,
     "kind": "test",
     "name": "it76",
     "testId": 76,
@@ -3443,7 +3887,7 @@
     "lineNumber": 547
   },
   {
-    "__docId__": 199,
+    "__docId__": 218,
     "kind": "test",
     "name": "it77",
     "testId": 77,
@@ -3456,7 +3900,7 @@
     "lineNumber": 555
   },
   {
-    "__docId__": 200,
+    "__docId__": 219,
     "kind": "test",
     "name": "it78",
     "testId": 78,
@@ -3469,7 +3913,7 @@
     "lineNumber": 563
   },
   {
-    "__docId__": 201,
+    "__docId__": 220,
     "kind": "test",
     "name": "it79",
     "testId": 79,
@@ -3482,7 +3926,7 @@
     "lineNumber": 571
   },
   {
-    "__docId__": 202,
+    "__docId__": 221,
     "kind": "test",
     "name": "it80",
     "testId": 80,

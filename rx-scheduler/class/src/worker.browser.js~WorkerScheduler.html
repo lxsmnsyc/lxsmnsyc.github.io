@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">CurrentScheduler | rx-scheduler</title>
+  <title data-ice="title">WorkerScheduler | rx-scheduler</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -47,23 +47,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CurrentScheduler from &apos;<span><a href="file/src/current.js.html#lineNumber25">rx-scheduler/src/current.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import WorkerScheduler from &apos;<span><a href="file/src/worker.browser.js.html#lineNumber60">rx-scheduler/src/worker.browser.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/current.js.html#lineNumber25">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/worker.browser.js.html#lineNumber60">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">CurrentScheduler</h1>
+  <h1 data-ice="name">WorkerScheduler</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span> &#x2192; CurrentScheduler</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span> &#x2192; WorkerScheduler</div></div>
   
   
   
@@ -73,7 +73,9 @@
 
   
   
-  <div class="description" data-ice="description"><p>A Scheduler that allows scheduling on the current thread.</p>
+  <div class="description" data-ice="description"><p>A Scheduler that allows scheduling on a separate worker thread.</p>
+<p>Scheduled functions are not executed on the worker thread, rather,
+the worker thread emits a message event that schedules the function.</p>
 </div>
   
 
@@ -104,7 +106,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#static-get-instance">instance</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html#static-get-instance">instance</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -142,13 +144,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html#instance-method-delay">delay</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, amount: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Schedules the given function at a delayed time on the current task.</p>
+        <div data-ice="description"><p>Schedules the function on the separate worker thread.</p>
 </div>
       </div>
     </td>
@@ -171,13 +173,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/current.js~CurrentScheduler.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html#instance-method-schedule">schedule</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Schedules the function on the current task.</p>
+        <div data-ice="description"><p>Schedules the function on the separate worker thread.</p>
 </div>
       </div>
     </td>
@@ -270,7 +272,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/worker.browser.js.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
@@ -319,14 +321,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/worker.browser.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Schedules the given function at a delayed time on the current task.</p>
+  <div data-ice="description"><p>Schedules the function on the separate worker thread.</p>
 </div>
 
   <div data-ice="override"><h4>Override:</h4><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-delay">SchedulerInterface#delay</a></span></div>
@@ -401,14 +403,14 @@ to cancel the schedule.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/current.js.html#lineNumber41">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/worker.browser.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Schedules the function on the current task.</p>
+  <div data-ice="description"><p>Schedules the function on the separate worker thread.</p>
 </div>
 
   <div data-ice="override"><h4>Override:</h4><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html#instance-method-schedule">SchedulerInterface#schedule</a></span></div>

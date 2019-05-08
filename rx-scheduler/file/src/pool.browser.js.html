@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/index.node.js | rx-scheduler</title>
+  <title data-ice="title">src/pool.browser.js | rx-scheduler</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -46,104 +46,144 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/index.node.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/pool.browser.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable class-methods-use-this */
-/**
- * @license
- * MIT License
- *
- * Copyright (c) 2019 Alexis Munsayac
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the &quot;Software&quot;), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- *
- * @author Alexis Munsayac &lt;alexis.munsayac@gmail.com&gt;
- * @copyright Alexis Munsayac 2019
- */
-/**
- * @external {Cancellable} https://lxsmnsyc.github.io/rx-cancellable/
- */
-import ImmediateScheduler from &apos;./immediate.node&apos;;
-import AsyncScheduler from &apos;./async&apos;;
-import TimeoutScheduler from &apos;./timeout&apos;;
-import CurrentScheduler from &apos;./current&apos;;
-import TickScheduler from &apos;./tick&apos;;
 import SchedulerInterface from &apos;./scheduler-interface&apos;;
+import { schedule, delay } from &apos;./utils&apos;;
 
 /**
- * Scheduler is an object that specifies an API for scheduling units of work.
- * These units of work are scheduled either executed immediately or enqueued and
- * executed using a callback mechanism.
- *
- * Scheduler provides 5 types of scheduling mechanism:
- * - Current: executes the task immediately.
- * - Immediate: schedules the task for the next frame.
- * - Async: schedules the task asynchronously (as a microtask).
- * - Timeout: schedules the task using setTimeout.
- * - Tick: schedules the task using process.nextTick.
+ * @ignore
  */
-export default class Scheduler {
-  /**
-   * Interface for all scheduler types.
-   */
-  static get interface() {
-    return SchedulerInterface;
+let INSTANCE;
+
+/**
+ * @ignore
+ */
+const func = (() =&gt; {
+  const script = &apos;(()=&gt;{self.addEventListener(&quot;message&quot;,a=&gt;self.postMessage(a.data))})();&apos;;
+
+  const url = URL.createObjectURL(new Blob([script]));
+
+  const maxWorkers = 256;
+  const totalWorkers = navigator.hardwareConcurrency || 4;
+
+  const workers = [];
+  const jobs = [];
+
+  const recycler = [1];
+  const jobQueue = [];
+
+  const allocate = () =&gt; {
+    const i = recycler[0];
+    const n = recycler[i] || 0;
+    if (n === 0) {
+      recycler[0] = i + 1;
+    } else {
+      recycler[0] = n;
+    }
+    recycler[i] = -1;
+    return i;
+  };
+
+  const deallocate = (i) =&gt; {
+    if (recycler[i] === -1) {
+      recycler[i] = recycler[0];
+      recycler[0] = i;
+    }
+  };
+
+  const createWorker = () =&gt; {
+    const worker = new Worker(url);
+
+    worker.addEventListener(&apos;message&apos;, ({ data }) =&gt; {
+      if (jobs[data]) {
+        jobs[data]();
+        jobs[data] = null;
+        deallocate(data);
+      }
+
+      if (jobQueue.length &gt; 0) {
+        worker.postMessage(jobQueue.shift());
+      } else {
+        workers.push(worker);
+      }
+    });
+
+    return worker;
+  };
+
+  for (let i = 0; i &lt; totalWorkers; i += 1) {
+    workers[i] = createWorker();
+  }
+
+  function pushJob(fn) {
+    const id = allocate();
+    jobs[id] = fn;
+
+    jobQueue.push(id);
+
+    if (workers.length &gt; 0) {
+      workers.shift().postMessage(jobQueue.shift());
+    } else if (totalWorkers &lt; maxWorkers) {
+      createWorker().postMessage(jobQueue.shift());
+    }
+  }
+
+  return pushJob;
+})();
+/**
+ * @ignore
+ */
+const sched = schedule(func);
+/**
+ * @ignore
+ */
+const timed = delay(func);
+
+/**
+ * A Scheduler that allows scheduling on an idle worker thread from the worker pool.
+ *
+ * Scheduled functions are not executed on the worker thread, rather,
+ * the worker thread emits a message event that schedules the function, in
+ * which the functions are called on the main thread.
+ *
+ * There are a maximum of 256 workers, only 4 or your hardware&apos;s concurrency
+ * (nagivator.hardwareConcurrency) size are precreated.
+ *
+ * Execution sequence may be arbitrary due to varying execution times for each worker.
+ */
+export default class PoolScheduler extends SchedulerInterface {
+  static get instance() {
+    if (typeof INSTANCE === &apos;undefined&apos;) {
+      INSTANCE = new PoolScheduler();
+    }
+    return INSTANCE;
   }
 
   /**
-   * A Scheduler that allows scheduling on the current thread.
-   * @returns {CurrentScheduler}
+   * Schedules the function on an idle worker thread from the worker pool.
+   * @param {!function} fn
+   * A function that is called after being scheduled.
+   * @returns {Cancellable}
+   * Returns an Cancellable that allows
+   * to cancel the schedule.
    */
-  static get current() {
-    return CurrentScheduler.instance;
+  schedule(fn) {
+    return sched(fn);
   }
 
   /**
-   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.
-   * @returns {ImmediateScheduler}
+   * Schedules the function on an idle worker thread from the worker pool.
+   * @param {!function} fn
+   * A function that is called after being scheduled.
+   * @param {!number} amount
+   * The amount of delay in milliseconds.
+   * @returns {Cancellable}
+   * Returns an Cancellable that allows
+   * to cancel the schedule.
    */
-  static get immediate() {
-    return ImmediateScheduler.instance;
-  }
-
-  /**
-   * A Scheduler that allows async scheduling on the current thread.
-   * @returns {AsyncScheduler}
-   */
-  static get async() {
-    return AsyncScheduler.instance;
-  }
-
-  /**
-   * A Scheduler that allows timeout scheduling on the current thread.
-   * @returns {TimeoutScheduler}
-   */
-  static get timeout() {
-    return TimeoutScheduler.instance;
-  }
-
-
-  /**
-   * A Scheduler that allows scheduling using process.nextTick.
-   * @returns {TickScheduler}
-   */
-  static get tick() {
-    return TickScheduler.instance;
+  delay(fn, amount) {
+    return timed(fn, amount);
   }
 }
 </code></pre>

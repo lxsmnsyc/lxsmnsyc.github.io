@@ -35,8 +35,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pool.browser.js~PoolScheduler.html">PoolScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html">WorkerScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
@@ -82,6 +84,8 @@ import AsyncScheduler from &apos;./async&apos;;
 import TimeoutScheduler from &apos;./timeout&apos;;
 import CurrentScheduler from &apos;./current&apos;;
 import SchedulerInterface from &apos;./scheduler-interface&apos;;
+import WorkerScheduler from &apos;./worker.browser&apos;;
+import PoolScheduler from &apos;./pool.browser&apos;;
 
 /**
  * Scheduler is an object that specifies an API for scheduling units of work.
@@ -132,6 +136,14 @@ export default class Scheduler {
    */
   static get timeout() {
     return TimeoutScheduler.instance;
+  }
+
+  static get worker() {
+    return WorkerScheduler.instance;
+  }
+
+  static get pool() {
+    return PoolScheduler.instance;
   }
 }
 </code></pre>

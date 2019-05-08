@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 2964,
+  "end": 3184,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 90,
+      "line": 100,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 2964,
+    "end": 3184,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 90,
+        "line": 100,
         "column": 0
       }
     },
@@ -423,20 +423,158 @@
             "raw": "'./scheduler-interface'"
           },
           "value": "./scheduler-interface"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 1599,
+        "end": 1646,
+        "loc": {
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 38,
+            "column": 47
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 1606,
+            "end": 1621,
+            "loc": {
+              "start": {
+                "line": 38,
+                "column": 7
+              },
+              "end": {
+                "line": 38,
+                "column": 22
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 1606,
+              "end": 1621,
+              "loc": {
+                "start": {
+                  "line": 38,
+                  "column": 7
+                },
+                "end": {
+                  "line": 38,
+                  "column": 22
+                },
+                "identifierName": "WorkerScheduler"
+              },
+              "name": "WorkerScheduler"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 1627,
+          "end": 1645,
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 28
+            },
+            "end": {
+              "line": 38,
+              "column": 46
+            }
+          },
+          "extra": {
+            "rawValue": "./worker.browser",
+            "raw": "'./worker.browser'"
+          },
+          "value": "./worker.browser"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 1647,
+        "end": 1690,
+        "loc": {
+          "start": {
+            "line": 39,
+            "column": 0
+          },
+          "end": {
+            "line": 39,
+            "column": 43
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 1654,
+            "end": 1667,
+            "loc": {
+              "start": {
+                "line": 39,
+                "column": 7
+              },
+              "end": {
+                "line": 39,
+                "column": 20
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 1654,
+              "end": 1667,
+              "loc": {
+                "start": {
+                  "line": 39,
+                  "column": 7
+                },
+                "end": {
+                  "line": 39,
+                  "column": 20
+                },
+                "identifierName": "PoolScheduler"
+              },
+              "name": "PoolScheduler"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 1673,
+          "end": 1689,
+          "loc": {
+            "start": {
+              "line": 39,
+              "column": 26
+            },
+            "end": {
+              "line": 39,
+              "column": 42
+            }
+          },
+          "extra": {
+            "rawValue": "./pool.browser",
+            "raw": "'./pool.browser'"
+          },
+          "value": "./pool.browser"
         },
         "trailingComments": [
           {
             "type": "CommentBlock",
             "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
-            "start": 1600,
-            "end": 2079,
+            "start": 1692,
+            "end": 2171,
             "loc": {
               "start": {
-                "line": 39,
+                "line": 41,
                 "column": 0
               },
               "end": {
-                "line": 49,
+                "line": 51,
                 "column": 3
               }
             }
@@ -445,43 +583,43 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 2080,
-        "end": 2963,
+        "start": 2172,
+        "end": 3183,
         "loc": {
           "start": {
-            "line": 50,
+            "line": 52,
             "column": 0
           },
           "end": {
-            "line": 89,
+            "line": 99,
             "column": 1
           }
         },
         "declaration": {
           "type": "ClassDeclaration",
-          "start": 2095,
-          "end": 2963,
+          "start": 2187,
+          "end": 3183,
           "loc": {
             "start": {
-              "line": 50,
+              "line": 52,
               "column": 15
             },
             "end": {
-              "line": 89,
+              "line": 99,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 2101,
-            "end": 2110,
+            "start": 2193,
+            "end": 2202,
             "loc": {
               "start": {
-                "line": 50,
+                "line": 52,
                 "column": 21
               },
               "end": {
-                "line": 50,
+                "line": 52,
                 "column": 30
               },
               "identifierName": "Scheduler"
@@ -492,30 +630,30 @@
           "superClass": null,
           "body": {
             "type": "ClassBody",
-            "start": 2111,
-            "end": 2963,
+            "start": 2203,
+            "end": 3183,
             "loc": {
               "start": {
-                "line": 50,
+                "line": 52,
                 "column": 31
               },
               "end": {
-                "line": 89,
+                "line": 99,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ClassMethod",
-                "start": 2167,
-                "end": 2226,
+                "start": 2259,
+                "end": 2318,
                 "loc": {
                   "start": {
-                    "line": 54,
+                    "line": 56,
                     "column": 2
                   },
                   "end": {
-                    "line": 56,
+                    "line": 58,
                     "column": 3
                   }
                 },
@@ -523,15 +661,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2178,
-                  "end": 2187,
+                  "start": 2270,
+                  "end": 2279,
                   "loc": {
                     "start": {
-                      "line": 54,
+                      "line": 56,
                       "column": 13
                     },
                     "end": {
-                      "line": 54,
+                      "line": 56,
                       "column": 22
                     },
                     "identifierName": "interface"
@@ -546,44 +684,44 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2190,
-                  "end": 2226,
+                  "start": 2282,
+                  "end": 2318,
                   "loc": {
                     "start": {
-                      "line": 54,
+                      "line": 56,
                       "column": 25
                     },
                     "end": {
-                      "line": 56,
+                      "line": 58,
                       "column": 3
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2196,
-                      "end": 2222,
+                      "start": 2288,
+                      "end": 2314,
                       "loc": {
                         "start": {
-                          "line": 55,
+                          "line": 57,
                           "column": 4
                         },
                         "end": {
-                          "line": 55,
+                          "line": 57,
                           "column": 30
                         }
                       },
                       "argument": {
                         "type": "Identifier",
-                        "start": 2203,
-                        "end": 2221,
+                        "start": 2295,
+                        "end": 2313,
                         "loc": {
                           "start": {
-                            "line": 55,
+                            "line": 57,
                             "column": 11
                           },
                           "end": {
-                            "line": 55,
+                            "line": 57,
                             "column": 29
                           },
                           "identifierName": "SchedulerInterface"
@@ -599,15 +737,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * Interface for all scheduler types.\n   ",
-                    "start": 2115,
-                    "end": 2164,
+                    "start": 2207,
+                    "end": 2256,
                     "loc": {
                       "start": {
-                        "line": 51,
+                        "line": 53,
                         "column": 2
                       },
                       "end": {
-                        "line": 53,
+                        "line": 55,
                         "column": 5
                       }
                     }
@@ -617,15 +755,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   ",
-                    "start": 2230,
-                    "end": 2335,
+                    "start": 2322,
+                    "end": 2427,
                     "loc": {
                       "start": {
-                        "line": 58,
+                        "line": 60,
                         "column": 2
                       },
                       "end": {
-                        "line": 61,
+                        "line": 63,
                         "column": 5
                       }
                     }
@@ -634,15 +772,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2338,
-                "end": 2402,
+                "start": 2430,
+                "end": 2494,
                 "loc": {
                   "start": {
-                    "line": 62,
+                    "line": 64,
                     "column": 2
                   },
                   "end": {
-                    "line": 64,
+                    "line": 66,
                     "column": 3
                   }
                 },
@@ -650,15 +788,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2349,
-                  "end": 2356,
+                  "start": 2441,
+                  "end": 2448,
                   "loc": {
                     "start": {
-                      "line": 62,
+                      "line": 64,
                       "column": 13
                     },
                     "end": {
-                      "line": 62,
+                      "line": 64,
                       "column": 20
                     },
                     "identifierName": "current"
@@ -673,58 +811,58 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2359,
-                  "end": 2402,
+                  "start": 2451,
+                  "end": 2494,
                   "loc": {
                     "start": {
-                      "line": 62,
+                      "line": 64,
                       "column": 23
                     },
                     "end": {
-                      "line": 64,
+                      "line": 66,
                       "column": 3
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2365,
-                      "end": 2398,
+                      "start": 2457,
+                      "end": 2490,
                       "loc": {
                         "start": {
-                          "line": 63,
+                          "line": 65,
                           "column": 4
                         },
                         "end": {
-                          "line": 63,
+                          "line": 65,
                           "column": 37
                         }
                       },
                       "argument": {
                         "type": "MemberExpression",
-                        "start": 2372,
-                        "end": 2397,
+                        "start": 2464,
+                        "end": 2489,
                         "loc": {
                           "start": {
-                            "line": 63,
+                            "line": 65,
                             "column": 11
                           },
                           "end": {
-                            "line": 63,
+                            "line": 65,
                             "column": 36
                           }
                         },
                         "object": {
                           "type": "Identifier",
-                          "start": 2372,
-                          "end": 2388,
+                          "start": 2464,
+                          "end": 2480,
                           "loc": {
                             "start": {
-                              "line": 63,
+                              "line": 65,
                               "column": 11
                             },
                             "end": {
-                              "line": 63,
+                              "line": 65,
                               "column": 27
                             },
                             "identifierName": "CurrentScheduler"
@@ -733,15 +871,15 @@
                         },
                         "property": {
                           "type": "Identifier",
-                          "start": 2389,
-                          "end": 2397,
+                          "start": 2481,
+                          "end": 2489,
                           "loc": {
                             "start": {
-                              "line": 63,
+                              "line": 65,
                               "column": 28
                             },
                             "end": {
-                              "line": 63,
+                              "line": 65,
                               "column": 36
                             },
                             "identifierName": "instance"
@@ -759,15 +897,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   ",
-                    "start": 2230,
-                    "end": 2335,
+                    "start": 2322,
+                    "end": 2427,
                     "loc": {
                       "start": {
-                        "line": 58,
+                        "line": 60,
                         "column": 2
                       },
                       "end": {
-                        "line": 61,
+                        "line": 63,
                         "column": 5
                       }
                     }
@@ -777,15 +915,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   ",
-                    "start": 2406,
-                    "end": 2530,
+                    "start": 2498,
+                    "end": 2622,
                     "loc": {
                       "start": {
-                        "line": 66,
+                        "line": 68,
                         "column": 2
                       },
                       "end": {
-                        "line": 69,
+                        "line": 71,
                         "column": 5
                       }
                     }
@@ -794,15 +932,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2533,
-                "end": 2601,
+                "start": 2625,
+                "end": 2693,
                 "loc": {
                   "start": {
-                    "line": 70,
+                    "line": 72,
                     "column": 2
                   },
                   "end": {
-                    "line": 72,
+                    "line": 74,
                     "column": 3
                   }
                 },
@@ -810,15 +948,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2544,
-                  "end": 2553,
+                  "start": 2636,
+                  "end": 2645,
                   "loc": {
                     "start": {
-                      "line": 70,
+                      "line": 72,
                       "column": 13
                     },
                     "end": {
-                      "line": 70,
+                      "line": 72,
                       "column": 22
                     },
                     "identifierName": "immediate"
@@ -833,58 +971,58 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2556,
-                  "end": 2601,
+                  "start": 2648,
+                  "end": 2693,
                   "loc": {
                     "start": {
-                      "line": 70,
+                      "line": 72,
                       "column": 25
                     },
                     "end": {
-                      "line": 72,
+                      "line": 74,
                       "column": 3
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2562,
-                      "end": 2597,
+                      "start": 2654,
+                      "end": 2689,
                       "loc": {
                         "start": {
-                          "line": 71,
+                          "line": 73,
                           "column": 4
                         },
                         "end": {
-                          "line": 71,
+                          "line": 73,
                           "column": 39
                         }
                       },
                       "argument": {
                         "type": "MemberExpression",
-                        "start": 2569,
-                        "end": 2596,
+                        "start": 2661,
+                        "end": 2688,
                         "loc": {
                           "start": {
-                            "line": 71,
+                            "line": 73,
                             "column": 11
                           },
                           "end": {
-                            "line": 71,
+                            "line": 73,
                             "column": 38
                           }
                         },
                         "object": {
                           "type": "Identifier",
-                          "start": 2569,
-                          "end": 2587,
+                          "start": 2661,
+                          "end": 2679,
                           "loc": {
                             "start": {
-                              "line": 71,
+                              "line": 73,
                               "column": 11
                             },
                             "end": {
-                              "line": 71,
+                              "line": 73,
                               "column": 29
                             },
                             "identifierName": "ImmediateScheduler"
@@ -893,15 +1031,15 @@
                         },
                         "property": {
                           "type": "Identifier",
-                          "start": 2588,
-                          "end": 2596,
+                          "start": 2680,
+                          "end": 2688,
                           "loc": {
                             "start": {
-                              "line": 71,
+                              "line": 73,
                               "column": 30
                             },
                             "end": {
-                              "line": 71,
+                              "line": 73,
                               "column": 38
                             },
                             "identifierName": "instance"
@@ -919,15 +1057,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   ",
-                    "start": 2406,
-                    "end": 2530,
+                    "start": 2498,
+                    "end": 2622,
                     "loc": {
                       "start": {
-                        "line": 66,
+                        "line": 68,
                         "column": 2
                       },
                       "end": {
-                        "line": 69,
+                        "line": 71,
                         "column": 5
                       }
                     }
@@ -937,15 +1075,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   ",
-                    "start": 2605,
-                    "end": 2714,
+                    "start": 2697,
+                    "end": 2806,
                     "loc": {
                       "start": {
-                        "line": 74,
+                        "line": 76,
                         "column": 2
                       },
                       "end": {
-                        "line": 77,
+                        "line": 79,
                         "column": 5
                       }
                     }
@@ -954,15 +1092,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2717,
-                "end": 2777,
+                "start": 2809,
+                "end": 2869,
                 "loc": {
                   "start": {
-                    "line": 78,
+                    "line": 80,
                     "column": 2
                   },
                   "end": {
-                    "line": 80,
+                    "line": 82,
                     "column": 3
                   }
                 },
@@ -970,15 +1108,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2728,
-                  "end": 2733,
+                  "start": 2820,
+                  "end": 2825,
                   "loc": {
                     "start": {
-                      "line": 78,
+                      "line": 80,
                       "column": 13
                     },
                     "end": {
-                      "line": 78,
+                      "line": 80,
                       "column": 18
                     },
                     "identifierName": "async"
@@ -993,58 +1131,58 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2736,
-                  "end": 2777,
+                  "start": 2828,
+                  "end": 2869,
                   "loc": {
                     "start": {
-                      "line": 78,
+                      "line": 80,
                       "column": 21
                     },
                     "end": {
-                      "line": 80,
+                      "line": 82,
                       "column": 3
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2742,
-                      "end": 2773,
+                      "start": 2834,
+                      "end": 2865,
                       "loc": {
                         "start": {
-                          "line": 79,
+                          "line": 81,
                           "column": 4
                         },
                         "end": {
-                          "line": 79,
+                          "line": 81,
                           "column": 35
                         }
                       },
                       "argument": {
                         "type": "MemberExpression",
-                        "start": 2749,
-                        "end": 2772,
+                        "start": 2841,
+                        "end": 2864,
                         "loc": {
                           "start": {
-                            "line": 79,
+                            "line": 81,
                             "column": 11
                           },
                           "end": {
-                            "line": 79,
+                            "line": 81,
                             "column": 34
                           }
                         },
                         "object": {
                           "type": "Identifier",
-                          "start": 2749,
-                          "end": 2763,
+                          "start": 2841,
+                          "end": 2855,
                           "loc": {
                             "start": {
-                              "line": 79,
+                              "line": 81,
                               "column": 11
                             },
                             "end": {
-                              "line": 79,
+                              "line": 81,
                               "column": 25
                             },
                             "identifierName": "AsyncScheduler"
@@ -1053,15 +1191,15 @@
                         },
                         "property": {
                           "type": "Identifier",
-                          "start": 2764,
-                          "end": 2772,
+                          "start": 2856,
+                          "end": 2864,
                           "loc": {
                             "start": {
-                              "line": 79,
+                              "line": 81,
                               "column": 26
                             },
                             "end": {
-                              "line": 79,
+                              "line": 81,
                               "column": 34
                             },
                             "identifierName": "instance"
@@ -1079,15 +1217,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   ",
-                    "start": 2605,
-                    "end": 2714,
+                    "start": 2697,
+                    "end": 2806,
                     "loc": {
                       "start": {
-                        "line": 74,
+                        "line": 76,
                         "column": 2
                       },
                       "end": {
-                        "line": 77,
+                        "line": 79,
                         "column": 5
                       }
                     }
@@ -1097,15 +1235,15 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   ",
-                    "start": 2781,
-                    "end": 2894,
+                    "start": 2873,
+                    "end": 2986,
                     "loc": {
                       "start": {
-                        "line": 82,
+                        "line": 84,
                         "column": 2
                       },
                       "end": {
-                        "line": 85,
+                        "line": 87,
                         "column": 5
                       }
                     }
@@ -1114,15 +1252,15 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2897,
-                "end": 2961,
+                "start": 2989,
+                "end": 3053,
                 "loc": {
                   "start": {
-                    "line": 86,
+                    "line": 88,
                     "column": 2
                   },
                   "end": {
-                    "line": 88,
+                    "line": 90,
                     "column": 3
                   }
                 },
@@ -1130,15 +1268,15 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2908,
-                  "end": 2915,
+                  "start": 3000,
+                  "end": 3007,
                   "loc": {
                     "start": {
-                      "line": 86,
+                      "line": 88,
                       "column": 13
                     },
                     "end": {
-                      "line": 86,
+                      "line": 88,
                       "column": 20
                     },
                     "identifierName": "timeout"
@@ -1153,58 +1291,58 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2918,
-                  "end": 2961,
+                  "start": 3010,
+                  "end": 3053,
                   "loc": {
                     "start": {
-                      "line": 86,
+                      "line": 88,
                       "column": 23
                     },
                     "end": {
-                      "line": 88,
+                      "line": 90,
                       "column": 3
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2924,
-                      "end": 2957,
+                      "start": 3016,
+                      "end": 3049,
                       "loc": {
                         "start": {
-                          "line": 87,
+                          "line": 89,
                           "column": 4
                         },
                         "end": {
-                          "line": 87,
+                          "line": 89,
                           "column": 37
                         }
                       },
                       "argument": {
                         "type": "MemberExpression",
-                        "start": 2931,
-                        "end": 2956,
+                        "start": 3023,
+                        "end": 3048,
                         "loc": {
                           "start": {
-                            "line": 87,
+                            "line": 89,
                             "column": 11
                           },
                           "end": {
-                            "line": 87,
+                            "line": 89,
                             "column": 36
                           }
                         },
                         "object": {
                           "type": "Identifier",
-                          "start": 2931,
-                          "end": 2947,
+                          "start": 3023,
+                          "end": 3039,
                           "loc": {
                             "start": {
-                              "line": 87,
+                              "line": 89,
                               "column": 11
                             },
                             "end": {
-                              "line": 87,
+                              "line": 89,
                               "column": 27
                             },
                             "identifierName": "TimeoutScheduler"
@@ -1213,15 +1351,15 @@
                         },
                         "property": {
                           "type": "Identifier",
-                          "start": 2948,
-                          "end": 2956,
+                          "start": 3040,
+                          "end": 3048,
                           "loc": {
                             "start": {
-                              "line": 87,
+                              "line": 89,
                               "column": 28
                             },
                             "end": {
-                              "line": 87,
+                              "line": 89,
                               "column": 36
                             },
                             "identifierName": "instance"
@@ -1238,20 +1376,266 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   ",
-                    "start": 2781,
-                    "end": 2894,
+                    "start": 2873,
+                    "end": 2986,
                     "loc": {
                       "start": {
-                        "line": 82,
+                        "line": 84,
                         "column": 2
                       },
                       "end": {
-                        "line": 85,
+                        "line": 87,
                         "column": 5
                       }
                     }
                   }
                 ]
+              },
+              {
+                "type": "ClassMethod",
+                "start": 3057,
+                "end": 3119,
+                "loc": {
+                  "start": {
+                    "line": 92,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 94,
+                    "column": 3
+                  }
+                },
+                "static": true,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 3068,
+                  "end": 3074,
+                  "loc": {
+                    "start": {
+                      "line": 92,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 92,
+                      "column": 19
+                    },
+                    "identifierName": "worker"
+                  },
+                  "name": "worker"
+                },
+                "kind": "get",
+                "id": null,
+                "generator": false,
+                "expression": false,
+                "async": false,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 3077,
+                  "end": 3119,
+                  "loc": {
+                    "start": {
+                      "line": 92,
+                      "column": 22
+                    },
+                    "end": {
+                      "line": 94,
+                      "column": 3
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "start": 3083,
+                      "end": 3115,
+                      "loc": {
+                        "start": {
+                          "line": 93,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 93,
+                          "column": 36
+                        }
+                      },
+                      "argument": {
+                        "type": "MemberExpression",
+                        "start": 3090,
+                        "end": 3114,
+                        "loc": {
+                          "start": {
+                            "line": 93,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 93,
+                            "column": 35
+                          }
+                        },
+                        "object": {
+                          "type": "Identifier",
+                          "start": 3090,
+                          "end": 3105,
+                          "loc": {
+                            "start": {
+                              "line": 93,
+                              "column": 11
+                            },
+                            "end": {
+                              "line": 93,
+                              "column": 26
+                            },
+                            "identifierName": "WorkerScheduler"
+                          },
+                          "name": "WorkerScheduler"
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "start": 3106,
+                          "end": 3114,
+                          "loc": {
+                            "start": {
+                              "line": 93,
+                              "column": 27
+                            },
+                            "end": {
+                              "line": 93,
+                              "column": 35
+                            },
+                            "identifierName": "instance"
+                          },
+                          "name": "instance"
+                        },
+                        "computed": false
+                      }
+                    }
+                  ],
+                  "directives": []
+                }
+              },
+              {
+                "type": "ClassMethod",
+                "start": 3123,
+                "end": 3181,
+                "loc": {
+                  "start": {
+                    "line": 96,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 98,
+                    "column": 3
+                  }
+                },
+                "static": true,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 3134,
+                  "end": 3138,
+                  "loc": {
+                    "start": {
+                      "line": 96,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 96,
+                      "column": 17
+                    },
+                    "identifierName": "pool"
+                  },
+                  "name": "pool"
+                },
+                "kind": "get",
+                "id": null,
+                "generator": false,
+                "expression": false,
+                "async": false,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 3141,
+                  "end": 3181,
+                  "loc": {
+                    "start": {
+                      "line": 96,
+                      "column": 20
+                    },
+                    "end": {
+                      "line": 98,
+                      "column": 3
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "start": 3147,
+                      "end": 3177,
+                      "loc": {
+                        "start": {
+                          "line": 97,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 97,
+                          "column": 34
+                        }
+                      },
+                      "argument": {
+                        "type": "MemberExpression",
+                        "start": 3154,
+                        "end": 3176,
+                        "loc": {
+                          "start": {
+                            "line": 97,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 97,
+                            "column": 33
+                          }
+                        },
+                        "object": {
+                          "type": "Identifier",
+                          "start": 3154,
+                          "end": 3167,
+                          "loc": {
+                            "start": {
+                              "line": 97,
+                              "column": 11
+                            },
+                            "end": {
+                              "line": 97,
+                              "column": 24
+                            },
+                            "identifierName": "PoolScheduler"
+                          },
+                          "name": "PoolScheduler"
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "start": 3168,
+                          "end": 3176,
+                          "loc": {
+                            "start": {
+                              "line": 97,
+                              "column": 25
+                            },
+                            "end": {
+                              "line": 97,
+                              "column": 33
+                            },
+                            "identifierName": "instance"
+                          },
+                          "name": "instance"
+                        },
+                        "computed": false
+                      }
+                    }
+                  ],
+                  "directives": []
+                }
               }
             ]
           },
@@ -1259,15 +1643,15 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
-              "start": 1600,
-              "end": 2079,
+              "start": 1692,
+              "end": 2171,
               "loc": {
                 "start": {
-                  "line": 39,
+                  "line": 41,
                   "column": 0
                 },
                 "end": {
-                  "line": 49,
+                  "line": 51,
                   "column": 3
                 }
               }
@@ -1279,15 +1663,15 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
-            "start": 1600,
-            "end": 2079,
+            "start": 1692,
+            "end": 2171,
             "loc": {
               "start": {
-                "line": 39,
+                "line": 41,
                 "column": 0
               },
               "end": {
-                "line": 49,
+                "line": 51,
                 "column": 3
               }
             }
@@ -1349,15 +1733,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
-      "start": 1600,
-      "end": 2079,
+      "start": 1692,
+      "end": 2171,
       "loc": {
         "start": {
-          "line": 39,
+          "line": 41,
           "column": 0
         },
         "end": {
-          "line": 49,
+          "line": 51,
           "column": 3
         }
       }
@@ -1365,15 +1749,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Interface for all scheduler types.\n   ",
-      "start": 2115,
-      "end": 2164,
+      "start": 2207,
+      "end": 2256,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 53,
           "column": 2
         },
         "end": {
-          "line": 53,
+          "line": 55,
           "column": 5
         }
       }
@@ -1381,15 +1765,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   ",
-      "start": 2230,
-      "end": 2335,
+      "start": 2322,
+      "end": 2427,
       "loc": {
         "start": {
-          "line": 58,
+          "line": 60,
           "column": 2
         },
         "end": {
-          "line": 61,
+          "line": 63,
           "column": 5
         }
       }
@@ -1397,15 +1781,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   ",
-      "start": 2406,
-      "end": 2530,
+      "start": 2498,
+      "end": 2622,
       "loc": {
         "start": {
-          "line": 66,
+          "line": 68,
           "column": 2
         },
         "end": {
-          "line": 69,
+          "line": 71,
           "column": 5
         }
       }
@@ -1413,15 +1797,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   ",
-      "start": 2605,
-      "end": 2714,
+      "start": 2697,
+      "end": 2806,
       "loc": {
         "start": {
-          "line": 74,
+          "line": 76,
           "column": 2
         },
         "end": {
-          "line": 77,
+          "line": 79,
           "column": 5
         }
       }
@@ -1429,15 +1813,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   ",
-      "start": 2781,
-      "end": 2894,
+      "start": 2873,
+      "end": 2986,
       "loc": {
         "start": {
-          "line": 82,
+          "line": 84,
           "column": 2
         },
         "end": {
-          "line": 85,
+          "line": 87,
           "column": 5
         }
       }
@@ -2158,17 +2542,283 @@
       }
     },
     {
-      "type": "CommentBlock",
-      "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
-      "start": 1600,
-      "end": 2079,
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 1599,
+      "end": 1605,
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 0
+        },
+        "end": {
+          "line": 38,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "WorkerScheduler",
+      "start": 1606,
+      "end": 1621,
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 7
+        },
+        "end": {
+          "line": 38,
+          "column": 22
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 1622,
+      "end": 1626,
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 23
+        },
+        "end": {
+          "line": 38,
+          "column": 27
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "./worker.browser",
+      "start": 1627,
+      "end": 1645,
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 28
+        },
+        "end": {
+          "line": 38,
+          "column": 46
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 1645,
+      "end": 1646,
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 46
+        },
+        "end": {
+          "line": 38,
+          "column": 47
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 1647,
+      "end": 1653,
       "loc": {
         "start": {
           "line": 39,
           "column": 0
         },
         "end": {
-          "line": 49,
+          "line": 39,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PoolScheduler",
+      "start": 1654,
+      "end": 1667,
+      "loc": {
+        "start": {
+          "line": 39,
+          "column": 7
+        },
+        "end": {
+          "line": 39,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 1668,
+      "end": 1672,
+      "loc": {
+        "start": {
+          "line": 39,
+          "column": 21
+        },
+        "end": {
+          "line": 39,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "./pool.browser",
+      "start": 1673,
+      "end": 1689,
+      "loc": {
+        "start": {
+          "line": 39,
+          "column": 26
+        },
+        "end": {
+          "line": 39,
+          "column": 42
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 1689,
+      "end": 1690,
+      "loc": {
+        "start": {
+          "line": 39,
+          "column": 42
+        },
+        "end": {
+          "line": 39,
+          "column": 43
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n * Scheduler is an object that specifies an API for scheduling units of work.\n * These units of work are scheduled either executed immediately or enqueued and\n * executed using a callback mechanism.\n *\n * Scheduler provides 4 types of scheduling mechanism:\n * - Current: executes the task immediately.\n * - Immediate: schedules the task for the next frame.\n * - Async: schedules the task asynchronously (as a microtask).\n * - Timeout: schedules the task using setTimeout.\n ",
+      "start": 1692,
+      "end": 2171,
+      "loc": {
+        "start": {
+          "line": 41,
+          "column": 0
+        },
+        "end": {
+          "line": 51,
           "column": 3
         }
       }
@@ -2188,15 +2838,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 2080,
-      "end": 2086,
+      "start": 2172,
+      "end": 2178,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 52,
           "column": 0
         },
         "end": {
-          "line": 50,
+          "line": 52,
           "column": 6
         }
       }
@@ -2216,15 +2866,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 2087,
-      "end": 2094,
+      "start": 2179,
+      "end": 2186,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 52,
           "column": 7
         },
         "end": {
-          "line": 50,
+          "line": 52,
           "column": 14
         }
       }
@@ -2244,15 +2894,15 @@
         "updateContext": null
       },
       "value": "class",
-      "start": 2095,
-      "end": 2100,
+      "start": 2187,
+      "end": 2192,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 52,
           "column": 15
         },
         "end": {
-          "line": 50,
+          "line": 52,
           "column": 20
         }
       }
@@ -2270,15 +2920,15 @@
         "binop": null
       },
       "value": "Scheduler",
-      "start": 2101,
-      "end": 2110,
+      "start": 2193,
+      "end": 2202,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 52,
           "column": 21
         },
         "end": {
-          "line": 50,
+          "line": 52,
           "column": 30
         }
       }
@@ -2295,15 +2945,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2111,
-      "end": 2112,
+      "start": 2203,
+      "end": 2204,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 52,
           "column": 31
         },
         "end": {
-          "line": 50,
+          "line": 52,
           "column": 32
         }
       }
@@ -2311,15 +2961,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * Interface for all scheduler types.\n   ",
-      "start": 2115,
-      "end": 2164,
+      "start": 2207,
+      "end": 2256,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 53,
           "column": 2
         },
         "end": {
-          "line": 53,
+          "line": 55,
           "column": 5
         }
       }
@@ -2337,15 +2987,15 @@
         "binop": null
       },
       "value": "static",
-      "start": 2167,
-      "end": 2173,
+      "start": 2259,
+      "end": 2265,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 2
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 8
         }
       }
@@ -2363,15 +3013,15 @@
         "binop": null
       },
       "value": "get",
-      "start": 2174,
-      "end": 2177,
+      "start": 2266,
+      "end": 2269,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 9
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 12
         }
       }
@@ -2389,15 +3039,15 @@
         "binop": null
       },
       "value": "interface",
-      "start": 2178,
-      "end": 2187,
+      "start": 2270,
+      "end": 2279,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 13
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 22
         }
       }
@@ -2414,15 +3064,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2187,
-      "end": 2188,
+      "start": 2279,
+      "end": 2280,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 22
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 23
         }
       }
@@ -2439,15 +3089,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2188,
-      "end": 2189,
+      "start": 2280,
+      "end": 2281,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 23
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 24
         }
       }
@@ -2464,15 +3114,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2190,
-      "end": 2191,
+      "start": 2282,
+      "end": 2283,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 56,
           "column": 25
         },
         "end": {
-          "line": 54,
+          "line": 56,
           "column": 26
         }
       }
@@ -2492,15 +3142,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2196,
-      "end": 2202,
+      "start": 2288,
+      "end": 2294,
       "loc": {
         "start": {
-          "line": 55,
+          "line": 57,
           "column": 4
         },
         "end": {
-          "line": 55,
+          "line": 57,
           "column": 10
         }
       }
@@ -2518,15 +3168,15 @@
         "binop": null
       },
       "value": "SchedulerInterface",
-      "start": 2203,
-      "end": 2221,
+      "start": 2295,
+      "end": 2313,
       "loc": {
         "start": {
-          "line": 55,
+          "line": 57,
           "column": 11
         },
         "end": {
-          "line": 55,
+          "line": 57,
           "column": 29
         }
       }
@@ -2544,15 +3194,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2221,
-      "end": 2222,
+      "start": 2313,
+      "end": 2314,
       "loc": {
         "start": {
-          "line": 55,
+          "line": 57,
           "column": 29
         },
         "end": {
-          "line": 55,
+          "line": 57,
           "column": 30
         }
       }
@@ -2569,15 +3219,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2225,
-      "end": 2226,
+      "start": 2317,
+      "end": 2318,
       "loc": {
         "start": {
-          "line": 56,
+          "line": 58,
           "column": 2
         },
         "end": {
-          "line": 56,
+          "line": 58,
           "column": 3
         }
       }
@@ -2585,15 +3235,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows scheduling on the current thread.\n   * @returns {CurrentScheduler}\n   ",
-      "start": 2230,
-      "end": 2335,
+      "start": 2322,
+      "end": 2427,
       "loc": {
         "start": {
-          "line": 58,
+          "line": 60,
           "column": 2
         },
         "end": {
-          "line": 61,
+          "line": 63,
           "column": 5
         }
       }
@@ -2611,15 +3261,15 @@
         "binop": null
       },
       "value": "static",
-      "start": 2338,
-      "end": 2344,
+      "start": 2430,
+      "end": 2436,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 2
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 8
         }
       }
@@ -2637,15 +3287,15 @@
         "binop": null
       },
       "value": "get",
-      "start": 2345,
-      "end": 2348,
+      "start": 2437,
+      "end": 2440,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 9
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 12
         }
       }
@@ -2663,15 +3313,15 @@
         "binop": null
       },
       "value": "current",
-      "start": 2349,
-      "end": 2356,
+      "start": 2441,
+      "end": 2448,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 13
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 20
         }
       }
@@ -2688,15 +3338,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2356,
-      "end": 2357,
+      "start": 2448,
+      "end": 2449,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 20
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 21
         }
       }
@@ -2713,15 +3363,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2357,
-      "end": 2358,
+      "start": 2449,
+      "end": 2450,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 21
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 22
         }
       }
@@ -2738,15 +3388,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2359,
-      "end": 2360,
+      "start": 2451,
+      "end": 2452,
       "loc": {
         "start": {
-          "line": 62,
+          "line": 64,
           "column": 23
         },
         "end": {
-          "line": 62,
+          "line": 64,
           "column": 24
         }
       }
@@ -2766,15 +3416,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2365,
-      "end": 2371,
+      "start": 2457,
+      "end": 2463,
       "loc": {
         "start": {
-          "line": 63,
+          "line": 65,
           "column": 4
         },
         "end": {
-          "line": 63,
+          "line": 65,
           "column": 10
         }
       }
@@ -2792,15 +3442,15 @@
         "binop": null
       },
       "value": "CurrentScheduler",
-      "start": 2372,
-      "end": 2388,
+      "start": 2464,
+      "end": 2480,
       "loc": {
         "start": {
-          "line": 63,
+          "line": 65,
           "column": 11
         },
         "end": {
-          "line": 63,
+          "line": 65,
           "column": 27
         }
       }
@@ -2818,15 +3468,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2388,
-      "end": 2389,
+      "start": 2480,
+      "end": 2481,
       "loc": {
         "start": {
-          "line": 63,
+          "line": 65,
           "column": 27
         },
         "end": {
-          "line": 63,
+          "line": 65,
           "column": 28
         }
       }
@@ -2844,15 +3494,15 @@
         "binop": null
       },
       "value": "instance",
-      "start": 2389,
-      "end": 2397,
+      "start": 2481,
+      "end": 2489,
       "loc": {
         "start": {
-          "line": 63,
+          "line": 65,
           "column": 28
         },
         "end": {
-          "line": 63,
+          "line": 65,
           "column": 36
         }
       }
@@ -2870,15 +3520,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2397,
-      "end": 2398,
+      "start": 2489,
+      "end": 2490,
       "loc": {
         "start": {
-          "line": 63,
+          "line": 65,
           "column": 36
         },
         "end": {
-          "line": 63,
+          "line": 65,
           "column": 37
         }
       }
@@ -2895,15 +3545,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2401,
-      "end": 2402,
+      "start": 2493,
+      "end": 2494,
       "loc": {
         "start": {
-          "line": 64,
+          "line": 66,
           "column": 2
         },
         "end": {
-          "line": 64,
+          "line": 66,
           "column": 3
         }
       }
@@ -2911,15 +3561,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows immediate scheduling, using requestAnimationFrame.\n   * @returns {ImmediateScheduler}\n   ",
-      "start": 2406,
-      "end": 2530,
+      "start": 2498,
+      "end": 2622,
       "loc": {
         "start": {
-          "line": 66,
+          "line": 68,
           "column": 2
         },
         "end": {
-          "line": 69,
+          "line": 71,
           "column": 5
         }
       }
@@ -2937,15 +3587,15 @@
         "binop": null
       },
       "value": "static",
-      "start": 2533,
-      "end": 2539,
+      "start": 2625,
+      "end": 2631,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 2
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 8
         }
       }
@@ -2963,15 +3613,15 @@
         "binop": null
       },
       "value": "get",
-      "start": 2540,
-      "end": 2543,
+      "start": 2632,
+      "end": 2635,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 9
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 12
         }
       }
@@ -2989,15 +3639,15 @@
         "binop": null
       },
       "value": "immediate",
-      "start": 2544,
-      "end": 2553,
+      "start": 2636,
+      "end": 2645,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 13
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 22
         }
       }
@@ -3014,15 +3664,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2553,
-      "end": 2554,
+      "start": 2645,
+      "end": 2646,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 22
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 23
         }
       }
@@ -3039,15 +3689,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2554,
-      "end": 2555,
+      "start": 2646,
+      "end": 2647,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 23
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 24
         }
       }
@@ -3064,15 +3714,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2556,
-      "end": 2557,
+      "start": 2648,
+      "end": 2649,
       "loc": {
         "start": {
-          "line": 70,
+          "line": 72,
           "column": 25
         },
         "end": {
-          "line": 70,
+          "line": 72,
           "column": 26
         }
       }
@@ -3092,15 +3742,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2562,
-      "end": 2568,
+      "start": 2654,
+      "end": 2660,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 73,
           "column": 4
         },
         "end": {
-          "line": 71,
+          "line": 73,
           "column": 10
         }
       }
@@ -3118,15 +3768,15 @@
         "binop": null
       },
       "value": "ImmediateScheduler",
-      "start": 2569,
-      "end": 2587,
+      "start": 2661,
+      "end": 2679,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 73,
           "column": 11
         },
         "end": {
-          "line": 71,
+          "line": 73,
           "column": 29
         }
       }
@@ -3144,15 +3794,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2587,
-      "end": 2588,
+      "start": 2679,
+      "end": 2680,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 73,
           "column": 29
         },
         "end": {
-          "line": 71,
+          "line": 73,
           "column": 30
         }
       }
@@ -3170,15 +3820,15 @@
         "binop": null
       },
       "value": "instance",
-      "start": 2588,
-      "end": 2596,
+      "start": 2680,
+      "end": 2688,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 73,
           "column": 30
         },
         "end": {
-          "line": 71,
+          "line": 73,
           "column": 38
         }
       }
@@ -3196,15 +3846,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2596,
-      "end": 2597,
+      "start": 2688,
+      "end": 2689,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 73,
           "column": 38
         },
         "end": {
-          "line": 71,
+          "line": 73,
           "column": 39
         }
       }
@@ -3221,15 +3871,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2600,
-      "end": 2601,
+      "start": 2692,
+      "end": 2693,
       "loc": {
         "start": {
-          "line": 72,
+          "line": 74,
           "column": 2
         },
         "end": {
-          "line": 72,
+          "line": 74,
           "column": 3
         }
       }
@@ -3237,15 +3887,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows async scheduling on the current thread.\n   * @returns {AsyncScheduler}\n   ",
-      "start": 2605,
-      "end": 2714,
+      "start": 2697,
+      "end": 2806,
       "loc": {
         "start": {
-          "line": 74,
+          "line": 76,
           "column": 2
         },
         "end": {
-          "line": 77,
+          "line": 79,
           "column": 5
         }
       }
@@ -3263,15 +3913,15 @@
         "binop": null
       },
       "value": "static",
-      "start": 2717,
-      "end": 2723,
+      "start": 2809,
+      "end": 2815,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 2
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 8
         }
       }
@@ -3289,15 +3939,15 @@
         "binop": null
       },
       "value": "get",
-      "start": 2724,
-      "end": 2727,
+      "start": 2816,
+      "end": 2819,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 9
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 12
         }
       }
@@ -3315,15 +3965,15 @@
         "binop": null
       },
       "value": "async",
-      "start": 2728,
-      "end": 2733,
+      "start": 2820,
+      "end": 2825,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 13
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 18
         }
       }
@@ -3340,15 +3990,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2733,
-      "end": 2734,
+      "start": 2825,
+      "end": 2826,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 18
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 19
         }
       }
@@ -3365,15 +4015,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2734,
-      "end": 2735,
+      "start": 2826,
+      "end": 2827,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 19
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 20
         }
       }
@@ -3390,15 +4040,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2736,
-      "end": 2737,
+      "start": 2828,
+      "end": 2829,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 80,
           "column": 21
         },
         "end": {
-          "line": 78,
+          "line": 80,
           "column": 22
         }
       }
@@ -3418,15 +4068,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2742,
-      "end": 2748,
+      "start": 2834,
+      "end": 2840,
       "loc": {
         "start": {
-          "line": 79,
+          "line": 81,
           "column": 4
         },
         "end": {
-          "line": 79,
+          "line": 81,
           "column": 10
         }
       }
@@ -3444,15 +4094,15 @@
         "binop": null
       },
       "value": "AsyncScheduler",
-      "start": 2749,
-      "end": 2763,
+      "start": 2841,
+      "end": 2855,
       "loc": {
         "start": {
-          "line": 79,
+          "line": 81,
           "column": 11
         },
         "end": {
-          "line": 79,
+          "line": 81,
           "column": 25
         }
       }
@@ -3470,15 +4120,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2763,
-      "end": 2764,
+      "start": 2855,
+      "end": 2856,
       "loc": {
         "start": {
-          "line": 79,
+          "line": 81,
           "column": 25
         },
         "end": {
-          "line": 79,
+          "line": 81,
           "column": 26
         }
       }
@@ -3496,15 +4146,15 @@
         "binop": null
       },
       "value": "instance",
-      "start": 2764,
-      "end": 2772,
+      "start": 2856,
+      "end": 2864,
       "loc": {
         "start": {
-          "line": 79,
+          "line": 81,
           "column": 26
         },
         "end": {
-          "line": 79,
+          "line": 81,
           "column": 34
         }
       }
@@ -3522,15 +4172,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2772,
-      "end": 2773,
+      "start": 2864,
+      "end": 2865,
       "loc": {
         "start": {
-          "line": 79,
+          "line": 81,
           "column": 34
         },
         "end": {
-          "line": 79,
+          "line": 81,
           "column": 35
         }
       }
@@ -3547,15 +4197,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2776,
-      "end": 2777,
+      "start": 2868,
+      "end": 2869,
       "loc": {
         "start": {
-          "line": 80,
+          "line": 82,
           "column": 2
         },
         "end": {
-          "line": 80,
+          "line": 82,
           "column": 3
         }
       }
@@ -3563,15 +4213,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n   * A Scheduler that allows timeout scheduling on the current thread.\n   * @returns {TimeoutScheduler}\n   ",
-      "start": 2781,
-      "end": 2894,
+      "start": 2873,
+      "end": 2986,
       "loc": {
         "start": {
-          "line": 82,
+          "line": 84,
           "column": 2
         },
         "end": {
-          "line": 85,
+          "line": 87,
           "column": 5
         }
       }
@@ -3589,15 +4239,15 @@
         "binop": null
       },
       "value": "static",
-      "start": 2897,
-      "end": 2903,
+      "start": 2989,
+      "end": 2995,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 2
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 8
         }
       }
@@ -3615,15 +4265,15 @@
         "binop": null
       },
       "value": "get",
-      "start": 2904,
-      "end": 2907,
+      "start": 2996,
+      "end": 2999,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 9
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 12
         }
       }
@@ -3641,15 +4291,15 @@
         "binop": null
       },
       "value": "timeout",
-      "start": 2908,
-      "end": 2915,
+      "start": 3000,
+      "end": 3007,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 13
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 20
         }
       }
@@ -3666,15 +4316,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2915,
-      "end": 2916,
+      "start": 3007,
+      "end": 3008,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 20
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 21
         }
       }
@@ -3691,15 +4341,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2916,
-      "end": 2917,
+      "start": 3008,
+      "end": 3009,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 21
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 22
         }
       }
@@ -3716,15 +4366,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2918,
-      "end": 2919,
+      "start": 3010,
+      "end": 3011,
       "loc": {
         "start": {
-          "line": 86,
+          "line": 88,
           "column": 23
         },
         "end": {
-          "line": 86,
+          "line": 88,
           "column": 24
         }
       }
@@ -3744,15 +4394,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2924,
-      "end": 2930,
+      "start": 3016,
+      "end": 3022,
       "loc": {
         "start": {
-          "line": 87,
+          "line": 89,
           "column": 4
         },
         "end": {
-          "line": 87,
+          "line": 89,
           "column": 10
         }
       }
@@ -3770,15 +4420,15 @@
         "binop": null
       },
       "value": "TimeoutScheduler",
-      "start": 2931,
-      "end": 2947,
+      "start": 3023,
+      "end": 3039,
       "loc": {
         "start": {
-          "line": 87,
+          "line": 89,
           "column": 11
         },
         "end": {
-          "line": 87,
+          "line": 89,
           "column": 27
         }
       }
@@ -3796,15 +4446,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2947,
-      "end": 2948,
+      "start": 3039,
+      "end": 3040,
       "loc": {
         "start": {
-          "line": 87,
+          "line": 89,
           "column": 27
         },
         "end": {
-          "line": 87,
+          "line": 89,
           "column": 28
         }
       }
@@ -3822,15 +4472,15 @@
         "binop": null
       },
       "value": "instance",
-      "start": 2948,
-      "end": 2956,
+      "start": 3040,
+      "end": 3048,
       "loc": {
         "start": {
-          "line": 87,
+          "line": 89,
           "column": 28
         },
         "end": {
-          "line": 87,
+          "line": 89,
           "column": 36
         }
       }
@@ -3848,15 +4498,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2956,
-      "end": 2957,
+      "start": 3048,
+      "end": 3049,
       "loc": {
         "start": {
-          "line": 87,
+          "line": 89,
           "column": 36
         },
         "end": {
-          "line": 87,
+          "line": 89,
           "column": 37
         }
       }
@@ -3873,15 +4523,635 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2960,
-      "end": 2961,
+      "start": 3052,
+      "end": 3053,
       "loc": {
         "start": {
-          "line": 88,
+          "line": 90,
           "column": 2
         },
         "end": {
-          "line": 88,
+          "line": 90,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "static",
+      "start": 3057,
+      "end": 3063,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 2
+        },
+        "end": {
+          "line": 92,
+          "column": 8
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "get",
+      "start": 3064,
+      "end": 3067,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 9
+        },
+        "end": {
+          "line": 92,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "worker",
+      "start": 3068,
+      "end": 3074,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 13
+        },
+        "end": {
+          "line": 92,
+          "column": 19
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3074,
+      "end": 3075,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 19
+        },
+        "end": {
+          "line": 92,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3075,
+      "end": 3076,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 20
+        },
+        "end": {
+          "line": 92,
+          "column": 21
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3077,
+      "end": 3078,
+      "loc": {
+        "start": {
+          "line": 92,
+          "column": 22
+        },
+        "end": {
+          "line": 92,
+          "column": 23
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "return",
+        "keyword": "return",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "return",
+      "start": 3083,
+      "end": 3089,
+      "loc": {
+        "start": {
+          "line": 93,
+          "column": 4
+        },
+        "end": {
+          "line": 93,
+          "column": 10
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "WorkerScheduler",
+      "start": 3090,
+      "end": 3105,
+      "loc": {
+        "start": {
+          "line": 93,
+          "column": 11
+        },
+        "end": {
+          "line": 93,
+          "column": 26
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ".",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3105,
+      "end": 3106,
+      "loc": {
+        "start": {
+          "line": 93,
+          "column": 26
+        },
+        "end": {
+          "line": 93,
+          "column": 27
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "instance",
+      "start": 3106,
+      "end": 3114,
+      "loc": {
+        "start": {
+          "line": 93,
+          "column": 27
+        },
+        "end": {
+          "line": 93,
+          "column": 35
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3114,
+      "end": 3115,
+      "loc": {
+        "start": {
+          "line": 93,
+          "column": 35
+        },
+        "end": {
+          "line": 93,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3118,
+      "end": 3119,
+      "loc": {
+        "start": {
+          "line": 94,
+          "column": 2
+        },
+        "end": {
+          "line": 94,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "static",
+      "start": 3123,
+      "end": 3129,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 2
+        },
+        "end": {
+          "line": 96,
+          "column": 8
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "get",
+      "start": 3130,
+      "end": 3133,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 9
+        },
+        "end": {
+          "line": 96,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "pool",
+      "start": 3134,
+      "end": 3138,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 13
+        },
+        "end": {
+          "line": 96,
+          "column": 17
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3138,
+      "end": 3139,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 17
+        },
+        "end": {
+          "line": 96,
+          "column": 18
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3139,
+      "end": 3140,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 18
+        },
+        "end": {
+          "line": 96,
+          "column": 19
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3141,
+      "end": 3142,
+      "loc": {
+        "start": {
+          "line": 96,
+          "column": 20
+        },
+        "end": {
+          "line": 96,
+          "column": 21
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "return",
+        "keyword": "return",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "return",
+      "start": 3147,
+      "end": 3153,
+      "loc": {
+        "start": {
+          "line": 97,
+          "column": 4
+        },
+        "end": {
+          "line": 97,
+          "column": 10
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PoolScheduler",
+      "start": 3154,
+      "end": 3167,
+      "loc": {
+        "start": {
+          "line": 97,
+          "column": 11
+        },
+        "end": {
+          "line": 97,
+          "column": 24
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ".",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3167,
+      "end": 3168,
+      "loc": {
+        "start": {
+          "line": 97,
+          "column": 24
+        },
+        "end": {
+          "line": 97,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "instance",
+      "start": 3168,
+      "end": 3176,
+      "loc": {
+        "start": {
+          "line": 97,
+          "column": 25
+        },
+        "end": {
+          "line": 97,
+          "column": 33
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3176,
+      "end": 3177,
+      "loc": {
+        "start": {
+          "line": 97,
+          "column": 33
+        },
+        "end": {
+          "line": 97,
+          "column": 34
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 3180,
+      "end": 3181,
+      "loc": {
+        "start": {
+          "line": 98,
+          "column": 2
+        },
+        "end": {
+          "line": 98,
           "column": 3
         }
       }
@@ -3898,15 +5168,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2962,
-      "end": 2963,
+      "start": 3182,
+      "end": 3183,
       "loc": {
         "start": {
-          "line": 89,
+          "line": 99,
           "column": 0
         },
         "end": {
-          "line": 89,
+          "line": 99,
           "column": 1
         }
       }
@@ -3924,15 +5194,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2964,
-      "end": 2964,
+      "start": 3184,
+      "end": 3184,
       "loc": {
         "start": {
-          "line": 90,
+          "line": 100,
           "column": 0
         },
         "end": {
-          "line": 90,
+          "line": 100,
           "column": 0
         }
       }

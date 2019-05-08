@@ -35,8 +35,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/immediate.node.js~ImmediateScheduler.html">ImmediateScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.browser.js~Scheduler.html">Scheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.node.js~Scheduler.html">Scheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pool.browser.js~PoolScheduler.html">PoolScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tick.js~TickScheduler.html">TickScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/timeout.js~TimeoutScheduler.html">TimeoutScheduler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/worker.browser.js~WorkerScheduler.html">WorkerScheduler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/src/scheduler-interface.js~SchedulerInterface.html">SchedulerInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://lxsmnsyc.github.io/rx-cancellable/">Cancellable</a></span></span></li>
@@ -46,6 +48,17 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/utils.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
+
+/**
+ * @ignore
+ */
+const protect = (fn, x) =&gt; {
+  try {
+    fn();
+  } finally {
+    x.cancel();
+  }
+};
 /**
  * @ignore
  */
@@ -65,7 +78,7 @@ const createController = (scheduler, fn, body) =&gt; {
 export const schedule = scheduler =&gt; fn =&gt; createController(
   scheduler,
   fn,
-  x =&gt; !x.cancelled &amp;&amp; fn() &amp;&amp; x.cancel(),
+  x =&gt; !x.cancelled &amp;&amp; protect(fn, x),
 );
 /**
  * @ignore
@@ -77,9 +90,13 @@ export const delay = scheduler =&gt; (fn, amount) =&gt; createController(
     if (x.cancelled) {
       return;
     }
-    const inner = setTimeout(() =&gt; !x.cancelled &amp;&amp; fn() &amp;&amp; x.cancel(), amount);
 
-    x.addEventListener(&apos;cancel&apos;, () =&gt; clearTimeout(inner));
+    if (typeof amount === &apos;number&apos; &amp;&amp; amount &gt; 0) {
+      const inner = setTimeout(() =&gt; !x.cancelled &amp;&amp; protect(fn, x), amount);
+      x.addEventListener(&apos;cancel&apos;, () =&gt; clearTimeout(inner));
+    } else {
+      protect(fn, x);
+    }
   },
 );
 </code></pre>
