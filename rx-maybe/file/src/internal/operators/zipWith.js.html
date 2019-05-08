@@ -45,16 +45,14 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
 import zipArray from &apos;./zipArray&apos;;
 import is from &apos;../is&apos;;
-
 /**
  * @ignore
  */
-export default (source, other, zipper) =&gt; {
-  if (!is(other)) {
-    return source;
-  }
-  return zipArray([source, other], zipper);
-};
+export default (source, other, zipper) =&gt; (
+  !is(other)
+    ? source
+    : zipArray([source, other], zipper)
+);
 </code></pre>
 
 </div>

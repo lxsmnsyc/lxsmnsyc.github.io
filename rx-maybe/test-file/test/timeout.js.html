@@ -44,6 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/timeout.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Maybe from &apos;../src/maybe&apos;;
 
 /**
@@ -117,6 +118,7 @@ describe(&apos;#timeout&apos;, () =&gt; {
     const controller = source.subscribe(
       () =&gt; done(false),
       () =&gt; done(false),
+      () =&gt; done(false),
     );
 
     controller.cancel();
@@ -128,8 +130,9 @@ describe(&apos;#timeout&apos;, () =&gt; {
    *
    */
   it(&apos;should not signal error if cancelled.&apos;, (done) =&gt; {
-    const source = Maybe.error(new Error(&apos;Hello&apos;)).delay(200).timeout(100);
+    const source = Maybe.error(new Error(&apos;Hello&apos;)).delay(200, Scheduler.current, true).timeout(100);
     const controller = source.subscribe(
+      () =&gt; done(false),
       () =&gt; done(false),
       () =&gt; done(false),
     );

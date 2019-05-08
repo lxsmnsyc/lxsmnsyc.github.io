@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/emitter.js",
-    "content": "import { Cancellable, BooleanCancellable } from 'rx-cancellable';\n\n/**\n * Abstraction over a MaybeObserver that allows associating\n * a resource with it.\n *\n * Calling onSuccess(Object) multiple times has no effect.\n * Calling onComplete() multiple times has no effect.\n * Calling onError(Error) multiple times has no effect.\n */\n// eslint-disable-next-line no-unused-vars\nexport default class MaybeEmitter extends Cancellable {\n  /**\n   * @ignore\n   */\n  constructor(success, complete, error) {\n    super();\n    /**\n     * @ignore\n     */\n    this.success = success;\n    /**\n     * @ignore\n     */\n    this.complete = complete;\n    /**\n     * @ignore\n     */\n    this.error = error;\n    /**\n     * @ignore\n     */\n    this.linked = new BooleanCancellable();\n  }\n\n  /**\n   * Returns true if the emitter is cancelled.\n   * @returns {boolean}\n   */\n  get cancelled() {\n    return this.linked.cancelled;\n  }\n\n  /**\n   * Returns true if the emitter is cancelled successfully.\n   * @returns {boolean}\n   */\n  cancel() {\n    return this.linked.cancel();\n  }\n\n  /**\n   * Set the given Cancellable as the Emitter's cancellable state.\n   * @param {Cancellable} cancellable\n   * The Cancellable instance\n   * @returns {boolean}\n   * Returns true if the cancellable is valid.\n   */\n  setCancellable(cancellable) {\n    if (cancellable instanceof Cancellable) {\n      if (this.cancelled) {\n        cancellable.cancel();\n      } else if (cancellable.cancelled) {\n        this.cancel();\n        return true;\n      } else {\n        const { linked } = this;\n        this.linked = cancellable;\n        linked.cancel();\n        return true;\n      }\n    }\n    return false;\n  }\n\n  /**\n   * Emits a completion.\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onComplete() {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.complete();\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits a success value.\n   * @param {!any} value\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onSuccess(value) {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      if (typeof value === 'undefined') {\n        this.error(new Error('onSuccess called with a null value.'));\n      } else {\n        this.success(value);\n      }\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits an error value.\n   * @param {!Error} err\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onError(err) {\n    let report = err;\n    if (!(err instanceof Error)) {\n      report = new Error('onError called with a non-Error value.');\n    }\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.error(report);\n    } finally {\n      this.cancel();\n    }\n  }\n}\n",
+    "content": "import { Cancellable, BooleanCancellable } from 'rx-cancellable';\n\n/**\n * Abstraction over a MaybeObserver that allows associating\n * a resource with it.\n *\n * Calling onSuccess(Object) multiple times has no effect.\n * Calling onComplete() multiple times has no effect.\n * Calling onError(Error) multiple times has no effect.\n */\n// eslint-disable-next-line no-unused-vars\nexport default class MaybeEmitter extends Cancellable {\n  /**\n   * @ignore\n   */\n  constructor(success, complete, error) {\n    super();\n    /**\n     * @ignore\n     */\n    this.success = success;\n    /**\n     * @ignore\n     */\n    this.complete = complete;\n    /**\n     * @ignore\n     */\n    this.error = error;\n    /**\n     * @ignore\n     */\n    this.linked = new BooleanCancellable();\n  }\n\n  /**\n   * Returns true if the emitter is cancelled.\n   * @returns {boolean}\n   */\n  get cancelled() {\n    return this.linked.cancelled;\n  }\n\n  /**\n   * Returns true if the emitter is cancelled successfully.\n   * @returns {boolean}\n   */\n  cancel() {\n    if (!this.cancelled) {\n      this.events.cancel.forEach(f => f.apply(this));\n      return this.linked.cancel();\n    }\n    return false;\n  }\n\n  /**\n   * Set the given Cancellable as the Emitter's cancellable state.\n   * @param {Cancellable} cancellable\n   * The Cancellable instance\n   * @returns {boolean}\n   * Returns true if the cancellable is valid.\n   */\n  setCancellable(cancellable) {\n    if (cancellable instanceof Cancellable) {\n      if (this.cancelled) {\n        cancellable.cancel();\n      } else if (cancellable.cancelled) {\n        this.cancel();\n        return true;\n      } else {\n        const { linked } = this;\n        this.linked = cancellable;\n        linked.cancel();\n        return true;\n      }\n    }\n    return false;\n  }\n\n  /**\n   * Emits a completion.\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onComplete() {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.complete();\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits a success value.\n   * @param {!any} value\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onSuccess(value) {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      if (typeof value === 'undefined') {\n        this.error(new Error('onSuccess called with a null value.'));\n      } else {\n        this.success(value);\n      }\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits an error value.\n   * @param {!Error} err\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onError(err) {\n    let report = err;\n    if (!(err instanceof Error)) {\n      report = new Error('onError called with a non-Error value.');\n    }\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.error(report);\n    } finally {\n      this.cancel();\n    }\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/src/emitter.js",
     "access": "public",
@@ -745,7 +745,7 @@
     "longname": "src/emitter.js~MaybeEmitter#setCancellable",
     "access": "public",
     "description": "Set the given Cancellable as the Emitter's cancellable state.",
-    "lineNumber": 59,
+    "lineNumber": 63,
     "unknown": [
       {
         "tagName": "@returns",
@@ -784,7 +784,7 @@
     "longname": "src/emitter.js~MaybeEmitter#onComplete",
     "access": "public",
     "description": "Emits a completion.",
-    "lineNumber": 80,
+    "lineNumber": 84,
     "params": [],
     "return": null
   },
@@ -799,7 +799,7 @@
     "longname": "src/emitter.js~MaybeEmitter#onSuccess",
     "access": "public",
     "description": "Emits a success value.",
-    "lineNumber": 96,
+    "lineNumber": 100,
     "params": [
       {
         "nullable": false,
@@ -825,7 +825,7 @@
     "longname": "src/emitter.js~MaybeEmitter#onError",
     "access": "public",
     "description": "Emits an error value.",
-    "lineNumber": 116,
+    "lineNumber": 120,
     "params": [
       {
         "nullable": false,
@@ -1026,7 +1026,7 @@
     "__docId__": 71,
     "kind": "file",
     "name": "src/internal/operators/ambWith.js",
-    "content": "import ambArray from './ambArray';\nimport is from '../is';\n/**\n * @ignore\n */\nexport default (source, other) => {\n  if (!is(other)) {\n    return source;\n  }\n  return ambArray([source, other]);\n};\n",
+    "content": "import ambArray from './ambArray';\nimport is from '../is';\n/**\n * @ignore\n */\nexport default (source, other) => (\n  !is(other)\n    ? source\n    : ambArray([source, other])\n);\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/src/internal/operators/ambWith.js",
     "access": "public",
@@ -1063,17 +1063,13 @@
         ]
       }
     ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
+    "return": null
   },
   {
     "__docId__": 73,
     "kind": "file",
     "name": "src/internal/operators/cache.js",
-    "content": "import { BooleanCancellable } from 'rx-cancellable';\nimport Maybe from '../../maybe';\nimport { cleanObserver, exists } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const {\n    onSuccess, onComplete, onError, onSubscribe,\n  } = cleanObserver(observer);\n\n  const {\n    source, cached, observers, subscribed,\n  } = this;\n\n  if (!cached) {\n    const index = observers.length;\n    observers[index] = observer;\n\n    const controller = new BooleanCancellable();\n\n    controller.addEventListener('cancel', () => {\n      observers.splice(index, 1);\n    });\n\n    onSubscribe(controller);\n\n    if (!subscribed) {\n      source.subscribeWith({\n        onSubscribe() {\n          // not applicable\n        },\n        onSuccess: (x) => {\n          this.cached = true;\n          this.value = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onSuccess(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onComplete: () => {\n          this.cached = true;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onComplete();\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onError: (x) => {\n          this.cached = true;\n          this.error = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onError(x);\n          }\n          this.observers = undefined;\n        },\n      });\n      this.subscribed = true;\n    }\n  } else {\n    const controller = new BooleanCancellable();\n    onSubscribe(controller);\n\n    const { value, error } = this;\n    if (exists(value)) {\n      onSuccess(value);\n    } else if (exists(error)) {\n      onError(error);\n    } else {\n      onComplete();\n    }\n    controller.cancel();\n  }\n}\n\n/**\n * @ignore\n */\nexport default (source) => {\n  const maybe = new Maybe(subscribeActual);\n  maybe.source = source;\n  maybe.cached = false;\n  maybe.subscribed = false;\n  maybe.observers = [];\n  return maybe;\n};\n",
+    "content": "import { BooleanCancellable } from 'rx-cancellable';\nimport Maybe from '../../maybe';\nimport { cleanObserver, exists } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const cleaned = cleanObserver(observer);\n\n  const {\n    source, cached, observers, subscribed,\n  } = this;\n\n  if (!cached) {\n    const index = observers.length;\n    observers[index] = cleaned;\n\n    const controller = new BooleanCancellable();\n\n    controller.addEventListener('cancel', () => {\n      observers.splice(index, 1);\n    });\n\n    cleaned.onSubscribe(controller);\n\n    if (!subscribed) {\n      source.subscribeWith({\n        onSubscribe() {\n          // not applicable\n        },\n        onSuccess: (x) => {\n          this.cached = true;\n          this.value = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onSuccess(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onComplete: () => {\n          this.cached = true;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onComplete();\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onError: (x) => {\n          this.cached = true;\n          this.error = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onError(x);\n          }\n          this.observers = undefined;\n        },\n      });\n      this.subscribed = true;\n    }\n  } else {\n    const controller = new BooleanCancellable();\n    cleaned.onSubscribe(controller);\n\n    const { value, error } = this;\n    if (exists(value)) {\n      cleaned.onSuccess(value);\n    } else if (exists(error)) {\n      cleaned.onError(error);\n    } else {\n      cleaned.onComplete();\n    }\n    controller.cancel();\n  }\n}\n\n/**\n * @ignore\n */\nexport default (source) => {\n  const maybe = new Maybe(subscribeActual);\n  maybe.source = source;\n  maybe.cached = false;\n  maybe.subscribed = false;\n  maybe.observers = [];\n  return maybe;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/src/internal/operators/cache.js",
     "access": "public",
@@ -1120,7 +1116,7 @@
     "importPath": "rx-maybe/src/internal/operators/cache.js",
     "importStyle": "cache",
     "description": "",
-    "lineNumber": 87,
+    "lineNumber": 85,
     "ignore": true,
     "params": [
       {
@@ -4088,7 +4084,7 @@
     "__docId__": 199,
     "kind": "file",
     "name": "src/internal/operators/zipWith.js",
-    "content": "\nimport zipArray from './zipArray';\nimport is from '../is';\n\n/**\n * @ignore\n */\nexport default (source, other, zipper) => {\n  if (!is(other)) {\n    return source;\n  }\n  return zipArray([source, other], zipper);\n};\n",
+    "content": "\nimport zipArray from './zipArray';\nimport is from '../is';\n/**\n * @ignore\n */\nexport default (source, other, zipper) => (\n  !is(other)\n    ? source\n    : zipArray([source, other], zipper)\n);\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/src/internal/operators/zipWith.js",
     "access": "public",
@@ -4109,7 +4105,7 @@
     "importPath": "rx-maybe/src/internal/operators/zipWith.js",
     "importStyle": "zipWith",
     "description": "",
-    "lineNumber": 8,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -4131,11 +4127,7 @@
         ]
       }
     ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
+    "return": null
   },
   {
     "__docId__": 201,
@@ -7017,7 +7009,7 @@
   },
   {
     "kind": "index",
-    "content": "# rx-maybe\n\nReactive Extenstions - represents a deferred computation and emission of a single value, no value at all or an exception. \n\n[![NPM](https://nodei.co/npm/rx-maybe.png)](https://nodei.co/npm/rx-maybe/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-maybe/badge)](https://www.jsdelivr.com/package/npm/rx-maybe)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-maybe.svg)](http://hits.dwyl.io/lxsmnsyc/rx-maybe)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-maybe.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-maybe) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-maybe) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-maybe/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-maybe)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-maybe/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-maybe?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-maybe\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-maybe/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-maybe/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Maybe = require('rx-maybe');\n```\n\nLoading the CommonJS module provides the Maybe class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-maybe provides the Maybe class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-maybe/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.5.0\n  - Reintroduced `zip`\n* 0.4.0\n  - Massive performance boost\n  - Renamed `zip` to `zipArray`\n  - added `ambArray`\n* 0.3.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - Renamed `doOnAbort` with `doOnCancel`\n* 0.2.0\n  - now uses [Schedulers](https://github.com/LXSMNSYC/rx-scheduler)\n  - `delay`, `delaySubscription`, `timeout` and `timer` now accepts `Schedulers` (defaults to `Scheduler.current`).\n  - added two new operators: `observeOn` (observes the emissions on a given Scheduler) and `subscribeOn` (subscribes to a given Single on a given Scheduler).\n* 0.1.0\n  * Release",
+    "content": "# rx-maybe\n\nReactive Extenstions - represents a deferred computation and emission of a single value, no value at all or an exception. \n\n[![NPM](https://nodei.co/npm/rx-maybe.png)](https://nodei.co/npm/rx-maybe/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-maybe/badge)](https://www.jsdelivr.com/package/npm/rx-maybe)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-maybe.svg)](http://hits.dwyl.io/lxsmnsyc/rx-maybe)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-maybe.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-maybe) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-maybe) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-maybe/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-maybe)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-maybe/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-maybe?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-maybe\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-maybe/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-maybe/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Maybe = require('rx-maybe');\n```\n\nLoading the CommonJS module provides the Maybe class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-maybe provides the Maybe class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-maybe/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.5.4\n  - Cancellable and Scheduler update compliance\n* 0.5.0\n  - Reintroduced `zip`\n* 0.4.0\n  - Massive performance boost\n  - Renamed `zip` to `zipArray`\n  - added `ambArray`\n* 0.3.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - Renamed `doOnAbort` with `doOnCancel`\n* 0.2.0\n  - now uses [Schedulers](https://github.com/LXSMNSYC/rx-scheduler)\n  - `delay`, `delaySubscription`, `timeout` and `timer` now accepts `Schedulers` (defaults to `Scheduler.current`).\n  - added two new operators: `observeOn` (observes the emissions on a given Scheduler) and `subscribeOn` (subscribes to a given Single on a given Scheduler).\n* 0.1.0\n  * Release",
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/README.md",
     "name": "./README.md",
     "static": true,
@@ -7025,7 +7017,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-maybe\",\n  \"version\": \"0.4.3\",\n  \"description\": \"represents a deferred computation and emission of a single value, no value at all or an exception.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-maybe.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"maybe\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-maybe/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-maybe#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.3\",\n    \"@babel/preset-env\": \"^7.4.3\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.2\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.10.1\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.0\",\n    \"rx-scheduler\": \"^0.2.4\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-maybe\",\n  \"version\": \"0.5.4\",\n  \"description\": \"represents a deferred computation and emission of a single value, no value at all or an exception.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Maybe\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Maybe\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-maybe.git\"\n  },\n  \"keywords\": [\n    \"rx\",\n    \"rxjs\",\n    \"reactivex\",\n    \"maybe\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-maybe/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-maybe#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.4\",\n    \"@babel/preset-env\": \"^7.4.4\",\n    \"@babel/register\": \"^7.4.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.2\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^14.1.0\",\n    \"rollup\": \"^1.11.3\",\n    \"rx-scheduler\": \"^0.3.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.2\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/package.json",
     "name": "package.json",
     "static": true,
@@ -7823,7 +7815,7 @@
     "__docId__": 351,
     "kind": "testFile",
     "name": "test/delay.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Maybe from '../src/maybe';\n\n/**\n *\n */\ndescribe('#delay', () => {\n  /**\n   *\n   */\n  it('should create a Maybe', () => {\n    const maybe = Maybe.just('Hello').delay(100);\n    assert(maybe instanceof Maybe);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Maybe.just('Hello');\n    const maybe = source.delay();\n    assert(source === maybe);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const maybe = Maybe.just('Hello').delay(100);\n    maybe.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      () => done(false),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal complete', (done) => {\n    const maybe = Maybe.empty().delay(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const maybe = Maybe.error(new Error('Hello')).delay(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      x => (x === 'Hello' ? done() : done(false)),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Maybe.just('Hello').delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal complete if cancelled.', (done) => {\n    const source = Maybe.empty().delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Maybe.error(new Error('Hello')).delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Scheduler from 'rx-scheduler';\nimport Maybe from '../src/maybe';\n\n/**\n *\n */\ndescribe('#delay', () => {\n  /**\n   *\n   */\n  it('should create a Maybe', () => {\n    const maybe = Maybe.just('Hello').delay(100);\n    assert(maybe instanceof Maybe);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Maybe.just('Hello');\n    const maybe = source.delay();\n    assert(source === maybe);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const maybe = Maybe.just('Hello').delay(100);\n    maybe.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      () => done(false),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal complete', (done) => {\n    const maybe = Maybe.empty().delay(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const maybe = Maybe.error(new Error('Hello')).delay(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      x => (x === 'Hello' ? done() : done(false)),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Maybe.just('Hello').delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal complete if cancelled.', (done) => {\n    const source = Maybe.empty().delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Maybe.error(new Error('Hello')).delay(100, Scheduler.current, true);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/test/delay.js",
     "access": "public",
@@ -7841,7 +7833,7 @@
     "longname": "test/delay.js~describe53",
     "access": "public",
     "description": "#delay",
-    "lineNumber": 8
+    "lineNumber": 9
   },
   {
     "__docId__": 353,
@@ -7854,7 +7846,7 @@
     "longname": "test/delay.js~describe53.it54",
     "access": "public",
     "description": "should create a Maybe",
-    "lineNumber": 12
+    "lineNumber": 13
   },
   {
     "__docId__": 354,
@@ -7867,7 +7859,7 @@
     "longname": "test/delay.js~describe53.it55",
     "access": "public",
     "description": "should return the same instance if the amount is not a number.",
-    "lineNumber": 19
+    "lineNumber": 20
   },
   {
     "__docId__": 355,
@@ -7880,7 +7872,7 @@
     "longname": "test/delay.js~describe53.it56",
     "access": "public",
     "description": "should signal success with the given value.",
-    "lineNumber": 27
+    "lineNumber": 28
   },
   {
     "__docId__": 356,
@@ -7893,7 +7885,7 @@
     "longname": "test/delay.js~describe53.it57",
     "access": "public",
     "description": "should signal complete",
-    "lineNumber": 38
+    "lineNumber": 39
   },
   {
     "__docId__": 357,
@@ -7906,7 +7898,7 @@
     "longname": "test/delay.js~describe53.it58",
     "access": "public",
     "description": "should signal error with the given value.",
-    "lineNumber": 49
+    "lineNumber": 50
   },
   {
     "__docId__": 358,
@@ -7919,7 +7911,7 @@
     "longname": "test/delay.js~describe53.it59",
     "access": "public",
     "description": "should not signal success if cancelled.",
-    "lineNumber": 60
+    "lineNumber": 61
   },
   {
     "__docId__": 359,
@@ -7932,7 +7924,7 @@
     "longname": "test/delay.js~describe53.it60",
     "access": "public",
     "description": "should not signal complete if cancelled.",
-    "lineNumber": 76
+    "lineNumber": 77
   },
   {
     "__docId__": 360,
@@ -7945,7 +7937,7 @@
     "longname": "test/delay.js~describe53.it61",
     "access": "public",
     "description": "should not signal error if cancelled.",
-    "lineNumber": 92
+    "lineNumber": 93
   },
   {
     "__docId__": 361,
@@ -11044,7 +11036,7 @@
     "__docId__": 604,
     "kind": "testFile",
     "name": "test/timeout.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Maybe from '../src/maybe';\n\n/**\n *\n */\ndescribe('#timeout', () => {\n  /**\n   *\n   */\n  it('should create a Maybe', () => {\n    const maybe = Maybe.just('Hello').timeout(100);\n    assert(maybe instanceof Maybe);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Maybe.just('Hello');\n    const maybe = source.timeout();\n    assert(source === maybe);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const maybe = Maybe.just('Hello').timeout(100);\n    maybe.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      () => done(false),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal complete.', (done) => {\n    const maybe = Maybe.empty().timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const maybe = Maybe.error('Hello').timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if the Maybe does not emit item within the given timeout.', (done) => {\n    const maybe = Maybe.timer(200).timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Maybe.timer(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Maybe.error(new Error('Hello')).delay(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Scheduler from 'rx-scheduler';\nimport Maybe from '../src/maybe';\n\n/**\n *\n */\ndescribe('#timeout', () => {\n  /**\n   *\n   */\n  it('should create a Maybe', () => {\n    const maybe = Maybe.just('Hello').timeout(100);\n    assert(maybe instanceof Maybe);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Maybe.just('Hello');\n    const maybe = source.timeout();\n    assert(source === maybe);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const maybe = Maybe.just('Hello').timeout(100);\n    maybe.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      () => done(false),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal complete.', (done) => {\n    const maybe = Maybe.empty().timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(),\n      () => done(false),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const maybe = Maybe.error('Hello').timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if the Maybe does not emit item within the given timeout.', (done) => {\n    const maybe = Maybe.timer(200).timeout(100);\n    maybe.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Maybe.timer(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Maybe.error(new Error('Hello')).delay(200, Scheduler.current, true).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-maybe/test/timeout.js",
     "access": "public",
@@ -11062,7 +11054,7 @@
     "longname": "test/timeout.js~describe272",
     "access": "public",
     "description": "#timeout",
-    "lineNumber": 8
+    "lineNumber": 9
   },
   {
     "__docId__": 606,
@@ -11075,7 +11067,7 @@
     "longname": "test/timeout.js~describe272.it273",
     "access": "public",
     "description": "should create a Maybe",
-    "lineNumber": 12
+    "lineNumber": 13
   },
   {
     "__docId__": 607,
@@ -11088,7 +11080,7 @@
     "longname": "test/timeout.js~describe272.it274",
     "access": "public",
     "description": "should return the same instance if the amount is not a number.",
-    "lineNumber": 19
+    "lineNumber": 20
   },
   {
     "__docId__": 608,
@@ -11101,7 +11093,7 @@
     "longname": "test/timeout.js~describe272.it275",
     "access": "public",
     "description": "should signal success with the given value.",
-    "lineNumber": 27
+    "lineNumber": 28
   },
   {
     "__docId__": 609,
@@ -11114,7 +11106,7 @@
     "longname": "test/timeout.js~describe272.it276",
     "access": "public",
     "description": "should signal complete.",
-    "lineNumber": 38
+    "lineNumber": 39
   },
   {
     "__docId__": 610,
@@ -11127,7 +11119,7 @@
     "longname": "test/timeout.js~describe272.it277",
     "access": "public",
     "description": "should signal error with the given value.",
-    "lineNumber": 49
+    "lineNumber": 50
   },
   {
     "__docId__": 611,
@@ -11140,7 +11132,7 @@
     "longname": "test/timeout.js~describe272.it278",
     "access": "public",
     "description": "should signal error if the Maybe does not emit item within the given timeout.",
-    "lineNumber": 60
+    "lineNumber": 61
   },
   {
     "__docId__": 612,
@@ -11153,7 +11145,7 @@
     "longname": "test/timeout.js~describe272.it279",
     "access": "public",
     "description": "should not signal success if cancelled.",
-    "lineNumber": 71
+    "lineNumber": 72
   },
   {
     "__docId__": 613,
@@ -11166,7 +11158,7 @@
     "longname": "test/timeout.js~describe272.it280",
     "access": "public",
     "description": "should not signal error if cancelled.",
-    "lineNumber": 86
+    "lineNumber": 88
   },
   {
     "__docId__": 614,

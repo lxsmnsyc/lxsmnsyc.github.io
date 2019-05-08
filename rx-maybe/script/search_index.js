@@ -319,55 +319,55 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber8",
+    "test-file/test/delay.js.html#lineNumber9",
     "#delay",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber12",
+    "test-file/test/delay.js.html#lineNumber13",
     "#delay should create a Maybe",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber76",
+    "test-file/test/delay.js.html#lineNumber77",
     "#delay should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber92",
+    "test-file/test/delay.js.html#lineNumber93",
     "#delay should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber60",
+    "test-file/test/delay.js.html#lineNumber61",
     "#delay should not signal success if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber19",
+    "test-file/test/delay.js.html#lineNumber20",
     "#delay should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber38",
+    "test-file/test/delay.js.html#lineNumber39",
     "#delay should signal complete",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber49",
+    "test-file/test/delay.js.html#lineNumber50",
     "#delay should signal error with the given value.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber27",
+    "test-file/test/delay.js.html#lineNumber28",
     "#delay should signal success with the given value.",
     "test"
   ],
@@ -1633,55 +1633,55 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber8",
+    "test-file/test/timeout.js.html#lineNumber9",
     "#timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber12",
+    "test-file/test/timeout.js.html#lineNumber13",
     "#timeout should create a Maybe",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber86",
+    "test-file/test/timeout.js.html#lineNumber88",
     "#timeout should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber71",
+    "test-file/test/timeout.js.html#lineNumber72",
     "#timeout should not signal success if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber19",
+    "test-file/test/timeout.js.html#lineNumber20",
     "#timeout should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber38",
+    "test-file/test/timeout.js.html#lineNumber39",
     "#timeout should signal complete.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber60",
+    "test-file/test/timeout.js.html#lineNumber61",
     "#timeout should signal error if the Maybe does not emit item within the given timeout.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber49",
+    "test-file/test/timeout.js.html#lineNumber50",
     "#timeout should signal error with the given value.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber27",
+    "test-file/test/timeout.js.html#lineNumber28",
     "#timeout should signal success with the given value.",
     "test"
   ],
