@@ -43,7 +43,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/utils.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BooleanCancellable } from &apos;rx-cancellable&apos;;
-
+import Scheduler from &apos;rx-scheduler&apos;;
 /**
  * @ignore
  */
@@ -140,6 +140,14 @@ export const immediateError = (o, x) =&gt; {
     controller.cancel();
   }
 };
+/**
+ * @ignore
+ */
+export const defaultScheduler = sched =&gt; (
+  isOf(sched, Scheduler.interface)
+    ? sched
+    : Scheduler.current
+);
 </code></pre>
 
 </div>

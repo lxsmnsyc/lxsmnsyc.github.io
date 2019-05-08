@@ -44,6 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/takeUntil.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Completable from &apos;../src/completable&apos;;
 
 /**
@@ -82,7 +83,7 @@ describe(&apos;#takeUntil&apos;, () =&gt; {
    *
    */
   it(&apos;should signal complete if other Completable has not emitted an error signal&apos;, (done) =&gt; {
-    const completable = Completable.complete().takeUntil(Completable.error(new Error(&apos;World&apos;)).delay(100));
+    const completable = Completable.complete().takeUntil(Completable.error(new Error(&apos;World&apos;)).delay(100, Scheduler.current, true));
 
     completable.subscribe(
       () =&gt; done(),

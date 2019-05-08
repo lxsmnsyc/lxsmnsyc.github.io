@@ -42,9 +42,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/timer.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
-import Completable from &apos;../../completable&apos;;
-import { cleanObserver, isNumber, isOf } from &apos;../utils&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Completable from &apos;../../completable&apos;;
+import { cleanObserver, isNumber, defaultScheduler } from &apos;../utils&apos;;
 import error from &apos;./error&apos;;
 
 /**
@@ -62,14 +61,9 @@ export default (amount, scheduler) =&gt; {
   if (!isNumber(amount)) {
     return error(new Error(&apos;Completable.timer: &quot;amount&quot; is not a number.&apos;));
   }
-
-  let sched = scheduler;
-  if (!isOf(sched, Scheduler.interface)) {
-    sched = Scheduler.current;
-  }
   const completable = new Completable(subscribeActual);
   completable.amount = amount;
-  completable.scheduler = sched;
+  completable.scheduler = defaultScheduler(scheduler);
   return completable;
 };
 </code></pre>

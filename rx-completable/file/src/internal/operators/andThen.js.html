@@ -47,12 +47,11 @@ import is from &apos;../is&apos;;
 /**
  * @ignore
  */
-export default (source, other) =&gt; {
-  if (!is(other)) {
-    return source;
-  }
-  return concatArray([source, other]);
-};
+export default (source, other) =&gt; (
+  !is(other)
+    ? source
+    : concatArray([source, other])
+);
 </code></pre>
 
 </div>

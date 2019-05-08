@@ -397,43 +397,43 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber8",
+    "test-file/test/delay.js.html#lineNumber9",
     "#delay",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber12",
+    "test-file/test/delay.js.html#lineNumber13",
     "#delay should create a Completable",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber47",
+    "test-file/test/delay.js.html#lineNumber48",
     "#delay should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber62",
+    "test-file/test/delay.js.html#lineNumber63",
     "#delay should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber19",
+    "test-file/test/delay.js.html#lineNumber20",
     "#delay should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber27",
+    "test-file/test/delay.js.html#lineNumber28",
     "#delay should signal complete.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber37",
+    "test-file/test/delay.js.html#lineNumber38",
     "#delay should signal error with the given value.",
     "test"
   ],
@@ -1297,49 +1297,49 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber8",
+    "test-file/test/takeUntil.js.html#lineNumber9",
     "#takeUntil",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber12",
+    "test-file/test/takeUntil.js.html#lineNumber13",
     "#takeUntil should create a Completable",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber20",
+    "test-file/test/takeUntil.js.html#lineNumber21",
     "#takeUntil should return the same instance if no other Completable is provided",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber29",
+    "test-file/test/takeUntil.js.html#lineNumber30",
     "#takeUntil should signal complete if other Completable has not emitted a complete signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber40",
+    "test-file/test/takeUntil.js.html#lineNumber41",
     "#takeUntil should signal complete if other Completable has not emitted an error signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber51",
+    "test-file/test/takeUntil.js.html#lineNumber52",
     "#takeUntil should signal error if other Completable has emitted a complete signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber62",
+    "test-file/test/takeUntil.js.html#lineNumber63",
     "#takeUntil should signal error if other Completable has emitted an error signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber73",
+    "test-file/test/takeUntil.js.html#lineNumber74",
     "#takeUntil should signal error if source signals error, nonetheless",
     "test"
   ],
@@ -1357,49 +1357,49 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber9",
+    "test-file/test/timeout.js.html#lineNumber10",
     "#timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber13",
+    "test-file/test/timeout.js.html#lineNumber14",
     "#timeout should create a Completable",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber58",
+    "test-file/test/timeout.js.html#lineNumber59",
     "#timeout should not signal complete if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber73",
+    "test-file/test/timeout.js.html#lineNumber74",
     "#timeout should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber20",
+    "test-file/test/timeout.js.html#lineNumber21",
     "#timeout should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber28",
+    "test-file/test/timeout.js.html#lineNumber29",
     "#timeout should signal complete with the given value.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber48",
+    "test-file/test/timeout.js.html#lineNumber49",
     "#timeout should signal error if the Completable does complete after the given timeout.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber38",
+    "test-file/test/timeout.js.html#lineNumber39",
     "#timeout should signal error with the given value.",
     "test"
   ],
@@ -2092,12 +2092,6 @@ window.esdocSearchIndex = [
     "class/src/emitter.js~CompletableEmitter.html#instance-constructor-constructor",
     "src/emitter.js~CompletableEmitter#constructor",
     "method"
-  ],
-  [
-    "src/emitter.js~completableemitter#link",
-    "class/src/emitter.js~CompletableEmitter.html#instance-member-link",
-    "src/emitter.js~CompletableEmitter#link",
-    "member"
   ],
   [
     "src/emitter.js~completableemitter#oncomplete",

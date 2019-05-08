@@ -42,10 +42,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/internal/operators/observeOn.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Scheduler from &apos;rx-scheduler&apos;;
-import { LinkedCancellable } from &apos;rx-cancellable&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { LinkedCancellable } from &apos;rx-cancellable&apos;;
 import Completable from &apos;../../completable&apos;;
-import { cleanObserver, isOf } from &apos;../utils&apos;;
+import { cleanObserver, defaultScheduler } from &apos;../utils&apos;;
 
 function subscribeActual(observer) {
   const { onSubscribe, onComplete, onError } = cleanObserver(observer);
@@ -74,13 +73,9 @@ function subscribeActual(observer) {
  * @ignore
  */
 export default (source, scheduler) =&gt; {
-  let sched = scheduler;
-  if (!isOf(sched, Scheduler.interface)) {
-    sched = Scheduler.current;
-  }
   const completable = new Completable(subscribeActual);
   completable.source = source;
-  completable.scheduler = sched;
+  completable.scheduler = defaultScheduler(scheduler);
   return completable;
 };
 </code></pre>

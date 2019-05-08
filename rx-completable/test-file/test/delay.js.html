@@ -44,6 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/delay.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Completable from &apos;../src/completable&apos;;
 
 /**
@@ -104,7 +105,7 @@ describe(&apos;#delay&apos;, () =&gt; {
    *
    */
   it(&apos;should not signal error if cancelled.&apos;, (done) =&gt; {
-    const source = Completable.error(new Error(&apos;Hello&apos;)).delay(100);
+    const source = Completable.error(new Error(&apos;Hello&apos;)).delay(100, Scheduler.current, true);
     const controller = source.subscribe(
       () =&gt; done(false),
       () =&gt; done(false),
