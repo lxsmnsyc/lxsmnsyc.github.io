@@ -44,6 +44,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/takeUntil.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable no-undef */
 import assert from &apos;assert&apos;;
+import Scheduler from &apos;rx-scheduler&apos;;
 import Single from &apos;../src/single&apos;;
 
 /**
@@ -82,7 +83,7 @@ describe(&apos;#takeUntil&apos;, () =&gt; {
    *
    */
   it(&apos;should signal success if other Single has not emitted an error signal&apos;, (done) =&gt; {
-    const single = Single.just(&apos;Hello&apos;).takeUntil(Single.error(new Error(&apos;World&apos;)).delay(100));
+    const single = Single.just(&apos;Hello&apos;).takeUntil(Single.error(new Error(&apos;World&apos;)).delay(100, Scheduler.current, true));
 
     single.subscribe(
       x =&gt; (x === &apos;Hello&apos; ? done() : done(false)),

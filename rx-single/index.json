@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/emitter.js",
-    "content": "import { Cancellable, BooleanCancellable } from 'rx-cancellable';\nimport { isOf, isNull } from './internal/utils';\n/**\n * Abstraction over a SingleObserver that allows associating\n * a resource with it.\n *\n * Calling onSuccess(Object) multiple times has no effect.\n * Calling onError(Error) multiple times or after onSuccess\n * has no effect.\n */\n// eslint-disable-next-line no-unused-vars\nexport default class SingleEmitter extends Cancellable {\n  constructor(success, error) {\n    super();\n    /**\n     * @ignore\n     */\n    this.success = success;\n    /**\n     * @ignore\n     */\n    this.error = error;\n    /**\n     * @ignore\n     */\n    this.link = new BooleanCancellable();\n  }\n\n  /**\n   * Returns true if the emitter is cancelled.\n   * @returns {boolean}\n   */\n  get cancelled() {\n    return this.link.cancelled;\n  }\n\n  /**\n   * Returns true if the emitter is cancelled successfully.\n   * @returns {boolean}\n   */\n  cancel() {\n    return this.link.cancel();\n  }\n\n  /**\n   * Set the given Cancellable as the Emitter's cancellable state.\n   * @param {Cancellable} cancellable\n   * The Cancellable instance\n   * @returns {boolean}\n   * Returns true if the cancellable is valid.\n   */\n  setCancellable(cancellable) {\n    if (isOf(cancellable, Cancellable)) {\n      if (this.cancelled) {\n        cancellable.cancel();\n      } else if (cancellable.cancelled) {\n        this.cancel();\n        return true;\n      } else {\n        const { link } = this;\n        this.link = cancellable;\n        link.cancel();\n        return true;\n      }\n    }\n    return false;\n  }\n\n  /**\n   * Emits a success value.\n   * @param {!any} value\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onSuccess(value) {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      if (isNull(value)) {\n        this.error(new Error('onSuccess called with a null value.'));\n      } else {\n        this.success(value);\n      }\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits an error value.\n   * @param {!Error} err\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onError(err) {\n    let report = err;\n    if (!isOf(err, Error)) {\n      report = new Error('onError called with a non-Error value.');\n    }\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.error(report);\n    } finally {\n      this.cancel();\n    }\n  }\n}\n",
+    "content": "import { Cancellable, BooleanCancellable } from 'rx-cancellable';\nimport { isOf, isNull } from './internal/utils';\n/**\n * Abstraction over a SingleObserver that allows associating\n * a resource with it.\n *\n * Calling onSuccess(Object) multiple times has no effect.\n * Calling onError(Error) multiple times or after onSuccess\n * has no effect.\n */\n// eslint-disable-next-line no-unused-vars\nexport default class SingleEmitter extends Cancellable {\n  constructor(success, error) {\n    super();\n    /**\n     * @ignore\n     */\n    this.success = success;\n    /**\n     * @ignore\n     */\n    this.error = error;\n    /**\n     * @ignore\n     */\n    this.linked = new BooleanCancellable();\n  }\n\n  /**\n   * Returns true if the emitter is cancelled.\n   * @returns {boolean}\n   */\n  get cancelled() {\n    return this.linked.cancelled;\n  }\n\n  /**\n   * Returns true if the emitter is cancelled successfully.\n   * @returns {boolean}\n   */\n  cancel() {\n    if (!this.cancelled) {\n      this.events.cancel.forEach(f => f.apply(this));\n      return this.linked.cancel();\n    }\n    return false;\n  }\n\n  /**\n   * Set the given Cancellable as the Emitter's cancellable state.\n   * @param {Cancellable} cancellable\n   * The Cancellable instance\n   * @returns {boolean}\n   * Returns true if the cancellable is valid.\n   */\n  setCancellable(cancellable) {\n    if (isOf(cancellable, Cancellable)) {\n      if (this.cancelled) {\n        cancellable.cancel();\n      } else if (cancellable.cancelled) {\n        this.cancel();\n        return true;\n      } else {\n        const { linked } = this;\n        this.linked = cancellable;\n        linked.cancel();\n        return true;\n      }\n    }\n    return false;\n  }\n\n  /**\n   * Emits a success value.\n   * @param {!any} value\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onSuccess(value) {\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      if (isNull(value)) {\n        this.error(new Error('onSuccess called with a null value.'));\n      } else {\n        this.success(value);\n      }\n    } finally {\n      this.cancel();\n    }\n  }\n\n  /**\n   * Emits an error value.\n   * @param {!Error} err\n   */\n  // eslint-disable-next-line class-methods-use-this, no-unused-vars\n  onError(err) {\n    let report = err;\n    if (!isOf(err, Error)) {\n      report = new Error('onError called with a non-Error value.');\n    }\n    if (this.cancelled) {\n      return;\n    }\n    try {\n      this.error(report);\n    } finally {\n      this.cancel();\n    }\n  }\n}\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/emitter.js",
     "access": "public",
@@ -643,10 +643,10 @@
   {
     "__docId__": 53,
     "kind": "member",
-    "name": "link",
+    "name": "linked",
     "memberof": "src/emitter.js~SingleEmitter",
     "static": false,
-    "longname": "src/emitter.js~SingleEmitter#link",
+    "longname": "src/emitter.js~SingleEmitter#linked",
     "access": "public",
     "description": "",
     "lineNumber": 26,
@@ -728,7 +728,7 @@
     "longname": "src/emitter.js~SingleEmitter#setCancellable",
     "access": "public",
     "description": "Set the given Cancellable as the Emitter's cancellable state.",
-    "lineNumber": 52,
+    "lineNumber": 56,
     "unknown": [
       {
         "tagName": "@returns",
@@ -767,7 +767,7 @@
     "longname": "src/emitter.js~SingleEmitter#onSuccess",
     "access": "public",
     "description": "Emits a success value.",
-    "lineNumber": 74,
+    "lineNumber": 78,
     "params": [
       {
         "nullable": false,
@@ -793,7 +793,7 @@
     "longname": "src/emitter.js~SingleEmitter#onError",
     "access": "public",
     "description": "Emits an error value.",
-    "lineNumber": 94,
+    "lineNumber": 98,
     "params": [
       {
         "nullable": false,
@@ -994,7 +994,7 @@
     "__docId__": 69,
     "kind": "file",
     "name": "src/internal/operators/ambWith.js",
-    "content": "import ambArray from './ambArray';\nimport is from '../is';\n/**\n * @ignore\n */\nexport default (source, other) => {\n  if (!(is(other))) {\n    return source;\n  }\n  return ambArray([source, other]);\n};\n",
+    "content": "import ambArray from './ambArray';\nimport is from '../is';\n/**\n * @ignore\n */\nexport default (source, other) => (\n  !is(other)\n    ? source\n    : ambArray([source, other])\n);\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/ambWith.js",
     "access": "public",
@@ -1031,17 +1031,13 @@
         ]
       }
     ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
+    "return": null
   },
   {
     "__docId__": 71,
     "kind": "file",
     "name": "src/internal/operators/cache.js",
-    "content": "import { BooleanCancellable } from 'rx-cancellable';\nimport Single from '../../single';\nimport { cleanObserver, exists } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const { onSuccess, onError, onSubscribe } = cleanObserver(observer);\n\n  const {\n    source, cached, observers, subscribed,\n  } = this;\n\n  if (!cached) {\n    const index = observers.length;\n    observers[index] = observer;\n\n    const controller = new BooleanCancellable();\n\n    controller.addEventListener('cancel', () => {\n      observers.splice(index, 1);\n    });\n\n    onSubscribe(controller);\n\n    if (!subscribed) {\n      source.subscribeWith({\n        onSubscribe() {\n          // not applicable\n        },\n        onSuccess: (x) => {\n          this.cached = true;\n          this.value = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onSuccess(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onError: (x) => {\n          this.cached = true;\n          this.error = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onError(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n      });\n      this.subscribed = true;\n    }\n  } else {\n    const controller = new BooleanCancellable();\n    onSubscribe(controller);\n\n    const { value, error } = this;\n    if (exists(value)) {\n      onSuccess(value);\n    }\n    if (exists(error)) {\n      onError(error);\n    }\n    controller.cancel();\n  }\n}\n\n/**\n * @ignore\n */\nexport default (source) => {\n  const single = new Single(subscribeActual);\n  single.source = source;\n  single.cached = false;\n  single.subscribed = false;\n  single.observers = [];\n  return single;\n};\n",
+    "content": "import { BooleanCancellable } from 'rx-cancellable';\nimport Single from '../../single';\nimport { cleanObserver, exists } from '../utils';\n\n/**\n * @ignore\n */\nfunction subscribeActual(observer) {\n  const cleaned = cleanObserver(observer);\n\n  const {\n    source, cached, observers, subscribed,\n  } = this;\n\n  if (!cached) {\n    const index = observers.length;\n    observers[index] = cleaned;\n\n    const controller = new BooleanCancellable();\n\n    controller.addEventListener('cancel', () => {\n      observers.splice(index, 1);\n    });\n\n    cleaned.onSubscribe(controller);\n\n    if (!subscribed) {\n      source.subscribeWith({\n        onSubscribe() {\n          // not applicable\n        },\n        onSuccess: (x) => {\n          this.cached = true;\n          this.value = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onSuccess(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n        onError: (x) => {\n          this.cached = true;\n          this.error = x;\n\n          // eslint-disable-next-line no-restricted-syntax\n          for (const obs of observers) {\n            obs.onError(x);\n          }\n          controller.cancel();\n          this.observers = undefined;\n        },\n      });\n      this.subscribed = true;\n    }\n  } else {\n    const controller = new BooleanCancellable();\n    cleaned.onSubscribe(controller);\n\n    const { value, error } = this;\n    if (exists(value)) {\n      cleaned.onSuccess(value);\n    }\n    if (exists(error)) {\n      cleaned.onError(error);\n    }\n    controller.cancel();\n  }\n}\n\n/**\n * @ignore\n */\nexport default (source) => {\n  const single = new Single(subscribeActual);\n  single.source = source;\n  single.cached = false;\n  single.subscribed = false;\n  single.observers = [];\n  return single;\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/cache.js",
     "access": "public",
@@ -3618,7 +3614,7 @@
     "__docId__": 178,
     "kind": "file",
     "name": "src/internal/operators/zip.js",
-    "content": "/* eslint-disable no-restricted-syntax */\nimport { isIterable } from '../utils';\nimport error from './error';\nimport is from '../is';\nimport zipArray from './zipArray';\n/**\n * @ignore\n */\nexport default (sources, zipper) => {\n  if (!isIterable(sources)) {\n    return error(new Error('Single.zip: sources is a non-Iterable.'));\n  }\n\n  const singles = [];\n\n  for (const source of sources) {\n    if (is(source)) {\n      singles.push(source);\n    } else {\n      return error(new Error('Observable.zip: one of the sources is not a Single.'));\n    }\n  }\n  return zipArray(singles, zipper);\n};\n",
+    "content": "/* eslint-disable no-restricted-syntax */\nimport { isIterable } from '../utils';\nimport error from './error';\nimport is from '../is';\nimport zipArray from './zipArray';\n/**\n * @ignore\n */\nexport default (sources, zipper) => {\n  if (!isIterable(sources)) {\n    return error(new Error('Single.zip: sources is a non-Iterable.'));\n  }\n\n  const singles = [];\n\n  for (const source of sources) {\n    if (is(source)) {\n      singles.push(source);\n    } else {\n      return error(new Error('Single.zip: one of the sources is not a Single.'));\n    }\n  }\n  return zipArray(singles, zipper);\n};\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/zip.js",
     "access": "public",
@@ -3765,7 +3761,7 @@
     "__docId__": 184,
     "kind": "file",
     "name": "src/internal/operators/zipWith.js",
-    "content": "import is from '../is';\nimport zipArray from './zipArray';\n/**\n * @ignore\n */\nexport default (source, other, zipper) => {\n  if (!is(other)) {\n    return source;\n  }\n  return zipArray([source, other], zipper);\n};\n",
+    "content": "import is from '../is';\nimport zipArray from './zipArray';\n/**\n * @ignore\n */\nexport default (source, other, zipper) => (\n  !is(other)\n    ? source\n    : zipArray([source, other], zipper)\n);\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/src/internal/operators/zipWith.js",
     "access": "public",
@@ -3808,11 +3804,7 @@
         ]
       }
     ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
+    "return": null
   },
   {
     "__docId__": 186,
@@ -6465,7 +6457,7 @@
   },
   {
     "kind": "index",
-    "content": "# rx-single\n\nReactive Extensions - represents a deferred computation with an indication for a single value or exception.\n\n[![NPM](https://nodei.co/npm/rx-single.png)](https://nodei.co/npm/rx-single/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-single/badge)](https://www.jsdelivr.com/package/npm/rx-single)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-single.svg)](http://hits.dwyl.io/lxsmnsyc/rx-single)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-single.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-single) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-single) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-single/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-single)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-single/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-single?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-single\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-single/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Single = require('rx-single');\n```\n\nLoading the CommonJS module provides the Single class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-single provides the Single class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-single/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.12.0\n  - Reintroduced `zip`\n* 0.11.0\n  - Massive performance boost\n  - Renamed `zip` to `zipArray`\n  - added `ambArray`\n* 0.10.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - Renamed `doOnAbort` with `doOnCancel`\n* 0.9.0\n  - now uses [Schedulers](https://github.com/LXSMNSYC/rx-scheduler)\n  - `delay`, `delaySubscription`, `timeout` and `timer` now accepts `Schedulers` (defaults to `Scheduler.current`).\n  - added two new operators: `observeOn` (observes the emissions on a given Scheduler) and `subscribeOn` (subscribes to a given Single on a given Scheduler).\n* 0.8.0\n  - Fixed fromCallable subscription overhead\n* 0.7.0\n  - Replaced operator bindings with operator reference + Function.call\n* 0.6.0\n  - Fixed some operators not guarding observers.\n* 0.4.0\n  - Null values are now guarded. Previously, only undefined values are guarded.\n* 0.3.0\n  - Disposable deprecated. Single now uses AbortController for representing state of disposition.\n  - Renamed doOnDispose to doOnAbort\n* 0.2.0\n  - onError (both Observer and Emitter) now only accepts Error instances.\n  - if no onError function is provided for the subscription, the error to be received is thrown instead.\n  - Single.error now only accepts Error instances.\n  - fixed error message for Single.amb\n* 0.1.0\n  - Release",
+    "content": "# rx-single\n\nReactive Extensions - represents a deferred computation with an indication for a single value or exception.\n\n[![NPM](https://nodei.co/npm/rx-single.png)](https://nodei.co/npm/rx-single/)\n\n[![](https://data.jsdelivr.com/v1/package/npm/rx-single/badge)](https://www.jsdelivr.com/package/npm/rx-single)\n[![HitCount](http://hits.dwyl.io/lxsmnsyc/rx-single.svg)](http://hits.dwyl.io/lxsmnsyc/rx-single)\n\n| Platform | Build Status |\n| --- | --- |\n| Linux | [![Build Status](https://travis-ci.org/LXSMNSYC/rx-single.svg?branch=master)](https://travis-ci.org/LXSMNSYC/rx-single) |\n| Windows | [![Build status](https://ci.appveyor.com/api/projects/status/mkjwe462uk80axx4?svg=true)](https://ci.appveyor.com/project/LXSMNSYC/rx-single) |\n\n\n[![codecov](https://codecov.io/gh/LXSMNSYC/rx-single/branch/master/graph/badge.svg)](https://codecov.io/gh/LXSMNSYC/rx-single)\n[![Known Vulnerabilities](https://snyk.io/test/github/LXSMNSYC/rx-single/badge.svg?targetFile=package.json)](https://snyk.io/test/github/LXSMNSYC/rx-single?targetFile=package.json)\n\n## Install\n\nNPM\n\n```bash\nnpm i rx-single\n```\n\nCDN\n\n* jsDelivr\n```html\n<script src=\"https://cdn.jsdelivr.net/npm/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/rx-single/dist/index.min.js\"></script>\n```\n\n* unpkg\n```html\n<script src=\"https://unpkg.com/rx-cancellable/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-scheduler/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/rx-single/dist/index.min.js\"></script>\n```\n\n## Usage\n\n### Loading the module\n\n#### CommonJS\n\n```js\nconst Single = require('rx-single');\n```\n\nLoading the CommonJS module provides the Single class.\n\n#### Browser\n\nLoading the JavaScript file for the rx-single provides the Single class\n\n## Documentation\n\nYou can read the documentation at the [official doc site](https://lxsmnsyc.github.io/rx-single/)\n\n## Build\n\nClone the repo first, then run the following to install the dependencies\n\n```bash\nnpm install\n```\n\nTo build the coverages, run the test suite, the docs, and the distributable modules:\n\n```bash\nnpm run build\n```\n\n## Changelogs\n* 0.12.5\n  - Cancellable and Scheduler update compliance\n* 0.12.0\n  - Reintroduced `zip`\n* 0.11.0\n  - Massive performance boost\n  - Renamed `zip` to `zipArray`\n  - added `ambArray`\n* 0.10.0\n  - Replaced AbortController with [Cancellable](https://lxsmnsyc.github.io/rx-cancellable/).\n  - Renamed `doOnAbort` with `doOnCancel`\n* 0.9.0\n  - now uses [Schedulers](https://github.com/LXSMNSYC/rx-scheduler)\n  - `delay`, `delaySubscription`, `timeout` and `timer` now accepts `Schedulers` (defaults to `Scheduler.current`).\n  - added two new operators: `observeOn` (observes the emissions on a given Scheduler) and `subscribeOn` (subscribes to a given Single on a given Scheduler).\n* 0.8.0\n  - Fixed fromCallable subscription overhead\n* 0.7.0\n  - Replaced operator bindings with operator reference + Function.call\n* 0.6.0\n  - Fixed some operators not guarding observers.\n* 0.4.0\n  - Null values are now guarded. Previously, only undefined values are guarded.\n* 0.3.0\n  - Disposable deprecated. Single now uses AbortController for representing state of disposition.\n  - Renamed doOnDispose to doOnAbort\n* 0.2.0\n  - onError (both Observer and Emitter) now only accepts Error instances.\n  - if no onError function is provided for the subscription, the error to be received is thrown instead.\n  - Single.error now only accepts Error instances.\n  - fixed error message for Single.amb\n* 0.1.0\n  - Release",
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/README.md",
     "name": "./README.md",
     "static": true,
@@ -6473,7 +6465,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"rx-single\",\n  \"version\": \"0.11.2\",\n  \"description\": \"Reactive Extensions - Represents an asynchronous value or error\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-single.git\"\n  },\n  \"keywords\": [\n    \"rxjs\",\n    \"reactivex\",\n    \"reactive\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-single/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-single#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.3\",\n    \"@babel/preset-env\": \"^7.4.3\",\n    \"@babel/register\": \"^7.4.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-custom-theme\": \"^1.4.2\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-publish-html-plugin\": \"^1.1.2\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.1\",\n    \"mocha\": \"^6.1.3\",\n    \"nyc\": \"^13.3.0\",\n    \"rollup\": \"^1.10.0\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.0\",\n    \"rx-scheduler\": \"^0.2.4\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"rx-single\",\n  \"version\": \"0.12.6\",\n  \"description\": \"Reactive Extensions - Represents an asynchronous value or error\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"linux-mocha\": \"./node_modules/.bin/mocha --require @babel/register -R spec --recursive\",\n    \"linux-test\": \"./node_modules/.bin/nyc --reporter=html npm run linux-mocha\",\n    \"linux-docs\": \"./node_modules/.bin/esdoc\",\n    \"linux-cjs\": \"./node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"linux-browser\": \"./node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"linux-minify\": \"npm run linux-browser && ./node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"linux-build\": \"npm run linux-cjs && npm run linux-minify && npm run linux-docs && npm run linux-test\",\n    \"win-mocha\": \"node node_modules/mocha/bin/mocha --require @babel/register -R spec --recursive\",\n    \"win-test\": \"node node_modules/nyc/bin/nyc.js --reporter=html npm run win-mocha\",\n    \"win-docs\": \"node node_modules/esdoc/out/src/ESDocCLI.js\",\n    \"win-cjs\": \"node node_modules/.bin/rollup src/index.js --format cjs --name \\\"Single\\\" --file index.js\",\n    \"win-browser\": \"node node_modules/.bin/rollup src/index.js --format iife --name \\\"Single\\\" --file dist/index.js -g \\\"rx-cancellable:Cancellable\\\"\",\n    \"win-minify\": \"npm run win-browser && node node_modules/.bin/terser dist/index.js --compress --mangle --output dist/index.min.js\",\n    \"win-build\": \"npm run win-cjs && npm run win-minify && npm run win-docs && npm run win-test\",\n    \"mocha\": \"npm run linux-mocha || npm run win-mocha\",\n    \"test\": \"npm run linux-test || npm run win-test\",\n    \"docs\": \"npm run linux-docs || npm run win-docs\",\n    \"cjs\": \"npm run linux-cjs || npm run win-cjs\",\n    \"browser\": \"npm run linux-browser || npm run win-browser\",\n    \"minify\": \"npm run linux-minify || npm run win-minify\",\n    \"build\": \"npm run cjs && npm run minify && npm run docs && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/LXSMNSYC/rx-single.git\"\n  },\n  \"keywords\": [\n    \"rxjs\",\n    \"reactivex\",\n    \"reactive\"\n  ],\n  \"author\": \"LXSMNSYC (alexis.munsayac@gmail.com)\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/LXSMNSYC/rx-single/issues\"\n  },\n  \"homepage\": \"https://github.com/LXSMNSYC/rx-single#readme\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.4.4\",\n    \"@babel/preset-env\": \"^7.4.4\",\n    \"@babel/register\": \"^7.4.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-custom-theme\": \"^1.4.2\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-integrate-test-plugin\": \"^1.0.0\",\n    \"esdoc-publish-html-plugin\": \"^1.1.2\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.16.0\",\n    \"eslint-config-airbnb-base\": \"^13.1.0\",\n    \"eslint-plugin-import\": \"^2.17.2\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^14.1.0\",\n    \"rollup\": \"^1.11.3\",\n    \"terser\": \"^3.17.0\"\n  },\n  \"dependencies\": {\n    \"rx-cancellable\": \"^0.3.2\",\n    \"rx-scheduler\": \"^0.3.0\"\n  }\n}\n",
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/package.json",
     "name": "package.json",
     "static": true,
@@ -7206,7 +7198,7 @@
     "__docId__": 324,
     "kind": "testFile",
     "name": "test/delay.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#delay', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').delay(100);\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Single.just('Hello');\n    const single = source.delay();\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const single = Single.just('Hello').delay(100);\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const single = Single.error(new Error('Hello')).delay(100);\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Single.just('Hello').delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Single.error(new Error('Hello')).delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Scheduler from 'rx-scheduler';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#delay', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').delay(100);\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Single.just('Hello');\n    const single = source.delay();\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const single = Single.just('Hello').delay(100);\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const single = Single.error(new Error('Hello')).delay(100);\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Single.just('Hello').delay(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Single.error(new Error('Hello')).delay(100, Scheduler.current, true);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/test/delay.js",
     "access": "public",
@@ -7224,7 +7216,7 @@
     "longname": "test/delay.js~describe48",
     "access": "public",
     "description": "#delay",
-    "lineNumber": 8
+    "lineNumber": 9
   },
   {
     "__docId__": 326,
@@ -7237,7 +7229,7 @@
     "longname": "test/delay.js~describe48.it49",
     "access": "public",
     "description": "should create a Single",
-    "lineNumber": 12
+    "lineNumber": 13
   },
   {
     "__docId__": 327,
@@ -7250,7 +7242,7 @@
     "longname": "test/delay.js~describe48.it50",
     "access": "public",
     "description": "should return the same instance if the amount is not a number.",
-    "lineNumber": 19
+    "lineNumber": 20
   },
   {
     "__docId__": 328,
@@ -7263,7 +7255,7 @@
     "longname": "test/delay.js~describe48.it51",
     "access": "public",
     "description": "should signal success with the given value.",
-    "lineNumber": 27
+    "lineNumber": 28
   },
   {
     "__docId__": 329,
@@ -7276,7 +7268,7 @@
     "longname": "test/delay.js~describe48.it52",
     "access": "public",
     "description": "should signal error with the given value.",
-    "lineNumber": 37
+    "lineNumber": 38
   },
   {
     "__docId__": 330,
@@ -7289,7 +7281,7 @@
     "longname": "test/delay.js~describe48.it53",
     "access": "public",
     "description": "should not signal success if cancelled.",
-    "lineNumber": 47
+    "lineNumber": 48
   },
   {
     "__docId__": 331,
@@ -7302,7 +7294,7 @@
     "longname": "test/delay.js~describe48.it54",
     "access": "public",
     "description": "should not signal error if cancelled.",
-    "lineNumber": 62
+    "lineNumber": 63
   },
   {
     "__docId__": 332,
@@ -9490,7 +9482,7 @@
     "__docId__": 504,
     "kind": "testFile",
     "name": "test/takeUntil.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#takeUntil', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').takeUntil(Single.timer(100));\n\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if no other Single is provided', () => {\n    const source = Single.just('Hello');\n    const single = source.takeUntil();\n\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success if other Single has not emitted a success signal', (done) => {\n    const single = Single.just('Hello').takeUntil(Single.timer(100));\n\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal success if other Single has not emitted an error signal', (done) => {\n    const single = Single.just('Hello').takeUntil(Single.error(new Error('World')).delay(100));\n\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if other Single has emitted a success signal', (done) => {\n    const single = Single.just('Hello').delay(100).takeUntil(Single.just('World'));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if other Single has emitted an error signal', (done) => {\n    const single = Single.just('Hello').delay(100).takeUntil(Single.error(new Error('World')));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if source signals error, nonetheless', (done) => {\n    const single = Single.error(new Error('Hello')).takeUntil(Single.timer(100));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Scheduler from 'rx-scheduler';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#takeUntil', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').takeUntil(Single.timer(100));\n\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if no other Single is provided', () => {\n    const source = Single.just('Hello');\n    const single = source.takeUntil();\n\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success if other Single has not emitted a success signal', (done) => {\n    const single = Single.just('Hello').takeUntil(Single.timer(100));\n\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal success if other Single has not emitted an error signal', (done) => {\n    const single = Single.just('Hello').takeUntil(Single.error(new Error('World')).delay(100, Scheduler.current, true));\n\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      done,\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if other Single has emitted a success signal', (done) => {\n    const single = Single.just('Hello').delay(100).takeUntil(Single.just('World'));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if other Single has emitted an error signal', (done) => {\n    const single = Single.just('Hello').delay(100).takeUntil(Single.error(new Error('World')));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if source signals error, nonetheless', (done) => {\n    const single = Single.error(new Error('Hello')).takeUntil(Single.timer(100));\n\n    single.subscribe(\n      done,\n      () => done(),\n    );\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/test/takeUntil.js",
     "access": "public",
@@ -9508,7 +9500,7 @@
     "longname": "test/takeUntil.js~describe200",
     "access": "public",
     "description": "#takeUntil",
-    "lineNumber": 8
+    "lineNumber": 9
   },
   {
     "__docId__": 506,
@@ -9521,7 +9513,7 @@
     "longname": "test/takeUntil.js~describe200.it201",
     "access": "public",
     "description": "should create a Single",
-    "lineNumber": 12
+    "lineNumber": 13
   },
   {
     "__docId__": 507,
@@ -9534,7 +9526,7 @@
     "longname": "test/takeUntil.js~describe200.it202",
     "access": "public",
     "description": "should return the same instance if no other Single is provided",
-    "lineNumber": 20
+    "lineNumber": 21
   },
   {
     "__docId__": 508,
@@ -9547,7 +9539,7 @@
     "longname": "test/takeUntil.js~describe200.it203",
     "access": "public",
     "description": "should signal success if other Single has not emitted a success signal",
-    "lineNumber": 29
+    "lineNumber": 30
   },
   {
     "__docId__": 509,
@@ -9560,7 +9552,7 @@
     "longname": "test/takeUntil.js~describe200.it204",
     "access": "public",
     "description": "should signal success if other Single has not emitted an error signal",
-    "lineNumber": 40
+    "lineNumber": 41
   },
   {
     "__docId__": 510,
@@ -9573,7 +9565,7 @@
     "longname": "test/takeUntil.js~describe200.it205",
     "access": "public",
     "description": "should signal error if other Single has emitted a success signal",
-    "lineNumber": 51
+    "lineNumber": 52
   },
   {
     "__docId__": 511,
@@ -9586,7 +9578,7 @@
     "longname": "test/takeUntil.js~describe200.it206",
     "access": "public",
     "description": "should signal error if other Single has emitted an error signal",
-    "lineNumber": 62
+    "lineNumber": 63
   },
   {
     "__docId__": 512,
@@ -9599,7 +9591,7 @@
     "longname": "test/takeUntil.js~describe200.it207",
     "access": "public",
     "description": "should signal error if source signals error, nonetheless",
-    "lineNumber": 73
+    "lineNumber": 74
   },
   {
     "__docId__": 513,
@@ -9642,7 +9634,7 @@
     "__docId__": 516,
     "kind": "testFile",
     "name": "test/timeout.js",
-    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#timeout', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').timeout(100);\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Single.just('Hello');\n    const single = source.timeout();\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const single = Single.just('Hello').timeout(100);\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      x => done(x),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const single = Single.error('Hello').timeout(100);\n    single.subscribe(\n      x => done(x),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if the Single does not emit item within the given timeout.', (done) => {\n    const single = Single.timer(200).timeout(100);\n    single.subscribe(\n      x => done(x),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Single.timer(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Single.error(new Error('Hello')).delay(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
+    "content": "/* eslint-disable no-undef */\nimport assert from 'assert';\nimport Scheduler from 'rx-scheduler';\nimport Single from '../src/single';\n\n/**\n *\n */\ndescribe('#timeout', () => {\n  /**\n   *\n   */\n  it('should create a Single', () => {\n    const single = Single.just('Hello').timeout(100);\n    assert(single instanceof Single);\n  });\n  /**\n   *\n   */\n  it('should return the same instance if the amount is not a number.', () => {\n    const source = Single.just('Hello');\n    const single = source.timeout();\n    assert(source === single);\n  });\n  /**\n   *\n   */\n  it('should signal success with the given value.', (done) => {\n    const single = Single.just('Hello').timeout(100);\n    single.subscribe(\n      x => (x === 'Hello' ? done() : done(false)),\n      x => done(x),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error with the given value.', (done) => {\n    const single = Single.error('Hello').timeout(100);\n    single.subscribe(\n      x => done(x),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should signal error if the Single does not emit item within the given timeout.', (done) => {\n    const single = Single.timer(200).timeout(100);\n    single.subscribe(\n      x => done(x),\n      () => done(),\n    );\n  });\n  /**\n   *\n   */\n  it('should not signal success if cancelled.', (done) => {\n    const source = Single.timer(200).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n  /**\n   *\n   */\n  it('should not signal error if cancelled.', (done) => {\n    const source = Single.error(new Error('Hello')).delay(200, Scheduler.current, true).timeout(100);\n    const controller = source.subscribe(\n      () => done(false),\n      () => done(false),\n    );\n\n    controller.cancel();\n    if (controller.cancelled) {\n      done();\n    }\n  });\n});\n",
     "static": true,
     "longname": "/home/snd-admin/Desktop/Repos/rx-single/test/timeout.js",
     "access": "public",
@@ -9660,7 +9652,7 @@
     "longname": "test/timeout.js~describe210",
     "access": "public",
     "description": "#timeout",
-    "lineNumber": 8
+    "lineNumber": 9
   },
   {
     "__docId__": 518,
@@ -9673,7 +9665,7 @@
     "longname": "test/timeout.js~describe210.it211",
     "access": "public",
     "description": "should create a Single",
-    "lineNumber": 12
+    "lineNumber": 13
   },
   {
     "__docId__": 519,
@@ -9686,7 +9678,7 @@
     "longname": "test/timeout.js~describe210.it212",
     "access": "public",
     "description": "should return the same instance if the amount is not a number.",
-    "lineNumber": 19
+    "lineNumber": 20
   },
   {
     "__docId__": 520,
@@ -9699,7 +9691,7 @@
     "longname": "test/timeout.js~describe210.it213",
     "access": "public",
     "description": "should signal success with the given value.",
-    "lineNumber": 27
+    "lineNumber": 28
   },
   {
     "__docId__": 521,
@@ -9712,7 +9704,7 @@
     "longname": "test/timeout.js~describe210.it214",
     "access": "public",
     "description": "should signal error with the given value.",
-    "lineNumber": 37
+    "lineNumber": 38
   },
   {
     "__docId__": 522,
@@ -9725,7 +9717,7 @@
     "longname": "test/timeout.js~describe210.it215",
     "access": "public",
     "description": "should signal error if the Single does not emit item within the given timeout.",
-    "lineNumber": 47
+    "lineNumber": 48
   },
   {
     "__docId__": 523,
@@ -9738,7 +9730,7 @@
     "longname": "test/timeout.js~describe210.it216",
     "access": "public",
     "description": "should not signal success if cancelled.",
-    "lineNumber": 57
+    "lineNumber": 58
   },
   {
     "__docId__": 524,
@@ -9751,7 +9743,7 @@
     "longname": "test/timeout.js~describe210.it217",
     "access": "public",
     "description": "should not signal error if cancelled.",
-    "lineNumber": 72
+    "lineNumber": 73
   },
   {
     "__docId__": 525,

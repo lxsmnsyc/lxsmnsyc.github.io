@@ -47,12 +47,11 @@ import zipArray from &apos;./zipArray&apos;;
 /**
  * @ignore
  */
-export default (source, other, zipper) =&gt; {
-  if (!is(other)) {
-    return source;
-  }
-  return zipArray([source, other], zipper);
-};
+export default (source, other, zipper) =&gt; (
+  !is(other)
+    ? source
+    : zipArray([source, other], zipper)
+);
 </code></pre>
 
 </div>

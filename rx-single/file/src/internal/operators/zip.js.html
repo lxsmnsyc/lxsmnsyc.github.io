@@ -61,7 +61,7 @@ export default (sources, zipper) =&gt; {
     if (is(source)) {
       singles.push(source);
     } else {
-      return error(new Error(&apos;Observable.zip: one of the sources is not a Single.&apos;));
+      return error(new Error(&apos;Single.zip: one of the sources is not a Single.&apos;));
     }
   }
   return zipArray(singles, zipper);

@@ -289,43 +289,43 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber8",
+    "test-file/test/delay.js.html#lineNumber9",
     "#delay",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber12",
+    "test-file/test/delay.js.html#lineNumber13",
     "#delay should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber62",
+    "test-file/test/delay.js.html#lineNumber63",
     "#delay should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber47",
+    "test-file/test/delay.js.html#lineNumber48",
     "#delay should not signal success if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber19",
+    "test-file/test/delay.js.html#lineNumber20",
     "#delay should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber37",
+    "test-file/test/delay.js.html#lineNumber38",
     "#delay should signal error with the given value.",
     "test"
   ],
   [
     "",
-    "test-file/test/delay.js.html#lineNumber27",
+    "test-file/test/delay.js.html#lineNumber28",
     "#delay should signal success with the given value.",
     "test"
   ],
@@ -1159,49 +1159,49 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber8",
+    "test-file/test/takeUntil.js.html#lineNumber9",
     "#takeUntil",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber12",
+    "test-file/test/takeUntil.js.html#lineNumber13",
     "#takeUntil should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber20",
+    "test-file/test/takeUntil.js.html#lineNumber21",
     "#takeUntil should return the same instance if no other Single is provided",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber51",
+    "test-file/test/takeUntil.js.html#lineNumber52",
     "#takeUntil should signal error if other Single has emitted a success signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber62",
+    "test-file/test/takeUntil.js.html#lineNumber63",
     "#takeUntil should signal error if other Single has emitted an error signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber73",
+    "test-file/test/takeUntil.js.html#lineNumber74",
     "#takeUntil should signal error if source signals error, nonetheless",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber29",
+    "test-file/test/takeUntil.js.html#lineNumber30",
     "#takeUntil should signal success if other Single has not emitted a success signal",
     "test"
   ],
   [
     "",
-    "test-file/test/takeUntil.js.html#lineNumber40",
+    "test-file/test/takeUntil.js.html#lineNumber41",
     "#takeUntil should signal success if other Single has not emitted an error signal",
     "test"
   ],
@@ -1219,49 +1219,49 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber8",
+    "test-file/test/timeout.js.html#lineNumber9",
     "#timeout",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber12",
+    "test-file/test/timeout.js.html#lineNumber13",
     "#timeout should create a Single",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber72",
+    "test-file/test/timeout.js.html#lineNumber73",
     "#timeout should not signal error if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber57",
+    "test-file/test/timeout.js.html#lineNumber58",
     "#timeout should not signal success if cancelled.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber19",
+    "test-file/test/timeout.js.html#lineNumber20",
     "#timeout should return the same instance if the amount is not a number.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber47",
+    "test-file/test/timeout.js.html#lineNumber48",
     "#timeout should signal error if the Single does not emit item within the given timeout.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber37",
+    "test-file/test/timeout.js.html#lineNumber38",
     "#timeout should signal error with the given value.",
     "test"
   ],
   [
     "",
-    "test-file/test/timeout.js.html#lineNumber27",
+    "test-file/test/timeout.js.html#lineNumber28",
     "#timeout should signal success with the given value.",
     "test"
   ],
