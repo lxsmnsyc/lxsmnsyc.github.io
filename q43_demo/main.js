@@ -38,7 +38,7 @@ canvas.addEventListener("mousedown", _ => showQT = !showQT);
 /**
  * This is for the Flocking algorithm
  */
-const INFLUENCE = 128;
+const INFLUENCE = 256;
 const COLLISION = 4;
 const WEIGHTS = {
     center: 0.5,
@@ -46,7 +46,7 @@ const WEIGHTS = {
     steering: 0.5
 };
 const MAXIMUM_VELOCITY = 2;
-const FOV = 45*Math.PI/180;
+const FOV = 90 * Math.PI/180;
 const PARTICLES = 1000;
 
 /**
