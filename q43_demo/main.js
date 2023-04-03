@@ -39,7 +39,7 @@ canvas.addEventListener("mousedown", _ => showQT = !showQT);
  * This is for the Flocking algorithm
  */
 const INFLUENCE = 256;
-const COLLISION = 8;
+const COLLISION = 32;
 const WEIGHTS = {
     center: 0.5,
     displacement: 1,
