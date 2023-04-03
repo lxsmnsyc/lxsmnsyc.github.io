@@ -41,9 +41,9 @@ canvas.addEventListener("mousedown", _ => showQT = !showQT);
 const INFLUENCE = 256;
 const COLLISION = 32;
 const WEIGHTS = {
-    center: 1,
-    displacement: 1,
-    steering: 1
+    center: 0.25,
+    displacement: 0.15,
+    steering: 0.15
 };
 const MAXIMUM_VELOCITY = 2;
 const FOV = 90 * Math.PI/180;
